@@ -16,7 +16,7 @@ public:
 	~Ship();
 
 	void reset();
-	void update(float frametime);
+	void update(float frametime, const sf::Event& event);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void onEvent(const sf::Event& event);
 

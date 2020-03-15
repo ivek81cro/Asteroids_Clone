@@ -33,7 +33,7 @@ void Ship::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(sShip, states);
 }
 
-void Ship::update(float frametime)
+void Ship::update(float frametime, const sf::Event& event)
 {
 	if (x_move != 0) 
 	{
@@ -52,6 +52,11 @@ void Ship::update(float frametime)
 			speed.x = speed.x > 0 ? max_speed : -max_speed;
 		if ((speed.y * speed.y) > (max_speed * max_speed))
 			speed.y = speed.y > 0 ? max_speed : -max_speed;
+	}
+	if (sf::Keyboard::isKeyPressed)
+	{
+		speed.x *= 0.997;
+		speed.y *= 0.997;
 	}
 	move(speed);
 

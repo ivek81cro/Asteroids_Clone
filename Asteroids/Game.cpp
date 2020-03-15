@@ -30,7 +30,7 @@ int Game::run()
 			ship.onEvent(event);
 		}
 		window.clear();
-		ship.update(clock.restart().asMilliseconds());
+		ship.update(clock.restart().asMilliseconds(),event);
 		window.draw(sBackground);
 		window.draw(ship);
 		window.display();
