@@ -53,7 +53,8 @@ void Ship::update(float frametime, const sf::Event& event)
 		if ((speed.y * speed.y) > (max_speed * max_speed))
 			speed.y = speed.y > 0 ? max_speed : -max_speed;
 	}
-	if (sf::Keyboard::isKeyPressed)
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)||
+		!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
 	{
 		speed.x *= 0.997;
 		speed.y *= 0.997;
