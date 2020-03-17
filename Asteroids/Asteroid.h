@@ -7,6 +7,8 @@
 class Asteroid : public sf::Drawable, public sf::Transformable
 {
 	static const float speed[3];
+	static bool init_done;
+	static sf::Texture tAsteroid;
 
 public:
 	Asteroid(int level);
@@ -19,12 +21,16 @@ public:
 	void breakDown();
 	void update(float frametime);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	static bool Init(const std::string& ImageFile)
+	{
+		init_done = true;
+		return tAsteroid.loadFromFile(ImageFile);
+	}
 
 private:
 	int level;
 	bool is_alive;
 	sf::Vector2f direction;
-	sf::Texture tAsteroid;
 	sf::Sprite sAsteroid;
 };
 

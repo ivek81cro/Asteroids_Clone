@@ -37,7 +37,7 @@ void Bullet::update(float frametime)
 		is_alive = false;
 
 	sBullet.setTexture(tBullet);
-	sBullet.setTextureRect(sf::IntRect(0,0,14,44));
+	sBullet.setTextureRect(sf::IntRect(0, 0, 14, 44));
 	sBullet.setOrigin(27, 10);
 
 	sf::Vector2f distance = direction * speed * frametime;

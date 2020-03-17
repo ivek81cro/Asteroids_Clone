@@ -9,7 +9,7 @@ class Bullet : public sf::Drawable, sf::Transformable
 	static bool init_done;
 	static const float lifetime;
 	static const float speed;
-	
+
 	static sf::Texture tBullet;
 	sf::Sprite sBullet;
 

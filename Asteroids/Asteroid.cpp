@@ -1,11 +1,19 @@
 #include "Asteroid.h"
 
 const float Asteroid::speed[3] = { 0.03f, 0.05f, 0.07f };
+bool Asteroid::init_done;
+sf::Texture Asteroid::tAsteroid;
 
 Asteroid::Asteroid(int level) :is_alive(true), level(level)
 {
 	int angle = rand() % 360;
 	direction = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
+
+	if (!init_done)
+		Init("images/rock.png");
+
+	setPosition(rand() % W_WIDTH, rand() % W_HEIGHT);
+	setRotation(rand() % 360);
 }
 
 Asteroid::~Asteroid()
@@ -15,7 +23,8 @@ Asteroid::~Asteroid()
 
 Asteroid::Asteroid(sf::Vector2f position, float angle, int level) :is_alive(true), level(level)
 {
-
+	direction = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
+	setPosition(position);
 }
 
 bool Asteroid::isAlive() 
@@ -41,5 +50,35 @@ bool Asteroid::checkPoint(sf::Vector2f point)
 	return true;
 }
 void Asteroid::breakDown(){}
-void Asteroid::update(float frametime){}
-void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const{}
+
+void Asteroid::update(float frametime)
+{
+	if (!is_alive) return;
+
+	sAsteroid.setTexture(tAsteroid);
+	sAsteroid.setTextureRect(sf::IntRect(12, 6, 30, 50));
+	sAsteroid.setOrigin(15, 25);
+
+	sf::Vector2f distance = direction * speed[level] * frametime;
+	move(distance);
+
+	sf::Vector2f position = getPosition();
+
+	if (position.x > W_WIDTH)
+		position.x = 0;
+	if (position.x < 0)
+		position.x = W_WIDTH;
+
+	if (position.y > W_HEIGHT)
+		position.y = 0;
+	if (position.y < 0)
+		position.y = W_HEIGHT;
+
+	setPosition(position);
+}
+void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	states.transform *= getTransform();
+	target.draw(sAsteroid, states);
+
+}
