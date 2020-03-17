@@ -2,7 +2,7 @@
 #include "Constants.h"
 
 const float Bullet::lifetime = 1000.0f;
-const float Bullet::speed = 0.9f;
+const float Bullet::speed = 0.09f;
 
 Bullet::Bullet(sf::Vector2f position, float angle) :
 	is_alive(true), remaning_life(lifetime),
@@ -10,7 +10,7 @@ Bullet::Bullet(sf::Vector2f position, float angle) :
 {
 	tBullet.loadFromFile("images/fire_blue.png");
 	sBullet.setTexture(tBullet);
-	sBullet.setTextureRect(sf::IntRect(4, 12, 22, 30));
+	sBullet.setTextureRect(sf::IntRect(4,12,22,30));
 	//sBullet.setOrigin(135,2);
 	setPosition(position);
 }
