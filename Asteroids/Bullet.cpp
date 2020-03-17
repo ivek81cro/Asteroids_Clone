@@ -1,8 +1,8 @@
 #include "Bullet.h"
 #include "Constants.h"
 
-const float Bullet::lifetime = 1.0f;
-const float Bullet::speed = 0.09f;
+const float Bullet::lifetime = 400.0f;
+const float Bullet::speed = 2.0f;
 
 Bullet::Bullet(sf::Vector2f position, float angle) :
 	is_alive(true), remaning_life(lifetime),
@@ -25,15 +25,16 @@ bool Bullet::isAlive()
 
 void Bullet::update(float frametime)
 {
+	if (!is_alive) return;	
+
+	remaning_life -= frametime;
+	if (remaning_life <= 0)
+		is_alive = false;
+
 	tBullet.loadFromFile("images/fire_blue.png");
 	sBullet.setTexture(tBullet);
 	sBullet.setTextureRect(sf::IntRect(5, 0, 20, 55));
 	sBullet.setOrigin(27, 10);
-	if (!is_alive) return;
-
-	remaning_life = frametime;
-	if (remaning_life <= 0)
-		is_alive = false;
 
 	sf::Vector2f distance = direction * speed * frametime;
 
