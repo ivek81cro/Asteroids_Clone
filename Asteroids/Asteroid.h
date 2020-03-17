@@ -32,6 +32,7 @@ private:
 	bool is_alive;
 	sf::Vector2f direction;
 	sf::Sprite sAsteroid;
+	int ran;
 };
 
 #endif
