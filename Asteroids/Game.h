@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Ship.h"
+#include "Bullet.h"
 
 class Game
 {
@@ -20,6 +21,7 @@ private:
 	bool running;
 	int lives;
 	Ship ship;
+	std::vector<Bullet> bullets;
 };
 
 #endif

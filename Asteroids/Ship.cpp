@@ -56,8 +56,8 @@ void Ship::update(float frametime, const sf::Event& event)
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)||
 		!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
 	{
-		speed.x *= 0.997;
-		speed.y *= 0.997;
+		speed.x *= 0.997f;
+		speed.y *= 0.997f;
 	}
 	move(speed);
 
@@ -90,6 +90,3 @@ void Ship::onEvent(const sf::Event& event)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		x_move = -1;
 }
-
-
-

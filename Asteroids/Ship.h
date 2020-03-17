@@ -4,8 +4,9 @@
 #include <SFML/Graphics.hpp>
 #include <math.h>
 #include "Constants.h"
+#include "Bullet.h"
 
-class Ship : public sf::Drawable, sf::Transformable
+class Ship : public sf::Drawable, public sf::Transformable
 {
 	static const float acceleration;
 	static const float max_speed;

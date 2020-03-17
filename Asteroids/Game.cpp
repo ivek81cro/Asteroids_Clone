@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Constants.h"
+#include "Level.h"
 
 Game::Game():running(true), lives(3) {}
 
@@ -13,10 +14,11 @@ int Game::run()
 	createWindow();
 
 	sf::Clock clock;
+	Level level;
 	sf::Texture tBackground;
 	tBackground.loadFromFile("images/background.jpg");
 	sf::Sprite sBackground(tBackground);
-
+	level.start();
 	while (running)
 	{
 		sf::Event event;
@@ -27,12 +29,12 @@ int Game::run()
 				window.close();
 				return EXIT_SUCCESS;
 			}
-			ship.onEvent(event);
+			level.onEvent(event);
 		}
 		window.clear();
-		ship.update(clock.restart().asMilliseconds(),event);
 		window.draw(sBackground);
-		window.draw(ship);
+		level.update(clock.restart().asMilliseconds(),event);
+		level.show(window);		
 		window.display();
 	}
 	return EXIT_SUCCESS;
