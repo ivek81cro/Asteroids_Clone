@@ -16,7 +16,7 @@ void Level::onEvent(const sf::Event& event)
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
-		Bullet bullet(ship.getPosition(), ship.getRotation()-90);
+		Bullet bullet(ship.getPosition(), ship.getRotation() - 90);
 		bullets.push_back(bullet);
 	}
 }
