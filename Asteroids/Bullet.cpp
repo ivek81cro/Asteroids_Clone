@@ -3,11 +3,16 @@
 
 const float Bullet::lifetime = 400.0f;
 const float Bullet::speed = 2.0f;
+bool Bullet::init_done;
+sf::Texture Bullet::tBullet;
 
 Bullet::Bullet(sf::Vector2f position, float angle) :
 	is_alive(true), remaning_life(lifetime),
 	direction(cos(angle* DEGTORAD), sin(angle* DEGTORAD))
 {
+	if (!init_done)
+		Init("images/bullet.png");
+	
 	setPosition(position);
 	setRotation(angle + 90);
 	setScale(0.25f, 0.25f);
@@ -31,9 +36,8 @@ void Bullet::update(float frametime)
 	if (remaning_life <= 0)
 		is_alive = false;
 
-	tBullet.loadFromFile("images/fire_blue.png");
 	sBullet.setTexture(tBullet);
-	sBullet.setTextureRect(sf::IntRect(5, 0, 20, 55));
+	sBullet.setTextureRect(sf::IntRect(0,0,14,44));
 	sBullet.setOrigin(27, 10);
 
 	sf::Vector2f distance = direction * speed * frametime;
