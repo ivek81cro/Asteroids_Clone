@@ -33,6 +33,7 @@ private:
 	sf::Vector2f direction;
 	sf::Sprite sAsteroid;
 	int ran;
+	int tick;
 };
 
 #endif

@@ -4,7 +4,7 @@ const float Asteroid::speed[3] = { 0.03f, 0.05f, 0.07f };
 bool Asteroid::init_done;
 sf::Texture Asteroid::tAsteroid;
 
-Asteroid::Asteroid(int level) :is_alive(true), level(level), ran(0)
+Asteroid::Asteroid(int level) :is_alive(true), level(level), ran(0), tick(0)
 {
 	int angle = rand() % 360;
 	direction = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
@@ -21,7 +21,7 @@ Asteroid::~Asteroid()
 
 }
 
-Asteroid::Asteroid(sf::Vector2f position, float angle, int level) :is_alive(true), level(level),ran(0)
+Asteroid::Asteroid(sf::Vector2f position, float angle, int level) :is_alive(true), level(level), ran(0), tick(0)
 {
 	direction = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
 	setPosition(position);
@@ -55,13 +55,19 @@ void Asteroid::update(float frametime)
 {
 	if (!is_alive) return;
 
-	if (ran >= 1024)
+	if (ran >= 1024) {
 		ran = 0;
+		tick = 0;
+	}
+
 	sAsteroid.setTexture(tAsteroid);
 	sAsteroid.setTextureRect(sf::IntRect(0+ran, 6, 65, 64));
 	sAsteroid.setOrigin(15, 25);
-
-	ran += 64;
+	
+	if (tick % 4 == 0)
+		ran += 64;
+	
+	++tick;
 
 	sf::Vector2f distance = direction * speed[level] * frametime;
 	move(distance);
