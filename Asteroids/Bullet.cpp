@@ -16,6 +16,10 @@ Bullet::Bullet(sf::Vector2f position, float angle) :
 	setPosition(position);
 	setRotation(angle + 90);
 	setScale(0.25f, 0.25f);
+
+	sBullet.setTexture(tBullet);
+	sBullet.setTextureRect(sf::IntRect(0, 0, 14, 44));
+	sBullet.setOrigin(14, 44);
 }
 
 Bullet::~Bullet()
@@ -35,10 +39,6 @@ void Bullet::update(float frametime)
 	remaning_life -= frametime;
 	if (remaning_life <= 0)
 		is_alive = false;
-
-	sBullet.setTexture(tBullet);
-	sBullet.setTextureRect(sf::IntRect(0, 0, 14, 44));
-	sBullet.setOrigin(27, 10);
 
 	sf::Vector2f distance = direction * speed * frametime;
 

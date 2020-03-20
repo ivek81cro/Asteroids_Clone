@@ -14,6 +14,10 @@ Asteroid::Asteroid(int level) :is_alive(true), level(level), ran(0), tick(0)
 
 	setPosition(rand() % W_WIDTH, rand() % W_HEIGHT);
 	setRotation(rand() % 360);
+	sAsteroid.setTexture(tAsteroid);
+	sAsteroid.setTextureRect(sf::IntRect(0 + ran, 6, 64, 64));
+	sAsteroid.setOrigin(64, 64);
+
 }
 
 Asteroid::~Asteroid()
@@ -37,18 +41,6 @@ int Asteroid::getLevel()
 	return level; 
 }
 
-bool Asteroid::checkPoint(sf::Vector2f point) 
-{
-	float ax = getPosition().x;
-	float ay = getPosition().y;
-
-	float px = point.x;
-	float py = point.y;
-
-	float sqrDistance = ((ax - px) * (ax - px)) + ((ay - py) * (ay - py));
-
-	return true;
-}
 void Asteroid::breakDown(){}
 
 void Asteroid::update(float frametime)
@@ -59,14 +51,10 @@ void Asteroid::update(float frametime)
 		ran = 0;
 		tick = 0;
 	}
-
-	sAsteroid.setTexture(tAsteroid);
-	sAsteroid.setTextureRect(sf::IntRect(0+ran, 6, 65, 64));
-	sAsteroid.setOrigin(15, 25);
+	sAsteroid.setTextureRect(sf::IntRect(0 + ran, 6, 64, 64));
 	
 	if (tick % 4 == 0)
 		ran += 64;
-	
 	++tick;
 
 	sf::Vector2f distance = direction * speed[level] * frametime;

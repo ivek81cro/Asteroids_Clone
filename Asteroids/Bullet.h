@@ -9,9 +9,8 @@ class Bullet : public sf::Drawable, sf::Transformable
 	static bool init_done;
 	static const float lifetime;
 	static const float speed;
-
 	static sf::Texture tBullet;
-	sf::Sprite sBullet;
+	
 
 public:
 	Bullet(sf::Vector2f position, float angle);
@@ -26,11 +25,13 @@ public:
 		init_done = true;
 		return tBullet.loadFromFile(ImageFile);
 	}
+	sf::Vector2f getSprite() const { return Transformable::getPosition(); }
 
 private:
 	bool is_alive;
 	float remaning_life;
 	sf::Vector2f direction;
+	sf::Sprite sBullet;
 };
 
 #endif

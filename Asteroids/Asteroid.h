@@ -17,7 +17,6 @@ public:
 
 	bool isAlive();
 	int getLevel();
-	bool checkPoint(sf::Vector2f point);
 	void breakDown();
 	void update(float frametime);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
@@ -26,7 +25,7 @@ public:
 		init_done = true;
 		return tAsteroid.loadFromFile(ImageFile);
 	}
-
+	sf::Vector2f getSprite() const { return Transformable::getPosition(); }
 private:
 	int level;
 	bool is_alive;

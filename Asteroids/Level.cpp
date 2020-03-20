@@ -1,8 +1,9 @@
 #include "Level.h"
+#include "Collision.h"
 
 Level::Level()
 {
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 2; i++) {
 		Asteroid a(0);
 		asteroids.push_back(a);
 	}
@@ -53,6 +54,37 @@ void Level::update(float frametime, const sf::Event& event)
 		else
 			start_asteroids = asteroids.erase(start_asteroids);
 	}
+
+	std::vector<Asteroid> new_asteroids;
+	start_asteroids = asteroids.begin();
+
+	while (start_asteroids != asteroids.end()) {
+		start_bullets = bullets.begin();
+		while (start_bullets != bullets.end()) {
+			if (!start_bullets->isAlive()) {
+				++start_bullets;
+				continue;
+			}
+			
+			//work out collision detection between bullet and asteroid
+
+			if (false) {
+				start_bullets->kill();
+				start_asteroids->breakDown();
+
+				if (start_asteroids->isAlive()) {
+					sf::Vector2f position = start_asteroids->getPosition();
+					float angle = rand() % 360;
+					Asteroid a(position, angle, start_asteroids->getLevel());
+					new_asteroids.push_back(a);
+				}
+				break;
+			}
+			++start_bullets;
+		}
+		++start_asteroids;
+	}
+	asteroids.insert(asteroids.end(), new_asteroids.begin(), new_asteroids.end());
 }
 
 void Level::show(sf::RenderTarget& target)
@@ -74,3 +106,4 @@ void Level::start()
 {
 
 }
+
