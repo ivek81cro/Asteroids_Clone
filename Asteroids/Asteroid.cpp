@@ -31,6 +31,12 @@ Asteroid::Asteroid(sf::Vector2f position, float angle, int level) :is_alive(true
 	setPosition(position);
 }
 
+bool Asteroid::Init(const std::string& ImageFile)
+{
+	init_done = true;
+	return tAsteroid.loadFromFile(ImageFile);
+}
+
 bool Asteroid::isAlive() 
 { 
 	return is_alive; 

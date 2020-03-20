@@ -22,12 +22,7 @@ public:
 	void breakDown();
 	void update(float frametime);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	static bool Init(const std::string& ImageFile)
-	{
-		init_done = true;
-		return tAsteroid.loadFromFile(ImageFile);
-	}
-	sf::Sprite::Transformable getSprite() { return sAsteroid; }
+	static bool Init(const std::string& ImageFile);
 private:
 	int level;
 	bool is_alive;

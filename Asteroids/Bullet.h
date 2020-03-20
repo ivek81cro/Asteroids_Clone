@@ -25,7 +25,6 @@ public:
 		init_done = true;
 		return tBullet.loadFromFile(ImageFile);
 	}
-	sf::Sprite::Transformable getSprite() { return sBullet; }
 
 private:
 	bool is_alive;

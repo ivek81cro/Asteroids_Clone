@@ -66,8 +66,8 @@ void Level::update(float frametime, const sf::Event& event)
 				continue;
 			}
 			//work on collision
-			bool state = start_asteroids->checkPoint(start_bullets->getPosition());			
-
+			bool state = start_asteroids->checkPoint(start_bullets->getPosition());	
+			sf::Vector2f rect = start_asteroids->getPosition();
 			if (state) {
 				start_bullets->kill();
 				start_asteroids->breakDown();
