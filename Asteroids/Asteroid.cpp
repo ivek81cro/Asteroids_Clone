@@ -1,6 +1,7 @@
 #include "Asteroid.h"
 
 const float Asteroid::speed[3] = { 0.03f, 0.05f, 0.07f };
+const float Asteroid::radius = 32.0f;
 bool Asteroid::init_done;
 sf::Texture Asteroid::tAsteroid;
 
@@ -16,8 +17,7 @@ Asteroid::Asteroid(int level) :is_alive(true), level(level), ran(0), tick(0)
 	setRotation(rand() % 360);
 	sAsteroid.setTexture(tAsteroid);
 	sAsteroid.setTextureRect(sf::IntRect(0 + ran, 6, 64, 64));
-	sAsteroid.setOrigin(64, 64);
-
+	sAsteroid.setOrigin(0, 0);
 }
 
 Asteroid::~Asteroid()
@@ -39,6 +39,20 @@ bool Asteroid::isAlive()
 int Asteroid::getLevel() 
 { 
 	return level; 
+}
+
+bool Asteroid::checkPoint(sf::Vector2f point) {
+
+	float ax = getPosition().x;
+	float ay = getPosition().y;
+
+	float px = point.x;
+	float py = point.y;
+
+	float sqrDistance = ((ax - px) * (ax - px)) + ((ay - py) * (ay - py));
+	float sqrRadius = radius * radius;
+
+	return (sqrDistance <= sqrRadius);
 }
 
 void Asteroid::breakDown(){}

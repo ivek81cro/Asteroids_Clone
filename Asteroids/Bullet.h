@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 
-class Bullet : public sf::Drawable, sf::Transformable
+class Bullet : public sf::Drawable, public sf::Transformable
 {
 	static bool init_done;
 	static const float lifetime;
@@ -25,7 +25,7 @@ public:
 		init_done = true;
 		return tBullet.loadFromFile(ImageFile);
 	}
-	sf::Vector2f getSprite() const { return Transformable::getPosition(); }
+	sf::Sprite::Transformable getSprite() { return sBullet; }
 
 private:
 	bool is_alive;

@@ -7,6 +7,7 @@
 class Asteroid : public sf::Drawable, public sf::Transformable
 {
 	static const float speed[3];
+	static const float radius;
 	static bool init_done;
 	static sf::Texture tAsteroid;
 
@@ -17,6 +18,7 @@ public:
 
 	bool isAlive();
 	int getLevel();
+	bool checkPoint(sf::Vector2f point);
 	void breakDown();
 	void update(float frametime);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
@@ -25,7 +27,7 @@ public:
 		init_done = true;
 		return tAsteroid.loadFromFile(ImageFile);
 	}
-	sf::Vector2f getSprite() const { return Transformable::getPosition(); }
+	sf::Sprite::Transformable getSprite() { return sAsteroid; }
 private:
 	int level;
 	bool is_alive;

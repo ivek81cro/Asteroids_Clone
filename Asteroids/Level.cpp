@@ -65,10 +65,10 @@ void Level::update(float frametime, const sf::Event& event)
 				++start_bullets;
 				continue;
 			}
-			
-			//work out collision detection between bullet and asteroid
+			//work on collision
+			bool state = start_asteroids->checkPoint(start_bullets->getPosition());			
 
-			if (false) {
+			if (state) {
 				start_bullets->kill();
 				start_asteroids->breakDown();
 

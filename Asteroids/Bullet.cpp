@@ -19,7 +19,7 @@ Bullet::Bullet(sf::Vector2f position, float angle) :
 
 	sBullet.setTexture(tBullet);
 	sBullet.setTextureRect(sf::IntRect(0, 0, 14, 44));
-	sBullet.setOrigin(14, 44);
+	sBullet.setOrigin(0, 0);
 }
 
 Bullet::~Bullet()
