@@ -2,7 +2,7 @@
 #include "Constants.h"
 
 const float Bullet::lifetime = 1000.0f;
-const float Bullet::speed = 0.7f;
+const float Bullet::speed = 0.9f;
 bool Bullet::init_done;
 sf::Texture Bullet::tBullet;
 

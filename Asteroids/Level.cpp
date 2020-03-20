@@ -3,7 +3,7 @@
 
 Level::Level()
 {
-	for (int i = 0; i < 2; i++) {
+	for (int i = 0; i < 3; i++) {
 		Asteroid a(0);
 		asteroids.push_back(a);
 	}
@@ -29,7 +29,7 @@ void Level::update(float frametime, const sf::Event& event)
 {
 	ship.update(frametime, event);
 
-	std::vector<Bullet>::iterator start_bullets = bullets.begin();
+	std::list<Bullet>::iterator start_bullets = bullets.begin();
 	while (start_bullets != bullets.end())
 	{
 		if (start_bullets->isAlive())
@@ -43,7 +43,7 @@ void Level::update(float frametime, const sf::Event& event)
 		}
 	}
 
-	std::vector<Asteroid>::iterator start_asteroids = asteroids.begin();
+	std::list<Asteroid>::iterator start_asteroids = asteroids.begin();
 	while (start_asteroids != asteroids.end()) 
 	{
 		if (start_asteroids->isAlive()) 
@@ -55,7 +55,7 @@ void Level::update(float frametime, const sf::Event& event)
 			start_asteroids = asteroids.erase(start_asteroids);
 	}
 
-	std::vector<Asteroid> new_asteroids;
+	std::list<Asteroid> new_asteroids;
 	start_asteroids = asteroids.begin();
 
 	while (start_asteroids != asteroids.end()) {
@@ -66,8 +66,8 @@ void Level::update(float frametime, const sf::Event& event)
 				continue;
 			}
 			//work on collision
-			bool state = start_asteroids->checkPoint(start_bullets->getPosition());	
-			sf::Vector2f rect = start_asteroids->getPosition();
+			sf::Vector2f bulletPosition = start_bullets->getPosition();
+			bool state = start_asteroids->checkPoint(bulletPosition);
 			if (state) {
 				start_bullets->kill();
 				start_asteroids->breakDown();
@@ -91,12 +91,12 @@ void Level::show(sf::RenderTarget& target)
 {
 	target.draw(ship);
 
-	for (std::vector<Bullet>::iterator it = bullets.begin(); it != bullets.end(); ++it)
+	for (std::list<Bullet>::iterator it = bullets.begin(); it != bullets.end(); ++it)
 	{
 		target.draw(*it);
 	}
 
-	for (std::vector<Asteroid>::iterator it = asteroids.begin(); it != asteroids.end(); ++it)
+	for (std::list<Asteroid>::iterator it = asteroids.begin(); it != asteroids.end(); ++it)
 	{
 		target.draw(*it);
 	}
