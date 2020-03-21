@@ -5,7 +5,6 @@
 #include "Bullet.h"
 #include "Asteroid.h" 
 #include <SFML/Graphics.hpp>
-#include <list>
 
 class Level
 {
@@ -20,8 +19,8 @@ public:
 
 private:
 	Ship ship;
-	std::list<Bullet> bullets;
-	std::list<Asteroid> asteroids;
+	std::vector<Bullet> bullets;
+	std::vector<Asteroid> asteroids;
 };
 
 #endif

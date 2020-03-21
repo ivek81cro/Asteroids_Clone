@@ -27,7 +27,7 @@ Asteroid::~Asteroid()
 }
 
 Asteroid::Asteroid(sf::Vector2f position, float angle, int level) 
-	:is_alive(true), level(level+1), ran(64), tick(0), radius(ASTEROID_RADIUS)
+	:is_alive(true), level(level), ran(64), tick(0), radius(ASTEROID_RADIUS)
 {
 	direction = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
 	setPosition(position);

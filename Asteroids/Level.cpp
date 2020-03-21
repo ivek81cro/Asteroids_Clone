@@ -28,11 +28,16 @@ void Level::update(float frametime, const sf::Event& event)
 {
 	ship.update(frametime, event);
 
-	std::list<Bullet>::iterator start_bullets = bullets.begin();
+	std::vector<Bullet>::iterator start_bullets = bullets.begin();
 	while (start_bullets != bullets.end())
 	{
 		if (start_bullets->isAlive())
 		{
+			//temp fix for double bullet creation
+			if(start_bullets+1 != bullets.end())
+				if (start_bullets->getPosition() == (start_bullets + 1)->getPosition())
+					start_bullets->kill();
+			//end
 			start_bullets->update(frametime);
 			++start_bullets;
 		}
@@ -42,7 +47,7 @@ void Level::update(float frametime, const sf::Event& event)
 		}
 	}
 
-	std::list<Asteroid>::iterator start_asteroids = asteroids.begin();
+	std::vector<Asteroid>::iterator start_asteroids = asteroids.begin();
 	while (start_asteroids != asteroids.end()) 
 	{
 		if (start_asteroids->isAlive()) 
@@ -54,7 +59,7 @@ void Level::update(float frametime, const sf::Event& event)
 			start_asteroids = asteroids.erase(start_asteroids);
 	}
 
-	std::list<Asteroid> new_asteroids;
+	std::vector<Asteroid> new_asteroids;
 	start_asteroids = asteroids.begin();
 
 	while (start_asteroids != asteroids.end()) {
@@ -89,12 +94,12 @@ void Level::show(sf::RenderTarget& target)
 {
 	target.draw(ship);
 
-	for (std::list<Bullet>::iterator it = bullets.begin(); it != bullets.end(); ++it)
+	for (std::vector<Bullet>::iterator it = bullets.begin(); it != bullets.end(); ++it)
 	{
 		target.draw(*it);
 	}
 
-	for (std::list<Asteroid>::iterator it = asteroids.begin(); it != asteroids.end(); ++it)
+	for (std::vector<Asteroid>::iterator it = asteroids.begin(); it != asteroids.end(); ++it)
 	{
 		target.draw(*it);
 	}
