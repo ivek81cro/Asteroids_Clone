@@ -1,7 +1,7 @@
 #include "Bullet.h"
 #include "Constants.h"
 
-const float Bullet::lifetime = 1000.0f;
+const float Bullet::lifetime = 10000000000.0f;
 const float Bullet::speed = 0.9f;
 bool Bullet::init_done;
 sf::Texture Bullet::tBullet;
@@ -19,7 +19,7 @@ Bullet::Bullet(sf::Vector2f position, float angle) :
 
 	sBullet.setTexture(tBullet);
 	sBullet.setTextureRect(sf::IntRect(0, 0, 14, 44));
-	sBullet.setOrigin(0, 0);
+	sBullet.setOrigin(7, 22);
 }
 
 Bullet::~Bullet()

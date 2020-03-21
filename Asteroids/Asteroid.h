@@ -7,7 +7,6 @@
 class Asteroid : public sf::Drawable, public sf::Transformable
 {
 	static const float speed[3];
-	static const float radius;
 	static bool init_done;
 	static sf::Texture tAsteroid;
 
@@ -31,6 +30,7 @@ private:
 	sf::Sprite sAsteroid;
 	int ran;
 	int tick;
+	float radius;
 };
 
 #endif

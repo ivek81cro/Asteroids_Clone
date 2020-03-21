@@ -1,11 +1,10 @@
 #include "Asteroid.h"
 
 const float Asteroid::speed[3] = { 0.03f, 0.05f, 0.07f };
-const float Asteroid::radius = 32.0f;
 bool Asteroid::init_done;
 sf::Texture Asteroid::tAsteroid;
 
-Asteroid::Asteroid(int level) :is_alive(true), level(level), ran(0), tick(0)
+Asteroid::Asteroid(int level) :is_alive(true), level(level), ran(0), tick(0), radius(ASTEROID_RADIUS)
 {
 	int angle = rand() % 360;
 	direction = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
@@ -17,6 +16,7 @@ Asteroid::Asteroid(int level) :is_alive(true), level(level), ran(0), tick(0)
 	setRotation(rand() % 360);
 	sAsteroid.setTexture(tAsteroid);
 	sAsteroid.setTextureRect(sf::IntRect(0 + ran, 6, 64, 64));
+	sAsteroid.setColor(sf::Color(255, 255, 0));
 	sAsteroid.setOrigin(32, 32);
 }
 
@@ -25,13 +25,16 @@ Asteroid::~Asteroid()
 
 }
 
-Asteroid::Asteroid(sf::Vector2f position, float angle, int level) :is_alive(true), level(level), ran(64), tick(0)
+Asteroid::Asteroid(sf::Vector2f position, float angle, int level) 
+	:is_alive(true), level(level+1), ran(64), tick(0), radius(ASTEROID_RADIUS)
 {
 	direction = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
 	setPosition(position);
 	sAsteroid.setTexture(tAsteroid);
 	sAsteroid.setTextureRect(sf::IntRect(0 + ran, 6, 64, 64));
 	sAsteroid.setOrigin(32, 32);
+	sAsteroid.setScale(0.75f, 0.75f);
+	radius *= ASTEROID_RESCALE_RADIUS_FACTOR;
 }
 
 bool Asteroid::Init(const std::string& ImageFile)
@@ -61,7 +64,7 @@ bool Asteroid::checkPoint(sf::Vector2f point) {
 	float sqrDistance = ((ax - px) * (ax - px)) + ((ay - py) * (ay - py));
 	float sqrRadius = radius * radius;
 
-	return (sqrDistance <= sqrRadius);
+ 	return (sqrDistance <= sqrRadius);
 }
 
 void Asteroid::breakDown()
@@ -74,6 +77,7 @@ void Asteroid::breakDown()
 	}
 
 	setScale(0.75f, 0.75f);
+	radius *= 0.75f;
 	int angle = rand() % 360;
 	direction = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
 }

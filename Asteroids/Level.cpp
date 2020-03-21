@@ -20,7 +20,7 @@ void Level::onEvent(const sf::Event& event)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
 		Bullet bullet(ship.getPosition(), ship.getRotation() - 90);
-		bullets.push_back(bullet);
+		bullets.push_back(Bullet (ship.getPosition(), ship.getRotation() - 90));
 	}
 }
 
@@ -65,6 +65,7 @@ void Level::update(float frametime, const sf::Event& event)
 				continue;
 			}
 			//work on collision
+			bool state = start_asteroids->checkPoint(start_bullets->getPosition());
 			if (start_asteroids->checkPoint(start_bullets->getPosition())) {
 				start_bullets->kill();
 				start_asteroids->breakDown();
@@ -73,7 +74,6 @@ void Level::update(float frametime, const sf::Event& event)
 					sf::Vector2f position = start_asteroids->getPosition();
 					float angle = rand() % 360;
 					Asteroid a(position, angle, start_asteroids->getLevel());
-					a.setScale(0.75f, 0.75f);
 					new_asteroids.push_back(a);
 				}
 				break;

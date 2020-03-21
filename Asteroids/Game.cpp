@@ -12,7 +12,6 @@ Game::~Game()
 int Game::run()
 {
 	createWindow();
-	window.setKeyRepeatEnabled(false);
 
 	sf::Clock clock;
 	Level level;
@@ -47,6 +46,6 @@ void Game::createWindow()
 		window.close();
 
 	window.create(sf::VideoMode(W_WIDTH, W_HEIGHT), W_TITLE, sf::Style::Close);
-	window.setKeyRepeatEnabled(true);
+	window.setKeyRepeatEnabled(false);
 	window.setFramerateLimit(W_FPSLIMIT);
 }
