@@ -33,9 +33,13 @@ Asteroid::Asteroid(sf::Vector2f position, float angle, int level)
 	setPosition(position);
 	sAsteroid.setTexture(tAsteroid);
 	sAsteroid.setTextureRect(sf::IntRect(0 + ran, 6, 64, 64));
-	sAsteroid.setOrigin(32, 32);
-	sAsteroid.setScale(0.75f, 0.75f);
-	radius *= ASTEROID_RESCALE_RADIUS_FACTOR;
+	sAsteroid.setOrigin(32, 32);	
+	setScale(level == 2 ? 
+		getScale() * ASTEROID_RESCALE_RADIUS_FACTOR * ASTEROID_RESCALE_RADIUS_FACTOR : 
+		getScale() * ASTEROID_RESCALE_RADIUS_FACTOR);
+	level == 2 ?
+		radius *= ASTEROID_RESCALE_RADIUS_FACTOR * ASTEROID_RESCALE_RADIUS_FACTOR : 
+		radius *= ASTEROID_RESCALE_RADIUS_FACTOR;
 }
 
 bool Asteroid::Init(const std::string& ImageFile)
@@ -77,7 +81,7 @@ void Asteroid::breakDown()
 		return;
 	}
 
-	setScale(0.75f, 0.75f);
+	setScale(getScale() * ASTEROID_RESCALE_RADIUS_FACTOR);
 	radius *= 0.75f;
 	int angle = rand() % 360;
 	direction = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
