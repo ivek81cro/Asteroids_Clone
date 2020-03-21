@@ -36,7 +36,7 @@ void Level::update(float frametime, const sf::Event& event)
 			//temp fix for double bullet creation
 			if(start_bullets+1 != bullets.end())
 				if (start_bullets->getPosition() == (start_bullets + 1)->getPosition())
-					bullets.erase(start_bullets);
+					start_bullets->kill();
 			//end
 			start_bullets->update(frametime);
 			++start_bullets;
