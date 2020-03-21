@@ -16,6 +16,7 @@ Asteroid::Asteroid(int level) :is_alive(true), level(level), ran(0), tick(0), ra
 	setRotation(rand() % 360);
 	sAsteroid.setTexture(tAsteroid);
 	sAsteroid.setTextureRect(sf::IntRect(0 + ran, 6, 64, 64));
+	//color added for testing
 	sAsteroid.setColor(sf::Color(255, 255, 0));
 	sAsteroid.setOrigin(32, 32);
 }
