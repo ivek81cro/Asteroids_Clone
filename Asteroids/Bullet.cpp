@@ -45,6 +45,12 @@ void Bullet::update(float frametime)
 	move(distance);
 }
 
+bool Bullet::Init(const std::string& ImageFile)
+{
+	init_done = true;
+	return tBullet.loadFromFile(ImageFile);
+}
+
 void Bullet::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	states.transform *= getTransform();

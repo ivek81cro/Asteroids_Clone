@@ -23,6 +23,7 @@ public:
 	void update(float frametime);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	static bool Init(const std::string& ImageFile);
+
 private:
 	int level;
 	bool is_alive;

@@ -12,6 +12,7 @@ Game::~Game()
 int Game::run()
 {
 	createWindow();
+	window.setKeyRepeatEnabled(false);
 
 	sf::Clock clock;
 	Level level;

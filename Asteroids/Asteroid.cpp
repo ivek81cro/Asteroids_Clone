@@ -73,7 +73,7 @@ void Asteroid::breakDown()
 		return;
 	}
 
-	sAsteroid.setOrigin(0, 0);
+	setScale(0.75f, 0.75f);
 	int angle = rand() % 360;
 	direction = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
 }

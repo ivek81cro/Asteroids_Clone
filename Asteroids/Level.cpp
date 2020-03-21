@@ -1,5 +1,4 @@
 #include "Level.h"
-#include "Collision.h"
 
 Level::Level()
 {
@@ -66,9 +65,7 @@ void Level::update(float frametime, const sf::Event& event)
 				continue;
 			}
 			//work on collision
-			sf::Vector2f bulletPosition = start_bullets->getPosition();
-			bool state = start_asteroids->checkPoint(bulletPosition);
-			if (state) {
+			if (start_asteroids->checkPoint(start_bullets->getPosition())) {
 				start_bullets->kill();
 				start_asteroids->breakDown();
 
@@ -76,6 +73,7 @@ void Level::update(float frametime, const sf::Event& event)
 					sf::Vector2f position = start_asteroids->getPosition();
 					float angle = rand() % 360;
 					Asteroid a(position, angle, start_asteroids->getLevel());
+					a.setScale(0.75f, 0.75f);
 					new_asteroids.push_back(a);
 				}
 				break;
