@@ -6,7 +6,7 @@
 #define DEGTORAD 0.017453f
 #define W_TITLE "Asteroids Clone"
 #define W_FPSLIMIT 60
-#define ASTEROID_RADIUS 20.0f
+#define ASTEROID_RADIUS 25.0f
 #define ASTEROID_RESCALE_RADIUS_FACTOR 0.75f
 
 #endif 
