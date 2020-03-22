@@ -1,7 +1,7 @@
 #include "Ship.h"
 
 const float Ship::acceleration = 5.0f;
-const float Ship::max_speed = 15.0f;
+const float Ship::max_speed = 10.0f;
 const float Ship::rotation_speed = 0.15f;
 
 Ship::Ship()
@@ -52,8 +52,17 @@ void Ship::update(float frametime, const sf::Event& event)
 			speed.x = speed.x > 0 ? max_speed : -max_speed;
 		if ((speed.y * speed.y) > (max_speed * max_speed))
 			speed.y = speed.y > 0 ? max_speed : -max_speed;
+
+		if (y_move == 1)
+			sShip.setTextureRect(sf::IntRect(40, 40, 40, 40));
+		if (y_move == -1)
+			sShip.setTextureRect(sf::IntRect(40, 0, 40, 40));
 	}
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)||
+
+	if(x_move == 0 && y_move==0)
+		sShip.setTextureRect(sf::IntRect(40, 85, 40, 40));
+	//drag
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) ||
 		!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
 	{
 		speed.x *= 0.997f;
@@ -84,9 +93,10 @@ void Ship::onEvent(const sf::Event& event)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		y_move += 1;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		x_move = 1;
+		x_move = 1;		
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		y_move += -1;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		x_move = -1;
+		
 }

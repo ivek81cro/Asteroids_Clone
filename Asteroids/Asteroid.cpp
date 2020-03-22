@@ -1,6 +1,6 @@
 #include "Asteroid.h"
 
-const float Asteroid::speed[3] = { 0.03f, 0.05f, 0.07f };
+const float Asteroid::speed[3] = { 0.03f, 0.06f, 0.09f };
 bool Asteroid::init_done;
 sf::Texture Asteroid::tAsteroid;
 
