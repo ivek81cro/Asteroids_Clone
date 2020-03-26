@@ -21,8 +21,10 @@ public:
 	void onEvent(const sf::Event& event);
 	float getRadius() { return radius; }
 	void shipExplode();
-	void kill() { is_alive = false; }
+	void kill();
 	bool isAlive() { return is_alive; }
+	void moveShip(float frametime, const sf::Event& event);
+	sf::Vector2f checkPosition();
 
 private:
 	sf::Vector2f speed;
