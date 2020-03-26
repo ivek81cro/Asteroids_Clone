@@ -12,6 +12,7 @@
 #define ASTEROID_RESCALE_RADIUS_FACTOR 0.75f
 #define SHIP_TEXTURE "images/spaceship.png"
 #define ASTEROID_TEXTURE "images/rock.png"
+#define SHIP_EXPLOSION_TEXTURE "images/explosions/type_A.png"
 
 #endif 
 

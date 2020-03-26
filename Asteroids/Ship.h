@@ -20,7 +20,9 @@ public:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void onEvent(const sf::Event& event);
 	float getRadius() { return radius; }
-
+	void shipExplode();
+	void kill() { is_alive = false; }
+	bool isAlive() { return is_alive; }
 
 private:
 	sf::Vector2f speed;
@@ -29,6 +31,9 @@ private:
 	int x_move;
 	int y_move;
 	float radius;
+	int tick = 0;
+	int ran = 0;
+	bool is_alive = true;
 };
 
 #endif

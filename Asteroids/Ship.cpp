@@ -6,10 +6,6 @@ const float Ship::rotation_speed = 0.15f;
 
 Ship::Ship()
 {
-	tShip.loadFromFile(SHIP_TEXTURE);
-	sShip.setTexture(tShip);
-	sShip.setTextureRect(sf::IntRect(40, 0, 40, 40));
-	sShip.setOrigin(20, 20);
 	radius = SHIP_RADIUS;
 
 	x_move = 0;
@@ -22,10 +18,16 @@ Ship::~Ship() {}
 
 void Ship::reset()
 {
+	tShip.loadFromFile(SHIP_TEXTURE);
+	sShip.setTexture(tShip);
+	sShip.setTextureRect(sf::IntRect(40, 0, 40, 40));
+	sShip.setOrigin(20, 20);
 	setPosition(W_WIDTH / 2, W_HEIGHT / 2);
 	setRotation(0.0f);
 	speed.x = 0;
 	speed.y = 0;
+	is_alive = true;
+	ran = 0;
 }
 
 void Ship::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -36,40 +38,47 @@ void Ship::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Ship::update(float frametime, const sf::Event& event)
 {
-	if (x_move != 0) 
+	if (!is_alive) 
 	{
-		rotate(x_move * rotation_speed * frametime);
+		shipExplode();
 	}
-
-	if (y_move != 0)
+	else
 	{
-		float rotation = getRotation() - 90;
-		float x_speed = cos(rotation * DEGTORAD);
-		float y_speed = sin(rotation * DEGTORAD);
+		if (x_move != 0)
+		{
+			rotate(x_move * rotation_speed * frametime);
+		}
 
-		speed.x += y_move * acceleration * frametime * x_speed / 1000;
-		speed.y += y_move * acceleration * frametime * y_speed / 1000;
-		if ((speed.x * speed.x) > (max_speed * max_speed))
-			speed.x = speed.x > 0 ? max_speed : -max_speed;
-		if ((speed.y * speed.y) > (max_speed * max_speed))
-			speed.y = speed.y > 0 ? max_speed : -max_speed;
+		if (y_move != 0)
+		{
+			float rotation = getRotation() - 90;
+			float x_speed = cos(rotation * DEGTORAD);
+			float y_speed = sin(rotation * DEGTORAD);
 
-		if (y_move == 1)
-			sShip.setTextureRect(sf::IntRect(40, 40, 40, 40));
-		if (y_move == -1)
-			sShip.setTextureRect(sf::IntRect(40, 0, 40, 40));
+			speed.x += y_move * acceleration * frametime * x_speed / 1000;
+			speed.y += y_move * acceleration * frametime * y_speed / 1000;
+			if ((speed.x * speed.x) > (max_speed * max_speed))
+				speed.x = speed.x > 0 ? max_speed : -max_speed;
+			if ((speed.y * speed.y) > (max_speed * max_speed))
+				speed.y = speed.y > 0 ? max_speed : -max_speed;
+
+			if (y_move == 1)
+				sShip.setTextureRect(sf::IntRect(40, 40, 40, 40));
+			if (y_move == -1)
+				sShip.setTextureRect(sf::IntRect(40, 0, 40, 40));
+
+			if (x_move == 0 && y_move == 0)
+				sShip.setTextureRect(sf::IntRect(40, 85, 40, 40));
+			//drag
+			if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) ||
+				!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
+			{
+				speed.x *= 0.997f;
+				speed.y *= 0.997f;
+			}
+		}
+		move(speed);
 	}
-
-	if(x_move == 0 && y_move==0)
-		sShip.setTextureRect(sf::IntRect(40, 85, 40, 40));
-	//drag
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) ||
-		!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
-	{
-		speed.x *= 0.997f;
-		speed.y *= 0.997f;
-	}
-	move(speed);
 
 	sf::Vector2f position = getPosition();
 
@@ -81,7 +90,7 @@ void Ship::update(float frametime, const sf::Event& event)
 	if (position.y > W_HEIGHT)
 		position.y = 0;
 	if (position.y < 0)
-		position.y=W_HEIGHT;
+		position.y = W_HEIGHT;
 
 	setPosition(position);
 }
@@ -100,4 +109,24 @@ void Ship::onEvent(const sf::Event& event)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		x_move = -1;
 		
+}
+
+void Ship::shipExplode()
+{
+	if (ran >= 950)
+		reset();
+	else {
+
+		tShip.loadFromFile(SHIP_EXPLOSION_TEXTURE);
+		sShip.setTexture(tShip);
+		sShip.setTextureRect(sf::IntRect(0 + ran, 0, 50, 50));
+		sShip.setOrigin(20, 20);
+
+		if (tick % 4 == 0)
+			ran += 50;
+		++tick;
+	}
+
+	x_move = 0;
+	y_move = 0;
 }

@@ -86,7 +86,7 @@ void Level::update(float frametime, const sf::Event& event)
 		}
 		if (start_asteroids->checkPoint(ship.getPosition(), ship.getRadius()))
 		{
-			start_asteroids->breakDown();
+			ship.kill();
 		}
 
 		++start_asteroids;
