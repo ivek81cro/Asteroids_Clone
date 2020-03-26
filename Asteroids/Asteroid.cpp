@@ -10,7 +10,7 @@ Asteroid::Asteroid(int level) :is_alive(true), level(level), ran(0), tick(0), ra
 	direction = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
 
 	if (!init_done)
-		Init("images/rock.png");
+		Init(ASTEROID_TEXTURE);
 
 	setPosition(rand() % W_WIDTH, rand() % W_HEIGHT);
 	setRotation(rand() % 360);
@@ -33,7 +33,7 @@ Asteroid::Asteroid(sf::Vector2f position, float angle, int level)
 	setPosition(position);
 	sAsteroid.setTexture(tAsteroid);
 	sAsteroid.setTextureRect(sf::IntRect(0 + ran, 6, 64, 64));
-	sAsteroid.setOrigin(32, 32);	
+	sAsteroid.setOrigin(32, 32);
 	setScale(level == 2 ? 
 		getScale() * ASTEROID_RESCALE_RADIUS_FACTOR * ASTEROID_RESCALE_RADIUS_FACTOR : 
 		getScale() * ASTEROID_RESCALE_RADIUS_FACTOR);
@@ -58,7 +58,7 @@ int Asteroid::getLevel()
 	return level; 
 }
 
-bool Asteroid::checkPoint(sf::Vector2f point) {
+bool Asteroid::checkPoint(sf::Vector2f point, float radiusOther) {
 
 	float ax = getPosition().x;
 	float ay = getPosition().y;
@@ -66,8 +66,8 @@ bool Asteroid::checkPoint(sf::Vector2f point) {
 	float px = point.x;
 	float py = point.y;
 
-	float sqrDistance = ((ax - px) * (ax - px)) + ((ay - py) * (ay - py));
-	float sqrRadius = radius * radius;
+	float sqrDistance = sqrt(((ax - px) * (ax - px)) + ((ay - py) * (ay - py)));
+	float sqrRadius = radius + radiusOther;
 
  	return (sqrDistance <= sqrRadius);
 }

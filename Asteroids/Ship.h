@@ -15,11 +15,11 @@ class Ship : public sf::Drawable, public sf::Transformable
 public:
 	Ship();
 	~Ship();
-
 	void reset();
 	void update(float frametime, const sf::Event& event);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void onEvent(const sf::Event& event);
+	float getRadius() { return radius; }
 
 
 private:
@@ -28,6 +28,7 @@ private:
 	sf::Sprite sShip;
 	int x_move;
 	int y_move;
+	float radius;
 };
 
 #endif

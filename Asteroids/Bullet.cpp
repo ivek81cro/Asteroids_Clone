@@ -8,7 +8,7 @@ sf::Texture Bullet::tBullet;
 
 Bullet::Bullet(sf::Vector2f position, float angle) :
 	is_alive(true), remaning_life(lifetime),
-	direction(cos(angle* DEGTORAD), sin(angle* DEGTORAD))
+	direction(cos(angle* DEGTORAD), sin(angle* DEGTORAD)), radius(BULLET_RADIUS)
 {
 	if (!init_done)
 		Init("images/bullet.png");

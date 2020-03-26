@@ -21,12 +21,14 @@ public:
 	void update(float frametime);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	static bool Init(const std::string& ImageFile);
+	float getRadius() { return radius; }
 
 private:
 	bool is_alive;
 	float remaning_life;
 	sf::Vector2f direction;
 	sf::Sprite sBullet;
+	float radius;
 };
 
 #endif

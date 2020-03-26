@@ -7,7 +7,11 @@
 #define W_TITLE "Asteroids Clone"
 #define W_FPSLIMIT 60
 #define ASTEROID_RADIUS 25.0f
+#define BULLET_RADIUS 7.0f
+#define SHIP_RADIUS 15.0f
 #define ASTEROID_RESCALE_RADIUS_FACTOR 0.75f
+#define SHIP_TEXTURE "images/spaceship.png"
+#define ASTEROID_TEXTURE "images/rock.png"
 
 #endif 
 

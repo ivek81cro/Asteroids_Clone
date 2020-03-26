@@ -6,10 +6,11 @@ const float Ship::rotation_speed = 0.15f;
 
 Ship::Ship()
 {
-	tShip.loadFromFile("images/spaceship.png");
+	tShip.loadFromFile(SHIP_TEXTURE);
 	sShip.setTexture(tShip);
 	sShip.setTextureRect(sf::IntRect(40, 0, 40, 40));
 	sShip.setOrigin(20, 20);
+	radius = SHIP_RADIUS;
 
 	x_move = 0;
 	y_move = 0;

@@ -69,9 +69,8 @@ void Level::update(float frametime, const sf::Event& event)
 				++start_bullets;
 				continue;
 			}
-			//work on collision
-			bool state = start_asteroids->checkPoint(start_bullets->getPosition());
-			if (start_asteroids->checkPoint(start_bullets->getPosition())) {
+			//work on bullet->asteroid collision
+			if (start_asteroids->checkPoint(start_bullets->getPosition(), start_bullets->getRadius())) {
 				start_bullets->kill();
 				start_asteroids->breakDown();
 
@@ -85,6 +84,11 @@ void Level::update(float frametime, const sf::Event& event)
 			}
 			++start_bullets;
 		}
+		if (start_asteroids->checkPoint(ship.getPosition(), ship.getRadius()))
+		{
+			start_asteroids->breakDown();
+		}
+
 		++start_asteroids;
 	}
 	asteroids.insert(asteroids.end(), new_asteroids.begin(), new_asteroids.end());
