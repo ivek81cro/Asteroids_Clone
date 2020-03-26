@@ -66,7 +66,7 @@ bool Asteroid::checkPoint(sf::Vector2f point, float radiusOther) {
 	float px = point.x;
 	float py = point.y;
 
-	float sqrDistance = sqrt(((ax - px) * (ax - px)) + ((ay - py) * (ay - py)));
+	float sqrDistance = sqrt((ax - px) * (ax - px) + (ay - py) * (ay - py));
 	float sqrRadius = radius + radiusOther;
 
  	return (sqrDistance <= sqrRadius);
