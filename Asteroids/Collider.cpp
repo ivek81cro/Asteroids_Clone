@@ -1,6 +1,6 @@
 #include "Collider.h"
 
-bool Collider::isCollide(Entity obj1, Entity obj2) {
+bool Collider::isCollide(Entity& obj1,Entity& obj2) {
 
 	float ax = obj1.getPosition().x;
 	float ay = obj1.getPosition().y;
