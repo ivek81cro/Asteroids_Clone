@@ -21,6 +21,7 @@ Bullet::Bullet(sf::Vector2f position, float angle) : remaning_life(lifetime),
 	sprite.setOrigin(7, 22);
 	radius = BULLET_RADIUS;
 	is_alive = true;
+	id = ID_BULLET;
 }
 
 Bullet::~Bullet()

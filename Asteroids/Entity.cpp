@@ -10,6 +10,11 @@ float Entity::getRadius()
 	return radius;
 }
 
+int Entity::getId()
+{
+	return id;
+}
+
 void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const 
 {
 	states.transform *= getTransform();

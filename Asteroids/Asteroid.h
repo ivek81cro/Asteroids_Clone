@@ -24,8 +24,6 @@ public:
 private:
 	int level;
 	sf::Vector2f direction;
-	int ran;
-	int tick;
 };
 
 #endif

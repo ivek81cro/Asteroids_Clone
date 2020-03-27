@@ -69,7 +69,7 @@ void Level::update(float frametime, const sf::Event& event)
 				++start_bullets;
 				continue;
 			}
-			//work on bullet->asteroid collision
+			
 			if (cld.isCollide(*start_asteroids,*start_bullets)) {
 				start_bullets->kill();
 				start_asteroids->breakDown();

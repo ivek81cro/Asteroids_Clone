@@ -4,7 +4,7 @@ const float Asteroid::speed[3] = { 0.03f, 0.06f, 0.09f };
 bool Asteroid::init_done;
 sf::Texture Asteroid::tAsteroid;
 
-Asteroid::Asteroid(int level) :level(level), ran(0), tick(0)
+Asteroid::Asteroid(int level) :level(level)
 {
 	int angle = rand() % 360;
 	direction = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
@@ -21,6 +21,7 @@ Asteroid::Asteroid(int level) :level(level), ran(0), tick(0)
 	sprite.setOrigin(32, 32);
 	is_alive = true;
 	radius = ASTEROID_RADIUS;
+	id = ID_ASTEROID;
 }
 
 Asteroid::~Asteroid()
@@ -29,7 +30,7 @@ Asteroid::~Asteroid()
 }
 
 Asteroid::Asteroid(sf::Vector2f position, float angle, int level):
-	level(level), ran(64), tick(0)
+	level(level)
 {
 	direction = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
 	setPosition(position);
@@ -38,6 +39,8 @@ Asteroid::Asteroid(sf::Vector2f position, float angle, int level):
 	sprite.setOrigin(32, 32);
 	radius = ASTEROID_RADIUS;
 	is_alive = true;
+	id = ID_ASTEROID;
+	ran = 64;
 	setScale(level == 2 ? 
 		getScale() * ASTEROID_RESCALE_RADIUS_FACTOR * ASTEROID_RESCALE_RADIUS_FACTOR : 
 		getScale() * ASTEROID_RESCALE_RADIUS_FACTOR);

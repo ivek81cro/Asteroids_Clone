@@ -13,6 +13,9 @@
 #define SHIP_TEXTURE "images/spaceship.png"
 #define ASTEROID_TEXTURE "images/rock.png"
 #define SHIP_EXPLOSION_TEXTURE "images/explosions/type_A.png"
+#define ID_SHIP 1001
+#define ID_ASTEROID 1002
+#define ID_BULLET 1003
 
 #endif 
 

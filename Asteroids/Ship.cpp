@@ -7,6 +7,7 @@ const float Ship::rotation_speed = 0.15f;
 Ship::Ship()
 {
 	radius = SHIP_RADIUS;
+	id = ID_SHIP;
 
 	x_move = 0;
 	y_move = 0;
@@ -28,6 +29,7 @@ void Ship::reset()
 	speed.y = 0;
 	is_alive = true;
 	ran = 0;
+	tick = 0;
 }
 
 void Ship::update(float frametime, const sf::Event& event)

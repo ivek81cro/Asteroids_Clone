@@ -29,8 +29,6 @@ private:
 	sf::Texture tShip;
 	int x_move;
 	int y_move;
-	int tick = 0;
-	int ran = 0;
 };
 
 #endif

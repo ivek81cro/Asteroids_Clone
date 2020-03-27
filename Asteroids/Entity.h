@@ -12,11 +12,15 @@ public:
 	bool isAlive();
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	float getRadius();
+	int getId();
 
 protected:
 	bool is_alive;
 	sf::Sprite sprite;
 	float radius;
+	int id;
+	int ran = 0;
+	int tick = 0;
 };
 
 #endif
