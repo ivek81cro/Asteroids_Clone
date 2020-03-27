@@ -1,4 +1,5 @@
 #include "Ship.h"
+#include <iostream>
 
 const float Ship::acceleration = 5.0f;
 const float Ship::max_speed = 10.0f;
@@ -6,7 +7,6 @@ const float Ship::rotation_speed = 0.15f;
 
 Ship::Ship()
 {
-	radius = SHIP_RADIUS;
 	id = ID_SHIP;
 
 	x_move = 0;
@@ -30,6 +30,7 @@ void Ship::reset()
 	is_alive = true;
 	ran = 0;
 	tick = 0;
+	radius = 0;
 }
 
 void Ship::update(float frametime, const sf::Event& event)
@@ -44,6 +45,11 @@ void Ship::update(float frametime, const sf::Event& event)
 		move(speed);
 	}
 
+	if (is_alive && radius == 0)
+	{
+		shieldsUp();
+	}
+	std::cout << tick << std::endl;
 	setPosition(checkPosition());
 }
 
@@ -124,7 +130,9 @@ void Ship::kill()
 void Ship::shipExplode()
 {
 	if (ran >= 950)
+	{
 		reset();
+	}
 	else 
 	{
 		tShip.loadFromFile(SHIP_EXPLOSION_TEXTURE);
@@ -135,5 +143,15 @@ void Ship::shipExplode()
 		if (tick % 4 == 0)
 			ran += 50;
 		++tick;
+	}
+}
+
+void Ship::shieldsUp()
+{
+	tick++;
+	if (tick > 200)
+	{
+		radius = SHIP_RADIUS;
+		tick = 0;
 	}
 }

@@ -23,6 +23,7 @@ public:
 	void kill();
 	void moveShip(float frametime, const sf::Event& event);
 	sf::Vector2f checkPosition();
+	void shieldsUp();
 
 private:
 	sf::Vector2f speed;

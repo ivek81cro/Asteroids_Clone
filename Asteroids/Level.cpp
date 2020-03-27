@@ -86,7 +86,8 @@ void Level::update(float frametime, const sf::Event& event)
 		}
 		if (cld.isCollide(*start_asteroids, ship))
 		{
-			ship.kill();
+			if (ship.getRadius() != 0)
+				ship.kill();
 		}
 
 		++start_asteroids;
