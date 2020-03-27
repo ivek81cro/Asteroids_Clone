@@ -3,8 +3,9 @@
 
 #include <SFML/Graphics.hpp>
 #include "Constants.h"
+#include "Entity.h"
 
-class Asteroid : public sf::Drawable, public sf::Transformable
+class Asteroid : public Entity
 {
 	static const float speed[3];
 	static bool init_done;
@@ -15,22 +16,16 @@ public:
 	Asteroid(sf::Vector2f position, float angle, int level);
 	~Asteroid();
 
-	bool isAlive();
 	int getLevel();
-	bool checkPoint(sf::Vector2f point, float radiusOther);
 	void breakDown();
 	void update(float frametime);
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	static bool Init(const std::string& ImageFile);
 
 private:
 	int level;
-	bool is_alive;
 	sf::Vector2f direction;
-	sf::Sprite sAsteroid;
 	int ran;
 	int tick;
-	float radius;
 };
 
 #endif

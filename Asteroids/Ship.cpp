@@ -19,21 +19,15 @@ Ship::~Ship() {}
 void Ship::reset()
 {
 	tShip.loadFromFile(SHIP_TEXTURE);
-	sShip.setTexture(tShip);
-	sShip.setTextureRect(sf::IntRect(40, 0, 40, 40));
-	sShip.setOrigin(20, 20);
+	sprite.setTexture(tShip);
+	sprite.setTextureRect(sf::IntRect(40, 0, 40, 40));
+	sprite.setOrigin(20, 20);
 	setPosition(W_WIDTH / 2, W_HEIGHT / 2);
 	setRotation(0.0f);
 	speed.x = 0;
 	speed.y = 0;
 	is_alive = true;
 	ran = 0;
-}
-
-void Ship::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
-	states.transform *= getTransform();
-	target.draw(sShip, states);
 }
 
 void Ship::update(float frametime, const sf::Event& event)
@@ -88,9 +82,9 @@ void Ship::moveShip(float frametime, const sf::Event& event)
 			speed.y = speed.y > 0 ? max_speed : -max_speed;
 
 		if (y_move == 1)
-			sShip.setTextureRect(sf::IntRect(40, 40, 40, 40));
+			sprite.setTextureRect(sf::IntRect(40, 40, 40, 40));
 		if (y_move == -1)
-			sShip.setTextureRect(sf::IntRect(40, 0, 40, 40));
+			sprite.setTextureRect(sf::IntRect(40, 0, 40, 40));
 		//drag
 		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) ||
 			!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
@@ -100,7 +94,7 @@ void Ship::moveShip(float frametime, const sf::Event& event)
 		}
 	}
 	if (x_move == 0 && y_move == 0)
-		sShip.setTextureRect(sf::IntRect(40, 85, 40, 40));
+		sprite.setTextureRect(sf::IntRect(40, 85, 40, 40));
 }
 
 sf::Vector2f Ship::checkPosition()
@@ -132,9 +126,9 @@ void Ship::shipExplode()
 	else 
 	{
 		tShip.loadFromFile(SHIP_EXPLOSION_TEXTURE);
-		sShip.setTexture(tShip);
-		sShip.setTextureRect(sf::IntRect(0 + ran, 0, 50, 50));
-		sShip.setOrigin(20, 20);
+		sprite.setTexture(tShip);
+		sprite.setTextureRect(sf::IntRect(0 + ran, 0, 50, 50));
+		sprite.setOrigin(20, 20);
 
 		if (tick % 4 == 0)
 			ran += 50;

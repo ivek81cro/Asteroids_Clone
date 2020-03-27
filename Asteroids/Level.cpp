@@ -61,7 +61,7 @@ void Level::update(float frametime, const sf::Event& event)
 
 	std::vector<Asteroid> new_asteroids;
 	start_asteroids = asteroids.begin();
-
+	Collider cld;
 	while (start_asteroids != asteroids.end()) {
 		start_bullets = bullets.begin();
 		while (start_bullets != bullets.end()) {
@@ -70,7 +70,7 @@ void Level::update(float frametime, const sf::Event& event)
 				continue;
 			}
 			//work on bullet->asteroid collision
-			if (start_asteroids->checkPoint(start_bullets->getPosition(), start_bullets->getRadius())) {
+			if (cld.isCollide(*start_asteroids,*start_bullets)) {
 				start_bullets->kill();
 				start_asteroids->breakDown();
 
@@ -84,7 +84,7 @@ void Level::update(float frametime, const sf::Event& event)
 			}
 			++start_bullets;
 		}
-		if (start_asteroids->checkPoint(ship.getPosition(), ship.getRadius()))
+		if (cld.isCollide(*start_asteroids, ship))
 		{
 			ship.kill();
 		}

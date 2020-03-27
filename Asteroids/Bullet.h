@@ -2,9 +2,10 @@
 #define _BULLET_H_
 
 #include <SFML/Graphics.hpp>
+#include "Entity.h"
 
 
-class Bullet : public sf::Drawable, public sf::Transformable
+class Bullet : public Entity
 {
 	static bool init_done;
 	static const float lifetime;
@@ -16,19 +17,13 @@ public:
 	Bullet(sf::Vector2f position, float angle);
 	~Bullet();
 
-	bool isAlive();
 	void kill();
 	void update(float frametime);
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	static bool Init(const std::string& ImageFile);
-	float getRadius() { return radius; }
 
 private:
-	bool is_alive;
 	float remaning_life;
 	sf::Vector2f direction;
-	sf::Sprite sBullet;
-	float radius;
 };
 
 #endif
