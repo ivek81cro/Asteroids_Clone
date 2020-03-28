@@ -1,13 +1,13 @@
-#include <SFML/Graphics.hpp>
 #include "Constants.h"
 #include "Game.h"
+#include <SFML/Graphics.hpp>
 
 int main()
 {
-	srand(time(NULL));
+    srand(time(NULL));
 
-	Game game;
-	game.run();
+    Game game;
+    game.run();
 
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }

@@ -2,25 +2,34 @@
 
 bool Entity::isAlive()
 {
-	return is_alive;
+    return is_alive;
 }
 
 float Entity::getRadius()
 {
-	return radius;
+    return radius;
 }
 
 int Entity::getId()
 {
-	return id;
+    return id;
 }
 
-void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const 
+sf::Sprite& Entity::getSprite()
 {
-	states.transform *= getTransform();
-	target.draw(sprite, states);
+    return sprite;
 }
 
-void Entity::update(float frametime, const sf::Event& event) {}
+void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+    states.transform *= sprite.getTransform();
+    target.draw(sprite, states);
+}
 
-void Entity::onEvent(const sf::Event& event) {}
+void Entity::update(float frametime, const sf::Event& event)
+{
+}
+
+void Entity::onEvent(const sf::Event& event)
+{
+}

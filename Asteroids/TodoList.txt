@@ -1,0 +1,15 @@
+Major TODO: Return all const references instead of making copy, execept bool.
+			All methods that are not changing class members shall be const.
+			All classes should have atleast default constructors and destructs myClassConstructor()=default; myClassDestructor()=default;
+			
+
+
+Classes: 
+		1)Asteroid
+		2)Bullet
+		3)Collider
+		4)Constants
+		5)Entity - done
+		6)Game
+		7)Level
+		8)Ship

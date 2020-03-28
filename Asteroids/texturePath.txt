@@ -1,0 +1,3 @@
+images/explosions/type_A.png Explosion
+images/rock.png Asteroid
+images/spaceship.png Ship
