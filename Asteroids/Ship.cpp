@@ -81,8 +81,8 @@ void Ship::moveShip(sf::Time& elapsedTime, const sf::Event& event)
         float x_speed  = cos(rotation * DEGTORAD);
         float y_speed  = sin(rotation * DEGTORAD);
 
-        speed.x += y_move * acceleration * elapsedTime.asMilliseconds() * x_speed / 1000;
-        speed.y += y_move * acceleration * elapsedTime.asMilliseconds() * y_speed / 1000;
+        speed.x += y_move * acceleration * elapsedTime.asSeconds() * x_speed;
+        speed.y += y_move * acceleration * elapsedTime.asSeconds() * y_speed;
         if ((speed.x * speed.x) > (max_speed * max_speed))
             speed.x = speed.x > 0 ? max_speed : -max_speed;
         if ((speed.y * speed.y) > (max_speed * max_speed))
