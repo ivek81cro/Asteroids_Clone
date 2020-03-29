@@ -74,7 +74,7 @@ void Asteroid::breakDown()
     direction = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
 }
 
-void Asteroid::update(float& elapsedTime)
+void Asteroid::update(sf::Time& elapsedTime)
 {
     if (!is_alive)
         return;
@@ -86,7 +86,7 @@ void Asteroid::update(float& elapsedTime)
     }
     sprite.setTextureRect(sf::IntRect(0 + mMoveRect, 6, 64, 64));
 
-    float frametime = .125f / 60.0f * 1000.0f;
+    float frametime = 125.0f / 60.0f;
     if (mElapsedTime >= frametime)
     {
         mMoveRect += 64;
@@ -94,7 +94,7 @@ void Asteroid::update(float& elapsedTime)
     }
     ++mElapsedTime;
 
-    sf::Vector2f distance = direction * speed[ level ] * elapsedTime;
+    sf::Vector2f distance = direction * speed[ level ] * (float)elapsedTime.asMilliseconds();
     sprite.move(distance);
 
     sf::Vector2f position = sprite.getPosition();

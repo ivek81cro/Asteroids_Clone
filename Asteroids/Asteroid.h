@@ -18,7 +18,7 @@ class Asteroid : public Entity
 
     int         getLevel();
     void        breakDown();
-    void        update(float& elapsedTime);
+    void        update(sf::Time& elapsedTime);
     static bool Init(const std::string& ImageFile);
 
   private:

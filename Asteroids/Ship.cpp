@@ -34,7 +34,7 @@ void Ship::reset()
     radius       = 0;
 }
 
-void Ship::update(float& elapsedTime, const sf::Event& event)
+void Ship::update(sf::Time& elapsedTime, const sf::Event& event)
 {
     if (!is_alive)
     {
@@ -68,11 +68,11 @@ void Ship::onEvent(const sf::Event& event)
         x_move = -1;
 }
 
-void Ship::moveShip(float& elapsedTime, const sf::Event& event)
+void Ship::moveShip(sf::Time& elapsedTime, const sf::Event& event)
 {
     if (x_move != 0)
     {
-        sprite.rotate(x_move * rotation_speed * elapsedTime);
+        sprite.rotate(x_move * rotation_speed * elapsedTime.asMilliseconds());
     }
 
     if (y_move != 0)
@@ -81,8 +81,8 @@ void Ship::moveShip(float& elapsedTime, const sf::Event& event)
         float x_speed  = cos(rotation * DEGTORAD);
         float y_speed  = sin(rotation * DEGTORAD);
 
-        speed.x += y_move * acceleration * elapsedTime * x_speed / 1000;
-        speed.y += y_move * acceleration * elapsedTime * y_speed / 1000;
+        speed.x += y_move * acceleration * elapsedTime.asMilliseconds() * x_speed / 1000;
+        speed.y += y_move * acceleration * elapsedTime.asMilliseconds() * y_speed / 1000;
         if ((speed.x * speed.x) > (max_speed * max_speed))
             speed.x = speed.x > 0 ? max_speed : -max_speed;
         if ((speed.y * speed.y) > (max_speed * max_speed))
@@ -125,7 +125,7 @@ void Ship::kill()
     is_alive = false;
 }
 
-void Ship::shipExplode(float& elapsedTime)
+void Ship::shipExplode(sf::Time& elapsedTime)
 {
     if (mMoveRect >= 950)
     {
@@ -138,23 +138,23 @@ void Ship::shipExplode(float& elapsedTime)
         sprite.setTextureRect(sf::IntRect(0 + mMoveRect, 0, 50, 50));
         sprite.setOrigin(20, 20);
 
-        float frametime = 4.0f / 60.0f * 1000.0f;
+        float frametime = 4.0f / 60.0f;
         if (mElapsedTime >= frametime)
         {
             mMoveRect += 50;
             mElapsedTime -= frametime;
         }
-        mElapsedTime += elapsedTime;
+        mElapsedTime += elapsedTime.asSeconds();
     }
 }
 
-void Ship::shieldsUp(float& elapsedTime)
+void Ship::shieldsUp(sf::Time& elapsedTime)
 {
-    float frametime = 240.0f / 60.0f * 1000.0f;
+    float frametime = 0.24f / 60.0f;
     if (mElapsedTime >= frametime)
     {
         radius       = SHIP_RADIUS;
         mElapsedTime = 0;
     }
-    mElapsedTime += elapsedTime;
+    mElapsedTime += elapsedTime.asSeconds();
 }

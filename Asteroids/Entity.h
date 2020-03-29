@@ -6,7 +6,7 @@
 class Entity
 {
   public:
-    virtual void update(float frametime, const sf::Event& event);
+    virtual void update(sf::Time& elapsedTime, const sf::Event& event);
     virtual void onEvent(const sf::Event& event);
 
     bool        isAlive();
@@ -19,8 +19,8 @@ class Entity
     bool       is_alive;
     float      radius;
     int        id;
-    int        mMoveRect=0;
-    int        mElapsedTime=0;
+    int        mMoveRect    = 0;
+    int        mElapsedTime = 0;
     sf::Sprite sprite;
 };
 

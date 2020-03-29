@@ -16,7 +16,7 @@ class Bullet : public Entity
     ~Bullet();
 
     void        kill();
-    void        update(float frametime);
+    void        update(sf::Time& elapsedTime);
     static bool Init(const std::string& ImageFile);
 
   private:

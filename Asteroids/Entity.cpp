@@ -26,7 +26,7 @@ void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.draw(sprite, states);
 }
 
-void Entity::update(float frametime, const sf::Event& event)
+void Entity::update(sf::Time& elapsedTime, const sf::Event& event)
 {
 }
 

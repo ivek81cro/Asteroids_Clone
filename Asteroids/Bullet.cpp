@@ -29,16 +29,16 @@ Bullet::~Bullet()
 {
 }
 
-void Bullet::update(float frametime)
+void Bullet::update(sf::Time& elapsedTime)
 {
     if (!is_alive)
         return;
 
-    remaning_life -= frametime;
+    remaning_life -= elapsedTime.asMilliseconds();
     if (remaning_life <= 0)
         is_alive = false;
 
-    sf::Vector2f distance = direction * speed * frametime;
+    sf::Vector2f distance = direction * speed * (float)elapsedTime.asMilliseconds();
 
     sprite.move(distance);
 }

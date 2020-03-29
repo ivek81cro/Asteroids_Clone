@@ -37,7 +37,7 @@ int Game::run()
         window.clear();
         window.draw(sBackground);
         RestartClock();
-        level.update(GetElapsed().asMilliseconds(), event);
+        level.update(GetElapsed(), event);
         level.show(window);
         window.display();
     }

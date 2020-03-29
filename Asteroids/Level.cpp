@@ -24,7 +24,7 @@ void Level::onEvent(const sf::Event& event)
     }
 }
 
-void Level::update(float elapsedTime, const sf::Event& event)
+void Level::update(sf::Time& elapsedTime, const sf::Event& event)
 {
     ship.update(elapsedTime, event);
 
