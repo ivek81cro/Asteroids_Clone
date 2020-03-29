@@ -24,9 +24,9 @@ void Level::onEvent(const sf::Event& event)
     }
 }
 
-void Level::update(float frametime, const sf::Event& event)
+void Level::update(float elapsedTime, const sf::Event& event)
 {
-    ship.update(frametime, event);
+    ship.update(elapsedTime, event);
 
     std::vector<Bullet>::iterator start_bullets = bullets.begin();
     while (start_bullets != bullets.end())
@@ -38,7 +38,7 @@ void Level::update(float frametime, const sf::Event& event)
                 if (start_bullets->getSprite().getPosition() == (start_bullets + 1)->getSprite().getPosition())
                     start_bullets->kill();
             //end
-            start_bullets->update(frametime);
+            start_bullets->update(elapsedTime);
             ++start_bullets;
         }
         else
@@ -52,7 +52,7 @@ void Level::update(float frametime, const sf::Event& event)
     {
         if (start_asteroids->isAlive())
         {
-            start_asteroids->update(frametime);
+            start_asteroids->update(elapsedTime);
             ++start_asteroids;
         }
         else

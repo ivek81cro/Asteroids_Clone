@@ -17,13 +17,13 @@ class Ship : public Entity
     Ship();
     ~Ship();
     void         reset();
-    void         update(float frametime, const sf::Event& event);
+    void         update(float& elapsedTime, const sf::Event& event);
     void         onEvent(const sf::Event& event);
-    void         shipExplode();
+    void         shipExplode(float& elapsedTime);
     void         kill();
-    void         moveShip(float frametime, const sf::Event& event);
+    void         moveShip(float& elapsedTime, const sf::Event& event);
     sf::Vector2f checkPosition();
-    void         shieldsUp();
+    void         shieldsUp(float& elapsedTime);
 
   private:
     sf::Vector2f speed;

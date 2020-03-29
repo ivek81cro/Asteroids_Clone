@@ -17,7 +17,6 @@ int Game::run()
 {
     createWindow();
 
-    sf::Clock   clock;
     Level       level;
     sf::Texture tBackground;
     tBackground.loadFromFile("images/background.jpg");
@@ -37,7 +36,8 @@ int Game::run()
         }
         window.clear();
         window.draw(sBackground);
-        level.update(clock.restart().asMilliseconds(), event);
+        RestartClock();
+        level.update(GetElapsed().asMilliseconds(), event);
         level.show(window);
         window.display();
     }
@@ -52,4 +52,14 @@ void Game::createWindow()
     window.create(sf::VideoMode(W_WIDTH, W_HEIGHT), W_TITLE, sf::Style::Close);
     window.setKeyRepeatEnabled(false);
     window.setFramerateLimit(W_FPSLIMIT);
+}
+
+void Game::RestartClock()
+{
+    mElapsed = mClock.restart();
+}
+
+sf::Time& Game::GetElapsed()
+{
+    return mElapsed;
 }

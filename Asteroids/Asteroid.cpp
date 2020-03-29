@@ -16,7 +16,7 @@ Asteroid::Asteroid(int level)
     sprite.setPosition(rand() % W_WIDTH, rand() % W_HEIGHT);
     sprite.setRotation(rand() % 360);
     sprite.setTexture(tAsteroid);
-    sprite.setTextureRect(sf::IntRect(0 + ran, 6, 64, 64));
+    sprite.setTextureRect(sf::IntRect(0 + mMoveRect, 6, 64, 64));
     //color added for testing
     sprite.setColor(sf::Color(255, 255, 0));
     sprite.setOrigin(32, 32);
@@ -35,12 +35,12 @@ Asteroid::Asteroid(sf::Vector2f position, float angle, int level)
     direction = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
     sprite.setPosition(position);
     sprite.setTexture(tAsteroid);
-    sprite.setTextureRect(sf::IntRect(0 + ran, 6, 64, 64));
+    sprite.setTextureRect(sf::IntRect(0 + mMoveRect, 6, 64, 64));
     sprite.setOrigin(32, 32);
     radius   = ASTEROID_RADIUS;
     is_alive = true;
     id       = ID_ASTEROID;
-    ran      = 64;
+    mMoveRect      = 64;
     sprite.setScale(level == 2 ? sprite.getScale() * ASTEROID_RESCALE_RADIUS_FACTOR * ASTEROID_RESCALE_RADIUS_FACTOR
                                : sprite.getScale() * ASTEROID_RESCALE_RADIUS_FACTOR);
     level == 2 ? radius *= ASTEROID_RESCALE_RADIUS_FACTOR* ASTEROID_RESCALE_RADIUS_FACTOR
@@ -74,23 +74,27 @@ void Asteroid::breakDown()
     direction = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
 }
 
-void Asteroid::update(float frametime)
+void Asteroid::update(float& elapsedTime)
 {
     if (!is_alive)
         return;
 
-    if (ran >= 1024)
+    if (mMoveRect >= 1024)
     {
-        ran  = 0;
-        tick = 0;
+        mMoveRect  = 0;
+        mElapsedTime = 0;
     }
-    sprite.setTextureRect(sf::IntRect(0 + ran, 6, 64, 64));
+    sprite.setTextureRect(sf::IntRect(0 + mMoveRect, 6, 64, 64));
 
-    if (tick % 4 == 0)
-        ran += 64;
-    ++tick;
+    float frametime = .125f / 60.0f * 1000.0f;
+    if (mElapsedTime >= frametime)
+    {
+        mMoveRect += 64;
+        mElapsedTime = 0;
+    }
+    ++mElapsedTime;
 
-    sf::Vector2f distance = direction * speed[ level ] * frametime;
+    sf::Vector2f distance = direction * speed[ level ] * elapsedTime;
     sprite.move(distance);
 
     sf::Vector2f position = sprite.getPosition();

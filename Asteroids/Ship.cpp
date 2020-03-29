@@ -1,5 +1,4 @@
 #include "Ship.h"
-#include <iostream>
 
 const float Ship::acceleration   = 5.0f;
 const float Ship::max_speed      = 10.0f;
@@ -27,31 +26,30 @@ void Ship::reset()
     sprite.setOrigin(20, 20);
     sprite.setPosition(W_WIDTH / 2, W_HEIGHT / 2);
     sprite.setRotation(0.0f);
-    speed.x  = 0;
-    speed.y  = 0;
-    is_alive = true;
-    ran      = 0;
-    tick     = 0;
-    radius   = 0;
+    speed.x      = 0;
+    speed.y      = 0;
+    is_alive     = true;
+    mMoveRect    = 0;
+    mElapsedTime = 0;
+    radius       = 0;
 }
 
-void Ship::update(float frametime, const sf::Event& event)
+void Ship::update(float& elapsedTime, const sf::Event& event)
 {
     if (!is_alive)
     {
-        shipExplode();
+        shipExplode(elapsedTime);
     }
     else
     {
-        moveShip(frametime, event);
+        moveShip(elapsedTime, event);
         sprite.move(speed);
     }
 
     if (is_alive && radius == 0)
     {
-        shieldsUp();
+        shieldsUp(elapsedTime);
     }
-    std::cout << tick << std::endl;
     sprite.setPosition(checkPosition());
 }
 
@@ -70,11 +68,11 @@ void Ship::onEvent(const sf::Event& event)
         x_move = -1;
 }
 
-void Ship::moveShip(float frametime, const sf::Event& event)
+void Ship::moveShip(float& elapsedTime, const sf::Event& event)
 {
     if (x_move != 0)
     {
-        sprite.rotate(x_move * rotation_speed * frametime);
+        sprite.rotate(x_move * rotation_speed * elapsedTime);
     }
 
     if (y_move != 0)
@@ -83,8 +81,8 @@ void Ship::moveShip(float frametime, const sf::Event& event)
         float x_speed  = cos(rotation * DEGTORAD);
         float y_speed  = sin(rotation * DEGTORAD);
 
-        speed.x += y_move * acceleration * frametime * x_speed / 1000;
-        speed.y += y_move * acceleration * frametime * y_speed / 1000;
+        speed.x += y_move * acceleration * elapsedTime * x_speed / 1000;
+        speed.y += y_move * acceleration * elapsedTime * y_speed / 1000;
         if ((speed.x * speed.x) > (max_speed * max_speed))
             speed.x = speed.x > 0 ? max_speed : -max_speed;
         if ((speed.y * speed.y) > (max_speed * max_speed))
@@ -127,9 +125,9 @@ void Ship::kill()
     is_alive = false;
 }
 
-void Ship::shipExplode()
+void Ship::shipExplode(float& elapsedTime)
 {
-    if (ran >= 950)
+    if (mMoveRect >= 950)
     {
         reset();
     }
@@ -137,21 +135,26 @@ void Ship::shipExplode()
     {
         tShip.loadFromFile(SHIP_EXPLOSION_TEXTURE);
         sprite.setTexture(tShip);
-        sprite.setTextureRect(sf::IntRect(0 + ran, 0, 50, 50));
+        sprite.setTextureRect(sf::IntRect(0 + mMoveRect, 0, 50, 50));
         sprite.setOrigin(20, 20);
 
-        if (tick % 4 == 0)
-            ran += 50;
-        ++tick;
+        float frametime = 4.0f / 60.0f * 1000.0f;
+        if (mElapsedTime >= frametime)
+        {
+            mMoveRect += 50;
+            mElapsedTime -= frametime;
+        }
+        mElapsedTime += elapsedTime;
     }
 }
 
-void Ship::shieldsUp()
+void Ship::shieldsUp(float& elapsedTime)
 {
-    tick++;
-    if (tick > 200)
+    float frametime = 240.0f / 60.0f * 1000.0f;
+    if (mElapsedTime >= frametime)
     {
-        radius = SHIP_RADIUS;
-        tick   = 0;
+        radius       = SHIP_RADIUS;
+        mElapsedTime = 0;
     }
+    mElapsedTime += elapsedTime;
 }

@@ -11,8 +11,10 @@ class Game
     Game();
     ~Game();
 
-    int  run();
-    void quit();
+    int       run();
+    void      quit();
+    sf::Time& GetElapsed();
+    void      RestartClock();
 
   private:
     void                createWindow();
@@ -21,6 +23,8 @@ class Game
     int                 lives;
     Ship                ship;
     std::vector<Bullet> bullets;
+    sf::Clock           mClock;
+    sf::Time            mElapsed;
 };
 
 #endif
