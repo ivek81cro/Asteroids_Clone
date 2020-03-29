@@ -92,15 +92,15 @@ void Ship::moveShip(sf::Time& elapsedTime, const sf::Event& event)
             sprite.setTextureRect(sf::IntRect(40, 40, 40, 40));
         if (y_move == -1)
             sprite.setTextureRect(sf::IntRect(40, 0, 40, 40));
-        //drag
-        if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || !sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
-        {
-            speed.x *= 0.997f;
-            speed.y *= 0.997f;
-        }
     }
     if (x_move == 0 && y_move == 0)
+    {
+        //Drag
+        speed.x *= 0.995f;
+        speed.y *= 0.995f;
+
         sprite.setTextureRect(sf::IntRect(40, 85, 40, 40));
+    }
 }
 
 sf::Vector2f Ship::checkPosition()
@@ -150,7 +150,7 @@ void Ship::shipExplode(sf::Time& elapsedTime)
 
 void Ship::shieldsUp(sf::Time& elapsedTime)
 {
-    float frametime = 0.24f / 60.0f;
+    float frametime = 240.0f / 60.0f;
     if (mElapsedTime >= frametime)
     {
         radius       = SHIP_RADIUS;

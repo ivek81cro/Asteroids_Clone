@@ -20,7 +20,7 @@ class Entity
     float      radius;
     int        id;
     int        mMoveRect    = 0;
-    int        mElapsedTime = 0;
+    float      mElapsedTime = 0;
     sf::Sprite sprite;
 };
 
