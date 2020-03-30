@@ -7,19 +7,19 @@ bool        Bullet::init_done;
 sf::Texture Bullet::tBullet;
 
 Bullet::Bullet(sf::Vector2f position, float angle)
-        : remaning_life(lifetime)
-        , direction(cos(angle * DEGTORAD), sin(angle * DEGTORAD))
+        : mRemainingLife(lifetime)
+        , mDirection(cos(angle * DEGTORAD), sin(angle * DEGTORAD))
         , Entity(0,0,ID_BULLET,BULLET_RADIUS, true)
 {
     if (!init_done)
-        Init(BULLET_TEXTURE);
+        init(BULLET_TEXTURE);
 
-    sprite.setPosition(position);
-    sprite.setRotation(angle + 90);
-    sprite.setScale(0.25f, 0.25f);
-    sprite.setTexture(tBullet);
-    sprite.setTextureRect(sf::IntRect(0, 0, 14, 44));
-    sprite.setOrigin(7, 22);
+    mSprite.setPosition(position);
+    mSprite.setRotation(angle + 90);
+    mSprite.setScale(0.25f, 0.25f);
+    mSprite.setTexture(tBullet);
+    mSprite.setTextureRect(sf::IntRect(0, 0, 14, 44));
+    mSprite.setOrigin(7, 22);
 }
 
 Bullet::~Bullet()
@@ -28,19 +28,19 @@ Bullet::~Bullet()
 
 void Bullet::update(sf::Time& elapsedTime)
 {
-    if (!is_alive)
+    if (!mAlive)
         return;
 
-    remaning_life -= elapsedTime.asMilliseconds();
-    if (remaning_life <= 0)
-        is_alive = false;
+    mRemainingLife -= elapsedTime.asMilliseconds();
+    if (mRemainingLife <= 0)
+        mAlive = false;
 
-    sf::Vector2f distance = direction * speed * (float)elapsedTime.asMilliseconds();
+    sf::Vector2f distance = mDirection * speed * (float)elapsedTime.asMilliseconds();
 
-    sprite.move(distance);
+    mSprite.move(distance);
 }
 
-bool Bullet::Init(const std::string& ImageFile)
+bool Bullet::init(const std::string& ImageFile)
 {
     init_done = true;
     return tBullet.loadFromFile(ImageFile);
@@ -48,5 +48,5 @@ bool Bullet::Init(const std::string& ImageFile)
 
 void Bullet::kill()
 {
-    is_alive = false;
+    mAlive = false;
 }

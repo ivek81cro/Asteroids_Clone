@@ -5,22 +5,22 @@ bool        Asteroid::init_done;
 sf::Texture Asteroid::tAsteroid;
 
 Asteroid::Asteroid(int level)
-        : level(level)
+        : mLevel(level)
         , Entity(0, 0, ID_ASTEROID, ASTEROID_RADIUS, true)
 {
     int angle = rand() % 360;
-    direction = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
+    mDirection = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
 
     if (!init_done)
         Init(ASTEROID_TEXTURE);
 
-    sprite.setPosition(rand() % W_WIDTH, rand() % W_HEIGHT);
-    sprite.setRotation(rand() % 360);
-    sprite.setTexture(tAsteroid);
-    sprite.setTextureRect(sf::IntRect(0 + mMoveRect, 6, 64, 64));
+    mSprite.setPosition(rand() % W_WIDTH, rand() % W_HEIGHT);
+    mSprite.setRotation(rand() % 360);
+    mSprite.setTexture(tAsteroid);
+    mSprite.setTextureRect(sf::IntRect(0 + mMoveRect, 6, 64, 64));
     //color added for testing
-    sprite.setColor(sf::Color(255, 255, 0));
-    sprite.setOrigin(32, 32);
+    mSprite.setColor(sf::Color(255, 255, 0));
+    mSprite.setOrigin(32, 32);
 }
 
 Asteroid::~Asteroid()
@@ -28,19 +28,19 @@ Asteroid::~Asteroid()
 }
 
 Asteroid::Asteroid(sf::Vector2f position, float angle, int level)
-        : level(level)
+        : mLevel(level)
         , Entity(0, 0, ID_ASTEROID, ASTEROID_RADIUS, true)
 {
-    direction = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
-    sprite.setPosition(position);
-    sprite.setTexture(tAsteroid);
-    sprite.setTextureRect(sf::IntRect(0 + mMoveRect, 6, 64, 64));
-    sprite.setOrigin(32, 32);
+    mDirection = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
+    mSprite.setPosition(position);
+    mSprite.setTexture(tAsteroid);
+    mSprite.setTextureRect(sf::IntRect(0 + mMoveRect, 6, 64, 64));
+    mSprite.setOrigin(32, 32);
     mMoveRect = 64;
-    sprite.setScale(level == 2 ? sprite.getScale() * ASTEROID_RESCALE_RADIUS_FACTOR * ASTEROID_RESCALE_RADIUS_FACTOR
-                               : sprite.getScale() * ASTEROID_RESCALE_RADIUS_FACTOR);
-    level == 2 ? radius *= ASTEROID_RESCALE_RADIUS_FACTOR* ASTEROID_RESCALE_RADIUS_FACTOR
-               : radius *= ASTEROID_RESCALE_RADIUS_FACTOR;
+    mSprite.setScale(level == 2 ? mSprite.getScale() * ASTEROID_RESCALE_RADIUS_FACTOR * ASTEROID_RESCALE_RADIUS_FACTOR
+                               : mSprite.getScale() * ASTEROID_RESCALE_RADIUS_FACTOR);
+    level == 2 ? mRadius *= ASTEROID_RESCALE_RADIUS_FACTOR* ASTEROID_RESCALE_RADIUS_FACTOR
+               : mRadius *= ASTEROID_RESCALE_RADIUS_FACTOR;
 }
 
 bool Asteroid::Init(const std::string& ImageFile)
@@ -51,28 +51,28 @@ bool Asteroid::Init(const std::string& ImageFile)
 
 int Asteroid::getLevel()
 {
-    return level;
+    return mLevel;
 }
 
 void Asteroid::breakDown()
 {
-    level++;
+    mLevel++;
 
-    if (level > 2)
+    if (mLevel > 2)
     {
-        is_alive = false;
+        mAlive = false;
         return;
     }
 
-    sprite.setScale(sprite.getScale() * ASTEROID_RESCALE_RADIUS_FACTOR);
-    radius *= 0.75f;
+    mSprite.setScale(mSprite.getScale() * ASTEROID_RESCALE_RADIUS_FACTOR);
+    mRadius *= 0.75f;
     int angle = rand() % 360;
-    direction = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
+    mDirection = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
 }
 
 void Asteroid::update(sf::Time& elapsedTime)
 {
-    if (!is_alive)
+    if (!mAlive)
         return;
 
     if (mMoveRect >= 1024)
@@ -80,7 +80,7 @@ void Asteroid::update(sf::Time& elapsedTime)
         mMoveRect    = 0;
         mElapsedTime = 0;
     }
-    sprite.setTextureRect(sf::IntRect(0 + mMoveRect, 6, 64, 64));
+    mSprite.setTextureRect(sf::IntRect(0 + mMoveRect, 6, 64, 64));
 
     float frametime = 125.0f / 60.0f;
     if (mElapsedTime >= frametime)
@@ -90,10 +90,10 @@ void Asteroid::update(sf::Time& elapsedTime)
     }
     ++mElapsedTime;
 
-    sf::Vector2f distance = direction * speed[ level ] * (float)elapsedTime.asMilliseconds();
-    sprite.move(distance);
+    sf::Vector2f distance = mDirection * speed[ mLevel ] * (float)elapsedTime.asMilliseconds();
+    mSprite.move(distance);
 
-    sf::Vector2f position = sprite.getPosition();
+    sf::Vector2f position = mSprite.getPosition();
 
     if (position.x > W_WIDTH)
         position.x = 0;
@@ -105,5 +105,5 @@ void Asteroid::update(sf::Time& elapsedTime)
     if (position.y < 0)
         position.y = W_HEIGHT;
 
-    sprite.setPosition(position);
+    mSprite.setPosition(position);
 }

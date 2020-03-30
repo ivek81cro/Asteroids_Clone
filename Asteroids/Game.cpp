@@ -3,55 +3,55 @@
 #include "Level.h"
 
 Game::Game()
-        : running(true)
-        , lives(3)
+        : mRunning(true)
+        , mLives(3)
 {
 }
 
 Game::~Game()
 {
-    window.close();
+    mWindow.close();
 }
 
 int Game::run()
 {
-    createWindow();
+    mCreateWindow();
 
     Level       level;
     sf::Texture tBackground;
     tBackground.loadFromFile("images/background.jpg");
     sf::Sprite sBackground(tBackground);
     level.start();
-    while (running)
+    while (mRunning)
     {
         sf::Event event;
-        while (window.pollEvent(event))
+        while (mWindow.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
             {
-                window.close();
+                mWindow.close();
                 return EXIT_SUCCESS;
             }
             level.onEvent(event);
         }
-        window.clear();
-        window.draw(sBackground);
+        mWindow.clear();
+        mWindow.draw(sBackground);
         RestartClock();
         level.update(GetElapsed(), event);
-        level.show(window);
-        window.display();
+        level.show(mWindow);
+        mWindow.display();
     }
     return EXIT_SUCCESS;
 }
 
-void Game::createWindow()
+void Game::mCreateWindow()
 {
-    if (window.isOpen())
-        window.close();
+    if (mWindow.isOpen())
+        mWindow.close();
 
-    window.create(sf::VideoMode(W_WIDTH, W_HEIGHT), W_TITLE, sf::Style::Close);
-    window.setKeyRepeatEnabled(false);
-    window.setFramerateLimit(W_FPSLIMIT);
+    mWindow.create(sf::VideoMode(W_WIDTH, W_HEIGHT), W_TITLE, sf::Style::Close);
+    mWindow.setKeyRepeatEnabled(false);
+    mWindow.setFramerateLimit(W_FPSLIMIT);
 }
 
 void Game::RestartClock()

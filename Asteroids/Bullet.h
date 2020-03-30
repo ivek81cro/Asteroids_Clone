@@ -17,11 +17,11 @@ class Bullet : public Entity
 
     void        kill();
     void        update(sf::Time& elapsedTime);
-    static bool Init(const std::string& ImageFile);
+    static bool init(const std::string& ImageFile);
 
   private:
-    float        remaning_life;
-    sf::Vector2f direction;
+    float        mRemainingLife;
+    sf::Vector2f mDirection;
 };
 
 #endif

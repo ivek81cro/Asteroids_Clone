@@ -19,12 +19,12 @@ class Entity
     sf::Sprite& getSprite();
 
   protected:
-    bool       is_alive;
-    float      radius;
-    int        id;
+    bool       mAlive;
+    float      mRadius;
+    int        mId;
     int        mMoveRect;
     float      mElapsedTime;
-    sf::Sprite sprite;
+    sf::Sprite mSprite;
 };
 
 #endif

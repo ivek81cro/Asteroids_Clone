@@ -3,36 +3,36 @@
 Entity::Entity(int moveRect, float elapsedTime, int id, float radius, bool isAlive)
         : mElapsedTime(elapsedTime)
         , mMoveRect(moveRect)
-        , id(id)
-        , radius(radius)
-        , is_alive(isAlive)
+        , mId(id)
+        , mRadius(radius)
+        , mAlive(isAlive)
 {
 }
 
 bool Entity::isAlive()
 {
-    return is_alive;
+    return mAlive;
 }
 
 float Entity::getRadius()
 {
-    return radius;
+    return mRadius;
 }
 
 int Entity::getId()
 {
-    return id;
+    return mId;
 }
 
 sf::Sprite& Entity::getSprite()
 {
-    return sprite;
+    return mSprite;
 }
 
 void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    states.transform *= sprite.getTransform();
-    target.draw(sprite, states);
+    states.transform *= mSprite.getTransform();
+    target.draw(mSprite, states);
 }
 
 void Entity::update(sf::Time& elapsedTime, const sf::Event& event)

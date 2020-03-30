@@ -26,10 +26,10 @@ class Ship : public Entity
     void         shieldsUp(sf::Time& elapsedTime);
 
   private:
-    sf::Vector2f speed;
-    sf::Texture  tShip;
-    int          x_move;
-    int          y_move;
+    sf::Vector2f mSpeed;
+    sf::Texture  mShipTexture;
+    int          mXmove;
+    int          mYmove;
 };
 
 #endif

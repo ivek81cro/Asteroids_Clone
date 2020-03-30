@@ -17,12 +17,10 @@ class Game
     void      RestartClock();
 
   private:
-    void                createWindow();
-    sf::RenderWindow    window;
-    bool                running;
-    int                 lives;
-    Ship                ship;
-    std::vector<Bullet> bullets;
+    void                mCreateWindow();
+    sf::RenderWindow    mWindow;
+    bool                mRunning;
+    int                 mLives;
     sf::Clock           mClock;
     sf::Time            mElapsed;
 };

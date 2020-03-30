@@ -22,8 +22,8 @@ class Asteroid : public Entity
     static bool Init(const std::string& ImageFile);
 
   private:
-    int          level;
-    sf::Vector2f direction;
+    int          mLevel;
+    sf::Vector2f mDirection;
 };
 
 #endif

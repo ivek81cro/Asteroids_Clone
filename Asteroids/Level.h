@@ -19,9 +19,9 @@ class Level
     void start();
 
   private:
-    Ship                  ship;
-    std::vector<Bullet>   bullets;
-    std::vector<Asteroid> asteroids;
+    Ship                  mShip;
+    std::vector<Bullet>   mBullets;
+    std::vector<Asteroid> mAsteroids;
 };
 
 #endif
