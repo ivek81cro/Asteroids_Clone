@@ -9,6 +9,7 @@ sf::Texture Bullet::tBullet;
 Bullet::Bullet(sf::Vector2f position, float angle)
         : remaning_life(lifetime)
         , direction(cos(angle * DEGTORAD), sin(angle * DEGTORAD))
+        , Entity(0,0,ID_BULLET,BULLET_RADIUS, true)
 {
     if (!init_done)
         Init(BULLET_TEXTURE);
@@ -16,13 +17,9 @@ Bullet::Bullet(sf::Vector2f position, float angle)
     sprite.setPosition(position);
     sprite.setRotation(angle + 90);
     sprite.setScale(0.25f, 0.25f);
-
     sprite.setTexture(tBullet);
     sprite.setTextureRect(sf::IntRect(0, 0, 14, 44));
     sprite.setOrigin(7, 22);
-    radius   = BULLET_RADIUS;
-    is_alive = true;
-    id       = ID_BULLET;
 }
 
 Bullet::~Bullet()

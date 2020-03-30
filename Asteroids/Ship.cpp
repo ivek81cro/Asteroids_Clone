@@ -5,11 +5,10 @@ const float Ship::max_speed      = 10.0f;
 const float Ship::rotation_speed = 0.15f;
 
 Ship::Ship()
+        : x_move(0)
+        , y_move(0)
+        , speed(0, 0)
 {
-    id = ID_SHIP;
-
-    x_move = 0;
-    y_move = 0;
 
     reset();
 }

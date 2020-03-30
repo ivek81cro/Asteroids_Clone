@@ -6,6 +6,7 @@ sf::Texture Asteroid::tAsteroid;
 
 Asteroid::Asteroid(int level)
         : level(level)
+        , Entity(0, 0, ID_ASTEROID, ASTEROID_RADIUS, true)
 {
     int angle = rand() % 360;
     direction = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
@@ -20,9 +21,6 @@ Asteroid::Asteroid(int level)
     //color added for testing
     sprite.setColor(sf::Color(255, 255, 0));
     sprite.setOrigin(32, 32);
-    is_alive = true;
-    radius   = ASTEROID_RADIUS;
-    id       = ID_ASTEROID;
 }
 
 Asteroid::~Asteroid()
@@ -31,16 +29,14 @@ Asteroid::~Asteroid()
 
 Asteroid::Asteroid(sf::Vector2f position, float angle, int level)
         : level(level)
+        , Entity(0, 0, ID_ASTEROID, ASTEROID_RADIUS, true)
 {
     direction = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
     sprite.setPosition(position);
     sprite.setTexture(tAsteroid);
     sprite.setTextureRect(sf::IntRect(0 + mMoveRect, 6, 64, 64));
     sprite.setOrigin(32, 32);
-    radius   = ASTEROID_RADIUS;
-    is_alive = true;
-    id       = ID_ASTEROID;
-    mMoveRect      = 64;
+    mMoveRect = 64;
     sprite.setScale(level == 2 ? sprite.getScale() * ASTEROID_RESCALE_RADIUS_FACTOR * ASTEROID_RESCALE_RADIUS_FACTOR
                                : sprite.getScale() * ASTEROID_RESCALE_RADIUS_FACTOR);
     level == 2 ? radius *= ASTEROID_RESCALE_RADIUS_FACTOR* ASTEROID_RESCALE_RADIUS_FACTOR
@@ -81,7 +77,7 @@ void Asteroid::update(sf::Time& elapsedTime)
 
     if (mMoveRect >= 1024)
     {
-        mMoveRect  = 0;
+        mMoveRect    = 0;
         mElapsedTime = 0;
     }
     sprite.setTextureRect(sf::IntRect(0 + mMoveRect, 6, 64, 64));

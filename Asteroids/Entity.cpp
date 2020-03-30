@@ -1,5 +1,14 @@
 #include "Entity.h"
 
+Entity::Entity(int moveRect, float elapsedTime, int id, float radius, bool isAlive)
+        : mElapsedTime(elapsedTime)
+        , mMoveRect(moveRect)
+        , id(id)
+        , radius(radius)
+        , is_alive(isAlive)
+{
+}
+
 bool Entity::isAlive()
 {
     return is_alive;
