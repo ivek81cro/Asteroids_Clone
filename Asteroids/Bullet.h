@@ -15,9 +15,9 @@ class Bullet : public Entity
     Bullet(sf::Vector2f position, float angle);
     ~Bullet();
 
-    void        kill();
-    void        update(sf::Time& elapsedTime);
-    static bool init(const std::string& ImageFile);
+    void        Kill();
+    void        Update(sf::Time& elapsedTime);
+    static bool Init(const std::string& ImageFile);
 
   private:
     float        mRemainingLife;

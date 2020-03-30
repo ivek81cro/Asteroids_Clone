@@ -16,9 +16,9 @@ class Asteroid : public Entity
     Asteroid(sf::Vector2f position, float angle, int level);
     ~Asteroid();
 
-    int         getLevel();
-    void        breakDown();
-    void        update(sf::Time& elapsedTime);
+    int         GetLevel();
+    void        BreakDown();
+    void        Update(sf::Time& elapsedTime);
     static bool Init(const std::string& ImageFile);
 
   private:

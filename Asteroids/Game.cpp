@@ -13,7 +13,7 @@ Game::~Game()
     mWindow.close();
 }
 
-int Game::run()
+int Game::Run()
 {
     mCreateWindow();
 
@@ -21,7 +21,7 @@ int Game::run()
     sf::Texture tBackground;
     tBackground.loadFromFile("images/background.jpg");
     sf::Sprite sBackground(tBackground);
-    level.start();
+    level.Start();
     while (mRunning)
     {
         sf::Event event;
@@ -32,13 +32,13 @@ int Game::run()
                 mWindow.close();
                 return EXIT_SUCCESS;
             }
-            level.onEvent(event);
+            level.OnEvent(event);
         }
         mWindow.clear();
         mWindow.draw(sBackground);
         RestartClock();
-        level.update(GetElapsed(), event);
-        level.show(mWindow);
+        level.Update(GetElapsed(), event);
+        level.Show(mWindow);
         mWindow.display();
     }
     return EXIT_SUCCESS;

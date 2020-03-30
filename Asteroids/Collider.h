@@ -7,7 +7,7 @@
 class Collider
 {
   public:
-    bool isCollide(Entity& obj1, Entity& obj2);
+    bool IsColide(Entity& obj1, Entity& obj2);
 
   private:
 };

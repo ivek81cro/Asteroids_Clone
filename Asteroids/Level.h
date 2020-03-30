@@ -13,10 +13,10 @@ class Level
     Level();
     ~Level();
 
-    void onEvent(const sf::Event& event);
-    void update(sf::Time& elapsedTime, const sf::Event& event);
-    void show(sf::RenderTarget& target);
-    void start();
+    void OnEvent(const sf::Event& event);
+    void Update(sf::Time& elapsedTime, const sf::Event& event);
+    void Show(sf::RenderTarget& target);
+    void Start();
 
   private:
     Ship                  mShip;

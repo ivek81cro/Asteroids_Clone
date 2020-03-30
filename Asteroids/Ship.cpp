@@ -10,14 +10,14 @@ Ship::Ship()
         , mSpeed(0, 0)
 {
 
-    reset();
+    Reset();
 }
 
 Ship::~Ship()
 {
 }
 
-void Ship::reset()
+void Ship::Reset()
 {
     mShipTexture.loadFromFile(SHIP_TEXTURE);
     mSprite.setTexture(mShipTexture);
@@ -33,26 +33,26 @@ void Ship::reset()
     mRadius       = 0;
 }
 
-void Ship::update(sf::Time& elapsedTime, const sf::Event& event)
+void Ship::Update(sf::Time& elapsedTime, const sf::Event& event)
 {
     if (!mAlive)
     {
-        shipExplode(elapsedTime);
+        ShipExplode(elapsedTime);
     }
     else
     {
-        moveShip(elapsedTime, event);
+        MoveShip(elapsedTime, event);
         mSprite.move(mSpeed);
     }
 
     if (mAlive && mRadius == 0)
     {
-        shieldsUp(elapsedTime);
+        ShieldsUp(elapsedTime);
     }
-    mSprite.setPosition(checkPosition());
+    mSprite.setPosition(CheckPosition());
 }
 
-void Ship::onEvent(const sf::Event& event)
+void Ship::OnEvent(const sf::Event& event)
 {
     mXmove = 0;
     mYmove = 0;
@@ -67,7 +67,7 @@ void Ship::onEvent(const sf::Event& event)
         mXmove = -1;
 }
 
-void Ship::moveShip(sf::Time& elapsedTime, const sf::Event& event)
+void Ship::MoveShip(sf::Time& elapsedTime, const sf::Event& event)
 {
     if (mXmove != 0)
     {
@@ -102,7 +102,7 @@ void Ship::moveShip(sf::Time& elapsedTime, const sf::Event& event)
     }
 }
 
-sf::Vector2f Ship::checkPosition()
+sf::Vector2f Ship::CheckPosition()
 {
     sf::Vector2f position = mSprite.getPosition();
 
@@ -119,16 +119,16 @@ sf::Vector2f Ship::checkPosition()
     return position;
 }
 
-void Ship::kill()
+void Ship::Kill()
 {
     mAlive = false;
 }
 
-void Ship::shipExplode(sf::Time& elapsedTime)
+void Ship::ShipExplode(sf::Time& elapsedTime)
 {
     if (mMoveRect >= 950)
     {
-        reset();
+        Reset();
     }
     else
     {
@@ -147,7 +147,7 @@ void Ship::shipExplode(sf::Time& elapsedTime)
     }
 }
 
-void Ship::shieldsUp(sf::Time& elapsedTime)
+void Ship::ShieldsUp(sf::Time& elapsedTime)
 {
     float frametime = 240.0f / 60.0f;
     if (mElapsedTime >= frametime)

@@ -7,7 +7,7 @@ int main()
     srand(time(NULL));
 
     Game game;
-    game.run();
+    game.Run();
 
     return EXIT_SUCCESS;
 }

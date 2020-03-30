@@ -16,14 +16,14 @@ class Ship : public Entity
   public:
     Ship();
     ~Ship();
-    void         reset();
-    void         update(sf::Time& elapsedTime, const sf::Event& event);
-    void         onEvent(const sf::Event& event);
-    void         shipExplode(sf::Time& elapsedTime);
-    void         kill();
-    void         moveShip(sf::Time& elapsedTime, const sf::Event& event);
-    sf::Vector2f checkPosition();
-    void         shieldsUp(sf::Time& elapsedTime);
+    void         Reset();
+    void         Update(sf::Time& elapsedTime, const sf::Event& event);
+    void         OnEvent(const sf::Event& event);
+    void         ShipExplode(sf::Time& elapsedTime);
+    void         Kill();
+    void         MoveShip(sf::Time& elapsedTime, const sf::Event& event);
+    sf::Vector2f CheckPosition();
+    void         ShieldsUp(sf::Time& elapsedTime);
 
   private:
     sf::Vector2f mSpeed;

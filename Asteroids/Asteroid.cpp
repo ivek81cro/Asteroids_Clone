@@ -49,12 +49,12 @@ bool Asteroid::Init(const std::string& ImageFile)
     return tAsteroid.loadFromFile(ImageFile);
 }
 
-int Asteroid::getLevel()
+int Asteroid::GetLevel()
 {
     return mLevel;
 }
 
-void Asteroid::breakDown()
+void Asteroid::BreakDown()
 {
     mLevel++;
 
@@ -70,7 +70,7 @@ void Asteroid::breakDown()
     mDirection = sf::Vector2f(cos(angle * DEGTORAD), sin(angle * DEGTORAD));
 }
 
-void Asteroid::update(sf::Time& elapsedTime)
+void Asteroid::Update(sf::Time& elapsedTime)
 {
     if (!mAlive)
         return;

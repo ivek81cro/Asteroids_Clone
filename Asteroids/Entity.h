@@ -9,14 +9,14 @@ class Entity
     Entity()=default;
     Entity(int moveRect, float elapsedTime, int id, float radius, bool isAlive);
 
-    virtual void update(sf::Time& elapsedTime, const sf::Event& event);
-    virtual void onEvent(const sf::Event& event);
+    virtual void Update(sf::Time& elapsedTime, const sf::Event& event);
+    virtual void OnEvent(const sf::Event& event);
 
-    bool        isAlive();
-    void        draw(sf::RenderTarget& target, sf::RenderStates states) const;
-    float       getRadius();
-    int         getId();
-    sf::Sprite& getSprite();
+    bool        IsAlive();
+    void        Draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    float       GetRadius();
+    int         GetId();
+    sf::Sprite& GetSprite();
 
   protected:
     bool       mAlive;

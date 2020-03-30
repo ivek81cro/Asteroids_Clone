@@ -12,7 +12,7 @@ Bullet::Bullet(sf::Vector2f position, float angle)
         , Entity(0,0,ID_BULLET,BULLET_RADIUS, true)
 {
     if (!init_done)
-        init(BULLET_TEXTURE);
+        Init(BULLET_TEXTURE);
 
     mSprite.setPosition(position);
     mSprite.setRotation(angle + 90);
@@ -26,7 +26,7 @@ Bullet::~Bullet()
 {
 }
 
-void Bullet::update(sf::Time& elapsedTime)
+void Bullet::Update(sf::Time& elapsedTime)
 {
     if (!mAlive)
         return;
@@ -40,13 +40,13 @@ void Bullet::update(sf::Time& elapsedTime)
     mSprite.move(distance);
 }
 
-bool Bullet::init(const std::string& ImageFile)
+bool Bullet::Init(const std::string& ImageFile)
 {
     init_done = true;
     return tBullet.loadFromFile(ImageFile);
 }
 
-void Bullet::kill()
+void Bullet::Kill()
 {
     mAlive = false;
 }

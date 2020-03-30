@@ -11,8 +11,8 @@ class Game
     Game();
     ~Game();
 
-    int       run();
-    void      quit();
+    int       Run();
+    void      Quit();
     sf::Time& GetElapsed();
     void      RestartClock();
 

@@ -9,36 +9,36 @@ Entity::Entity(int moveRect, float elapsedTime, int id, float radius, bool isAli
 {
 }
 
-bool Entity::isAlive()
+bool Entity::IsAlive()
 {
     return mAlive;
 }
 
-float Entity::getRadius()
+float Entity::GetRadius()
 {
     return mRadius;
 }
 
-int Entity::getId()
+int Entity::GetId()
 {
     return mId;
 }
 
-sf::Sprite& Entity::getSprite()
+sf::Sprite& Entity::GetSprite()
 {
     return mSprite;
 }
 
-void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void Entity::Draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     states.transform *= mSprite.getTransform();
     target.draw(mSprite, states);
 }
 
-void Entity::update(sf::Time& elapsedTime, const sf::Event& event)
+void Entity::Update(sf::Time& elapsedTime, const sf::Event& event)
 {
 }
 
-void Entity::onEvent(const sf::Event& event)
+void Entity::OnEvent(const sf::Event& event)
 {
 }
