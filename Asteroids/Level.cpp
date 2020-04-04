@@ -5,7 +5,7 @@ Level::Level()
     for (int i = 0; i < 5; i++)
     {
         Asteroid a(0);
-        mAsteroids.push_back(a);
+        asteroids.push_back(a);
     }
 }
 
@@ -13,28 +13,28 @@ Level::~Level()
 {
 }
 
-void Level::OnEvent(const sf::Event& event)
+void Level::onEvent(const sf::Event& event)
 {
-    mShip.OnEvent(event);
+    ship.OnEvent(event);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
     {
-        Bullet bullet(mShip.GetSprite().getPosition(), mShip.GetSprite().getRotation() - 90);
-        mBullets.push_back(bullet);
+        Bullet bullet(ship.GetSprite().getPosition(), ship.GetSprite().getRotation() - 90);
+        bullets.push_back(bullet);
     }
 }
 
-void Level::Update(sf::Time& elapsedTime, const sf::Event& event)
+void Level::update(sf::Time& elapsedTime, const sf::Event& event)
 {
-    mShip.Update(elapsedTime, event);
+    ship.Update(elapsedTime, event);
 
-    std::vector<Bullet>::iterator start_bullets = mBullets.begin();
-    while (start_bullets != mBullets.end())
+    std::vector<Bullet>::iterator start_bullets = bullets.begin();
+    while (start_bullets != bullets.end())
     {
         if (start_bullets->IsAlive())
         {
             //temp fix for double bullet creation
-            if (start_bullets + 1 != mBullets.end())
+            if (start_bullets + 1 != bullets.end())
                 if (start_bullets->GetSprite().getPosition() == (start_bullets + 1)->GetSprite().getPosition())
                     start_bullets->Kill();
             //end
@@ -43,12 +43,12 @@ void Level::Update(sf::Time& elapsedTime, const sf::Event& event)
         }
         else
         {
-            start_bullets = mBullets.erase(start_bullets);
+            start_bullets = bullets.erase(start_bullets);
         }
     }
 
-    std::vector<Asteroid>::iterator start_asteroids = mAsteroids.begin();
-    while (start_asteroids != mAsteroids.end())
+    std::vector<Asteroid>::iterator start_asteroids = asteroids.begin();
+    while (start_asteroids != asteroids.end())
     {
         if (start_asteroids->IsAlive())
         {
@@ -56,16 +56,16 @@ void Level::Update(sf::Time& elapsedTime, const sf::Event& event)
             ++start_asteroids;
         }
         else
-            start_asteroids = mAsteroids.erase(start_asteroids);
+            start_asteroids = asteroids.erase(start_asteroids);
     }
 
     std::vector<Asteroid> new_asteroids;
-    start_asteroids = mAsteroids.begin();
+    start_asteroids = asteroids.begin();
     Collider cld;
-    while (start_asteroids != mAsteroids.end())
+    while (start_asteroids != asteroids.end())
     {
-        start_bullets = mBullets.begin();
-        while (start_bullets != mBullets.end())
+        start_bullets = bullets.begin();
+        while (start_bullets != bullets.end())
         {
             if (!start_bullets->IsAlive())
             {
@@ -89,32 +89,32 @@ void Level::Update(sf::Time& elapsedTime, const sf::Event& event)
             }
             ++start_bullets;
         }
-        if (cld.IsColide(*start_asteroids, mShip))
+        if (cld.IsColide(*start_asteroids, ship))
         {
-            if (mShip.GetRadius() != 0)
-                mShip.Kill();
+            if (ship.GetRadius() != 0)
+                ship.Kill();
         }
 
         ++start_asteroids;
     }
-    mAsteroids.insert(mAsteroids.end(), new_asteroids.begin(), new_asteroids.end());
+    asteroids.insert(asteroids.end(), new_asteroids.begin(), new_asteroids.end());
 }
 
-void Level::Show(sf::RenderTarget& target)
+void Level::show(sf::RenderTarget& target)
 {
-    target.draw(mShip.GetSprite());
+    target.draw(ship.GetSprite());
 
-    for (std::vector<Bullet>::iterator it = mBullets.begin(); it != mBullets.end(); ++it)
+    for (std::vector<Bullet>::iterator it = bullets.begin(); it != bullets.end(); ++it)
     {
         target.draw(it->GetSprite());
     }
 
-    for (std::vector<Asteroid>::iterator it = mAsteroids.begin(); it != mAsteroids.end(); ++it)
+    for (std::vector<Asteroid>::iterator it = asteroids.begin(); it != asteroids.end(); ++it)
     {
         target.draw(it->GetSprite());
     }
 }
 
-void Level::Start()
+void Level::start()
 {
 }

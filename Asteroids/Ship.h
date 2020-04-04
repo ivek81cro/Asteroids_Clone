@@ -27,7 +27,7 @@ class Ship : public Entity
 
   private:
     sf::Vector2f mSpeed;
-    sf::Texture  mShipTexture;
+    sf::Texture  shipTexture;
     int          mXmove;
     int          mYmove;
 };

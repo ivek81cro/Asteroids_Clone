@@ -14,7 +14,7 @@ class Level
     ~Level();
 
     void onEvent(const sf::Event& event);
-    void update(float framerate, const sf::Event& event);
+    void update(sf::Time& elapsedTime, const sf::Event& event);
     void show(sf::RenderTarget& target);
     void start();
 

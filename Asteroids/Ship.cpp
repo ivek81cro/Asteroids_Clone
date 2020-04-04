@@ -19,8 +19,8 @@ Ship::~Ship()
 
 void Ship::Reset()
 {
-    mShipTexture.loadFromFile(SHIP_TEXTURE);
-    mSprite.setTexture(mShipTexture);
+    shipTexture.loadFromFile(SHIP_TEXTURE);
+    mSprite.setTexture(shipTexture);
     mSprite.setTextureRect(sf::IntRect(40, 0, 40, 40));
     mSprite.setOrigin(20, 20);
     mSprite.setPosition(W_WIDTH / 2, W_HEIGHT / 2);
@@ -132,8 +132,8 @@ void Ship::ShipExplode(sf::Time& elapsedTime)
     }
     else
     {
-        mShipTexture.loadFromFile(SHIP_EXPLOSION_TEXTURE);
-        mSprite.setTexture(mShipTexture);
+        shipTexture.loadFromFile(SHIP_EXPLOSION_TEXTURE);
+        mSprite.setTexture(shipTexture);
         mSprite.setTextureRect(sf::IntRect(0 + mMoveRect, 0, 50, 50));
         mSprite.setOrigin(20, 20);
 
