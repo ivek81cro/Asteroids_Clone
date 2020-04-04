@@ -45,7 +45,7 @@ class Game
 
     //Inititalization
     void InitWindow();
-    void initStates();
+    void InitStates();
 };
 
 #endif

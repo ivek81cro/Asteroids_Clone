@@ -6,25 +6,25 @@
 void Game::InitWindow()
 {
     std::ifstream ifs("Config/window.ini");
-    sf::VideoMode windowBounds(800, 600);
+    sf::VideoMode window_bounds(800, 600);
     std::string   title;
-    unsigned      frameRateLimit = 120;
-    bool          vSyncEnabled   = false;
+    unsigned      frame_rate_limit = 120;
+    bool          v_sync_enabled   = false;
 
     if (ifs.is_open())
     {
         std::getline(ifs, title);
-        ifs >> windowBounds.width >> windowBounds.height;
-        ifs >> frameRateLimit;
-        ifs >> vSyncEnabled;
+        ifs >> window_bounds.width >> window_bounds.height;
+        ifs >> frame_rate_limit;
+        ifs >> v_sync_enabled;
     }
 
     ifs.close();
 
-    window_ = new sf::RenderWindow(windowBounds, title);
+    window_ = new sf::RenderWindow(window_bounds, title);
     window_->setKeyRepeatEnabled(false);
-    window_->setFramerateLimit(frameRateLimit);
-    window_->setVerticalSyncEnabled(vSyncEnabled);
+    window_->setFramerateLimit(frame_rate_limit);
+    window_->setVerticalSyncEnabled(v_sync_enabled);
 }
 
 void Game::InitStates()

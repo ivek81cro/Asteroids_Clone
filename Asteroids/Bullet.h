@@ -16,8 +16,8 @@ class Bullet : public Entity
     ~Bullet();
 
     void        Kill();
-    void        Update(sf::Time& elapsedTime);
-    static bool Init(const std::string& ImageFile);
+    void        Update(sf::Time& elapsed_time);
+    static bool Init(const std::string& image_file);
 
   private:
     float        mRemainingLife;
