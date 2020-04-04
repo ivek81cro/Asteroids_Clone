@@ -2,27 +2,50 @@
 #define _GAME_H_
 
 #include "Bullet.h"
+#include "GameState.h"
+#include "Level.h"
 #include "Ship.h"
-#include <SFML/Graphics.hpp>
 
 class Game
 {
   public:
+    //Constructors/Destructors
     Game();
-    ~Game();
+    virtual ~Game();
 
-    int       Run();
-    void      Quit();
-    sf::Time& GetElapsed();
-    void      RestartClock();
+    //Functions
+
+    //Regular
+    void endApplication();
+
+    //Update
+    void updateDelta();
+    void updateSFMLEvents();
+    void update();
+
+    //Render
+    void render();
+
+    //Core
+    int run();
 
   private:
-    void                mCreateWindow();
-    sf::RenderWindow    mWindow;
-    bool                mRunning;
-    int                 mLives;
-    sf::Clock           mClock;
-    sf::Time            mElapsed;
+    sf::RenderWindow* window;
+    sf::Event         event;
+
+    sf::Clock clock;
+    float     delta;
+
+    std::stack<State*> states;
+
+    bool                running;
+    int                 lives;
+    Ship                ship;
+    std::vector<Bullet> bullets;
+
+    //Inititalization
+    void initWindow();
+    void initStates();
 };
 
 #endif

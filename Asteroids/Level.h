@@ -1,5 +1,5 @@
 #ifndef _LEVEL_H_
-#define _LEVEL_H
+#define _LEVEL_H_
 
 #include "Asteroid.h"
 #include "Bullet.h"
@@ -13,15 +13,15 @@ class Level
     Level();
     ~Level();
 
-    void OnEvent(const sf::Event& event);
-    void Update(sf::Time& elapsedTime, const sf::Event& event);
-    void Show(sf::RenderTarget& target);
-    void Start();
+    void onEvent(const sf::Event& event);
+    void update(float framerate, const sf::Event& event);
+    void show(sf::RenderTarget& target);
+    void start();
 
   private:
-    Ship                  mShip;
-    std::vector<Bullet>   mBullets;
-    std::vector<Asteroid> mAsteroids;
+    Ship                  ship;
+    std::vector<Bullet>   bullets;
+    std::vector<Asteroid> asteroids;
 };
 
 #endif
