@@ -2,23 +2,23 @@
 
 State::State(sf::RenderWindow* window)
 {
-    this->window = window;
-    quit     = false;
+    this->window_ = window;
+    quit_     = false;
 }
 
 State::~State()
 {
 }
 
-const bool& State::getQuit() const
+const bool& State::GetQuit() const
 {
-    return quit;
+    return quit_;
 }
 
-void State::checkForQuit()
+void State::CheckForQuit()
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
     {
-        quit = true;
+        quit_ = true;
     }
 }

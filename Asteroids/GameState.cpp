@@ -9,21 +9,21 @@ GameState::~GameState()
 {
 }
 
-void GameState::endState()
+void GameState::EndState()
 {
 
 }
 
-void GameState::updateKeybinds(const float& delta)
+void GameState::UpdateKeybinds(const float& delta)
 {
-    checkForQuit();
+    CheckForQuit();
 }
 
-void GameState::update(const float& delta)
+void GameState::Update(const float& delta)
 {
-    updateKeybinds(delta);
+    UpdateKeybinds(delta);
 }
 
-void GameState::render(sf::RenderTarget* target)
+void GameState::Render(sf::RenderTarget* target)
 {
 }

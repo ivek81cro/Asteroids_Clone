@@ -1,7 +1,5 @@
-#ifndef _STATE_H_
-#define _STATE_H_
-
-#include <vector>
+#ifndef STATE_H_
+#define STATE_H_
 
 #include <SFML/Graphics.hpp>
 #include <fstream>
@@ -12,23 +10,23 @@
 
 class State
 {
-  private:
-    sf::RenderWindow*        window;
-    std::vector<sf::Texture> textures;
-    bool                     quit;
-
   public:
     State(sf::RenderWindow* window);
     virtual ~State();
 
-    const bool& getQuit() const;
+    const bool& GetQuit() const;
 
-    virtual void checkForQuit();
+    virtual void CheckForQuit();
 
-    virtual void endState()                                 = 0;
-    virtual void updateKeybinds(const float& delta)         = 0;
-    virtual void update(const float& delta)                 = 0;
-    virtual void render(sf::RenderTarget* target = nullptr) = 0;
+    virtual void EndState()                                 = 0;
+    virtual void UpdateKeybinds(const float& delta)         = 0;
+    virtual void Update(const float& delta)                 = 0;
+    virtual void Render(sf::RenderTarget* target = nullptr) = 0;
+
+  private:
+    sf::RenderWindow*        window_;
+    std::vector<sf::Texture> textures_;
+    bool                     quit_;
 };
 
-#endif // !_STATE_H_
+#endif // !STATE_H_

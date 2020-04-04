@@ -1,19 +1,20 @@
-#ifndef _GAMESTATE_H_
-#define _GAMESTATE_H_
+#ifndef GAMESTATE_H_
+#define GAMESTATE_H_
 
 #include "State.h"
 class GameState : public State
 {
-  private:
   public:
     GameState(sf::RenderWindow* window);
     virtual ~GameState();
 
-    void endState();
+    void EndState();
 
-    void updateKeybinds(const float& delta);
-    void update(const float& delta);
-    void render(sf::RenderTarget* target = nullptr);
+    void UpdateKeybinds(const float& delta);
+    void Update(const float& delta);
+    void Render(sf::RenderTarget* target = nullptr);
+
+  private:
 };
 
-#endif // !_GAMESTATE_H_
+#endif // !GAMESTATE_H_

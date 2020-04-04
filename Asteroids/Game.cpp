@@ -3,7 +3,7 @@
 #include "Level.h"
 
 //Initialization
-void Game::initWindow()
+void Game::InitWindow()
 {
     std::ifstream ifs("Config/window.ini");
     sf::VideoMode windowBounds(800, 600);
@@ -21,103 +21,103 @@ void Game::initWindow()
 
     ifs.close();
 
-    window = new sf::RenderWindow(windowBounds, title);
-    window->setKeyRepeatEnabled(false);
-    window->setFramerateLimit(frameRateLimit);
-    window->setVerticalSyncEnabled(vSyncEnabled);
+    window_ = new sf::RenderWindow(windowBounds, title);
+    window_->setKeyRepeatEnabled(false);
+    window_->setFramerateLimit(frameRateLimit);
+    window_->setVerticalSyncEnabled(vSyncEnabled);
 }
 
-void Game::initStates()
+void Game::InitStates()
 {
-    states.push(new GameState(window));
+    states_.push(new GameState(window_));
 }
 
 //Constructors/Destructors
 Game::Game()
 {
-    initWindow();
-    initStates();
+    InitWindow();
+    InitStates();
 }
 
 Game::~Game()
 {
-    delete window;
+    delete window_;
 
-    while (!states.empty())
+    while (!states_.empty())
     {
-        delete states.top();
-        states.pop();
+        delete states_.top();
+        states_.pop();
     }
 }
 
 //Regular
-void Game::endApplication()
+void Game::EndApplication()
 {
 
 }
 
 //Update
-void Game::updateDelta()
+void Game::UpdateDelta()
 {
-    delta = clock.restart().asSeconds();
+    delta_ = clock_.restart().asSeconds();
 }
 
-void Game::updateSFMLEvents()
+void Game::UpdateSFMLEvents()
 {
-    while (window->pollEvent(event))
+    while (window_->pollEvent(event_))
     {
-        if (event.type == sf::Event::Closed)
-            window->close();
+        if (event_.type == sf::Event::Closed)
+            window_->close();
     }
 }
 
-void Game::update()
+void Game::Update()
 {
-    updateSFMLEvents();
+    UpdateSFMLEvents();
 
-    if (!states.empty())
+    if (!states_.empty())
     {
-        states.top()->update(delta);
+        states_.top()->Update(delta_);
 
-        if (states.top()->getQuit())
+        if (states_.top()->GetQuit())
         {
-            states.top()->endState();
-            delete states.top();
-            states.pop();
+            states_.top()->EndState();
+            delete states_.top();
+            states_.pop();
         }
     }
     else
     {
-        endApplication();
-        window->close();
+        EndApplication();
+        window_->close();
     }
 }
 
 //Render
-void Game::render()
+void Game::Render()
 {
 
     sf::Texture tBackground;
     tBackground.loadFromFile("images/background.jpg");
     sf::Sprite sBackground(tBackground);
 
-    window->clear();
+    window_->clear();
 
-    if (!states.empty())
-        states.top()->render();
+    if (!states_.empty())
+        states_.top()->Render();
 
-    window->draw(sBackground);
-    window->display();
+    window_->draw(sBackground);
+    window_->display();
 }
 
 //Core
-int Game::run()
+int Game::Run()
 {
-    while (window->isOpen())
+    while (window_->isOpen())
     {
-        updateDelta();
-        update();
-        render();
+        UpdateDelta();
+        Update();
+        Render();
     }
     return EXIT_SUCCESS;
 }

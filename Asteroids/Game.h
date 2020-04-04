@@ -1,5 +1,5 @@
-#ifndef _GAME_H_
-#define _GAME_H_
+#ifndef GAME_H_
+#define GAME_H_
 
 #include "Bullet.h"
 #include "GameState.h"
@@ -16,35 +16,35 @@ class Game
     //Functions
 
     //Regular
-    void endApplication();
+    void EndApplication();
 
     //Update
-    void updateDelta();
-    void updateSFMLEvents();
-    void update();
+    void UpdateDelta();
+    void UpdateSFMLEvents();
+    void Update();
 
     //Render
-    void render();
+    void Render();
 
     //Core
-    int run();
+    int Run();
 
   private:
-    sf::RenderWindow* window;
-    sf::Event         event;
+    sf::RenderWindow* window_;
+    sf::Event         event_;
 
-    sf::Clock clock;
-    float     delta;
+    sf::Clock clock_;
+    float     delta_;
 
-    std::stack<State*> states;
+    std::stack<State*> states_;
 
-    bool                running;
-    int                 lives;
-    Ship                ship;
-    std::vector<Bullet> bullets;
+    bool                running_;
+    int                 lives_;
+    Ship                ship_;
+    std::vector<Bullet> bullets_;
 
     //Inititalization
-    void initWindow();
+    void InitWindow();
     void initStates();
 };
 

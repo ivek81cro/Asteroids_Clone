@@ -6,7 +6,7 @@ int main()
 {
 
     Game game;
-    game.run();
+    game.Run();
 
     return EXIT_SUCCESS;
 }
