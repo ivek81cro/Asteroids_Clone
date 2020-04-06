@@ -1,30 +1,37 @@
-#ifndef _ENTITY_H_
-#define _ENTITY_H_
+#ifndef ENTITY_H_
+#define ENTITY_H_
 
-#include <SFML/Graphics.hpp>
+#include <cstdlib>
+#include <ctime>
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <sstream>
+#include <stack>
+#include <vector>
+
+#include "SFML/Audio.hpp"
+#include "SFML/Graphics.hpp"
+#include "SFML/System.hpp"
+#include "SFML/Window.hpp"
 
 class Entity
 {
   public:
-    Entity()=default;
-    Entity(int moveRect, float elapsedTime, int id, float radius, bool isAlive);
+    Entity();
+    virtual ~Entity();
 
-    virtual void Update(sf::Time& elapsedTime, const sf::Event& event);
-    virtual void OnEvent(const sf::Event& event);
+    //Functions
+    virtual void Move(const float& delta, const float x, const float y);
 
-    bool        IsAlive();
-    void        Draw(sf::RenderTarget& target, sf::RenderStates states) const;
-    float       GetRadius();
-    int         GetId();
-    sf::Sprite& GetSprite();
+    virtual void Update(const float& delta);
+    virtual void Render(sf::RenderTarget* target);
 
   protected:
-    bool       mAlive;
-    float      mRadius;
-    int        mId;
-    int        mMoveRect;
-    float      mElapsedTime;
-    sf::Sprite mSprite;
+    sf::RectangleShape shape_;
+    float              movement_speed_;
+
+  private:
 };
 
 #endif

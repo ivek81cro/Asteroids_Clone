@@ -1,6 +1,4 @@
 #include "Game.h"
-#include "Constants.h"
-#include "Level.h"
 
 //Initialization
 void Game::InitWindow()
@@ -27,15 +25,31 @@ void Game::InitWindow()
     window_->setVerticalSyncEnabled(v_sync_enabled);
 }
 
+void Game::InitKeys()
+{
+    std::ifstream ifs("Config/supported_keys.ini");
+    if (ifs.is_open())
+    {
+        std::string key       = "";
+        int         key_value = 0;
+        while (ifs >> key >> key_value)
+        {
+            supported_keys_[ key ] = key_value;
+        }
+    }
+    ifs.close();
+}
+
 void Game::InitStates()
 {
-    states_.push(new GameState(window_));
+    states_.push(new MainMenuState(window_, &supported_keys_));
 }
 
 //Constructors/Destructors
 Game::Game()
 {
     InitWindow();
+    InitKeys();
     InitStates();
 }
 
@@ -53,7 +67,6 @@ Game::~Game()
 //Regular
 void Game::EndApplication()
 {
-
 }
 
 //Update
@@ -96,17 +109,11 @@ void Game::Update()
 //Render
 void Game::Render()
 {
-
-    sf::Texture tBackground;
-    tBackground.loadFromFile("images/background.jpg");
-    sf::Sprite sBackground(tBackground);
-
     window_->clear();
 
     if (!states_.empty())
         states_.top()->Render();
 
-    window_->draw(sBackground);
     window_->display();
 }
 

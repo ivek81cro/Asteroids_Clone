@@ -1,17 +1,12 @@
 #ifndef STATE_H_
 #define STATE_H_
 
-#include <SFML/Graphics.hpp>
-#include <fstream>
-#include <map>
-#include <sstream>
-#include <stack>
-#include <vector>
+#include "Entity.h"
 
 class State
 {
   public:
-    State(sf::RenderWindow* window);
+    State(sf::RenderWindow* window, std::map<std::string, int>* supported_keys);
     virtual ~State();
 
     const bool& GetQuit() const;
@@ -19,14 +14,29 @@ class State
     virtual void CheckForQuit();
 
     virtual void EndState()                                 = 0;
-    virtual void UpdateKeybinds(const float& delta)         = 0;
+    virtual void UpdateMousePositions();
+    virtual void UpdateInput(const float& delta)            = 0;
     virtual void Update(const float& delta)                 = 0;
     virtual void Render(sf::RenderTarget* target = nullptr) = 0;
 
-  private:
-    sf::RenderWindow*        window_;
+  protected:
+    sf::RenderWindow*           window_;
+    std::map<std::string, int>* supported_keys_;
+    std::map<std::string, int>  keybinds_;
+    bool                        quit_;
+
+    //Mouse position
+    sf::Vector2i mouse_pos_screen_;
+    sf::Vector2i mouse_pos_window_;
+    sf::Vector2f mouse_pos_view_;
+
+    //Resources
     std::vector<sf::Texture> textures_;
-    bool                     quit_;
+
+    //Functions
+    virtual void InitKeybinds() = 0;
+
+    private:
 };
 
 #endif // !STATE_H_

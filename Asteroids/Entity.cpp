@@ -1,44 +1,26 @@
 #include "Entity.h"
 
-Entity::Entity(int moveRect, float elapsedTime, int id, float radius, bool isAlive)
-        : mElapsedTime(elapsedTime)
-        , mMoveRect(moveRect)
-        , mId(id)
-        , mRadius(radius)
-        , mAlive(isAlive)
+Entity::Entity()
+{
+    shape_.setSize(sf::Vector2f(50.f, 50.f));
+    shape_.setFillColor(sf::Color::White);
+    movement_speed_ = 100.0f;
+}
+
+Entity::~Entity()
 {
 }
 
-bool Entity::IsAlive()
+void Entity::Move(const float& delta, const float dir_x, const float dir_y)
 {
-    return mAlive;
+    shape_.move(dir_x * movement_speed_ * delta, dir_y * movement_speed_ * delta);
 }
 
-float Entity::GetRadius()
-{
-    return mRadius;
-}
-
-int Entity::GetId()
-{
-    return mId;
-}
-
-sf::Sprite& Entity::GetSprite()
-{
-    return mSprite;
-}
-
-void Entity::Draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
-    states.transform *= mSprite.getTransform();
-    target.draw(mSprite, states);
-}
-
-void Entity::Update(sf::Time& elapsedTime, const sf::Event& event)
+void Entity::Update(const float& delta)
 {
 }
 
-void Entity::OnEvent(const sf::Event& event)
+void Entity::Render(sf::RenderTarget* target)
 {
+    target->draw(shape_);
 }

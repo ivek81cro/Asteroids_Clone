@@ -1,10 +1,7 @@
 #ifndef GAME_H_
 #define GAME_H_
 
-#include "Bullet.h"
-#include "GameState.h"
-#include "Level.h"
-#include "Ship.h"
+#include "MainMenuState.h"
 
 class Game
 {
@@ -38,13 +35,11 @@ class Game
 
     std::stack<State*> states_;
 
-    bool                running_;
-    int                 lives_;
-    Ship                ship_;
-    std::vector<Bullet> bullets_;
+    std::map<std::string, int> supported_keys_;
 
-    //Inititalization
+     //Inititalization
     void InitWindow();
+    void InitKeys();
     void InitStates();
 };
 
