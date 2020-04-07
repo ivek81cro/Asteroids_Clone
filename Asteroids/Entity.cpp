@@ -2,18 +2,28 @@
 
 Entity::Entity()
 {
-    shape_.setSize(sf::Vector2f(50.f, 50.f));
-    shape_.setFillColor(sf::Color::White);
-    movement_speed_ = 100.0f;
+    InitVariables();
 }
 
 Entity::~Entity()
 {
+    delete sprite_;
 }
 
+//Component functions
+void Entity::CreateSprite(sf::Texture* texture)
+{
+    texture_ = texture;
+    sprite_->setTexture(*texture_);
+}
+
+//Functions
 void Entity::Move(const float& delta, const float dir_x, const float dir_y)
 {
-    shape_.move(dir_x * movement_speed_ * delta, dir_y * movement_speed_ * delta);
+    if (sprite_)
+    {
+        sprite_->move(dir_x * movement_speed_ * delta, dir_y * movement_speed_ * delta);
+    }
 }
 
 void Entity::Update(const float& delta)
@@ -22,5 +32,13 @@ void Entity::Update(const float& delta)
 
 void Entity::Render(sf::RenderTarget* target)
 {
-    target->draw(shape_);
+    target->draw(*sprite_);
+}
+
+//Initializer functions
+void Entity::InitVariables()
+{
+    texture_        = nullptr;
+    sprite_         = nullptr;
+    movement_speed_ = 100.f;
 }

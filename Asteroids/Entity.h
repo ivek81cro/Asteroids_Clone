@@ -21,6 +21,9 @@ class Entity
     Entity();
     virtual ~Entity();
 
+    //Component functions
+    void CreateSprite(sf::Texture* texture);
+
     //Functions
     virtual void Move(const float& delta, const float x, const float y);
 
@@ -28,10 +31,14 @@ class Entity
     virtual void Render(sf::RenderTarget* target);
 
   protected:
-    sf::RectangleShape shape_;
-    float              movement_speed_;
+    sf::Texture* texture_;
+    sf::Sprite*  sprite_;
+
+    float movement_speed_;
 
   private:
+    //Initializer functions
+    void InitVariables();
 };
 
 #endif
