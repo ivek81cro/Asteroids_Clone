@@ -42,7 +42,7 @@ void Game::InitKeys()
 
 void Game::InitStates()
 {
-    states_.push(new MainMenuState(window_, &supported_keys_));
+    states_.push(new MainMenuState(window_, &supported_keys_, &states_));
 }
 
 //Constructors/Destructors

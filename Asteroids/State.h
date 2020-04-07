@@ -6,7 +6,7 @@
 class State
 {
   public:
-    State(sf::RenderWindow* window, std::map<std::string, int>* supported_keys);
+    State(sf::RenderWindow* window, std::map<std::string, int>* supported_keys, std::stack<State*>* states);
     virtual ~State();
 
     const bool& GetQuit() const;
@@ -20,6 +20,7 @@ class State
     virtual void Render(sf::RenderTarget* target = nullptr) = 0;
 
   protected:
+    std::stack<State*>*         states_;
     sf::RenderWindow*           window_;
     std::map<std::string, int>* supported_keys_;
     std::map<std::string, int>  keybinds_;
