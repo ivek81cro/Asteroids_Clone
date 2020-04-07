@@ -9,11 +9,9 @@ class State
     State(sf::RenderWindow* window, std::map<std::string, int>* supported_keys, std::stack<State*>* states);
     virtual ~State();
 
-    const bool& GetQuit() const;
+    const bool&  GetQuit() const;
 
-    virtual void CheckForQuit();
-
-    virtual void EndState()                                 = 0;
+    void EndState();
     virtual void UpdateMousePositions();
     virtual void UpdateInput(const float& delta)            = 0;
     virtual void Update(const float& delta)                 = 0;
@@ -37,7 +35,7 @@ class State
     //Functions
     virtual void InitKeybinds() = 0;
 
-    private:
+  private:
 };
 
 #endif // !STATE_H_

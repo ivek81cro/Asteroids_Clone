@@ -10,8 +10,6 @@ class MainMenuState : public State
     MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supported_keys, std::stack<State*>* states);
     virtual ~MainMenuState();
 
-    void EndState();
-
     void UpdateInput(const float& delta);
     void UpdateButtons();
     void Update(const float& delta);

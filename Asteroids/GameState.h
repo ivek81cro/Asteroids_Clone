@@ -9,8 +9,7 @@ class GameState : public State
     GameState(sf::RenderWindow* window, std::map<std::string, int>* supported_keys, std::stack<State*>* states);
     virtual ~GameState();
 
-    void EndState();
-
+    //Functions
     void UpdateInput(const float& delta);
     void Update(const float& delta);
     void Render(sf::RenderTarget* target = nullptr);
@@ -18,7 +17,7 @@ class GameState : public State
   private:
     Entity player_;
 
-    //Functions
+    //Initializer Functions
     void InitKeybinds();
 };
 

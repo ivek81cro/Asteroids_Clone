@@ -20,10 +20,6 @@ MainMenuState::~MainMenuState()
     }
 }
 
-void MainMenuState::EndState()
-{
-}
-
 //Initializer functions
 void MainMenuState::InitVariables()
 {
@@ -84,7 +80,6 @@ void MainMenuState::InitButtons()
 //Update functions
 void MainMenuState::UpdateInput(const float& delta)
 {
-    CheckForQuit();
 }
 
 void MainMenuState::UpdateButtons()
@@ -104,7 +99,7 @@ void MainMenuState::UpdateButtons()
     //Quit game
     if (buttons_[ "EXIT_STATE" ]->IsPressed())
     {
-        quit_ = true;
+        EndState();
     }
 }
 

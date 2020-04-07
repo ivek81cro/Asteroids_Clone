@@ -10,10 +10,6 @@ GameState::~GameState()
 {
 }
 
-void GameState::EndState()
-{
-}
-
 void GameState::InitKeybinds()
 {
     std::ifstream ifs("Config/gamestate_keybinds.ini");
@@ -31,8 +27,6 @@ void GameState::InitKeybinds()
 
 void GameState::UpdateInput(const float& delta)
 {
-    CheckForQuit();
-
     //Update player input
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_UP"))))
         player_.Move(delta, 0.f, -1.f);
@@ -42,6 +36,9 @@ void GameState::UpdateInput(const float& delta)
         player_.Move(delta, -1.f, 0.f);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_RIGHT"))))
         player_.Move(delta, 1.f, 0.f);
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("CLOSE"))))
+        EndState();
 }
 
 void GameState::Update(const float& delta)
