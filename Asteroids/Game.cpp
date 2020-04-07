@@ -11,6 +11,7 @@ void Game::InitVariables()
 void Game::InitWindow()
 {
     std::ifstream ifs("Config/window.ini");
+
     video_modes_                     = sf::VideoMode::getFullscreenModes();
     bool          fullscreen         = false;
     std::string   title              = "None";

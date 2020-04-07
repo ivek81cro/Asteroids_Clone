@@ -4,12 +4,11 @@ MainMenuState::MainMenuState(sf::RenderWindow* window, std::map<std::string, int
                              std::stack<State*>* states)
         : State(window, supported_keys, states)
 {
+    InitVariables();
+    InitBackground();
     InitFonts();
     InitKeybinds();
     InitButtons();
-
-    background_.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
-    background_.setFillColor(sf::Color::Magenta);
 }
 
 MainMenuState::~MainMenuState()
@@ -23,6 +22,24 @@ MainMenuState::~MainMenuState()
 
 void MainMenuState::EndState()
 {
+}
+
+//Initializer functions
+void MainMenuState::InitVariables()
+{
+}
+
+void MainMenuState::InitBackground()
+{
+    background_.setSize(
+        sf::Vector2f(static_cast<float>(window_->getSize().x), static_cast<float>(window_->getSize().y)));
+
+    if (!background_texture_.loadFromFile("Resources/Images/background.jpg"))
+    {
+        throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_TEXTURE";
+    }
+
+    background_.setTexture(&background_texture_);
 }
 
 void MainMenuState::InitFonts()
@@ -50,13 +67,21 @@ void MainMenuState::InitKeybinds()
 
 void MainMenuState::InitButtons()
 {
-    buttons_[ "GAME_STATE" ] = new Button(100, 100, 150, 50, &font_, "New game", sf::Color(70, 70, 70, 200),
-                                          sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200));
+    sf::Vector2f position;
+    position.x = window_->getSize().x / 2.f - 125.f;
+    position.y = window_->getSize().y / 2.f - 25.f;
 
-    buttons_[ "EXIT_STATE" ] = new Button(100, 300, 150, 50, &font_, "Quit", sf::Color(100, 100, 100, 200),
-                                          sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200));
+    buttons_[ "GAME_STATE" ] = new Button(position.x, position.y-200.f, 250, 50, &font_, "New game", sf::Color(255, 0, 0, 200),
+                                          sf::Color(255, 102, 102, 200), sf::Color(204, 0, 0, 200));
+
+    buttons_[ "SETTINGS" ] = new Button(position.x, position.y - 125.f, 250, 50, &font_, "Settings", sf::Color(255, 0, 0, 200),
+                   sf::Color(255, 102, 102, 200), sf::Color(204, 0, 0, 200));
+
+    buttons_[ "EXIT_STATE" ] = new Button(position.x, position.y-50.f, 250, 50, &font_, "Quit", sf::Color(255, 0, 0, 200),
+                                          sf::Color(255, 102, 102, 200), sf::Color(204, 0, 0, 200));
 }
 
+//Update functions
 void MainMenuState::UpdateInput(const float& delta)
 {
     CheckForQuit();
@@ -91,6 +116,7 @@ void MainMenuState::Update(const float& delta)
     UpdateButtons();
 }
 
+//Render functions
 void MainMenuState::RenderButtons(sf::RenderTarget* target)
 {
     for (auto& it : buttons_)
@@ -108,4 +134,15 @@ void MainMenuState::Render(sf::RenderTarget* target)
     target->draw(background_);
 
     RenderButtons(target);
+
+    //Mouse coordinates for testing
+    sf::Text mouse_text;
+    mouse_text.setPosition(mouse_pos_view_.x, mouse_pos_view_.y -50);
+    mouse_text.setFont(font_);
+    mouse_text.setCharacterSize(12);
+    std::stringstream ss;
+    ss << mouse_pos_view_.x << " " << mouse_pos_view_.y;
+    mouse_text.setString(ss.str());
+
+    target->draw(mouse_text);
 }
