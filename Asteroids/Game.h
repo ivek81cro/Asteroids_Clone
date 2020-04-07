@@ -27,8 +27,11 @@ class Game
     int Run();
 
   private:
-    sf::RenderWindow* window_;
-    sf::Event         event_;
+    sf::RenderWindow*          window_;
+    sf::Event                  event_;
+    std::vector<sf::VideoMode> video_modes_;
+    sf::ContextSettings        window_settings_;
+    bool                       fullscreen_;
 
     sf::Clock clock_;
     float     delta_;
@@ -37,7 +40,8 @@ class Game
 
     std::map<std::string, int> supported_keys_;
 
-     //Inititalization
+    //Inititalization
+    void InitVariables();
     void InitWindow();
     void InitKeys();
     void InitStates();
