@@ -10,7 +10,7 @@ class Entity
     virtual ~Entity();
 
     //Component functions
-    void CreateSprite(sf::Texture* texture);
+    void SetTexture(sf::Texture& texture);
     void CreateMovementComponent(const float max_velocity);
 
     //Functions
@@ -22,8 +22,7 @@ class Entity
     virtual void Render(sf::RenderTarget* target);
 
   protected:
-    sf::Texture* texture_;
-    sf::Sprite*  sprite_;
+    sf::Sprite  sprite_;
 
     MovementComponent* movement_component_;
 

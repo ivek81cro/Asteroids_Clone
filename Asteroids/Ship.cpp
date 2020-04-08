@@ -1,12 +1,12 @@
 #include "Ship.h"
 
 //Constructors / Destructors
-Ship::Ship(float x, float y, sf::Texture* texture)
+Ship::Ship(float x, float y, sf::Texture& texture)
 {
     InitVariables();
     InitComponents();
 
-    CreateSprite(texture);
+    SetTexture(texture);
     SetPosition(x, y);
     SetTextureRect(40, 40, 40, 45);
 }

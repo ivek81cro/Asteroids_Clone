@@ -40,7 +40,7 @@ void GameState::InitTextures()
 
 void GameState::InitPlayer()
 {
-    player_ = new Ship(0, 0, &textures_[ "PLAYER_SHIP" ]);
+    player_ = new Ship(0, 0, textures_[ "PLAYER_SHIP" ]);
 }
 
 //Update functions

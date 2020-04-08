@@ -5,7 +5,7 @@
 class Ship : public Entity
 {
   public:
-    Ship(float x, float y, sf::Texture* texture);
+    Ship(float x, float y, sf::Texture& texture);
     virtual ~Ship();
 
     //Functions
