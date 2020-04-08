@@ -2,6 +2,7 @@
 #define STATE_H_
 
 #include "Entity.h"
+#include "Ship.h"
 
 class State
 {
@@ -30,7 +31,7 @@ class State
     sf::Vector2f mouse_pos_view_;
 
     //Resources
-    std::vector<sf::Texture> textures_;
+    std::map<std::string, sf::Texture> textures_;
 
     //Functions
     virtual void InitKeybinds() = 0;

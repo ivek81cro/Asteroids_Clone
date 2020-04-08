@@ -1,15 +1,20 @@
 #include "GameState.h"
 
+//Constructors / Destructors
 GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supported_keys, std::stack<State*>* states)
         : State(window, supported_keys, states)
 {
     InitKeybinds();
+    InitTextures();
+    InitPlayer();
 }
 
 GameState::~GameState()
 {
+    delete player_;
 }
 
+//Initializer functions
 void GameState::InitKeybinds()
 {
     std::ifstream ifs("Config/gamestate_keybinds.ini");
@@ -25,17 +30,31 @@ void GameState::InitKeybinds()
     ifs.close();
 }
 
+void GameState::InitTextures()
+{
+    if (!textures_[ "PLAYER_SHIP" ].loadFromFile("Resources/Images/spaceship.png"))
+    {
+        throw "ERROR::GAMESTATE::COULD_NOT_LOAD_PLAYER_SHIP_TEXTURE";
+    }
+}
+
+void GameState::InitPlayer()
+{
+    player_ = new Ship(0, 0, &textures_[ "PLAYER_SHIP" ]);
+}
+
+//Update functions
 void GameState::UpdateInput(const float& delta)
 {
     //Update player input
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_UP"))))
-        player_.Move(delta, 0.f, -1.f);
+        player_->Move(delta, 0.f, -1.f);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_DOWN"))))
-        player_.Move(delta, 0.f, 1.f);
+        player_->Move(delta, 0.f, 1.f);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_LEFT"))))
-        player_.Move(delta, -1.f, 0.f);
+        player_->Move(delta, -1.f, 0.f);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_RIGHT"))))
-        player_.Move(delta, 1.f, 0.f);
+        player_->Move(delta, 1.f, 0.f);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("CLOSE"))))
         EndState();
@@ -45,14 +64,15 @@ void GameState::Update(const float& delta)
 {
     UpdateMousePositions();
     UpdateInput(delta);
-    player_.Update(delta);
+    player_->Update(delta);
 }
 
+//Render Functions
 void GameState::Render(sf::RenderTarget* target)
 {
     if (!target)
     {
         target = window_;
     }
-    player_.Render(target);
+    player_->Render(target);
 }

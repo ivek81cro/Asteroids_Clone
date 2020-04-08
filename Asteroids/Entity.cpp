@@ -14,10 +14,27 @@ Entity::~Entity()
 void Entity::CreateSprite(sf::Texture* texture)
 {
     texture_ = texture;
-    sprite_->setTexture(*texture_);
+    sprite_  = new sf::Sprite(*texture_);
 }
 
 //Functions
+
+void Entity::SetPosition(const float x, const float y)
+{
+    if (sprite_)
+    {
+        sprite_->setPosition(x, y);
+    }
+}
+
+void Entity::SetTextureRect(const int x, const int y, const int height, const int width)
+{
+    if (sprite_)
+    {
+        sprite_->setTextureRect(sf::IntRect(x, y, height, width));
+    }
+}
+
 void Entity::Move(const float& delta, const float dir_x, const float dir_y)
 {
     if (sprite_)
@@ -32,7 +49,10 @@ void Entity::Update(const float& delta)
 
 void Entity::Render(sf::RenderTarget* target)
 {
-    target->draw(*sprite_);
+    if (sprite_)
+    {
+        target->draw(*sprite_);
+    }
 }
 
 //Initializer functions

@@ -9,16 +9,20 @@ class GameState : public State
     GameState(sf::RenderWindow* window, std::map<std::string, int>* supported_keys, std::stack<State*>* states);
     virtual ~GameState();
 
-    //Functions
+    //Update functions
     void UpdateInput(const float& delta);
     void Update(const float& delta);
+
+    //Render functions
     void Render(sf::RenderTarget* target = nullptr);
 
   private:
-    Entity player_;
+    Ship *player_;
 
     //Initializer Functions
     void InitKeybinds();
+    void InitTextures();
+    void InitPlayer();
 };
 
 #endif // !GAMESTATE_H_
