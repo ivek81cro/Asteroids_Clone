@@ -17,6 +17,11 @@ void Entity::CreateSprite(sf::Texture* texture)
     sprite_  = new sf::Sprite(*texture_);
 }
 
+void Entity::CreateMovementComponent(const float max_velocity)
+{
+    movement_component_ = new MovementComponent(max_velocity);
+}
+
 //Functions
 
 void Entity::SetPosition(const float x, const float y)
@@ -37,9 +42,10 @@ void Entity::SetTextureRect(const int x, const int y, const int height, const in
 
 void Entity::Move(const float& delta, const float dir_x, const float dir_y)
 {
-    if (sprite_)
+    if (sprite_ && movement_component_)
     {
-        sprite_->move(dir_x * movement_speed_ * delta, dir_y * movement_speed_ * delta);
+        movement_component_->Move(dir_x, dir_y); //Sets velocity
+        sprite_->move(movement_component_->GetVelocity() * delta); //Uses velocity
     }
 }
 
@@ -58,7 +64,7 @@ void Entity::Render(sf::RenderTarget* target)
 //Initializer functions
 void Entity::InitVariables()
 {
-    texture_        = nullptr;
-    sprite_         = nullptr;
-    movement_speed_ = 100.f;
+    texture_            = nullptr;
+    sprite_             = nullptr;
+    movement_component_ = nullptr;
 }

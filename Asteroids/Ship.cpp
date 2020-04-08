@@ -22,5 +22,5 @@ void Ship::InitVariables()
 
 void Ship::InitComponents()
 {
-    
+    CreateMovementComponent(100.f);
 }
