@@ -7,6 +7,7 @@ Entity::Entity()
 
 Entity::~Entity()
 {
+    delete movement_component_;
 }
 
 //Component functions
@@ -15,16 +16,16 @@ void Entity::SetTexture(sf::Texture& texture)
     sprite_.setTexture(texture);
 }
 
-void Entity::CreateMovementComponent(const float max_velocity)
+void Entity::CreateMovementComponent(const float max_velocity, const float acceleration, const float deceleration)
 {
-    movement_component_ = new MovementComponent(sprite_, max_velocity);
+    movement_component_ = new MovementComponent(sprite_, max_velocity, acceleration, deceleration);
 }
 
 //Functions
 
 void Entity::SetPosition(const float x, const float y)
 {
-        sprite_.setPosition(x, y);
+    sprite_.setPosition(x, y);
 }
 
 void Entity::SetTextureRect(const int x, const int y, const int height, const int width)
@@ -32,7 +33,7 @@ void Entity::SetTextureRect(const int x, const int y, const int height, const in
     sprite_.setTextureRect(sf::IntRect(x, y, height, width));
 }
 
-void Entity::Move(const float& delta, const float dir_x, const float dir_y)
+void Entity::Move(const float dir_x, const float dir_y, const float& delta)
 {
     if (movement_component_)
     {
@@ -42,11 +43,13 @@ void Entity::Move(const float& delta, const float dir_x, const float dir_y)
 
 void Entity::Update(const float& delta)
 {
+    if (movement_component_)
+        movement_component_->Update(delta);
 }
 
 void Entity::Render(sf::RenderTarget* target)
 {
-        target->draw(sprite_);
+    target->draw(sprite_);
 }
 
 //Initializer functions

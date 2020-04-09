@@ -67,14 +67,26 @@ void MainMenuState::InitButtons()
     position.x = window_->getSize().x / 2.f - 125.f;
     position.y = window_->getSize().y / 2.f - 25.f;
 
-    buttons_[ "GAME_STATE" ] = new Button(position.x, position.y-200.f, 250, 50, &font_, "New game", sf::Color(255, 0, 0, 200),
-                                          sf::Color(255, 102, 102, 200), sf::Color(204, 0, 0, 200));
+    buttons_[ "GAME_STATE" ] = new Button(position.x, position.y - 200.f, 250.f, 50.f, 
+        &font_, "New game", 50, 
+        sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), 
+        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)
+    );
 
-    buttons_[ "SETTINGS" ] = new Button(position.x, position.y - 125.f, 250, 50, &font_, "Settings", sf::Color(255, 0, 0, 200),
-                   sf::Color(255, 102, 102, 200), sf::Color(204, 0, 0, 200));
+    buttons_[ "SETTINGS" ] = new Button(position.x, position.y - 125.f, 250, 50, 
+        &font_, "Settings", 50, 
+        sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
+        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 
-    buttons_[ "EXIT_STATE" ] = new Button(position.x, position.y-50.f, 250, 50, &font_, "Quit", sf::Color(255, 0, 0, 200),
-                                          sf::Color(255, 102, 102, 200), sf::Color(204, 0, 0, 200));
+    buttons_[ "EDITOR_STATE" ] = new Button(position.x, position.y - 50.f, 250, 50,
+        &font_, "Editor", 50, 
+        sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
+        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
+
+    buttons_[ "EXIT_STATE" ] = new Button(position.x, position.y + 25.f, 250, 50, 
+        &font_, "Quit", 50, 
+        sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
+        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 }
 
 //Update functions
@@ -132,7 +144,7 @@ void MainMenuState::Render(sf::RenderTarget* target)
 
     //Mouse coordinates for testing
     sf::Text mouse_text;
-    mouse_text.setPosition(mouse_pos_view_.x, mouse_pos_view_.y -50);
+    mouse_text.setPosition(mouse_pos_view_.x, mouse_pos_view_.y - 50);
     mouse_text.setFont(font_);
     mouse_text.setCharacterSize(12);
     std::stringstream ss;

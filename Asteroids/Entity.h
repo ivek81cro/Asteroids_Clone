@@ -11,12 +11,12 @@ class Entity
 
     //Component functions
     void SetTexture(sf::Texture& texture);
-    void CreateMovementComponent(const float max_velocity);
+    void CreateMovementComponent(const float max_velocity, const float acceleration, const float deceleration);
 
     //Functions
     virtual void SetPosition(const float x, const float y);
     virtual void SetTextureRect(const int x, const int y, const int height, const int width);
-    virtual void Move(const float& delta, const float x, const float y);
+    virtual void Move(const float x, const float y, const float& delta);
 
     virtual void Update(const float& delta);
     virtual void Render(sf::RenderTarget* target);

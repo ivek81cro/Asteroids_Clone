@@ -13,7 +13,8 @@ enum button_states
 class Button
 {
   public:
-    Button(float x, float y, float width, float height, sf::Font* font, std::string text, sf::Color idle_color,
+    Button(float x, float y, float width, float height, sf::Font* font, std::string text, unsigned character_size,
+           sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color, sf::Color idle_color,
            sf::Color hover_color, sf::Color active_color);
     virtual ~Button();
 
@@ -30,6 +31,10 @@ class Button
     sf::RectangleShape shape_;
     sf::Font*          font_;
     sf::Text           text_;
+
+    sf::Color text_idle_color_;
+    sf::Color text_hover_color_;
+    sf::Color text_active_color_;
 
     sf::Color idle_color_;
     sf::Color hover_color_;

@@ -48,13 +48,13 @@ void GameState::UpdateInput(const float& delta)
 {
     //Update player input
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_UP"))))
-        player_->Move(delta, 0.f, -1.f);
+        player_->Move(0.f, -1.f, delta);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_DOWN"))))
-        player_->Move(delta, 0.f, 1.f);
+        player_->Move(0.f, 1.f, delta);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_LEFT"))))
-        player_->Move(delta, -1.f, 0.f);
+        player_->Move(-1.f, 0.f, delta);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_RIGHT"))))
-        player_->Move(delta, 1.f, 0.f);
+        player_->Move(1.f, 0.f, delta);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("CLOSE"))))
         EndState();
