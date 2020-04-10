@@ -33,6 +33,16 @@ void Entity::SetTextureRect(const int x, const int y, const int height, const in
     sprite_.setTextureRect(sf::IntRect(x, y, height, width));
 }
 
+void Entity::SetRotation(const float r)
+{
+    sprite_.setRotation(r);
+}
+
+void Entity::SetOrigin(const sf::Vector2f origin)
+{
+    sprite_.setOrigin(origin);
+}
+
 void Entity::Move(const float dir_x, const float dir_y, const float& delta)
 {
     if (movement_component_)
