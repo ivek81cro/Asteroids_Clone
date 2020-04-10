@@ -7,7 +7,7 @@ void Game::InitVariables()
     delta_      = 0.f;
 }
 
-//Initialization
+//Initialization functions
 void Game::InitWindow()
 {
     std::ifstream ifs("Config/window.ini");
@@ -86,7 +86,7 @@ void Game::EndApplication()
 {
 }
 
-//Update
+//Update functions
 void Game::UpdateDelta()
 {
     delta_ = clock_.restart().asSeconds();
@@ -123,7 +123,7 @@ void Game::Update()
     }
 }
 
-//Render
+//Render functions
 void Game::Render()
 {
     window_->clear();
@@ -134,7 +134,7 @@ void Game::Render()
     window_->display();
 }
 
-//Core
+//Core function
 int Game::Run()
 {
     while (window_->isOpen())

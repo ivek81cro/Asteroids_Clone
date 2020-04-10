@@ -1,5 +1,6 @@
 #include "Entity.h"
 
+//Constructors / Destrustors
 Entity::Entity()
 {
     InitVariables();
@@ -22,7 +23,6 @@ void Entity::CreateMovementComponent(const float max_velocity, const float accel
 }
 
 //Functions
-
 void Entity::SetPosition(const float x, const float y)
 {
     sprite_.setPosition(x, y);

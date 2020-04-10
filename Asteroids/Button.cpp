@@ -1,5 +1,6 @@
 #include "Button.h"
 
+//Constructors / Destructors
 Button::Button(float x, float y, float width, float height, sf::Font* font, std::string text, unsigned character_size,
                sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color ,sf::Color idle_color,
                sf::Color hover_color, sf::Color active_color)
@@ -34,6 +35,7 @@ Button::~Button()
 {
 }
 
+//Accessors
 const bool Button::IsPressed() const
 {
     if (button_state_ == BTN_ACTIVE)
@@ -42,6 +44,7 @@ const bool Button::IsPressed() const
     return false;
 }
 
+//Functions
 void Button::Update(sf::Vector2f mouse_pos)
 {
     button_state_ = BTN_IDLE;

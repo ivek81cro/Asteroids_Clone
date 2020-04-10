@@ -12,7 +12,7 @@ class Game
 
     //Functions
 
-    //Regular
+    //Regular functions
     void EndApplication();
 
     //Update
@@ -20,10 +20,10 @@ class Game
     void UpdateSFMLEvents();
     void Update();
 
-    //Render
+    //Render functions
     void Render();
 
-    //Core
+    //Core function
     int Run();
 
   private:

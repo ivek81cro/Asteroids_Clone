@@ -1,5 +1,6 @@
 #include "MovementComponent.h"
 
+//Constructors / Destructors
 MovementComponent::MovementComponent(sf::Sprite& sprite, float max_velocity, float acceleration, float deceleration)
         : sprite_(sprite)
         , max_velocity_(max_velocity)
@@ -35,10 +36,6 @@ void MovementComponent::Move(const float dir_x, const float dir_y, const float d
         if (velocity_.x < -max_velocity_)
             velocity_.x = -max_velocity_;
     }
-
-    velocity_.y += acceleration_ * dir_y;
-    if (velocity_.y > max_velocity_)
-        velocity_.y = max_velocity_;
 }
 
 void MovementComponent::Update(const float& delta)
