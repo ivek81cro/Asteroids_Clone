@@ -9,6 +9,8 @@ Ship::Ship(float x, float y, sf::Texture& texture)
     SetTexture(texture);
     SetPosition(x, y);
     SetTextureRect(40, 40, 40, 45);
+    SetRotation(0.f);
+    SetOrigin(sf::Vector2f(20.f, 20.f));
 }
 
 Ship::~Ship()

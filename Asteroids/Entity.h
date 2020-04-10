@@ -16,6 +16,8 @@ class Entity
     //Functions
     virtual void SetPosition(const float x, const float y);
     virtual void SetTextureRect(const int x, const int y, const int height, const int width);
+    virtual void SetRotation(const float r);
+    virtual void SetOrigin(const sf::Vector2f origin);
     virtual void Move(const float x, const float y, const float& delta);
 
     virtual void Update(const float& delta);
