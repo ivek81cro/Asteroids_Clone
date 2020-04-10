@@ -18,7 +18,6 @@ class MainMenuState : public State
 
   private:
     //Variables
-    sf::Texture        background_texture_;
     sf::RectangleShape background_;
     sf::Font           font_;
 

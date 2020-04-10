@@ -40,7 +40,8 @@ void GameState::InitTextures()
 
 void GameState::InitPlayer()
 {
-    player_ = new Ship(window_->getSize().x / 2, window_->getSize().y / 2, textures_[ "PLAYER_SHIP" ]);
+    player_ = new Ship(static_cast<float>(window_->getSize().x / 2), static_cast<float> (window_->getSize().y / 2),
+                       textures_[ "PLAYER_SHIP" ]);
 }
 
 //Update functions

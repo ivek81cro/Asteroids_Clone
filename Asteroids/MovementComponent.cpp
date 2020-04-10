@@ -52,12 +52,12 @@ void MovementComponent::CheckPosition(const sf::Vector2u& window_size)
     if (position.x > window_size.x)
         position.x = 0;
     if (position.x < 0)
-        position.x = window_size.x;
+        position.x = static_cast<float>(window_size.x);
 
     if (position.y > window_size.y)
         position.y = 0;
     if (position.y < 0)
-        position.y = window_size.y;
+        position.y = static_cast<float>(window_size.y);
 
     sprite_.setPosition(position);
 }

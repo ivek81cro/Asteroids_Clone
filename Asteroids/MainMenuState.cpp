@@ -31,12 +31,12 @@ void MainMenuState::InitBackground()
     background_.setSize(
         sf::Vector2f(static_cast<float>(window_->getSize().x), static_cast<float>(window_->getSize().y)));
 
-    if (!background_texture_.loadFromFile("Resources/Images/background.jpg"))
+    if (!textures_[ "BACKGROUND_TEXTURE" ].loadFromFile("Resources/Images/background.jpg"))
     {
         throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_TEXTURE";
     }
 
-    background_.setTexture(&background_texture_);
+    background_.setTexture(&textures_[ "BACKGROUND_TEXTURE" ]);
 }
 
 void MainMenuState::InitFonts()
@@ -68,26 +68,25 @@ void MainMenuState::InitButtons()
     position.x = window_->getSize().x / 2.f - 125.f;
     position.y = window_->getSize().y / 2.f - 25.f;
 
-    buttons_[ "GAME_STATE" ] = new Button(position.x, position.y - 200.f, 250.f, 50.f, 
-        &font_, "New game", 50, 
-        sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), 
-        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)
-    );
+    buttons_[ "GAME_STATE" ] =
+        new Button(position.x, position.y - 200.f, 250.f, 50.f, &font_, "New game", 50, sf::Color(255, 0, 0, 200),
+                   sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0),
+                   sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 
-    buttons_[ "SETTINGS" ] = new Button(position.x, position.y - 125.f, 250, 50, 
-        &font_, "Settings", 50, 
-        sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
-        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
+    buttons_[ "SETTINGS" ] =
+        new Button(position.x, position.y - 125.f, 250, 50, &font_, "Settings", 50, sf::Color(255, 0, 0, 200),
+                   sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0),
+                   sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 
-    buttons_[ "EDITOR_STATE" ] = new Button(position.x, position.y - 50.f, 250, 50,
-        &font_, "Editor", 50, 
-        sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
-        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
+    buttons_[ "EDITOR_STATE" ] =
+        new Button(position.x, position.y - 50.f, 250, 50, &font_, "Editor", 50, sf::Color(255, 0, 0, 200),
+                   sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0),
+                   sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 
-    buttons_[ "EXIT_STATE" ] = new Button(position.x, position.y + 25.f, 250, 50, 
-        &font_, "Quit", 50, 
-        sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
-        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
+    buttons_[ "EXIT_STATE" ] =
+        new Button(position.x, position.y + 25.f, 250, 50, &font_, "Quit", 50, sf::Color(255, 0, 0, 200),
+                   sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0),
+                   sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 }
 
 //Update functions
