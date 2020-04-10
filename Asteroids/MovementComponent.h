@@ -25,8 +25,10 @@ class MovementComponent
     const sf::Vector2f& GetVelocity() const;
 
     //Functions
-    void Move(const float x, const float y, const float delta);
-    void Update(const float& delta);
+    void Move(const float x, const float y, const float& delta);
+    void CheckMaxVelocity(const float& delta);
+    void CheckPosition(const sf::Vector2u& window_size);
+    void Update(const float& delta, const sf::Vector2u& window_size);
 
   private:
     sf::Sprite& sprite_;

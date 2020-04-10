@@ -20,74 +20,52 @@ const sf::Vector2f& MovementComponent::GetVelocity() const
 }
 
 //Functions
-void MovementComponent::Move(const float dir_x, const float dir_y, const float delta)
+void MovementComponent::Move(const float dir_x, const float dir_y, const float& delta)
 {
     //Acceeration
+    sprite_.rotate(dir_x * 300.f * delta);
 
-    velocity_.x += acceleration_ * dir_x;
+    if (dir_y != 0)
+    {
+        float rotation = sprite_.getRotation() + 90;
+        float x_pos    = cos(rotation * 0.017453f);
+        float y_pos    = sin(rotation * 0.017453f);
 
-    if (velocity_.x > 0.f)
-    {
-        if (velocity_.x > max_velocity_)
-            velocity_.x = max_velocity_;
-    }
-    else if (velocity_.x < 0.f)
-    {
-        if (velocity_.x < -max_velocity_)
-            velocity_.x = -max_velocity_;
+        velocity_.x += acceleration_ * dir_y * delta * x_pos;
+        velocity_.y += acceleration_ * dir_y * delta * y_pos;
     }
 }
 
-void MovementComponent::Update(const float& delta)
+void MovementComponent::CheckMaxVelocity(const float& delta)
 {
-    //Movement for x
-    if (velocity_.x > 0.f)
-    {
-        //Max velocity check +x
-        if (velocity_.x > max_velocity_)
-            velocity_.x = max_velocity_;
+    if ((velocity_.x * velocity_.x) > (max_velocity_ * max_velocity_))
+        velocity_.x = velocity_.x > 0 ? max_velocity_ : -max_velocity_;
 
-        //Deceleration +x
-        velocity_.x -= deceleration_;
-        if (velocity_.x < 0.f)
-            velocity_.x = 0;
-    }
-    else if (velocity_.x < 0.f)
-    {
-        //Max velocity check -x
-        if (velocity_.x < -max_velocity_)
-            velocity_.x = -max_velocity_;
+    if ((velocity_.y * velocity_.y) > (max_velocity_ * max_velocity_))
+        velocity_.y = velocity_.y > 0 ? max_velocity_ : -max_velocity_;    
+}
 
-        //Deceleration -x
-        velocity_.x += deceleration_;
-        if (velocity_.x > 0.f)
-            velocity_.x = 0;
-    }
+void MovementComponent::CheckPosition(const sf::Vector2u& window_size)
+{
+    sf::Vector2f position = sprite_.getPosition();
 
-    //Movement for y
-    if (velocity_.y > 0.f)
-    {
-        //Max velocity check +y
-        if (velocity_.y > max_velocity_)
-            velocity_.y = max_velocity_;
+    if (position.x > window_size.x)
+        position.x = 0;
+    if (position.x < 0)
+        position.x = window_size.x;
 
-        //Deceleration +y
-        velocity_.y -= deceleration_;
-        if (velocity_.y < 0.f)
-            velocity_.y = 0;
-    }
-    else if (velocity_.y < 0.f)
-    {
-        //Max velocity check -y
-        if (velocity_.y < -max_velocity_)
-            velocity_.y = -max_velocity_;
+    if (position.y > window_size.y)
+        position.y = 0;
+    if (position.y < 0)
+        position.y = window_size.y;
 
-        //Deceleration -x
-        velocity_.y += deceleration_;
-        if (velocity_.y > 0.f)
-            velocity_.y = 0;
-    }
+    sprite_.setPosition(position);
+}
 
+void MovementComponent::Update(const float& delta, const sf::Vector2u& window_size)
+{
+    CheckMaxVelocity(delta);
+    CheckPosition(window_size);
     //Final move
     sprite_.move(velocity_ * delta); //Uses velocity
 }

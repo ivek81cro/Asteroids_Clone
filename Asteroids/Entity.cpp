@@ -51,10 +51,10 @@ void Entity::Move(const float dir_x, const float dir_y, const float& delta)
     }
 }
 
-void Entity::Update(const float& delta)
+void Entity::Update(const float& delta, const sf::Vector2u& window_size)
 {
     if (movement_component_)
-        movement_component_->Update(delta);
+        movement_component_->Update(delta, window_size);
 }
 
 void Entity::Render(sf::RenderTarget* target)

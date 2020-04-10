@@ -20,7 +20,7 @@ class Entity
     virtual void SetOrigin(const sf::Vector2f origin);
     virtual void Move(const float x, const float y, const float& delta);
 
-    virtual void Update(const float& delta);
+    virtual void Update(const float& delta, const sf::Vector2u& window_size);
     virtual void Render(sf::RenderTarget* target);
 
   protected:

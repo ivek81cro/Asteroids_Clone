@@ -40,7 +40,7 @@ void GameState::InitTextures()
 
 void GameState::InitPlayer()
 {
-    player_ = new Ship(0, 0, textures_[ "PLAYER_SHIP" ]);
+    player_ = new Ship(window_->getSize().x / 2, window_->getSize().y / 2, textures_[ "PLAYER_SHIP" ]);
 }
 
 //Update functions
@@ -64,7 +64,7 @@ void GameState::Update(const float& delta)
 {
     UpdateMousePositions();
     UpdateInput(delta);
-    player_->Update(delta);
+    player_->Update(delta, window_->getSize());
 }
 
 //Render Functions
