@@ -17,7 +17,7 @@ class GameState : public State
     void Render(sf::RenderTarget* target = nullptr);
 
   private:
-    Ship *player_;
+    Ship* player_;
 
     //Initializer Functions
     void InitKeybinds();

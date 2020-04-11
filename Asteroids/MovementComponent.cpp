@@ -42,7 +42,11 @@ void MovementComponent::CheckMaxVelocity(const float& delta)
         velocity_.x = velocity_.x > 0 ? max_velocity_ : -max_velocity_;
 
     if ((velocity_.y * velocity_.y) > (max_velocity_ * max_velocity_))
-        velocity_.y = velocity_.y > 0 ? max_velocity_ : -max_velocity_;    
+        velocity_.y = velocity_.y > 0 ? max_velocity_ : -max_velocity_;
+
+    //Deceleration
+    velocity_.y *= deceleration_;
+    velocity_.x *= deceleration_;
 }
 
 void MovementComponent::CheckPosition(const sf::Vector2u& window_size)

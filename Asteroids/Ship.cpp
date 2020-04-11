@@ -24,5 +24,5 @@ void Ship::InitVariables()
 
 void Ship::InitComponents()
 {
-    CreateMovementComponent(200.f, 400.f, 50.f);
+    CreateMovementComponent(200.f, 400.f, 0.998f);
 }
