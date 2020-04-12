@@ -35,11 +35,11 @@ void Bullet::SetLifeTime(const float& delta)
 void Bullet::InitVariables()
 {
     name_     = "bullet";
-    lifetime_ = .2f;
+    lifetime_ = 2.f;
     alive_    = true;
 }
 
 void Bullet::InitComponents()
 {
-    CreateMovementComponent(100.f, 0.f, 0.f, sprite_.getRotation());
+    CreateMovementComponent(1000.f, 0.f, 0.f, sprite_.getRotation());
 }

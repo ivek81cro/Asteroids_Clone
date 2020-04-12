@@ -54,7 +54,7 @@ void MovementComponent::MoveShip(const float dir_x, const float dir_y, const flo
 
 void MovementComponent::MoveAsteroid()
 {
-    velocity_ = direction_ * 100.f;
+    velocity_ = direction_ * 1000.f;
 }
 
 void MovementComponent::CheckMaxVelocity(const float& delta)
@@ -93,7 +93,8 @@ void MovementComponent::CheckPosition(const sf::Vector2u& window_size)
 void MovementComponent::Update(const float& delta, const sf::Vector2u& window_size)
 {
     CheckMaxVelocity(delta);
-    CheckPosition(window_size);
+    if (name_ != "bullet")
+        CheckPosition(window_size);
     //Final move
     sprite_.move(velocity_ * delta); //Uses velocity
 }

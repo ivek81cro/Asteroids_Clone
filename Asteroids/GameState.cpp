@@ -83,7 +83,8 @@ void GameState::InitAsteroids()
 
 void GameState::FireBullet()
 {
-    bullet_.push_back(new Bullet(ship_->GetPosition().x, ship_->GetPosition().y, textures_[ "BULLET" ], ship_->GetAngle()));
+    bullet_.push_back(
+        new Bullet(ship_->GetPosition().x, ship_->GetPosition().y, textures_[ "BULLET" ], ship_->GetAngle()));
 }
 
 //Update functions
@@ -117,6 +118,15 @@ void GameState::Update(const float& delta)
 {
     UpdateMousePositions();
     UpdateInput(delta);
+
+    //Check if bullet is alive
+    bullet_.erase(std::remove_if(bullet_.begin(), bullet_.end(), [](Bullet* bullet) { return !(*bullet).IsAlive(); }),
+                  bullet_.end());
+
+    //Check if asteroid is alive
+    asteroid_.erase(
+        std::remove_if(asteroid_.begin(), asteroid_.end(), [](Asteroid* asteroid) { return !(*asteroid).IsAlive(); }),
+        asteroid_.end());
 
     ship_->Update(delta, window_->getSize());
 

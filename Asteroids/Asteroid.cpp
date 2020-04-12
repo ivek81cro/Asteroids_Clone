@@ -20,6 +20,7 @@ Asteroid::~Asteroid()
 void Asteroid::InitVariables()
 {
     name_ = "asteroid";
+    alive_ = true;
 }
 
 void Asteroid::InitComponents()
