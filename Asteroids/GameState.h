@@ -17,12 +17,16 @@ class GameState : public State
     void Render(sf::RenderTarget* target = nullptr);
 
   private:
-    Ship* player_;
+    Ship*                  ship_;
+    std::vector<Asteroid*> asteroid_;
+    sf::RectangleShape     background_;
 
     //Initializer Functions
     void InitKeybinds();
     void InitTextures();
+    void InitBackground();
     void InitPlayer();
+    void InitAsteroids();
 };
 
 #endif // !GAMESTATE_H_

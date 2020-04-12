@@ -6,12 +6,16 @@ GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* suppo
 {
     InitKeybinds();
     InitTextures();
+    InitBackground();
     InitPlayer();
+    InitAsteroids();
 }
 
 GameState::~GameState()
 {
-    delete player_;
+    delete ship_;
+    while (!asteroid_.empty())
+        asteroid_.pop_back();
 }
 
 //Initializer functions
@@ -36,12 +40,38 @@ void GameState::InitTextures()
     {
         throw "ERROR::GAMESTATE::COULD_NOT_LOAD_PLAYER_SHIP_TEXTURE";
     }
+
+    if (!textures_[ "ASTEROID" ].loadFromFile("Resources/Images/rock.png"))
+    {
+        throw "ERROR::GAMESTATE::COULD_NOT_LOAD_PLAYER_ASTEROID_TEXTURE";
+    }
+
+    if (!textures_[ "BACKGROUND_TEXTURE" ].loadFromFile("Resources/Images/background.jpg"))
+    {
+        throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_TEXTURE";
+    }
+}
+
+void GameState::InitBackground()
+{
+    background_.setSize(
+        sf::Vector2f(static_cast<float>(window_->getSize().x), static_cast<float>(window_->getSize().y)));
+
+    background_.setTexture(&textures_[ "BACKGROUND_TEXTURE" ]);
 }
 
 void GameState::InitPlayer()
 {
-    player_ = new Ship(static_cast<float>(window_->getSize().x / 2), static_cast<float> (window_->getSize().y / 2),
+    ship_ = new Ship(static_cast<float>(window_->getSize().x / 2), static_cast<float>(window_->getSize().y / 2),
                        textures_[ "PLAYER_SHIP" ]);
+}
+
+void GameState::InitAsteroids()
+{
+    for (int i = 0; i < 10; ++i)
+        asteroid_.push_back(new Asteroid(static_cast<float>(rand() % (window_->getSize().x)),
+                                         static_cast<float>(rand() % (window_->getSize().y)),
+                                         textures_[ "ASTEROID" ]));
 }
 
 //Update functions
@@ -49,13 +79,13 @@ void GameState::UpdateInput(const float& delta)
 {
     //Update player input
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_UP"))))
-        player_->Move(0.f, -1.f, delta);
+        ship_->Move(0.f, -1.f, delta);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_DOWN"))))
-        player_->Move(0.f, 1.f, delta);
+        ship_->Move(0.f, 1.f, delta);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_LEFT"))))
-        player_->Move(-1.f, 0.f, delta);
+        ship_->Move(-1.f, 0.f, delta);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_RIGHT"))))
-        player_->Move(1.f, 0.f, delta);
+        ship_->Move(1.f, 0.f, delta);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("CLOSE"))))
         EndState();
@@ -65,7 +95,14 @@ void GameState::Update(const float& delta)
 {
     UpdateMousePositions();
     UpdateInput(delta);
-    player_->Update(delta, window_->getSize());
+    
+    ship_->Update(delta, window_->getSize());
+
+    for (std::vector<Asteroid*>::iterator it = asteroid_.begin(); it != asteroid_.end(); ++it)
+    {
+        (*it)->Move(0, 0, delta);
+        (*it)->Update(delta, window_->getSize());
+    }
 }
 
 //Render Functions
@@ -75,5 +112,13 @@ void GameState::Render(sf::RenderTarget* target)
     {
         target = window_;
     }
-    player_->Render(target);
+
+    target->draw(background_);
+
+    ship_->Render(target);
+
+    for (std::vector<Asteroid*>::iterator it = asteroid_.begin(); it != asteroid_.end(); ++it)
+    {
+        (*it)->Render(target);
+    }
 }

@@ -17,9 +17,10 @@ void Entity::SetTexture(sf::Texture& texture)
     sprite_.setTexture(texture);
 }
 
-void Entity::CreateMovementComponent(const float max_velocity, const float acceleration, const float deceleration)
+void Entity::CreateMovementComponent(const float max_velocity, const float acceleration, const float deceleration,
+                                     const float& angle)
 {
-    movement_component_ = new MovementComponent(sprite_, max_velocity, acceleration, deceleration);
+    movement_component_ = new MovementComponent(sprite_, max_velocity, acceleration, deceleration, angle, name_);
 }
 
 //Functions

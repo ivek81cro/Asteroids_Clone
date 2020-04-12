@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "Ship.h"
+#include "Asteroid.h"
 
 class State
 {
