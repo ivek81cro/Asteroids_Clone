@@ -29,7 +29,7 @@ void MovementComponent::Move(const float dir_x, const float dir_y, const float& 
     if (name_ == "ship")
         MoveShip(dir_x, dir_y, delta);
 
-    if (name_ == "asteroid")
+    if (name_ == "asteroid" || name_== "bullet")
         MoveAsteroid();
 }
 

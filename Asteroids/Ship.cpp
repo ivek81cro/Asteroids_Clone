@@ -27,3 +27,14 @@ void Ship::InitComponents()
 {
     CreateMovementComponent(200.f, 400.f, 0.998f, sprite_.getRotation());
 }
+
+//Functions
+sf::Vector2f Ship::GetPosition() const
+{
+     return sprite_.getPosition();
+}
+
+float Ship::GetAngle() const
+{
+    return sprite_.getRotation();
+}

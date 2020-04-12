@@ -19,7 +19,12 @@ class GameState : public State
   private:
     Ship*                  ship_;
     std::vector<Asteroid*> asteroid_;
+    std::vector<Bullet*>   bullet_;
     sf::RectangleShape     background_;
+
+    sf::Clock elapsed_coldown_;
+    sf::Clock bullet_clock_;
+    sf::Time  bullet_cooldown_;
 
     //Initializer Functions
     void InitKeybinds();
@@ -27,6 +32,7 @@ class GameState : public State
     void InitBackground();
     void InitPlayer();
     void InitAsteroids();
+    void FireBullet();
 };
 
 #endif // !GAMESTATE_H_

@@ -2,7 +2,7 @@
 
 State::State(sf::RenderWindow* window, std::map<std::string, int>* supported_keys, std::stack<State*>* states)
 {
-    this->window_   = window;
+    window_         = window;
     quit_           = false;
     states_         = states;
     supported_keys_ = supported_keys;

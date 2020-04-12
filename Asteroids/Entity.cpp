@@ -31,7 +31,7 @@ void Entity::SetPosition(const float x, const float y)
 
 void Entity::SetTextureRect(const int x, const int y, const int height, const int width)
 {
-    sprite_.setTextureRect(sf::IntRect(x, y, height, width));
+    sprite_.setTextureRect(sf::IntRect(x, y, width, height));
 }
 
 void Entity::SetRotation(const float r)
@@ -50,6 +50,16 @@ void Entity::Move(const float dir_x, const float dir_y, const float& delta)
     {
         movement_component_->Move(dir_x, dir_y, delta); //Sets velocity
     }
+}
+
+bool Entity::IsAlive()
+{
+    return alive_;
+}
+
+void Entity::SetAlive(bool is_alive)
+{
+    alive_ = is_alive;
 }
 
 void Entity::Update(const float& delta, const sf::Vector2u& window_size)

@@ -9,6 +9,8 @@ class Ship : public Entity
     virtual ~Ship();
 
     //Functions
+    sf::Vector2f GetPosition() const;
+    float        GetAngle() const;
 
   private:
     //Variables

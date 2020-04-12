@@ -16,6 +16,8 @@ GameState::~GameState()
     delete ship_;
     while (!asteroid_.empty())
         asteroid_.pop_back();
+    while (!bullet_.empty())
+        bullet_.pop_back();
 }
 
 //Initializer functions
@@ -46,9 +48,14 @@ void GameState::InitTextures()
         throw "ERROR::GAMESTATE::COULD_NOT_LOAD_PLAYER_ASTEROID_TEXTURE";
     }
 
+    if (!textures_[ "BULLET" ].loadFromFile("Resources/Images/fire_red_reverse.png"))
+    {
+        throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_BULLET_EXTURE";
+    }
+
     if (!textures_[ "BACKGROUND_TEXTURE" ].loadFromFile("Resources/Images/background.jpg"))
     {
-        throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_TEXTURE";
+        throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_BACLGROUND_TEXTURE";
     }
 }
 
@@ -63,7 +70,7 @@ void GameState::InitBackground()
 void GameState::InitPlayer()
 {
     ship_ = new Ship(static_cast<float>(window_->getSize().x / 2), static_cast<float>(window_->getSize().y / 2),
-                       textures_[ "PLAYER_SHIP" ]);
+                     textures_[ "PLAYER_SHIP" ]);
 }
 
 void GameState::InitAsteroids()
@@ -72,6 +79,11 @@ void GameState::InitAsteroids()
         asteroid_.push_back(new Asteroid(static_cast<float>(rand() % (window_->getSize().x)),
                                          static_cast<float>(rand() % (window_->getSize().y)),
                                          textures_[ "ASTEROID" ]));
+}
+
+void GameState::FireBullet()
+{
+    bullet_.push_back(new Bullet(ship_->GetPosition().x, ship_->GetPosition().y, textures_[ "BULLET" ], ship_->GetAngle()));
 }
 
 //Update functions
@@ -87,6 +99,16 @@ void GameState::UpdateInput(const float& delta)
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_RIGHT"))))
         ship_->Move(1.f, 0.f, delta);
 
+    //Bullet fire
+    float time       = elapsed_coldown_.restart().asSeconds();
+    bullet_cooldown_ = bullet_clock_.getElapsedTime();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("FIRE"))) && bullet_cooldown_.asSeconds() > 0.25f)
+    {
+        bullet_clock_.restart();
+        FireBullet();
+    }
+
+    //Close with esc button
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("CLOSE"))))
         EndState();
 }
@@ -95,11 +117,18 @@ void GameState::Update(const float& delta)
 {
     UpdateMousePositions();
     UpdateInput(delta);
-    
+
     ship_->Update(delta, window_->getSize());
 
     for (std::vector<Asteroid*>::iterator it = asteroid_.begin(); it != asteroid_.end(); ++it)
     {
+        (*it)->Move(0, 0, delta);
+        (*it)->Update(delta, window_->getSize());
+    }
+
+    for (std::vector<Bullet*>::iterator it = bullet_.begin(); it != bullet_.end(); ++it)
+    {
+        (*it)->SetLifeTime(delta);
         (*it)->Move(0, 0, delta);
         (*it)->Update(delta, window_->getSize());
     }
@@ -118,6 +147,11 @@ void GameState::Render(sf::RenderTarget* target)
     ship_->Render(target);
 
     for (std::vector<Asteroid*>::iterator it = asteroid_.begin(); it != asteroid_.end(); ++it)
+    {
+        (*it)->Render(target);
+    }
+
+    for (std::vector<Bullet*>::iterator it = bullet_.begin(); it != bullet_.end(); ++it)
     {
         (*it)->Render(target);
     }

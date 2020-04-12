@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "Ship.h"
 #include "Asteroid.h"
+#include "Bullet.h"
 
 class State
 {
