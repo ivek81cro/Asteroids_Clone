@@ -30,7 +30,7 @@ class GameState : public State
     void InitBackground();
     void InitPlayer();
     void InitAsteroids();
-    void FireBullet();
+    void FireBullet(Ship* s);
 };
 
 #endif // !GAMESTATE_H_

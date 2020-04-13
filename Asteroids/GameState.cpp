@@ -66,20 +66,19 @@ void GameState::InitPlayer()
 {
     entities_.push_back(
         std::unique_ptr<Ship>(new Ship(static_cast<float>(window_->getSize().x / 2),
-                                        static_cast<float>(window_->getSize().y / 2), textures_[ "PLAYER_SHIP" ])));
+                                       static_cast<float>(window_->getSize().y / 2), textures_[ "PLAYER_SHIP" ])));
 }
 
 void GameState::InitAsteroids()
 {
     for (int i = 0; i < 10; ++i)
         entities_.push_back(std::unique_ptr<Asteroid>(new Asteroid(static_cast<float>(rand() % (window_->getSize().x)),
-                                                                    static_cast<float>(rand() % (window_->getSize().y)),
-                                                                    textures_[ "ASTEROID" ])));
+                                                                   static_cast<float>(rand() % (window_->getSize().y)),
+                                                                   textures_[ "ASTEROID" ])));
 }
 
-void GameState::FireBullet()
+void GameState::FireBullet(Ship* s)
 {
-    Ship* s = static_cast<Ship*>(entities_[ 0 ].get());
     entities_.push_back(std::unique_ptr<Bullet>(
         new Bullet(s->GetPosition().x, s->GetPosition().y, textures_[ "BULLET" ], s->GetAngle())));
 }
@@ -87,15 +86,22 @@ void GameState::FireBullet()
 //Update functions
 void GameState::UpdateInput(const float& delta)
 {
+    Ship* s = nullptr;
+    for (auto& it : entities_)
+    {
+        if (it->GetName() == "ship")
+            s = static_cast<Ship*>(it.get());
+    }
+
     //Update player input
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_UP"))))
-        entities_[ 0 ]->Move(0.f, -1.f, delta);
+        s->Move(0.f, -1.f, delta);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_DOWN"))))
-        entities_[ 0 ]->Move(0.f, 1.f, delta);
+        s->Move(0.f, 1.f, delta);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_LEFT"))))
-        entities_[ 0 ]->Move(-1.f, 0.f, delta);
+        s->Move(-1.f, 0.f, delta);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_RIGHT"))))
-        entities_[ 0 ]->Move(1.f, 0.f, delta);
+        s->Move(1.f, 0.f, delta);
 
     //Bullet fire
     float time       = elapsed_coldown_.restart().asSeconds();
@@ -103,7 +109,7 @@ void GameState::UpdateInput(const float& delta)
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("FIRE"))) && bullet_cooldown_.asSeconds() > 0.25f)
     {
         bullet_clock_.restart();
-        FireBullet();
+        FireBullet(s);
     }
 
     //Close with esc button
