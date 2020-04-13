@@ -17,9 +17,7 @@ class GameState : public State
     void Render(sf::RenderTarget* target = nullptr);
 
   private:
-    Ship*                 ship_;
-    std::vector<Asteroid*> asteroid_;
-    std::vector<Bullet*>  bullet_;
+    std::vector<std::unique_ptr<Entity>>  entities_;
     sf::RectangleShape    background_;
 
     sf::Clock elapsed_coldown_;

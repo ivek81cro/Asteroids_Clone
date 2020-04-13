@@ -9,7 +9,11 @@ class Asteroid : public Entity
     Asteroid(float x, float y, sf::Texture& texture);
     virtual ~Asteroid();
 
+    Asteroid(const Asteroid&) = delete;
+    void operator=(const Asteroid&) = delete;
+
     //Functions
+    void SetScale(const sf::Vector2f& factor);
 
   private:
     //Variables

@@ -16,6 +16,11 @@ Asteroid::~Asteroid()
 {
 }
 
+void Asteroid::SetScale(const sf::Vector2f& factor)
+{
+    sprite_.setScale(factor);
+}
+
 //Initializer functions
 void Asteroid::InitVariables()
 {

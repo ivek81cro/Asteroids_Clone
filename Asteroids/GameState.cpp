@@ -13,11 +13,6 @@ GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* suppo
 
 GameState::~GameState()
 {
-    delete ship_;
-    while (!asteroid_.empty())
-        asteroid_.pop_back();
-    while (!bullet_.empty())
-        bullet_.pop_back();
 }
 
 //Initializer functions
@@ -69,22 +64,24 @@ void GameState::InitBackground()
 
 void GameState::InitPlayer()
 {
-    ship_ = new Ship(static_cast<float>(window_->getSize().x / 2), static_cast<float>(window_->getSize().y / 2),
-                     textures_[ "PLAYER_SHIP" ]);
+    entities_.push_back(
+        std::unique_ptr<Ship>(new Ship(static_cast<float>(window_->getSize().x / 2),
+                                        static_cast<float>(window_->getSize().y / 2), textures_[ "PLAYER_SHIP" ])));
 }
 
 void GameState::InitAsteroids()
 {
     for (int i = 0; i < 10; ++i)
-        asteroid_.push_back(new Asteroid(static_cast<float>(rand() % (window_->getSize().x)),
-                                         static_cast<float>(rand() % (window_->getSize().y)),
-                                         textures_[ "ASTEROID" ]));
+        entities_.push_back(std::unique_ptr<Asteroid>(new Asteroid(static_cast<float>(rand() % (window_->getSize().x)),
+                                                                    static_cast<float>(rand() % (window_->getSize().y)),
+                                                                    textures_[ "ASTEROID" ])));
 }
 
 void GameState::FireBullet()
 {
-    bullet_.push_back(
-        new Bullet(ship_->GetPosition().x, ship_->GetPosition().y, textures_[ "BULLET" ], ship_->GetAngle()));
+    Ship* s = static_cast<Ship*>(entities_[ 0 ].get());
+    entities_.push_back(std::unique_ptr<Bullet>(
+        new Bullet(s->GetPosition().x, s->GetPosition().y, textures_[ "BULLET" ], s->GetAngle())));
 }
 
 //Update functions
@@ -92,13 +89,13 @@ void GameState::UpdateInput(const float& delta)
 {
     //Update player input
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_UP"))))
-        ship_->Move(0.f, -1.f, delta);
+        entities_[ 0 ]->Move(0.f, -1.f, delta);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_DOWN"))))
-        ship_->Move(0.f, 1.f, delta);
+        entities_[ 0 ]->Move(0.f, 1.f, delta);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_LEFT"))))
-        ship_->Move(-1.f, 0.f, delta);
+        entities_[ 0 ]->Move(-1.f, 0.f, delta);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_RIGHT"))))
-        ship_->Move(1.f, 0.f, delta);
+        entities_[ 0 ]->Move(1.f, 0.f, delta);
 
     //Bullet fire
     float time       = elapsed_coldown_.restart().asSeconds();
@@ -119,28 +116,20 @@ void GameState::Update(const float& delta)
     UpdateMousePositions();
     UpdateInput(delta);
 
-    //Check if bullet is alive
-    bullet_.erase(std::remove_if(bullet_.begin(), bullet_.end(), [](Bullet* bullet) { return !(*bullet).IsAlive(); }),
-                  bullet_.end());
-
-    //Check if asteroid is alive
-    asteroid_.erase(
-        std::remove_if(asteroid_.begin(), asteroid_.end(), [](Asteroid* asteroid) { return !(*asteroid).IsAlive(); }),
-        asteroid_.end());
-
-    ship_->Update(delta, window_->getSize());
-
-    for (std::vector<Asteroid*>::iterator it = asteroid_.begin(); it != asteroid_.end(); ++it)
+    //Check if entity is alive
+    for (auto& it : entities_)
     {
-        (*it)->Move(0, 0, delta);
-        (*it)->Update(delta, window_->getSize());
+        if (!it->IsAlive())
+            it->SetAlive(false);
     }
 
-    for (std::vector<Bullet*>::iterator it = bullet_.begin(); it != bullet_.end(); ++it)
+    for (auto& it : entities_)
     {
-        (*it)->SetLifeTime(delta);
-        (*it)->Move(0, 0, delta);
-        (*it)->Update(delta, window_->getSize());
+        if (it->GetName() == "bullet")
+            static_cast<Bullet*>(it.get())->SetLifeTime(delta);
+        if ((it)->GetName() != "ship")
+            it->Move(0, 0, delta);
+        it->Update(delta, window_->getSize());
     }
 }
 
@@ -154,15 +143,8 @@ void GameState::Render(sf::RenderTarget* target)
 
     target->draw(background_);
 
-    ship_->Render(target);
-
-    for (std::vector<Asteroid*>::iterator it = asteroid_.begin(); it != asteroid_.end(); ++it)
+    for (auto& it : entities_)
     {
-        (*it)->Render(target);
-    }
-
-    for (std::vector<Bullet*>::iterator it = bullet_.begin(); it != bullet_.end(); ++it)
-    {
-        (*it)->Render(target);
+        it->Render(target);
     }
 }

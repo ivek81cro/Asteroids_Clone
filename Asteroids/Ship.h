@@ -8,6 +8,9 @@ class Ship : public Entity
     Ship(float x, float y, sf::Texture& texture);
     virtual ~Ship();
 
+    Ship(const Ship&) = delete;
+    void operator=(const Ship&) = delete;
+
     //Functions
     sf::Vector2f GetPosition() const;
     float        GetAngle() const;

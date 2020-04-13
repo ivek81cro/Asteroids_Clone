@@ -7,7 +7,10 @@ class Bullet : public Entity
 {
   public:
     Bullet(float x, float y, sf::Texture& texture, float angle);
-    virtual ~Bullet();
+    virtual ~Bullet();    
+
+    Bullet(const Bullet&) = delete;
+    void operator=(const Bullet&) = delete;
 
     //Functions
     void SetScale(const sf::Vector2f& factor);

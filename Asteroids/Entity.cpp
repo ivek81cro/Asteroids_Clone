@@ -62,6 +62,11 @@ void Entity::SetAlive(bool is_alive)
     alive_ = is_alive;
 }
 
+std::string Entity::GetName()
+{
+    return name_;
+}
+
 void Entity::Update(const float& delta, const sf::Vector2u& window_size)
 {
     if (movement_component_)

@@ -22,6 +22,7 @@ class Entity
     virtual void Move(const float dir_x, const float dir_y, const float& delta);
     virtual bool IsAlive();
     virtual void SetAlive(bool is_alive);
+    virtual std::string GetName();
 
     virtual void Update(const float& delta, const sf::Vector2u& window_size);
     virtual void Render(sf::RenderTarget* target);
