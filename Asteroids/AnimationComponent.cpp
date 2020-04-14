@@ -3,6 +3,7 @@
 AnimationComponent::AnimationComponent(sf::Sprite& sprite, sf::Texture& texture_sheet)
         : sprite_(sprite)
         , texture_sheet_(texture_sheet)
+        , last_animation_(nullptr)
 {
 }
 
@@ -24,5 +25,15 @@ void AnimationComponent::AddAnimation(const std::string key, float animation_tim
 //Functions
 void AnimationComponent::Play(const std::string key, const float& delta)
 {
+    if (last_animation_ != animations_[ key ] && last_animation_ != nullptr)
+    {
+        if (last_animation_ == nullptr)
+            last_animation_ = animations_[ key ];
+        else
+        {
+            last_animation_->Reset();
+            last_animation_ = animations_[ key ];
+        }
+    }
     animations_[ key ]->Play(delta);
 }

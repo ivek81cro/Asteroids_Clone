@@ -35,6 +35,16 @@ void Entity::Move(const float dir_x, const float dir_y, const float& delta)
     if (movement_component_)
         movement_component_->Move(dir_x, dir_y, delta); //Sets velocity
 
+    //Ship animation preset based on movement
+    if (name_ == "ship")
+    {
+        if (dir_x > 0)
+            animation_name_ = "ship_r";
+        else if (dir_x < 0)
+            animation_name_ = "ship_l";
+        else
+            animation_name_ = name_;
+    }
 }
 
 bool Entity::IsAlive()

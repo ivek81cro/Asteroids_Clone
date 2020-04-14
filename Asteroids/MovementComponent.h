@@ -27,8 +27,6 @@ class MovementComponent
 
     //Functions
     void Move(const float x, const float y, const float& delta);
-    void MoveShip(const float x, const float y, const float& delta);
-    void MoveAsteroid();
     void CheckMaxVelocity(const float& delta);
     void CheckPosition(const sf::Vector2u& window_size);
     void Update(const float& delta, const sf::Vector2u& window_size);

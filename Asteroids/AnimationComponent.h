@@ -88,6 +88,8 @@ class AnimationComponent
   private:
     std::map<std::string, Animation*> animations_;
 
+    Animation* last_animation_;
+
     sf::Sprite&  sprite_;
     sf::Texture& texture_sheet_;
 };

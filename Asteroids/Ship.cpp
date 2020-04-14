@@ -11,6 +11,8 @@ Ship::Ship(float x, float y, sf::Texture& texture_sheet)
     CreateAnimationComponent(texture_sheet);
 
     animation_component_->AddAnimation("ship", 5.f, 1, 0, 2, 0, 40, 45);
+    animation_component_->AddAnimation("ship_l", 2.5f, 4, 0, 5, 0, 40, 45);
+    animation_component_->AddAnimation("ship_r", 2.5f, 7, 0, 8, 0, 40, 45);
 }
 
 Ship::~Ship()
@@ -20,7 +22,7 @@ Ship::~Ship()
 //Initializer functions
 void Ship::InitVariables()
 {
-    name_  = "ship";
+    name_           = "ship";
     animation_name_ = name_;
 }
 

@@ -1,8 +1,8 @@
 #include "MovementComponent.h"
 
 //Constructors / Destructors
-MovementComponent::MovementComponent(sf::Sprite& sprite, const float& max_velocity, const float& acceleration, const float& deceleration,
-                                     const float& angle, const std::string& name)
+MovementComponent::MovementComponent(sf::Sprite& sprite, const float& max_velocity, const float& acceleration,
+                                     const float& deceleration, const float& angle, const std::string& name)
         : sprite_(sprite)
         , max_velocity_(max_velocity)
         , acceleration_(acceleration)
@@ -26,37 +26,30 @@ const sf::Vector2f& MovementComponent::GetVelocity() const
 //Functions
 void MovementComponent::Move(const float dir_x, const float dir_y, const float& delta)
 {
-    if (name_ == "ship")
-        MoveShip(dir_x, dir_y, delta);
 
-    if (name_ == "asteroid" || name_== "bullet")
-        MoveAsteroid();
-}
-
-void MovementComponent::MoveShip(const float dir_x, const float dir_y, const float& delta)
-{
-    //Acceeration
     if (dir_x != 0)
     {
         sprite_.rotate(dir_x * 300.f * delta);
     }
 
-    if (dir_y != 0)
+    if (name_ == "ship")
     {
-        float angle = sprite_.getRotation() + 90;
-        if (acceleration_ != 0)
+        if (dir_y != 0)
         {
-            direction_ = {cos(angle * 0.017453f), sin(angle * 0.017453f)};
+            float angle = sprite_.getRotation() + 90;
+            if (acceleration_ != 0)
+            {
+                direction_ = {cos(angle * 0.017453f), sin(angle * 0.017453f)};
 
-            velocity_.x += acceleration_ * dir_y * delta * direction_.x;
-            velocity_.y += acceleration_ * dir_y * delta * direction_.y;
+                velocity_.x += acceleration_ * dir_y * delta * direction_.x;
+                velocity_.y += acceleration_ * dir_y * delta * direction_.y;
+            }
         }
     }
-}
-
-void MovementComponent::MoveAsteroid()
-{
-    velocity_ = direction_ * 1000.f;
+    else
+    {
+        velocity_ = direction_ * 1000.f;
+    }
 }
 
 void MovementComponent::CheckMaxVelocity(const float& delta)

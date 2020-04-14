@@ -12,6 +12,8 @@ class Ship : public Entity
     void operator=(const Ship&) = delete;
 
     //Functions
+    void Update();
+
     sf::Vector2f GetPosition() const;
     float        GetAngle() const;
 
