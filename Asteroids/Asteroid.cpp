@@ -1,15 +1,16 @@
 #include "Asteroid.h"
 
-Asteroid::Asteroid(float x, float y, sf::Texture& texture)
+Asteroid::Asteroid(float x, float y, sf::Texture& texture_sheet)
 {
-    SetTexture(texture);
     SetPosition(x, y);
-    SetTextureRect(0, 6, 64, 64);
-    SetRotation(static_cast<float>((rand() % 360)));
-    SetOrigin(sf::Vector2f(32.f, 32.f));
 
     InitVariables();
     InitComponents();
+    
+    CreateMovementComponent(50.f, 0.f, 0.f, sprite_.getRotation());
+    CreateAnimationComponent(texture_sheet);
+
+    animation_component_->AddAnimation(name_, 5.f, 0, 0, 15, 0, 64, 64);
 }
 
 Asteroid::~Asteroid()
@@ -26,9 +27,9 @@ void Asteroid::InitVariables()
 {
     name_ = "asteroid";
     alive_ = true;
+    sprite_.setRotation(static_cast<float>((rand() % 360)));
 }
 
 void Asteroid::InitComponents()
 {
-    CreateMovementComponent(50.f, 0.f, 0.f, sprite_.getRotation());
 }

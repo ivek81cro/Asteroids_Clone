@@ -9,39 +9,25 @@ Entity::Entity()
 Entity::~Entity()
 {
     delete movement_component_;
+    delete animation_component_;
 }
 
 //Component functions
-void Entity::SetTexture(sf::Texture& texture)
-{
-    sprite_.setTexture(texture);
-}
-
 void Entity::CreateMovementComponent(const float max_velocity, const float acceleration, const float deceleration,
                                      const float& angle)
 {
     movement_component_ = new MovementComponent(sprite_, max_velocity, acceleration, deceleration, angle, name_);
 }
 
+void Entity::CreateAnimationComponent(sf::Texture& texture_sheet)
+{
+    animation_component_ = new AnimationComponent(sprite_, texture_sheet);
+}
+
 //Functions
 void Entity::SetPosition(const float x, const float y)
 {
     sprite_.setPosition(x, y);
-}
-
-void Entity::SetTextureRect(const int x, const int y, const int height, const int width)
-{
-    sprite_.setTextureRect(sf::IntRect(x, y, width, height));
-}
-
-void Entity::SetRotation(const float r)
-{
-    sprite_.setRotation(r);
-}
-
-void Entity::SetOrigin(const sf::Vector2f origin)
-{
-    sprite_.setOrigin(origin);
 }
 
 void Entity::Move(const float dir_x, const float dir_y, const float& delta)
@@ -71,6 +57,9 @@ void Entity::Update(const float& delta, const sf::Vector2u& window_size)
 {
     if (movement_component_)
         movement_component_->Update(delta, window_size);
+
+    if (animation_component_)
+        animation_component_->Play(name_, delta);
 }
 
 void Entity::Render(sf::RenderTarget* target)

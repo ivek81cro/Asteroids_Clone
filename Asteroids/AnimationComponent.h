@@ -27,34 +27,36 @@ class AnimationComponent
         sf::IntRect  current_rect_;
         sf::IntRect  end_rect_;
 
-        Animation(sf::Sprite& sprite, sf::Texture& texture_sheet, float animation_timer, int start_x, int start_y,
-                  int end_x, int end_y, int width, int height)
+        Animation(sf::Sprite& sprite, sf::Texture& texture_sheet, float animation_timer, int start_frame_x,
+                  int start_frame_y, int frames_x, int frames_y, int width, int height)
                 : sprite_(sprite)
                 , texture_sheet_(texture_sheet)
                 , width_(width)
                 , height_(height)
                 , animation_timer_(animation_timer)
         {
-            start_rect_   = sf::IntRect(start_x, start_y, width, height);
-            end_rect_     = sf::IntRect(end_x, end_y, width, height);
+            timer_        = 0.f;
+            start_rect_   = sf::IntRect(start_frame_x * width, start_frame_y, width, height);
+            end_rect_     = sf::IntRect(frames_x * width, frames_y * height, width, height);
             current_rect_ = start_rect_;
 
             sprite_.setTexture(texture_sheet_, true);
             sprite_.setTextureRect(start_rect_);
+            sprite_.setOrigin(width / 2.f, height / 2.f);
         }
 
         //Functions
-        void Update(const float& delta)
+        void Play(const float& delta)
         {
             //Update timer
-            timer_ = 10.f;
+            timer_ += 100.f * delta;
             if (timer_ >= animation_timer_)
             {
                 //Reset timer
                 timer_ = 0.f;
 
                 //Animate
-                if (start_rect_ != end_rect_)
+                if (current_rect_ != end_rect_)
                 {
                     current_rect_.left += width_;
                 }
@@ -62,11 +64,15 @@ class AnimationComponent
                 {
                     current_rect_.left = start_rect_.left;
                 }
+                sprite_.setTextureRect(current_rect_);
             }
         }
 
-        void Pause();
-        void Reset();
+        void Reset()
+        {
+            timer_        = 0.f;
+            current_rect_ = start_rect_;
+        }
     };
 
   public:
@@ -74,16 +80,13 @@ class AnimationComponent
     virtual ~AnimationComponent();
 
     //Functions
-    void AddAnimation(const std::string key);
+    void AddAnimation(const std::string key, float animation_timer, int start_frame_x, int start_frame_y, int frames_x,
+                      int frames_y, int width, int height);
 
-    void StartAnimation(std::string animation);
-    void PauseAnimation(std::string animation);
-    void ResetAnimation(std::string animation);
-
-    void Update(const float& delta);
+    void Play(const std::string key, const float& delta);
 
   private:
-    std::map<std::string, Animation> animations_;
+    std::map<std::string, Animation*> animations_;
 
     sf::Sprite&  sprite_;
     sf::Texture& texture_sheet_;
