@@ -102,10 +102,18 @@ void MainMenuState::UpdateButtons()
         it.second->Update(mouse_pos_view_);
     }
 
-    //New game
+    //Settings
+
+    //Editor
     if (buttons_[ "GAME_STATE" ]->IsPressed())
     {
         states_->push(new GameState(window_, supported_keys_, states_));
+    }
+
+    //New game
+    if (buttons_[ "EDITOR_STATE" ]->IsPressed())
+    {
+        states_->push(new EditorState(window_, supported_keys_, states_));
     }
 
     //Quit game

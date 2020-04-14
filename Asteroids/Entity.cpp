@@ -80,5 +80,6 @@ void Entity::Render(sf::RenderTarget* target)
 void Entity::InitVariables()
 {
     movement_component_ = nullptr;
+    animation_component_ = nullptr;
     alive_              = true;
 }
