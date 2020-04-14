@@ -123,7 +123,8 @@ void GameState::Update(const float& delta)
     UpdateInput(delta);
 
     //Check if entity is alive
-    entities_.erase(std::remove_if(entities_.begin(), entities_.end(), [](const std::unique_ptr<Entity>& ent) { return !ent->IsAlive(); }),
+    entities_.erase(std::remove_if(entities_.begin(), entities_.end(),
+                                   [](const std::unique_ptr<Entity>& ent) { return !ent->IsAlive(); }),
                     entities_.end());
 
     for (auto& it : entities_)

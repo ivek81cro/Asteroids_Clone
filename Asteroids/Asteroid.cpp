@@ -6,7 +6,7 @@ Asteroid::Asteroid(float x, float y, sf::Texture& texture_sheet)
 
     InitVariables();
     InitComponents();
-    
+
     CreateMovementComponent(50.f, 0.f, 0.f, sprite_.getRotation());
     CreateAnimationComponent(texture_sheet);
 
@@ -25,7 +25,7 @@ void Asteroid::SetScale(const sf::Vector2f& factor)
 //Initializer functions
 void Asteroid::InitVariables()
 {
-    name_ = "asteroid";
+    name_  = "asteroid";
     alive_ = true;
     sprite_.setRotation(static_cast<float>((rand() % 360)));
 }

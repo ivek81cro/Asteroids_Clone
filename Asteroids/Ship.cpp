@@ -20,19 +20,18 @@ Ship::~Ship()
 //Initializer functions
 void Ship::InitVariables()
 {
-    name_ = "ship";
+    name_  = "ship";
     alive_ = true;
 }
 
 void Ship::InitComponents()
 {
-    
 }
 
 //Functions
 sf::Vector2f Ship::GetPosition() const
 {
-     return sprite_.getPosition();
+    return sprite_.getPosition();
 }
 
 float Ship::GetAngle() const
