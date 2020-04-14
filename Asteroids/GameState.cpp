@@ -94,8 +94,9 @@ void GameState::UpdateInput(const float& delta)
             s = static_cast<Ship*>(it.get());
         }
     }
-    //Update player input
-    s->Move(0.f, 0.f, delta);//For animation frame idle    
+
+    s->ResetAnimationName();
+    //Update player input 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_UP"))))
         s->Move(0.f, -1.f, delta);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_DOWN"))))

@@ -12,7 +12,7 @@ class Ship : public Entity
     void operator=(const Ship&) = delete;
 
     //Functions
-    void Update();
+    void ResetAnimationName();
 
     sf::Vector2f GetPosition() const;
     float        GetAngle() const;

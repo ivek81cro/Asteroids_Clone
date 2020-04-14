@@ -31,6 +31,11 @@ void Ship::InitComponents()
 }
 
 //Functions
+void Ship::ResetAnimationName()
+{
+    animation_name_ = name_;
+}
+
 sf::Vector2f Ship::GetPosition() const
 {
     return sprite_.getPosition();
