@@ -26,7 +26,7 @@ void Asteroid::SetScale(const sf::Vector2f& factor)
 void Asteroid::InitVariables()
 {
     name_  = "asteroid";
-    alive_ = true;
+    animation_name_ = name_;
     sprite_.setRotation(static_cast<float>((rand() % 360)));
 }
 

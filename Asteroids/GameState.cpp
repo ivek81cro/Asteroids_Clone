@@ -90,7 +90,9 @@ void GameState::UpdateInput(const float& delta)
     for (auto& it : entities_)
     {
         if (it->GetName() == "ship")
+        {
             s = static_cast<Ship*>(it.get());
+        }
     }
 
     //Update player input

@@ -33,9 +33,8 @@ void Entity::SetPosition(const float x, const float y)
 void Entity::Move(const float dir_x, const float dir_y, const float& delta)
 {
     if (movement_component_)
-    {
         movement_component_->Move(dir_x, dir_y, delta); //Sets velocity
-    }
+
 }
 
 bool Entity::IsAlive()
@@ -59,7 +58,7 @@ void Entity::Update(const float& delta, const sf::Vector2u& window_size)
         movement_component_->Update(delta, window_size);
 
     if (animation_component_)
-        animation_component_->Play(name_, delta);
+        animation_component_->Play(animation_name_, delta);
 }
 
 void Entity::Render(sf::RenderTarget* target)
@@ -71,4 +70,5 @@ void Entity::Render(sf::RenderTarget* target)
 void Entity::InitVariables()
 {
     movement_component_ = nullptr;
+    alive_              = true;
 }

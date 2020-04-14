@@ -28,6 +28,7 @@ class Entity
   protected:
     sf::Sprite  sprite_;
     std::string name_;
+    std::string animation_name_;
 
     bool alive_;
 

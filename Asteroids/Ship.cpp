@@ -10,7 +10,7 @@ Ship::Ship(float x, float y, sf::Texture& texture_sheet)
     CreateMovementComponent(200.f, 400.f, 0.998f, sprite_.getRotation());
     CreateAnimationComponent(texture_sheet);
 
-    animation_component_->AddAnimation(name_, 10.f, 1, 0, 2, 0, 40, 45);
+    animation_component_->AddAnimation("ship", 5.f, 1, 0, 2, 0, 40, 45);
 }
 
 Ship::~Ship()
@@ -21,7 +21,7 @@ Ship::~Ship()
 void Ship::InitVariables()
 {
     name_  = "ship";
-    alive_ = true;
+    animation_name_ = name_;
 }
 
 void Ship::InitComponents()

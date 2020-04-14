@@ -37,7 +37,9 @@ void MovementComponent::MoveShip(const float dir_x, const float dir_y, const flo
 {
     //Acceeration
     if (dir_x != 0)
+    {
         sprite_.rotate(dir_x * 300.f * delta);
+    }
 
     if (dir_y != 0)
     {

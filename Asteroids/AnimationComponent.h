@@ -36,7 +36,7 @@ class AnimationComponent
                 , animation_timer_(animation_timer)
         {
             timer_        = 0.f;
-            start_rect_   = sf::IntRect(start_frame_x * width, start_frame_y, width, height);
+            start_rect_   = sf::IntRect(start_frame_x * width, start_frame_y * height, width, height);
             end_rect_     = sf::IntRect(frames_x * width, frames_y * height, width, height);
             current_rect_ = start_rect_;
 
@@ -70,7 +70,7 @@ class AnimationComponent
 
         void Reset()
         {
-            timer_        = 0.f;
+            timer_        = animation_timer_;
             current_rect_ = start_rect_;
         }
     };

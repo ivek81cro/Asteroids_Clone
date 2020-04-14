@@ -37,8 +37,8 @@ void Bullet::SetLifeTime(const float& delta)
 void Bullet::InitVariables()
 {
     name_     = "bullet";
+    animation_name_ = name_;
     lifetime_ = 1.f;
-    alive_    = true;
     sprite_.setRotation(angle_ - 90);
 }
 
