@@ -34,6 +34,12 @@ void Entity::CreateAnimationComponent(sf::Texture& texture_sheet)
     animation_component_ = new AnimationComponent(sprite_, texture_sheet);
 }
 
+void Entity::CreateHitboxComponent(sf::Sprite& sprite, float offset_x, float offset_y, float width)
+{
+    hitbox_component_ =
+        new HitboxComponent(sprite, offset_x, offset_y, width);
+}
+
 //Functions
 void Entity::SetPosition(const float x, const float y)
 {
@@ -79,9 +85,15 @@ void Entity::Update(const float& delta, const sf::Vector2u& window_size)
 
     if (animation_component_)
         animation_component_->Play(animation_name_, delta);
+
+    if (hitbox_component_)
+        hitbox_component_->Update();
 }
 
-void Entity::Render(sf::RenderTarget* target)
+void Entity::Render(sf::RenderTarget& target)
 {
-    target->draw(sprite_);
+    target.draw(sprite_);
+
+    if (hitbox_component_)
+        hitbox_component_->Render(target);
 }

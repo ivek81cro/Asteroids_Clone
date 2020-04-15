@@ -132,7 +132,7 @@ void MainMenuState::Update(const float& delta)
 }
 
 //Render functions
-void MainMenuState::RenderButtons(sf::RenderTarget* target)
+void MainMenuState::RenderButtons(sf::RenderTarget& target)
 {
     for (auto& it : buttons_)
     {
@@ -148,7 +148,7 @@ void MainMenuState::Render(sf::RenderTarget* target)
     }
     target->draw(background_);
 
-    RenderButtons(target);
+    RenderButtons(*target);
 
     //Mouse coordinates for testing
     sf::Text mouse_text;

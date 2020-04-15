@@ -82,7 +82,7 @@ void EditorState::Update(const float& delta)
 }
 
 //Render functions
-void EditorState::RenderButtons(sf::RenderTarget* target)
+void EditorState::RenderButtons(sf::RenderTarget& target)
 {
     for (auto& it : buttons_)
     {
@@ -97,7 +97,7 @@ void EditorState::Render(sf::RenderTarget* target)
         target = window_;
     }
 
-    RenderButtons(target);
+    RenderButtons(*target);
 
     //Mouse coordinates for testing
     sf::Text mouse_text;

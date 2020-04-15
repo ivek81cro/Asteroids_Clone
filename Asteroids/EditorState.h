@@ -13,7 +13,7 @@ class EditorState : public State
     void UpdateInput(const float& delta);
     void UpdateButtons();
     void Update(const float& delta);
-    void RenderButtons(sf::RenderTarget* target = nullptr);
+    void RenderButtons(sf::RenderTarget& target);
     void Render(sf::RenderTarget* target = nullptr);
 
   private:

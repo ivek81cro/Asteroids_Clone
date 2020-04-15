@@ -15,6 +15,7 @@ class Entity
     void CreateMovementComponent(const float max_velocity, const float acceleration, const float deceleration,
                                  const float& angle);
     void CreateAnimationComponent(sf::Texture& texture_sheet);
+    void CreateHitboxComponent(sf::Sprite& sprite, float offset_x, float offset_y, float width);
 
     //Functions
     virtual void        SetPosition(const float x, const float y);
@@ -24,7 +25,7 @@ class Entity
     virtual std::string GetName();
 
     virtual void Update(const float& delta, const sf::Vector2u& window_size);
-    virtual void Render(sf::RenderTarget* target);
+    virtual void Render(sf::RenderTarget& target);
 
   protected:
     sf::Sprite  sprite_;

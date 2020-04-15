@@ -152,6 +152,6 @@ void GameState::Render(sf::RenderTarget* target)
 
     for (auto& it : entities_)
     {
-        it->Render(target);
+        it->Render(*target);
     }
 }

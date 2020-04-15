@@ -7,6 +7,7 @@ Ship::Ship(float x, float y, sf::Texture& texture_sheet)
 
     SetPosition(x, y);
 
+    CreateHitboxComponent(sprite_, -20.f, -20.f, 40.f);
     CreateMovementComponent(200.f, 400.f, 0.998f, sprite_.getRotation());
     CreateAnimationComponent(texture_sheet);
 

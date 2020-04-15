@@ -23,7 +23,7 @@ class Button
 
     //Functions
     void Update(sf::Vector2f mouse_pos);
-    void Render(sf::RenderTarget* target);
+    void Render(sf::RenderTarget& target);
 
   private:
     short unsigned button_state_;
