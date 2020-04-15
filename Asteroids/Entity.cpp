@@ -20,6 +20,7 @@ void Entity::InitVariables()
     movement_component_  = nullptr;
     animation_component_ = nullptr;
     alive_               = true;
+    exploding_           = false;
 }
 
 //Component functions
@@ -48,7 +49,7 @@ void Entity::SetPosition(const float x, const float y)
 
 void Entity::Move(const float dir_x, const float dir_y, const float& delta)
 {
-    if (movement_component_)
+    if (movement_component_ && !exploding_)
         movement_component_->Move(dir_x, dir_y, delta); //Sets velocity
 
     //Ship animation preset based on movement
@@ -84,7 +85,11 @@ void Entity::Update(const float& delta, const sf::Vector2u& window_size)
         movement_component_->Update(delta, window_size);
 
     if (animation_component_)
+    {
+        if (name_ == "ship" && exploding_)
+            animation_name_ = "ship_explode";
         animation_component_->Play(animation_name_, delta);
+    }
 
     if (hitbox_component_)
         hitbox_component_->Update();

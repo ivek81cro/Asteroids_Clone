@@ -36,6 +36,7 @@ class Entity
     std::string animation_name_;
 
     bool alive_;
+    bool exploding_;
 
     MovementComponent*  movement_component_;
     AnimationComponent* animation_component_;

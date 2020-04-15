@@ -14,6 +14,9 @@ Ship::Ship(float x, float y, sf::Texture& texture_sheet)
     animation_component_->AddAnimation("ship", 5.f, 1, 0, 2, 0, 40, 45);
     animation_component_->AddAnimation("ship_l", 2.5f, 4, 0, 5, 0, 40, 45);
     animation_component_->AddAnimation("ship_r", 2.5f, 7, 0, 8, 0, 40, 45);
+    animation_component_->AddAnimation("ship_explode", 5.f, 0, 1, 21, 1, 40, 45);
+
+    exploding_ = true;
 }
 
 Ship::~Ship()
