@@ -2,6 +2,7 @@
 #define ENTITY_H_
 
 #include "AnimationComponent.h"
+#include "HitboxComponent.h"
 #include "MovementComponent.h"
 
 class Entity
@@ -27,6 +28,9 @@ class Entity
 
   protected:
     sf::Sprite  sprite_;
+
+    HitboxComponent* hitbox_component_;
+
     std::string name_;
     std::string animation_name_;
 

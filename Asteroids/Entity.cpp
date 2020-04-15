@@ -10,6 +10,16 @@ Entity::~Entity()
 {
     delete movement_component_;
     delete animation_component_;
+    delete hitbox_component_;
+}
+
+//Initializer functions
+void Entity::InitVariables()
+{
+    hitbox_component_    = nullptr;
+    movement_component_  = nullptr;
+    animation_component_ = nullptr;
+    alive_               = true;
 }
 
 //Component functions
@@ -74,12 +84,4 @@ void Entity::Update(const float& delta, const sf::Vector2u& window_size)
 void Entity::Render(sf::RenderTarget* target)
 {
     target->draw(sprite_);
-}
-
-//Initializer functions
-void Entity::InitVariables()
-{
-    movement_component_ = nullptr;
-    animation_component_ = nullptr;
-    alive_              = true;
 }
