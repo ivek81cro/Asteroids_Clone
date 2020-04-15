@@ -36,11 +36,15 @@ void MovementComponent::Move(const float dir_x, const float dir_y, const float& 
     {
         if (dir_y != 0)
         {
-            float angle = sprite_.getRotation() + 90;
-            if (acceleration_ != 0)
-            {
-                direction_ = {cos(angle * 0.017453f), sin(angle * 0.017453f)};
+            float angle = sprite_.getRotation() + 90.f;
 
+            direction_ = {cos(angle * 0.0174533f), sin(angle * 0.0174533f)};
+
+            //Max speed limit
+            float vector_magnitude = sqrt(velocity_.x * velocity_.x + velocity_.y * velocity_.y);
+
+            if (vector_magnitude < max_velocity_)
+            {
                 velocity_.x += acceleration_ * dir_y * delta * direction_.x;
                 velocity_.y += acceleration_ * dir_y * delta * direction_.y;
             }
@@ -48,20 +52,15 @@ void MovementComponent::Move(const float dir_x, const float dir_y, const float& 
     }
     else
     {
-        velocity_ = direction_ * 1000.f;
+        velocity_ = direction_ * max_velocity_;
     }
 }
 
 void MovementComponent::CheckMaxVelocity(const float& delta)
 {
-    if ((velocity_.x * velocity_.x) > (max_velocity_ * max_velocity_))
-        velocity_.x = velocity_.x > 0 ? max_velocity_ : -max_velocity_;
 
-    if ((velocity_.y * velocity_.y) > (max_velocity_ * max_velocity_))
-        velocity_.y = velocity_.y > 0 ? max_velocity_ : -max_velocity_;
-
-    //Deceleration
-    if (deceleration_ != 0)
+    //Deceleration -ship only
+    if (name_ == "ship")
     {
         velocity_.y *= deceleration_;
         velocity_.x *= deceleration_;

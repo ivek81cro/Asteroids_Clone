@@ -60,7 +60,7 @@
       <Filter>States</Filter>
     </ClCompile>
     <ClCompile Include="HitboxComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -101,7 +101,7 @@
       <Filter>States</Filter>
     </ClInclude>
     <ClInclude Include="HitboxComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
