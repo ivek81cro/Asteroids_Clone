@@ -94,6 +94,12 @@ void GameState::UpdateInput(const float& delta)
             s = static_cast<Ship*>(it.get());
         }
     }
+    //If ship not alive, reset player
+    if (s == nullptr)
+    {
+        InitPlayer();
+        s = static_cast<Ship*>(entities_[ entities_.size() - 1 ].get());
+    }
 
     s->ResetAnimationName();
     //Update player input 
@@ -109,7 +115,7 @@ void GameState::UpdateInput(const float& delta)
     //Bullet fire
     float time       = elapsed_coldown_.restart().asSeconds();
     bullet_cooldown_ = bullet_clock_.getElapsedTime();
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("FIRE"))) && bullet_cooldown_.asSeconds() > 0.25f)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("FIRE"))) && bullet_cooldown_.asSeconds() > 0.25f && s->IsAlive())
     {
         bullet_clock_.restart();
         FireBullet(s);

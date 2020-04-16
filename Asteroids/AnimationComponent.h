@@ -21,6 +21,7 @@ class AnimationComponent
         sf::Texture& texture_sheet_;
         float        animation_timer_;
         float        timer_;
+        bool         done_;
         int          width_;
         int          height_;
         sf::IntRect  start_rect_;
@@ -34,6 +35,8 @@ class AnimationComponent
                 , width_(width)
                 , height_(height)
                 , animation_timer_(animation_timer)
+                , timer_(0.f)
+                , done_(false)
         {
             timer_        = 0.f;
             start_rect_   = sf::IntRect(start_frame_x * width, start_frame_y * height, width, height);
@@ -45,10 +48,17 @@ class AnimationComponent
             sprite_.setOrigin(width / 2.f, height / 2.f);
         }
 
+        //Accessor
+        const bool& IsDone() const
+        {
+            return done_;
+        }
+
         //Functions
-        void Play(const float& delta)
+        const bool& Play(const float& delta)
         {
             //Update timer
+            done_ = false;
             timer_ += 100.f * delta;
             if (timer_ >= animation_timer_)
             {
@@ -63,9 +73,11 @@ class AnimationComponent
                 else //Reset
                 {
                     current_rect_.left = start_rect_.left;
+                    done_               = true;
                 }
                 sprite_.setTextureRect(current_rect_);
             }
+            return done_;
         }
 
         void Reset()
@@ -79,11 +91,14 @@ class AnimationComponent
     AnimationComponent(sf::Sprite& sprite, sf::Texture& texture_sheet);
     virtual ~AnimationComponent();
 
+    //Accessor
+    const bool& IsDone(const std::string key);
+
     //Functions
     void AddAnimation(const std::string key, float animation_timer, int start_frame_x, int start_frame_y, int frames_x,
                       int frames_y, int width, int height);
 
-    void Play(const std::string key, const float& delta, const bool priority = false);
+    const bool& Play(const std::string key, const float& delta, const bool priority = false);
 
   private:
     std::map<std::string, Animation*> animations_;

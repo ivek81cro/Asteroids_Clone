@@ -16,6 +16,13 @@ AnimationComponent::~AnimationComponent()
     }
 }
 
+//Accessor
+const bool& AnimationComponent::IsDone(const std::string key)
+{
+    return animations_[ key ]->IsDone();
+}
+
+//Functions
 void AnimationComponent::AddAnimation(const std::string key, float animation_timer, int start_frame_x,
                                       int start_frame_y, int frames_x, int frames_y, int width, int height)
 {
@@ -23,18 +30,45 @@ void AnimationComponent::AddAnimation(const std::string key, float animation_tim
                                        frames_y, width, height);
 }
 
-//Functions
-void AnimationComponent::Play(const std::string key, const float& delta, const bool priority)
+const bool& AnimationComponent::Play(const std::string key, const float& delta, const bool priority)
 {
-    if (last_animation_ != animations_[ key ] && last_animation_ != nullptr)
+    if (prority_animation_)
     {
-        if (last_animation_ == nullptr)
-            last_animation_ = animations_[ key ];
-        else
+        if (prority_animation_ == animations_[ key ])
         {
-            last_animation_->Reset();
-            last_animation_ = animations_[ key ];
+            if (last_animation_ != animations_[ key ] && last_animation_ != nullptr)
+            {
+                if (last_animation_ == nullptr)
+                    last_animation_ = animations_[ key ];
+                else
+                {
+                    last_animation_->Reset();
+                    last_animation_ = animations_[ key ];
+                }
+            }
+            if (animations_[ key ]->Play(delta))
+            {
+                prority_animation_ = nullptr;
+            }
         }
     }
-    animations_[ key ]->Play(delta);
+    else
+    {
+        if (priority)//If priority exists 
+        {
+            prority_animation_ = animations_[ key ];
+        }
+        if (last_animation_ != animations_[ key ] && last_animation_ != nullptr)
+        {
+            if (last_animation_ == nullptr)
+                last_animation_ = animations_[ key ];
+            else
+            {
+                last_animation_->Reset();
+                last_animation_ = animations_[ key ];
+            }
+        }
+        animations_[ key ]->Play(delta);
+    }
+    return animations_[ key ]->IsDone();
 }
