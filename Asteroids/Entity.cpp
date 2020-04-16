@@ -87,7 +87,9 @@ void Entity::Update(const float& delta, const sf::Vector2u& window_size)
     if (animation_component_)
     {
         if (name_ == "ship" && exploding_)
+        {
             animation_name_ = "ship_explode";
+        }
         animation_component_->Play(animation_name_, delta);
     }
 

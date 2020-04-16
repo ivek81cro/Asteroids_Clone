@@ -7,6 +7,7 @@ Asteroid::Asteroid(float x, float y, sf::Texture& texture_sheet)
     InitVariables();
     InitComponents();
 
+    CreateHitboxComponent(sprite_, -20.f, -20.f, 42);
     CreateMovementComponent(50.f, 0.f, 0.f, sprite_.getRotation());
     CreateAnimationComponent(texture_sheet);
 

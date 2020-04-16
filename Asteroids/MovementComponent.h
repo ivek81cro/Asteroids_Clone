@@ -23,6 +23,7 @@ class MovementComponent
     virtual ~MovementComponent();
 
     //Accessors
+    const float& GetMaxVelocity() const;
     const sf::Vector2f& GetVelocity() const;
 
     //Functions

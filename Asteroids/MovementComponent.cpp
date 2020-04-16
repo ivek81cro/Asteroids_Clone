@@ -17,7 +17,12 @@ MovementComponent::~MovementComponent()
 {
 }
 
-///Accessors
+//Accessors
+const float& MovementComponent::GetMaxVelocity() const
+{
+    return max_velocity_;
+}
+
 const sf::Vector2f& MovementComponent::GetVelocity() const
 {
     return velocity_;
