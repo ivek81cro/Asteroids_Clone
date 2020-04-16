@@ -38,6 +38,41 @@ void Ship::ResetAnimationName()
     animation_name_ = name_;
 }
 
+void Ship::Update(const float& delta, const sf::Vector2u& window_size)
+{
+    //-----------TESTING-----------------
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        exploding_ = true;
+    //-----------------------------------
+
+    if (exploding_)
+    {
+        animation_name_ = "ship_explode";
+        animation_component_->Play(animation_name_, delta, true);
+        if (animation_component_->IsDone("ship_explode"))
+        {
+            exploding_ = false;
+            alive_ = false;
+        }
+    }
+    else
+        Entity::Update(delta, window_size);
+}
+
+void Ship::Move(const float dir_x, const float dir_y, const float& delta)
+{
+    Entity::Move(dir_x, dir_y, delta);
+
+    //Ship animation preset based on movement
+
+    if (dir_x > 0)
+        animation_name_ = "ship_r";
+    else if (dir_x < 0)
+        animation_name_ = "ship_l";
+    else
+        animation_name_ = name_;
+}
+
 sf::Vector2f Ship::GetPosition() const
 {
     return sprite_.getPosition();
