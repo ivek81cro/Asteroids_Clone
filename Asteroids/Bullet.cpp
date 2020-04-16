@@ -9,7 +9,8 @@ Bullet::Bullet(float x, float y, sf::Texture& texture_sheet, float angle)
     InitVariables();
     InitComponents();
 
-    CreateMovementComponent(1000.f, 0.f, 0.f, sprite_.getRotation());
+    CreateHitboxComponent(sprite_, -16.f * 0.25f, -32.f * 0.25f, 32 * 0.25f);
+    CreateMovementComponent(50.f, 0.f, 0.f, sprite_.getRotation());
     CreateAnimationComponent(texture_sheet);
 
     animation_component_->AddAnimation(name_, 10.f, 0, 0, 0, 0, 64, 32);
