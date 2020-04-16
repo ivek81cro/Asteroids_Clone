@@ -83,12 +83,13 @@ class AnimationComponent
     void AddAnimation(const std::string key, float animation_timer, int start_frame_x, int start_frame_y, int frames_x,
                       int frames_y, int width, int height);
 
-    void Play(const std::string key, const float& delta);
+    void Play(const std::string key, const float& delta, const bool priority = false);
 
   private:
     std::map<std::string, Animation*> animations_;
 
     Animation* last_animation_;
+    Animation* prority_animation_;
 
     sf::Sprite&  sprite_;
     sf::Texture& texture_sheet_;

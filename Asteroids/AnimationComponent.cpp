@@ -4,6 +4,7 @@ AnimationComponent::AnimationComponent(sf::Sprite& sprite, sf::Texture& texture_
         : sprite_(sprite)
         , texture_sheet_(texture_sheet)
         , last_animation_(nullptr)
+        , prority_animation_(nullptr)
 {
 }
 
@@ -23,7 +24,7 @@ void AnimationComponent::AddAnimation(const std::string key, float animation_tim
 }
 
 //Functions
-void AnimationComponent::Play(const std::string key, const float& delta)
+void AnimationComponent::Play(const std::string key, const float& delta, const bool priority)
 {
     if (last_animation_ != animations_[ key ] && last_animation_ != nullptr)
     {
