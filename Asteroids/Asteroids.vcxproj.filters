@@ -72,7 +72,7 @@
       <Filter>Tile</Filter>
     </ClCompile>
     <ClCompile Include="PauseMenu.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,7 +119,7 @@
       <Filter>Tile</Filter>
     </ClInclude>
     <ClInclude Include="PauseMenu.h">
-      <Filter>Header Files</Filter>
+      <Filter>GUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

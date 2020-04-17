@@ -13,6 +13,7 @@ class GameState : public State
     //Update functions
     void UpdateInput(const float& delta);
     void UpdatePlayerInput(const float& delta);
+    void UpdatePauseMenuButtons();
     void Update(const float& delta);
 
     //Render functions

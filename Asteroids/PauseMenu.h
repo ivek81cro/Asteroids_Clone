@@ -11,8 +11,13 @@ class PauseMenu
     virtual ~PauseMenu();
 
     //Functions
-    void Update();
+    const bool IsButtonPressed(const std::string key);
+    void AddButton(const std::string key, float y, const std::string text);
+    void Update(const sf::Vector2f& mouse_position);
     void Render(sf::RenderTarget& target);
+
+    //Accessor
+    std::map<std::string, Button*>& GetButtons();
 
   private:
     sf::Font& font_;
@@ -22,6 +27,8 @@ class PauseMenu
     sf::RectangleShape container_;
 
     std::map<std::string, Button*> buttons_;
+
+    //Functions
 };
 
 #endif // !PAUSEMENU_H_

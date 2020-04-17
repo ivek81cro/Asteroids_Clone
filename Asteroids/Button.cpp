@@ -45,7 +45,7 @@ const bool Button::IsPressed() const
 }
 
 //Functions
-void Button::Update(sf::Vector2f mouse_pos)
+void Button::Update(const sf::Vector2f& mouse_pos)
 {
     button_state_ = BTN_IDLE;
     if (shape_.getGlobalBounds().contains(mouse_pos))

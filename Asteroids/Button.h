@@ -22,7 +22,7 @@ class Button
     const bool IsPressed() const;
 
     //Functions
-    void Update(sf::Vector2f mouse_pos);
+    void Update(const sf::Vector2f& mouse_pos);
     void Render(sf::RenderTarget& target);
 
   private:

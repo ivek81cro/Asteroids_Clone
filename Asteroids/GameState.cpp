@@ -68,6 +68,8 @@ void GameState::InitTextures()
 void GameState::InitPauseMenu()
 {
     p_menu_ = new PauseMenu(*window_, font_);
+
+    p_menu_->AddButton("QUIT", 300.f, "Quit");
 }
 
 void GameState::InitBackground()
@@ -150,6 +152,12 @@ void GameState::UpdatePlayerInput(const float& delta)
     }    
 }
 
+void GameState::UpdatePauseMenuButtons()
+{
+    if (p_menu_->IsButtonPressed("QUIT"))
+        EndState();
+}
+
 void GameState::Update(const float& delta)
 {
     UpdateMousePositions();
@@ -175,7 +183,8 @@ void GameState::Update(const float& delta)
     }
     else
     {
-        p_menu_->Update();
+        p_menu_->Update(mouse_pos_view_);
+        UpdatePauseMenuButtons();
     }
 }
 
