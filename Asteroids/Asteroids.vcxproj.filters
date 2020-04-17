@@ -21,6 +21,9 @@
     <Filter Include="Tile">
       <UniqueIdentifier>{78dd0f09-001f-4694-951c-3593bb7dc884}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{078d22ec-9550-4b75-92a9-36b75c6c4da3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -68,6 +71,9 @@
     <ClCompile Include="Tile.cpp">
       <Filter>Tile</Filter>
     </ClCompile>
+    <ClCompile Include="PauseMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -111,6 +117,9 @@
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseMenu.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

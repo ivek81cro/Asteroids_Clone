@@ -13,8 +13,11 @@ class State
     virtual ~State();
 
     const bool&  GetQuit() const;
-
+    
     void EndState();
+    void PauseState();
+    void UnpauseState();
+
     virtual void UpdateMousePositions();
     virtual void UpdateInput(const float& delta)            = 0;
     virtual void Update(const float& delta)                 = 0;
@@ -26,6 +29,7 @@ class State
     std::map<std::string, int>* supported_keys_;
     std::map<std::string, int>  keybinds_;
     bool                        quit_;
+    bool                        paused_;
 
     //Mouse position
     sf::Vector2i mouse_pos_screen_;

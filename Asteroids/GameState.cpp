@@ -5,7 +5,9 @@ GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* suppo
         : State(window, supported_keys, states)
 {
     InitKeybinds();
+    InitFonts();
     InitTextures();
+    InitPauseMenu();
     InitBackground();
     InitPlayer();
     InitAsteroids();
@@ -13,6 +15,15 @@ GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* suppo
 
 GameState::~GameState()
 {
+    delete p_menu_;
+}
+
+void GameState::InitFonts()
+{
+    if (!font_.loadFromFile("Fonts/Dosis-Light.ttf"))
+    {
+        throw("ERROR::MAINMENUSTATE::COULD_NOT_LOAD_FONT");
+    }
 }
 
 //Initializer functions
@@ -54,6 +65,11 @@ void GameState::InitTextures()
     }
 }
 
+void GameState::InitPauseMenu()
+{
+    p_menu_ = new PauseMenu(*window_, font_);
+}
+
 void GameState::InitBackground()
 {
     background_.setSize(
@@ -83,8 +99,19 @@ void GameState::FireBullet(Ship* s)
         new Bullet(s->GetPosition().x, s->GetPosition().y, textures_[ "BULLET" ], s->GetAngle())));
 }
 
-//Update functions
 void GameState::UpdateInput(const float& delta)
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("CLOSE"))))
+    {
+        if (!paused_)
+            PauseState();
+        else
+           UnpauseState();
+    }
+}
+
+//Update functions
+void GameState::UpdatePlayerInput(const float& delta)
 {
     Ship* s = nullptr;
     for (auto& it : entities_)
@@ -102,7 +129,7 @@ void GameState::UpdateInput(const float& delta)
     }
 
     s->ResetAnimationName();
-    //Update player input 
+    //Update player input
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_UP"))))
         s->Move(0.f, -1.f, delta);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_DOWN"))))
@@ -115,15 +142,12 @@ void GameState::UpdateInput(const float& delta)
     //Bullet fire
     float time       = elapsed_coldown_.restart().asSeconds();
     bullet_cooldown_ = bullet_clock_.getElapsedTime();
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("FIRE"))) && bullet_cooldown_.asSeconds() > 0.25f && s->IsAlive())
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("FIRE"))) && bullet_cooldown_.asSeconds() > 0.25f &&
+        s->IsAlive())
     {
         bullet_clock_.restart();
         FireBullet(s);
-    }
-
-    //Close with esc button
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("CLOSE"))))
-        EndState();
+    }    
 }
 
 void GameState::Update(const float& delta)
@@ -131,18 +155,27 @@ void GameState::Update(const float& delta)
     UpdateMousePositions();
     UpdateInput(delta);
 
-    //Check if entity is alive
-    entities_.erase(std::remove_if(entities_.begin(), entities_.end(),
-                                   [](const std::unique_ptr<Entity>& ent) { return !ent->IsAlive(); }),
-                    entities_.end());
-
-    for (auto& it : entities_)
+    if (!paused_)
     {
-        if (it->GetName() == "bullet")
-            static_cast<Bullet*>(it.get())->SetLifeTime(delta);
-        if ((it)->GetName() != "ship")
-            it->Move(0, 0, delta);
-        it->Update(delta, window_->getSize());
+        UpdatePlayerInput(delta);
+
+        //Check if entity is alive
+        entities_.erase(std::remove_if(entities_.begin(), entities_.end(),
+                                       [](const std::unique_ptr<Entity>& ent) { return !ent->IsAlive(); }),
+                        entities_.end());
+
+        for (auto& it : entities_)
+        {
+            if (it->GetName() == "bullet")
+                static_cast<Bullet*>(it.get())->SetLifeTime(delta);
+            if ((it)->GetName() != "ship")
+                it->Move(0, 0, delta);
+            it->Update(delta, window_->getSize());
+        }
+    }
+    else
+    {
+        p_menu_->Update();
     }
 }
 
@@ -159,5 +192,10 @@ void GameState::Render(sf::RenderTarget* target)
     for (auto& it : entities_)
     {
         it->Render(*target);
+    }
+
+    if (paused_)
+    {
+        p_menu_->Render(*target);
     }
 }

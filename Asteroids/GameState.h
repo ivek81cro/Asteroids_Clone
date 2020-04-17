@@ -1,6 +1,7 @@
 #ifndef GAMESTATE_H_
 #define GAMESTATE_H_
 
+#include "PauseMenu.h"
 #include "State.h"
 
 class GameState : public State
@@ -11,14 +12,18 @@ class GameState : public State
 
     //Update functions
     void UpdateInput(const float& delta);
+    void UpdatePlayerInput(const float& delta);
     void Update(const float& delta);
 
     //Render functions
     void Render(sf::RenderTarget* target = nullptr);
 
   private:
-    std::vector<std::unique_ptr<Entity>>  entities_;
-    sf::RectangleShape    background_;
+    sf::Font   font_;
+    PauseMenu* p_menu_;
+
+    std::vector<std::unique_ptr<Entity>> entities_;
+    sf::RectangleShape                   background_;
 
     sf::Clock elapsed_coldown_;
     sf::Clock bullet_clock_;
@@ -26,7 +31,9 @@ class GameState : public State
 
     //Initializer Functions
     void InitKeybinds();
+    void InitFonts();
     void InitTextures();
+    void InitPauseMenu();
     void InitBackground();
     void InitPlayer();
     void InitAsteroids();
