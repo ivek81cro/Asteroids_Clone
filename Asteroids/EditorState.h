@@ -20,7 +20,7 @@ class EditorState : public State
     //Variables
     sf::Font           font_;
 
-    std::map<std::string, Button*> buttons_;
+    std::map<std::string, gui::Button*> buttons_;
 
     //Functions
     void InitVariables();

@@ -1,7 +1,7 @@
 #include "Button.h"
 
 //Constructors / Destructors
-Button::Button(float x, float y, float width, float height, sf::Font* font, std::string text, unsigned character_size,
+gui::Button::Button(float x, float y, float width, float height, sf::Font* font, std::string text, unsigned character_size,
                sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color ,sf::Color idle_color,
                sf::Color hover_color, sf::Color active_color)
 {
@@ -31,12 +31,12 @@ Button::Button(float x, float y, float width, float height, sf::Font* font, std:
     active_color_ = active_color;
 }
 
-Button::~Button()
+gui::Button::~Button()
 {
 }
 
 //Accessors
-const bool Button::IsPressed() const
+const bool gui::Button::IsPressed() const
 {
     if (button_state_ == BTN_ACTIVE)
         return true;
@@ -45,7 +45,7 @@ const bool Button::IsPressed() const
 }
 
 //Functions
-void Button::Update(const sf::Vector2f& mouse_pos)
+void gui::Button::Update(const sf::Vector2f& mouse_pos)
 {
     button_state_ = BTN_IDLE;
     if (shape_.getGlobalBounds().contains(mouse_pos))
@@ -79,7 +79,7 @@ void Button::Update(const sf::Vector2f& mouse_pos)
     }
 }
 
-void Button::Render(sf::RenderTarget& target)
+void gui::Button::Render(sf::RenderTarget& target)
 {
     target.draw(shape_);
     target.draw(text_);

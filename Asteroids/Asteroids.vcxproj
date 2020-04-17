@@ -166,6 +166,7 @@
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
+    <ClCompile Include="SettingsState.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="Tile.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="PauseMenu.h" />
+    <ClInclude Include="SettingsState.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="Tile.h" />

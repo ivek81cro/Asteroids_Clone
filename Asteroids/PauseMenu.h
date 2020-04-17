@@ -17,7 +17,7 @@ class PauseMenu
     void Render(sf::RenderTarget& target);
 
     //Accessor
-    std::map<std::string, Button*>& GetButtons();
+    std::map<std::string, gui::Button*>& GetButtons();
 
   private:
     sf::Font& font_;
@@ -26,7 +26,7 @@ class PauseMenu
     sf::RectangleShape background_;
     sf::RectangleShape container_;
 
-    std::map<std::string, Button*> buttons_;
+    std::map<std::string, gui::Button*> buttons_;
 
     //Functions
 };
