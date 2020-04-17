@@ -16,7 +16,7 @@ class SettingsState : public State
 
     //Functions
     void UpdateInput(const float& delta);
-    void UpdateButtons();
+    void UpdateButtons(const float& delta);
     void Update(const float& delta);
     void RenderButtons(sf::RenderTarget& target);
     void Render(sf::RenderTarget* target = nullptr);
@@ -27,8 +27,11 @@ class SettingsState : public State
     sf::Font           font_;
 
     std::map<std::string, gui::Button*> buttons_;
+    std::map<std::string, gui::DropDownList*> ddl_;
 
-    gui::DropDownList* ddl_;
+    sf::Text options_text_;
+
+    std::vector<sf::VideoMode> v_modes_;
 
     //Functions
     void InitVariables();
@@ -36,6 +39,7 @@ class SettingsState : public State
     void InitFonts();
     void InitKeybinds();
     void InitButtons();
+    void InitText();
 };
 
 #endif // !SETTINGSSTATE_H_

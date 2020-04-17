@@ -13,6 +13,9 @@ namespace gui
                      unsigned default_index = 0);
         virtual ~DropDownList();
 
+        //Accessor
+        const unsigned short& GetActiveElementId() const; 
+
         //Functions
         const bool GetKeytime();
         void       UpdateKeytime(const float& delta);

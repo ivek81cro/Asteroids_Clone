@@ -69,7 +69,7 @@ void GameState::InitPauseMenu()
 {
     p_menu_ = new PauseMenu(*window_, font_);
 
-    p_menu_->AddButton("QUIT", 300.f, "Quit");
+    p_menu_->AddButton("QUIT", window_->getSize().y - 100.f, "Quit");
 }
 
 void GameState::InitBackground()

@@ -3,9 +3,10 @@
 //Constructors / Destructors
 gui::Button::Button(float x, float y, float width, float height, sf::Font* font, std::string text, unsigned character_size,
                sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color ,sf::Color idle_color,
-               sf::Color hover_color, sf::Color active_color)
+               sf::Color hover_color, sf::Color active_color, short unsigned id)
 {
     button_state_ = BTN_IDLE;
+    id_           = id;
 
     shape_.setPosition(sf::Vector2f(x, y));
     shape_.setSize(sf::Vector2f(width, height));
@@ -44,9 +45,19 @@ const bool gui::Button::IsPressed() const
     return false;
 }
 
-const std::string& gui::Button::GetText() const
+const std::string gui::Button::GetText() const
 {
     return text_.getString();
+}
+
+void gui::Button::SetId(const short unsigned id)
+{
+    id_ = id;
+}
+
+const unsigned short& gui::Button::GetId()
+{
+    return id_;
 }
 
 //Modifiers
