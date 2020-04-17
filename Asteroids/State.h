@@ -12,13 +12,17 @@ class State
     State(sf::RenderWindow* window, std::map<std::string, int>* supported_keys, std::stack<State*>* states);
     virtual ~State();
 
+    //Accessor
     const bool&  GetQuit() const;
+    const bool  GetKeytime();
     
+    //Functions
     void EndState();
     void PauseState();
     void UnpauseState();
 
     virtual void UpdateMousePositions();
+    virtual void UpdateKeytime(const float& delta);
     virtual void UpdateInput(const float& delta)            = 0;
     virtual void Update(const float& delta)                 = 0;
     virtual void Render(sf::RenderTarget* target = nullptr) = 0;
@@ -30,6 +34,8 @@ class State
     std::map<std::string, int>  keybinds_;
     bool                        quit_;
     bool                        paused_;
+    float                       keytime_;
+    float                       keytime_max_;
 
     //Mouse position
     sf::Vector2i mouse_pos_screen_;

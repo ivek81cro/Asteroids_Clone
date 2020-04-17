@@ -103,7 +103,7 @@ void GameState::FireBullet(Ship* s)
 
 void GameState::UpdateInput(const float& delta)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("CLOSE"))))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("CLOSE"))) && GetKeytime())
     {
         if (!paused_)
             PauseState();
@@ -161,6 +161,7 @@ void GameState::UpdatePauseMenuButtons()
 void GameState::Update(const float& delta)
 {
     UpdateMousePositions();
+    UpdateKeytime(delta);
     UpdateInput(delta);
 
     if (!paused_)
