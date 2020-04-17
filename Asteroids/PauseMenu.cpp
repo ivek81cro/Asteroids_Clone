@@ -30,7 +30,6 @@ PauseMenu::~PauseMenu()
     }
 }
 
-
 //Functions
 const bool PauseMenu::IsButtonPressed(const std::string key)
 {
