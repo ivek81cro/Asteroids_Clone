@@ -21,6 +21,10 @@ namespace gui
 
         //Accessors
         const bool IsPressed() const;
+        const std::string& GetText() const;
+
+        //Modifiers
+        void SetText(const std::string text);
 
         //Functions
         void Update(const sf::Vector2f& mouse_pos);

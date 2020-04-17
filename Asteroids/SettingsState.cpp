@@ -18,6 +18,8 @@ SettingsState::~SettingsState()
     {
         delete it->second;
     }
+
+    delete ddl_;
 }
 
 //Initializer functions
@@ -71,6 +73,11 @@ void SettingsState::InitButtons()
         new gui::Button(position.x, position.y + 25.f, 250, 50, &font_, "Quit", 50, sf::Color(255, 0, 0, 200),
                    sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0),
                    sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
+
+    std::string li[] = {
+        "sfds", "sfdsdf", "dfdgf", "efsfd", "sfdsdfs",
+    };
+    ddl_ = new gui::DropDownList(100, 100, 200, 50, font_, li, 5);
 }
 
 //Accessor
@@ -101,6 +108,8 @@ void SettingsState::Update(const float& delta)
     UpdateInput(delta);
 
     UpdateButtons();
+
+    ddl_->Update(mouse_pos_view_, delta);
 }
 
 void SettingsState::RenderButtons(sf::RenderTarget& target)
@@ -120,6 +129,8 @@ void SettingsState::Render(sf::RenderTarget* target)
     target->draw(background_);
 
     RenderButtons(*target);
+
+    ddl_->Render(*target);
 
     ////Mouse coordinates for testing
     //sf::Text mouse_text;

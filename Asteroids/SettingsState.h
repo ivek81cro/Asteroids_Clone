@@ -3,6 +3,7 @@
 
 #include "State.h"
 #include "Button.h"
+#include "DropDownList.h"
 
 
 class SettingsState : public State
@@ -26,6 +27,8 @@ class SettingsState : public State
     sf::Font           font_;
 
     std::map<std::string, gui::Button*> buttons_;
+
+    gui::DropDownList* ddl_;
 
     //Functions
     void InitVariables();

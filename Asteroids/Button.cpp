@@ -44,6 +44,17 @@ const bool gui::Button::IsPressed() const
     return false;
 }
 
+const std::string& gui::Button::GetText() const
+{
+    return text_.getString();
+}
+
+//Modifiers
+void gui::Button::SetText(const std::string text)
+{
+    text_.setString(text);
+}
+
 //Functions
 void gui::Button::Update(const sf::Vector2f& mouse_pos)
 {
