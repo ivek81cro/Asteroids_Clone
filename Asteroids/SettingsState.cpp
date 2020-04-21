@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "SettingsState.h"
 
 SettingsState::SettingsState(sf::RenderWindow* window, std::map<std::string, int>* supported_keys,

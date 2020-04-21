@@ -1,8 +1,6 @@
 #ifndef BUTTON_H_
 #define BUTTON_H_
 
-#include "SFML/Graphics.hpp"
-
 enum button_states
 {
     BTN_IDLE = 0,

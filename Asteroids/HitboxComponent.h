@@ -1,8 +1,6 @@
 #ifndef HITBOXCOMPONENT_H_
 #define HITBOXCOMPONENT_H_
 
-#include "SFML/Graphics.hpp"
-
 class HitboxComponent
 {
   public:

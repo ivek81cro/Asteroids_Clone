@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Bullet.h"
 
 Bullet::Bullet(float x, float y, sf::Texture& texture_sheet, float angle)

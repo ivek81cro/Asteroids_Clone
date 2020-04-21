@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Asteroid.h"
 
 Asteroid::Asteroid(float x, float y, sf::Texture& texture_sheet)

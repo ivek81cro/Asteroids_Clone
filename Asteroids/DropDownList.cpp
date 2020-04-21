@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "DropDownList.h"
 
 gui::DropDownList::DropDownList(float x, float y, float width, float height, sf::Font& font, std::string list[],
