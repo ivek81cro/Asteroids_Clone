@@ -1,14 +1,7 @@
 #ifndef ANIMATIONCOMPONENT_H_
 #define ANIMATIONCOMPONENT_H_
 
-#include <iostream>
-#include <map>
-#include <string>
-
-#include "SFML/Audio.hpp"
-#include "SFML/Graphics.hpp"
-#include "SFML/System.hpp"
-#include "SFML/Window.hpp"
+#include "stdafx.h"
 
 class AnimationComponent
 {

@@ -1,5 +1,6 @@
 #ifndef SHIP_H_
 #define SHIP_H_
+
 #include "Entity.h"
 
 class Ship : public Entity

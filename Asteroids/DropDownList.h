@@ -2,7 +2,7 @@
 #define DROPDOWNBOX_H_
 
 #include "Button.h"
-#include "SFML/Graphics.hpp"
+#include "stdafx.h"
 
 namespace gui
 {

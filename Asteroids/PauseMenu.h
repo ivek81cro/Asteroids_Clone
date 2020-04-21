@@ -2,7 +2,7 @@
 #define PAUSEMENU_H_
 
 #include "Button.h"
-#include "SFML/Graphics.hpp"
+#include "stdafx.h"
 
 class PauseMenu
 {
