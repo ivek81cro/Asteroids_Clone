@@ -2,9 +2,10 @@
 #include "MainMenuState.h"
 
 //Constructors / Destructors
-MainMenuState::MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supported_keys,
+MainMenuState::MainMenuState(sf::RenderWindow* window, GraphicsSettings& gfx_settings, std::map<std::string, int>* supported_keys,
                              std::stack<State*>* states)
         : State(window, supported_keys, states)
+        , gfx_settings_(gfx_settings)
 {
     InitVariables();
     InitBackground();
@@ -114,7 +115,7 @@ void MainMenuState::UpdateButtons()
      //Settings
     if (buttons_[ "SETTINGS_STATE" ]->IsPressed())
     {
-        states_->push(new SettingsState(window_, supported_keys_, states_));
+        states_->push(new SettingsState(window_, gfx_settings_, supported_keys_, states_));
     }
 
     //Editor

@@ -1,10 +1,11 @@
 #ifndef STATE_H_
 #define STATE_H_
 
-#include "Entity.h"
-#include "Ship.h"
 #include "Asteroid.h"
 #include "Bullet.h"
+#include "Entity.h"
+#include "GraphicsSettings.h"
+#include "Ship.h"
 
 class State
 {
@@ -13,9 +14,9 @@ class State
     virtual ~State();
 
     //Accessor
-    const bool&  GetQuit() const;
+    const bool& GetQuit() const;
     const bool  GetKeytime();
-    
+
     //Functions
     void EndState();
     void PauseState();

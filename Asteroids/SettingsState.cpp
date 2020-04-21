@@ -1,9 +1,11 @@
 #include "stdafx.h"
 #include "SettingsState.h"
 
-SettingsState::SettingsState(sf::RenderWindow* window, std::map<std::string, int>* supported_keys,
+SettingsState::SettingsState(sf::RenderWindow* window, GraphicsSettings& gfx_settings,
+                             std::map<std::string, int>* supported_keys,
                              std::stack<State*>* states)
         : State(window, supported_keys, states)
+        , gfx_settings_(gfx_settings)
 {
     InitVariables();
     InitBackground();
@@ -132,8 +134,8 @@ void SettingsState::UpdateButtons(const float& delta)
     if (buttons_[ "APPLY" ]->IsPressed())
     {
         //TEST
-        window_->create(v_modes_[ ddl_[ "RESOLUTION" ]->GetActiveElementId() ], "Test", sf::Style::Default);
-        InitButtons();
+        gfx_settings_.resolution_ = v_modes_[ ddl_[ "RESOLUTION" ]->GetActiveElementId() ];
+        window_->create(gfx_settings_.resolution_, gfx_settings_.title_, sf::Style::Default);
     }
 
     //Dropdown lists

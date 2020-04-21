@@ -9,7 +9,8 @@
 class MainMenuState : public State
 {
   public:
-    MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supported_keys, std::stack<State*>* states);
+    MainMenuState(sf::RenderWindow* window, GraphicsSettings& gfx_settings, std::map<std::string, int>* supported_keys,
+                  std::stack<State*>* states);
     virtual ~MainMenuState();
 
     //Functions
@@ -21,6 +22,7 @@ class MainMenuState : public State
 
   private:
     //Variables
+    GraphicsSettings&  gfx_settings_;
     sf::RectangleShape background_;
     sf::Font           font_;
 
