@@ -80,6 +80,7 @@ void gui::DropDownList::Update(const sf::Vector2f& mouse_pos, const float& delta
             {
                 show_list_ = false;
                 active_element_->SetText(i->GetText());
+                active_element_->SetId(i->GetId());
             }
         }
     }

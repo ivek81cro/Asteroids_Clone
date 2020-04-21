@@ -22,11 +22,11 @@ namespace gui
         //Accessors
         const bool            IsPressed() const;
         const std::string     GetText() const;
-        void                  SetId(const short unsigned id);
         const short unsigned& GetId();
 
         //Modifiers
         void SetText(const std::string text);
+        void SetId(const short unsigned id);
 
         //Functions
         void Update(const sf::Vector2f& mouse_pos);

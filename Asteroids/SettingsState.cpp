@@ -77,12 +77,13 @@ void SettingsState::InitButtons()
     float height = 50;
 
     buttons_[ "BACK" ] = new gui::Button(
-        x - 200, y - 100, width, height, &font_, "Back", 40, sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250),
+        x / 2.f - width / 2.f, y - 100, width, height, &font_, "Back", 40, sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250),
         sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 
     buttons_[ "APPLY" ] = new gui::Button(
-        x - 200, y - 150, width, height, &font_, "Apply", 40, sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250),
-        sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
+        x / 2.f - width / 2.f, y - 150, width, height, &font_, "Apply", 40, sf::Color(255, 0, 0, 200),
+        sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), 
+        sf::Color(204, 0, 0, 0));
 
     std::vector<std::string> modes_str;
     for (auto& i : v_modes_)
@@ -130,7 +131,8 @@ void SettingsState::UpdateButtons(const float& delta)
     if (buttons_[ "APPLY" ]->IsPressed())
     {
         //TEST
-        //window_->create(v_modes_[ ddl_[ "RESOLUTION" ]->GetActiveElementId() ], "Test", sf::Style::Default);
+        window_->create(v_modes_[ ddl_[ "RESOLUTION" ]->GetActiveElementId() ], "Test", sf::Style::Default);
+        InitButtons();
     }
 
     //Dropdown lists
