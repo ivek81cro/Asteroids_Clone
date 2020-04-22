@@ -3,13 +3,21 @@
 
 void Game::InitVariables()
 {
-    window_     = nullptr;
-    delta_      = 0.f;
+    window_ = nullptr;
+    delta_  = 0.f;
 }
 
 void Game::InitGraphicsSettings()
 {
     gfx_settings_.LoadFromFile("Config/graphics.ini");
+}
+
+void Game::InitStateData()
+{
+    state_data_.window_         = window_;
+    state_data_.gfx_settings_   = &gfx_settings_;
+    state_data_.supported_keys_ = &supported_keys_;
+    state_data_.states_         = &states_;
 }
 
 //Initialization functions
@@ -47,7 +55,7 @@ void Game::InitKeys()
 
 void Game::InitStates()
 {
-    states_.push(new MainMenuState(window_, gfx_settings_, &supported_keys_, &states_));
+    states_.push(new MainMenuState(&state_data_));
 }
 
 //Constructors/Destructors
@@ -57,6 +65,7 @@ Game::Game()
     InitGraphicsSettings();
     InitWindow();
     InitKeys();
+    InitStateData();
     InitStates();
 }
 

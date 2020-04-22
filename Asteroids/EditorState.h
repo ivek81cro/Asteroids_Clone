@@ -7,7 +7,7 @@
 class EditorState : public State
 {
   public:
-    EditorState(sf::RenderWindow* window, std::map<std::string, int>* supported_keys, std::stack<State*>* states);
+    EditorState(StateData* state_data);
     virtual ~EditorState();
 
     void UpdateInput(const float& delta);

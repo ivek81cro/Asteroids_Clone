@@ -1,12 +1,13 @@
 #include "stdafx.h"
 #include "State.h"
 
-State::State(sf::RenderWindow* window, std::map<std::string, int>* supported_keys, std::stack<State*>* states)
+State::State(StateData* state_data)
 {
-    window_         = window;
+    state_data_     = state_data;
+    window_         = state_data->window_;
     quit_           = false;
-    states_         = states;
-    supported_keys_ = supported_keys;
+    states_         = state_data->states_;
+    supported_keys_ = state_data->supported_keys_;
     paused_         = false;
     keytime_        = 0.f;
     keytime_max_    = 10.f;

@@ -7,7 +7,7 @@
 class GameState : public State
 {
   public:
-    GameState(sf::RenderWindow* window, std::map<std::string, int>* supported_keys, std::stack<State*>* states);
+    GameState(StateData* state_data);
     virtual ~GameState();
 
     //Update functions

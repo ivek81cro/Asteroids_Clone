@@ -2,8 +2,8 @@
 #include "GameState.h"
 
 //Constructors / Destructors
-GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supported_keys, std::stack<State*>* states)
-        : State(window, supported_keys, states)
+GameState::GameState(StateData* state_data)
+        : State(state_data)
 {
     InitKeybinds();
     InitFonts();
@@ -116,6 +116,7 @@ void GameState::UpdateInput(const float& delta)
 //Update functions
 void GameState::UpdatePlayerInput(const float& delta)
 {
+    //Select ship from entites
     Ship* s = nullptr;
     for (auto& it : entities_)
     {
@@ -142,7 +143,7 @@ void GameState::UpdatePlayerInput(const float& delta)
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_RIGHT"))))
         s->Move(1.f, 0.f, delta);
 
-    //Bullet fire
+    //Ship fires bullet if alive, if key cooldown time elapsed
     float time       = elapsed_coldown_.restart().asSeconds();
     bullet_cooldown_ = bullet_clock_.getElapsedTime();
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("FIRE"))) && bullet_cooldown_.asSeconds() > 0.25f &&
@@ -169,7 +170,7 @@ void GameState::Update(const float& delta)
     {
         UpdatePlayerInput(delta);
 
-        //Check if entity is alive
+        //Check if entity is alive, remove ones that are not
         entities_.erase(std::remove_if(entities_.begin(), entities_.end(),
                                        [](const std::unique_ptr<Entity>& ent) { return !ent->IsAlive(); }),
                         entities_.end());
@@ -177,10 +178,10 @@ void GameState::Update(const float& delta)
         for (auto& it : entities_)
         {
             if (it->GetName() == "bullet")
-                static_cast<Bullet*>(it.get())->SetLifeTime(delta);
+                static_cast<Bullet*>(it.get())->SetLifeTime(delta);//Decrease lifetime for elapsed time
             if ((it)->GetName() != "ship")
-                it->Move(0, 0, delta);
-            it->Update(delta, window_->getSize());
+                it->Move(0, 0, delta);//Move asteroids and bullets
+            it->Update(delta, window_->getSize());//Update each entity
         }
     }
     else

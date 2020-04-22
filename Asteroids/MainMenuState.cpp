@@ -2,10 +2,8 @@
 #include "MainMenuState.h"
 
 //Constructors / Destructors
-MainMenuState::MainMenuState(sf::RenderWindow* window, GraphicsSettings& gfx_settings, std::map<std::string, int>* supported_keys,
-                             std::stack<State*>* states)
-        : State(window, supported_keys, states)
-        , gfx_settings_(gfx_settings)
+MainMenuState::MainMenuState(StateData* state_data)
+        : State(state_data)
 {
     InitVariables();
     InitBackground();
@@ -109,19 +107,19 @@ void MainMenuState::UpdateButtons()
     //New game
     if (buttons_[ "GAME_STATE" ]->IsPressed())
     {
-        states_->push(new GameState(window_, supported_keys_, states_));
+        states_->push(new GameState(state_data_));
     }
 
      //Settings
     if (buttons_[ "SETTINGS_STATE" ]->IsPressed())
     {
-        states_->push(new SettingsState(window_, gfx_settings_, supported_keys_, states_));
+        states_->push(new SettingsState(state_data_));
     }
 
     //Editor
     if (buttons_[ "EDITOR_STATE" ]->IsPressed())
     {
-        states_->push(new EditorState(window_, supported_keys_, states_));
+        states_->push(new EditorState(state_data_));
     }
 
     //Quit game

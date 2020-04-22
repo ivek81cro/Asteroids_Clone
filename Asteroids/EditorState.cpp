@@ -2,9 +2,8 @@
 #include "EditorState.h"
 
 //Constructors / Destructors
-EditorState::EditorState(sf::RenderWindow* window, std::map<std::string, int>* supported_keys,
-                             std::stack<State*>* states)
-        : State(window, supported_keys, states)
+EditorState::EditorState(StateData* state_data)
+        : State(state_data)
 {
     InitVariables();
     InitBackground();

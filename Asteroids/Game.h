@@ -28,6 +28,7 @@ class Game
 
   private:
     GraphicsSettings           gfx_settings_;
+    StateData                  state_data_;
     sf::RenderWindow*          window_;
     sf::Event                  event_;
 
@@ -43,6 +44,7 @@ class Game
     void InitGraphicsSettings();
     void InitWindow();
     void InitKeys();
+    void InitStateData();
     void InitStates();
 };
 
