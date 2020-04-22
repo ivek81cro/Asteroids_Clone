@@ -17,9 +17,18 @@ HitboxComponent::~HitboxComponent()
 {
 }
 
-bool HitboxComponent::CheckIntersect(const sf::FloatRect& frect)
+bool HitboxComponent::CheckIntersect(const HitboxComponent& other)
 {
-    return hitbox_.getGlobalBounds().intersects(frect);       
+    float ax = sprite_.getPosition().x;
+    float ay = sprite_.getPosition().y;
+
+    float px = other.sprite_.getPosition().x;
+    float py = other.sprite_.getPosition().y;
+
+    float sqrDistance = sqrt((ax - px) * (ax - px) + (ay - py) * (ay - py));
+    float sqrRadius   = hitbox_.getRadius() + other.hitbox_.getRadius();
+
+    return (sqrDistance <= sqrRadius);
 }
 
 void HitboxComponent::Update()

@@ -12,9 +12,7 @@ class State;
 class StateData
 {
   public:
-    StateData()
-    {
-    }
+    StateData(){};
 
     //Variables
     sf::RenderWindow*           window_;

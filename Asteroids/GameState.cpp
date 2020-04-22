@@ -160,6 +160,23 @@ void GameState::UpdatePauseMenuButtons()
         EndState();
 }
 
+void GameState::CheckEntitiesAlive(const float& delta)
+{
+    //Check if entity is alive, remove ones that are not
+    entities_.erase(std::remove_if(entities_.begin(), entities_.end(),
+                                   [](const std::unique_ptr<Entity>& ent) { return !ent->IsAlive(); }),
+                    entities_.end());
+
+    for (auto& it : entities_)
+    {
+        if (it->GetName() == "bullet")
+            static_cast<Bullet*>(it.get())->SetLifeTime(delta); //Decrease lifetime for elapsed time
+        if ((it)->GetName() != "ship")
+            it->Move(0, 0, delta);             //Move asteroids and bullets
+        it->Update(delta, window_->getSize()); //Update each entity
+    }
+}
+
 void GameState::Update(const float& delta)
 {
     UpdateMousePositions();
@@ -168,21 +185,8 @@ void GameState::Update(const float& delta)
 
     if (!paused_)
     {
-        UpdatePlayerInput(delta);
-
-        //Check if entity is alive, remove ones that are not
-        entities_.erase(std::remove_if(entities_.begin(), entities_.end(),
-                                       [](const std::unique_ptr<Entity>& ent) { return !ent->IsAlive(); }),
-                        entities_.end());
-
-        for (auto& it : entities_)
-        {
-            if (it->GetName() == "bullet")
-                static_cast<Bullet*>(it.get())->SetLifeTime(delta);//Decrease lifetime for elapsed time
-            if ((it)->GetName() != "ship")
-                it->Move(0, 0, delta);//Move asteroids and bullets
-            it->Update(delta, window_->getSize());//Update each entity
-        }
+        UpdatePlayerInput(delta);   
+        CheckEntitiesAlive(delta);
     }
     else
     {

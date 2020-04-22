@@ -8,13 +8,13 @@ class HitboxComponent
     virtual ~HitboxComponent();
 
     //Functions
-    bool CheckIntersect(const sf::FloatRect& frect);
+    bool CheckIntersect(const HitboxComponent& other);
 
     void Update();
     void Render(sf::RenderTarget& target);
 
   private:
-    sf::Sprite&        sprite_;
+    sf::Sprite&     sprite_;
     sf::CircleShape hitbox_;
 
     float offset_x_;
