@@ -78,11 +78,6 @@ void MainMenuState::InitButtons()
                    sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0),
                    sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 
-    buttons_[ "EDITOR_STATE" ] =
-        new gui::Button(position.x, position.y - 50.f, 250, 50, &font_, "Editor", 50, sf::Color(255, 0, 0, 200),
-                   sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0),
-                   sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
-
     buttons_[ "EXIT_STATE" ] =
         new gui::Button(position.x, position.y + 25.f, 250, 50, &font_, "Quit", 50, sf::Color(255, 0, 0, 200),
                    sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0),
@@ -102,8 +97,6 @@ void MainMenuState::UpdateButtons()
         it.second->Update(mouse_pos_view_);
     }
 
-    //Settings
-
     //New game
     if (buttons_[ "GAME_STATE" ]->IsPressed())
     {
@@ -114,12 +107,6 @@ void MainMenuState::UpdateButtons()
     if (buttons_[ "SETTINGS_STATE" ]->IsPressed())
     {
         states_->push(new SettingsState(state_data_));
-    }
-
-    //Editor
-    if (buttons_[ "EDITOR_STATE" ]->IsPressed())
-    {
-        states_->push(new EditorState(state_data_));
     }
 
     //Quit game
