@@ -90,9 +90,10 @@ void GameState::InitPlayer()
 
 void GameState::InitAsteroids()
 {
-    for (int i = 0; i < 10; ++i)
+    for (int i = 0; i < 3; ++i)
         entities_.push_back(std::unique_ptr<Asteroid>(new Asteroid(static_cast<float>(rand() % (window_->getSize().x)),
                                                                    static_cast<float>(rand() % (window_->getSize().y)),
+                                                                    1,
                                                                    textures_[ "ASTEROID" ])));
 }
 
@@ -162,11 +163,6 @@ void GameState::UpdatePauseMenuButtons()
 
 void GameState::CheckEntitiesAlive(const float& delta)
 {
-    //Check if entity is alive, remove ones that are not
-    entities_.erase(std::remove_if(entities_.begin(), entities_.end(),
-                                   [](const std::unique_ptr<Entity>& ent) { return !ent->IsAlive(); }),
-                    entities_.end());
-
     for (auto& it : entities_)
     {
         if (it->GetName() == "bullet")
@@ -177,6 +173,48 @@ void GameState::CheckEntitiesAlive(const float& delta)
     }
 }
 
+void GameState::CheckCollision()
+{
+    //TODO 01: Needs more work 
+    std::vector<std::unique_ptr<Entity>>           new_entities;
+    std::vector<std::unique_ptr<Entity>>::iterator it = entities_.begin();
+    std::vector<std::unique_ptr<Entity>>::iterator it2;
+    while (it != entities_.end() - 1)
+    {
+        it2 = it + 1;
+        while (it2 != entities_.end())
+        {
+            if ((*it)->GetName() == "asteroid" && (*it2)->GetName() == "bullet" && !(*it)->IsExploding())
+            {
+                if ((*it)->CheckCollision((*it2)->GetHitbox()))
+                {
+                    for (int i = 0; i < 3; ++i)
+                    {
+                        new_entities.push_back(std::unique_ptr<Asteroid>(new Asteroid((*it)->Getposition().x,
+                                                                                      (*it)->Getposition().y,
+                                                                                      (*it)->GetLevel() + 1,
+                                                                                      textures_[ "ASTEROID" ])));
+                    }
+                    (*it2)->SetAlive(false);
+                    (*it)->SetAlive(false);
+                }
+            }
+            ++it2;
+        }
+        ++it;
+    }
+    if (new_entities.size() != 0)
+    {
+        std::move(new_entities.begin(), new_entities.end(), std::back_inserter(entities_));
+        new_entities.clear();
+    }
+
+    //Check if entity is alive, remove ones that are not
+    entities_.erase(std::remove_if(entities_.begin(), entities_.end(),
+                                   [](const std::unique_ptr<Entity>& ent) { return !ent->IsAlive(); }),
+                    entities_.end());
+}
+
 void GameState::Update(const float& delta)
 {
     UpdateMousePositions();
@@ -185,7 +223,8 @@ void GameState::Update(const float& delta)
 
     if (!paused_)
     {
-        UpdatePlayerInput(delta);   
+        UpdatePlayerInput(delta);
+        CheckCollision();
         CheckEntitiesAlive(delta);
     }
     else

@@ -36,10 +36,10 @@ void Entity::CreateAnimationComponent(sf::Texture& texture_sheet)
     animation_component_ = new AnimationComponent(sprite_, texture_sheet);
 }
 
-void Entity::CreateHitboxComponent(sf::Sprite& sprite, float offset_x, float offset_y, float width)
+void Entity::CreateHitboxComponent(sf::Sprite& sprite, float width, float factor)
 {
     hitbox_component_ =
-        new HitboxComponent(sprite, offset_x, offset_y, width);
+        new HitboxComponent(sprite, width, factor);
 }
 
 //Functions
@@ -64,22 +64,54 @@ void Entity::SetAlive(bool is_alive)
     alive_ = is_alive;
 }
 
+bool Entity::IsExploding()
+{
+    return exploding_;
+}
+
 std::string Entity::GetName()
 {
     return name_;
 }
 
+const sf::CircleShape& Entity::GetHitbox() const
+{
+    return hitbox_component_->GetHitbox();
+}
+
+bool Entity::CheckCollision(const sf::CircleShape& other)
+{
+    float ax = hitbox_component_->GetHitbox().getPosition().x;
+    float ay = hitbox_component_->GetHitbox().getPosition().y;
+
+    float px = other.getPosition().x;
+    float py = other.getPosition().y;
+
+    float sqrDistance = sqrt((ax - px) * (ax - px) + (ay - py) * (ay - py));
+    float sqrRadius   = hitbox_component_->GetHitbox().getRadius() + other.getRadius();
+
+    return (sqrDistance <= sqrRadius);
+}
+
+const int& Entity::GetLevel() const
+{
+    return level_;
+}
+
+const sf::Vector2f& Entity::Getposition() const
+{
+    return sprite_.getPosition();
+}
+
 void Entity::Update(const float& delta, const sf::Vector2u& window_size)
 {
-    if (movement_component_)
+    if (movement_component_ && alive_)
         movement_component_->Update(delta, window_size);
 
-    if (animation_component_)
-    {
+    if (animation_component_ && alive_)
         animation_component_->Play(animation_name_, delta);
-    }
 
-    if (hitbox_component_)
+    if (hitbox_component_ && alive_)
         hitbox_component_->Update();
 }
 

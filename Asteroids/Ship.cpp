@@ -8,7 +8,7 @@ Ship::Ship(float x, float y, sf::Texture& texture_sheet)
 
     SetPosition(x, y);
 
-    CreateHitboxComponent(sprite_, -18.f, -20.f, 38.f);
+    CreateHitboxComponent(sprite_, 38.f);
     CreateMovementComponent(200.f, 400.f, 0.998f, sprite_.getRotation());
     CreateAnimationComponent(texture_sheet);
 
@@ -27,6 +27,7 @@ void Ship::InitVariables()
 {
     name_           = "ship";
     animation_name_ = name_;
+    level_          = 0;
 }
 
 void Ship::InitComponents()
@@ -42,8 +43,8 @@ void Ship::ResetAnimationName()
 void Ship::Update(const float& delta, const sf::Vector2u& window_size)
 {
     //-----------TESTING-----------------
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-        exploding_ = true;
+    /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        exploding_ = true;*/
     //-----------------------------------
 
     if (exploding_)
@@ -70,6 +71,11 @@ void Ship::Move(const float dir_x, const float dir_y, const float& delta)
         animation_name_ = "ship_l";
     else
         animation_name_ = name_;
+}
+
+void Ship::SetAlive(bool is_alive)
+{
+    exploding_ = true;
 }
 
 sf::Vector2f Ship::GetPosition() const

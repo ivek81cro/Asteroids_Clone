@@ -1,39 +1,31 @@
 #include "stdafx.h"
 #include "HitboxComponent.h"
 
-HitboxComponent::HitboxComponent(sf::Sprite& sprite, float offset_x, float offset_y, float width)
+HitboxComponent::HitboxComponent(sf::Sprite& sprite, float& width, float& factor)
         : sprite_(sprite)
-        , offset_x_(offset_x)
-        , offset_y_(offset_y)
+        , factor_(factor)
 {
-    hitbox_.setPosition(sprite_.getPosition().x + offset_x, sprite_.getPosition().y + offset_y);
-    hitbox_.setRadius(width/2.f);
+    hitbox_.setPosition(sprite_.getPosition().x, sprite_.getPosition().y);
+    hitbox_.setRadius(width / 2.f * factor);
     hitbox_.setFillColor(sf::Color::Transparent);
     hitbox_.setOutlineThickness(1.f);
     hitbox_.setOutlineColor(sf::Color::Green);
+    hitbox_.setOrigin(width / 2.f * factor_, width / 2.f * factor_);
 }
 
 HitboxComponent::~HitboxComponent()
 {
 }
 
-bool HitboxComponent::CheckIntersect(const HitboxComponent& other)
+//Functions
+sf::CircleShape& HitboxComponent::GetHitbox()
 {
-    float ax = sprite_.getPosition().x;
-    float ay = sprite_.getPosition().y;
-
-    float px = other.sprite_.getPosition().x;
-    float py = other.sprite_.getPosition().y;
-
-    float sqrDistance = sqrt((ax - px) * (ax - px) + (ay - py) * (ay - py));
-    float sqrRadius   = hitbox_.getRadius() + other.hitbox_.getRadius();
-
-    return (sqrDistance <= sqrRadius);
+    return hitbox_;
 }
 
 void HitboxComponent::Update()
 {
-    hitbox_.setPosition(sprite_.getPosition().x + offset_x_, sprite_.getPosition().y + offset_y_);
+    hitbox_.setPosition(sprite_.getPosition().x, sprite_.getPosition().y);
 }
 
 void HitboxComponent::Render(sf::RenderTarget& target)

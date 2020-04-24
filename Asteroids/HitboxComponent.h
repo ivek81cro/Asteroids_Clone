@@ -4,11 +4,11 @@
 class HitboxComponent
 {
   public:
-    HitboxComponent(sf::Sprite& sprite, float offset_x, float offset_y, float width);
+    HitboxComponent(sf::Sprite& sprite, float& width, float& factor);
     virtual ~HitboxComponent();
 
     //Functions
-    bool CheckIntersect(const HitboxComponent& other);
+    sf::CircleShape& GetHitbox();
 
     void Update();
     void Render(sf::RenderTarget& target);
@@ -17,8 +17,7 @@ class HitboxComponent
     sf::Sprite&     sprite_;
     sf::CircleShape hitbox_;
 
-    float offset_x_;
-    float offset_y_;
+    float factor_;
 };
 
 #endif // !HITBOXCOMPONENT_H_

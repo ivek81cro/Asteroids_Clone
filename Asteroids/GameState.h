@@ -15,6 +15,7 @@ class GameState : public State
     void UpdatePlayerInput(const float& delta);
     void UpdatePauseMenuButtons();
     void CheckEntitiesAlive(const float& delta);
+    void CheckCollision();
     void Update(const float& delta);
 
     //Render functions

@@ -10,7 +10,7 @@ Bullet::Bullet(float x, float y, sf::Texture& texture_sheet, float angle)
     InitVariables();
     InitComponents();
 
-    CreateHitboxComponent(sprite_, -16.f * 0.25f, -32.f * 0.25f, 32 * 0.25f);
+    CreateHitboxComponent(sprite_, 32 * 0.25f);
     CreateMovementComponent(1000.f, 0.f, 0.f, sprite_.getRotation());
     CreateAnimationComponent(texture_sheet);
 
@@ -42,6 +42,7 @@ void Bullet::InitVariables()
     animation_name_ = name_;
     lifetime_ = 1.f;
     sprite_.setRotation(angle_ - 90);
+    level_ = 0;
 }
 
 void Bullet::InitComponents()
