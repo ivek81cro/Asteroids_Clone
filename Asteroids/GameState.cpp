@@ -145,7 +145,6 @@ void GameState::UpdatePlayerInput(const float& delta)
         s->Move(1.f, 0.f, delta);
 
     //Ship fires bullet if alive, if key cooldown time elapsed
-    float time       = elapsed_coldown_.restart().asSeconds();
     bullet_cooldown_ = bullet_clock_.getElapsedTime();
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("FIRE"))) && bullet_cooldown_.asSeconds() > 0.25f &&
         s->IsAlive() && !s->IsExploding())

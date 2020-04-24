@@ -1,6 +1,29 @@
 #include "stdafx.h"
 #include "Game.h"
 
+//Constructors/Destructors
+Game::Game()
+{
+    InitVariables();
+    InitGraphicsSettings();
+    InitWindow();
+    InitKeys();
+    InitStateData();
+    InitStates();
+}
+
+Game::~Game()
+{
+    delete window_;
+
+    while (!states_.empty())
+    {
+        delete states_.top();
+        states_.pop();
+    }
+}
+
+//Initialization functions
 void Game::InitVariables()
 {
     window_ = nullptr;
@@ -20,7 +43,6 @@ void Game::InitStateData()
     state_data_.states_         = &states_;
 }
 
-//Initialization functions
 void Game::InitWindow()
 {
     if (gfx_settings_.fullscreen_)
@@ -56,28 +78,6 @@ void Game::InitKeys()
 void Game::InitStates()
 {
     states_.push(new MainMenuState(&state_data_));
-}
-
-//Constructors/Destructors
-Game::Game()
-{
-    InitVariables();
-    InitGraphicsSettings();
-    InitWindow();
-    InitKeys();
-    InitStateData();
-    InitStates();
-}
-
-Game::~Game()
-{
-    delete window_;
-
-    while (!states_.empty())
-    {
-        delete states_.top();
-        states_.pop();
-    }
 }
 
 //Regular

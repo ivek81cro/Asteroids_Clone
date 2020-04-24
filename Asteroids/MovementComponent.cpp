@@ -11,6 +11,7 @@ MovementComponent::MovementComponent(sf::Sprite& sprite, const float& max_veloci
         , name_(name)
         , angle_(angle)
 {
+    //Calculation for bullets and asteroids
     direction_ = {cos(angle * 0.017453f), sin(angle * 0.017453f)};
 }
 
@@ -32,18 +33,19 @@ const sf::Vector2f& MovementComponent::GetVelocity() const
 //Functions
 void MovementComponent::Move(const float dir_x, const float dir_y, const float& delta)
 {
-
+    //Ship rotation
     if (dir_x != 0)
     {
         sprite_.rotate(dir_x * 300.f * delta);
     }
-
+    //Ship movement forward-backward
     if (name_ == "ship")
     {
         if (dir_y != 0)
         {
             float angle = sprite_.getRotation() + 90.f;
 
+            //Recalculation for ship direction based on rotation
             direction_ = {cos(angle * 0.0174533f), sin(angle * 0.0174533f)};
 
             //Max speed limit
@@ -58,13 +60,13 @@ void MovementComponent::Move(const float dir_x, const float dir_y, const float& 
     }
     else
     {
+        //Asteroids and bullets
         velocity_ = direction_ * max_velocity_;
     }
 }
 
 void MovementComponent::CheckMaxVelocity(const float& delta)
 {
-
     //Deceleration -ship only
     if (name_ == "ship")
     {
@@ -75,6 +77,7 @@ void MovementComponent::CheckMaxVelocity(const float& delta)
 
 void MovementComponent::CheckPosition(const sf::Vector2u& window_size)
 {
+    //Infinite screen for asteroids and ship
     sf::Vector2f position = sprite_.getPosition();
 
     if (position.x > window_size.x)
@@ -96,5 +99,5 @@ void MovementComponent::Update(const float& delta, const sf::Vector2u& window_si
     if (name_ != "bullet")
         CheckPosition(window_size);
     //Final move
-    sprite_.move(velocity_ * delta); //Uses velocity
+    sprite_.move(velocity_ * delta); //Position change
 }
