@@ -28,6 +28,8 @@ void Ship::InitVariables()
     name_           = "ship";
     animation_name_ = name_;
     level_          = 0;
+    invulnerability_ = true;
+    shield_timer_    = 5.f;
 }
 
 void Ship::InitComponents()
@@ -51,7 +53,13 @@ void Ship::Update(const float& delta, const sf::Vector2u& window_size)
         }
     }
     else
+    {
+        if (shield_timer_ > 0.f)
+            shield_timer_ -= delta;
+        else
+            invulnerability_ = false;
         Entity::Update(delta, window_size);
+    }
 }
 
 void Ship::Move(const float dir_x, const float dir_y, const float& delta)
@@ -71,6 +79,11 @@ void Ship::Move(const float dir_x, const float dir_y, const float& delta)
 void Ship::SetAlive(bool is_alive)
 {
     exploding_ = true;
+}
+
+bool Ship::ShieldsUp()
+{
+    return invulnerability_;
 }
 
 sf::Vector2f Ship::GetPosition() const

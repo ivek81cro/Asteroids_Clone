@@ -11,7 +11,7 @@ Asteroid::Asteroid(float x, float y, int level, sf::Texture& texture_sheet)
     
     SetScale(level);
 
-    CreateHitboxComponent(sprite_, 42, factor_);
+    CreateHitboxComponent(sprite_, 42, rescale_factor_);
     CreateMovementComponent(max_velocity_asteroid_, 0.f, 0.f, sprite_.getRotation());
     CreateAnimationComponent(texture_sheet);    
 
@@ -26,20 +26,19 @@ Asteroid::~Asteroid()
 //Functions
 void Asteroid::SetScale(const int& level)
 {
-    factor_ = 1.f;
+    rescale_factor_ = 1.f;
     if (level == 2)
     {
-        factor_                = 0.75f;
+        rescale_factor_                = 0.75f;
         max_velocity_asteroid_ = 100.f;
     }
     if (level == 3)
     {
-
-        factor_ = 0.5f;
+        rescale_factor_                = 0.5f;
         max_velocity_asteroid_ = 150.f;
     }
 
-    sprite_.setScale(factor_, factor_);
+    sprite_.setScale(rescale_factor_, rescale_factor_);
 }
 
 void Asteroid::SetAlive(bool is_alive)

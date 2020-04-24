@@ -204,7 +204,7 @@ void GameState::CheckCollision()
                 }
             }
             if (it->GetName() == "ship" && it2->GetName() == "asteroid" && !it->IsExploding() &&
-                !it2->IsExploding())
+                !it2->IsExploding() && !static_cast<Ship*>(it.get())->ShieldsUp())
             {
                 if (it->CheckCollision(it2->GetHitbox()))
                 {

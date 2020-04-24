@@ -17,12 +17,16 @@ class Ship : public Entity
     void Update(const float& delta, const sf::Vector2u& window_size);
     void Move(const float dir_x, const float dir_y, const float& delta);
     void SetAlive(bool is_alive);
+    bool ShieldsUp();
 
     sf::Vector2f GetPosition() const;
     float        GetAngle() const;
 
   private:
     //Variables
+
+    bool  invulnerability_;
+    float shield_timer_;
 
     //Initializer functions
     void InitVariables();
