@@ -22,7 +22,7 @@ class Asteroid : public Entity
   private:
     //Variables
     int level_;
-    float factor_;
+    float rescale_factor_;
     float max_velocity_asteroid_;
 
     //Initializer functions
