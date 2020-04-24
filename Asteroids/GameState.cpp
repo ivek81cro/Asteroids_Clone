@@ -163,12 +163,20 @@ void GameState::UpdatePauseMenuButtons()
 
 void GameState::CheckEntitiesAlive(const float& delta)
 {
+    //Check if entity is alive, remove ones that are not
+    entities_.erase(std::remove_if(entities_.begin(), entities_.end(),
+                                   [](const std::unique_ptr<Entity>& ent) { return !ent->IsAlive(); }),
+                    entities_.end());
+    
+    //Update entities
     for (auto& it : entities_)
     {
         if (it->GetName() == "bullet")
             static_cast<Bullet*>(it.get())->SetLifeTime(delta); //Decrease lifetime for elapsed time
+        
         if ((it)->GetName() != "ship")
-            it->Move(0, 0, delta);             //Move asteroids and bullets
+            it->Move(0, 0, delta);             //Movement for asteroids and bullets
+
         it->Update(delta, window_->getSize()); //Update each entity
     }
 }
@@ -208,11 +216,6 @@ void GameState::CheckCollision()
         std::move(new_entities.begin(), new_entities.end(), std::back_inserter(entities_));
         new_entities.clear();
     }
-
-    //Check if entity is alive, remove ones that are not
-    entities_.erase(std::remove_if(entities_.begin(), entities_.end(),
-                                   [](const std::unique_ptr<Entity>& ent) { return !ent->IsAlive(); }),
-                    entities_.end());
 }
 
 void GameState::Update(const float& delta)
