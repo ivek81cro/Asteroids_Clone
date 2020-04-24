@@ -42,11 +42,6 @@ void Ship::ResetAnimationName()
 
 void Ship::Update(const float& delta, const sf::Vector2u& window_size)
 {
-    //-----------TESTING-----------------
-    /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-        exploding_ = true;*/
-    //-----------------------------------
-
     if (exploding_)
     {
         if (animation_component_->Play("ship_explode", delta, true))
