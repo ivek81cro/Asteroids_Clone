@@ -19,6 +19,7 @@ GameState::~GameState()
     delete p_menu_;
 }
 
+//Initializer functions
 void GameState::InitFonts()
 {
     if (!font_.loadFromFile("Fonts/Dosis-Light.ttf"))
@@ -27,7 +28,6 @@ void GameState::InitFonts()
     }
 }
 
-//Initializer functions
 void GameState::InitKeybinds()
 {
     std::ifstream ifs("Config/gamestate_keybinds.ini");
@@ -148,7 +148,7 @@ void GameState::UpdatePlayerInput(const float& delta)
     float time       = elapsed_coldown_.restart().asSeconds();
     bullet_cooldown_ = bullet_clock_.getElapsedTime();
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("FIRE"))) && bullet_cooldown_.asSeconds() > 0.25f &&
-        s->IsAlive())
+        s->IsAlive() && !s->IsExploding())
     {
         bullet_clock_.restart();
         FireBullet(s);
