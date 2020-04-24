@@ -184,32 +184,35 @@ void GameState::CheckEntitiesAlive(const float& delta)
 void GameState::CheckCollision()
 {
     //TODO 01: Needs more work 
-    std::vector<std::unique_ptr<Entity>>           new_entities;
-    std::vector<std::unique_ptr<Entity>>::iterator it = entities_.begin();
-    std::vector<std::unique_ptr<Entity>>::iterator it2;
-    while (it != entities_.end() - 1)
+    std::vector<std::unique_ptr<Entity>> new_entities;
+    for (auto& it : entities_)
     {
-        it2 = it + 1;
-        while (it2 != entities_.end())
+        for (auto& it2 : entities_)
         {
-            if ((*it)->GetName() == "asteroid" && (*it2)->GetName() == "bullet" && !(*it)->IsExploding())
+            if (it->GetName() == "asteroid" && it2->GetName() == "bullet" && !it->IsExploding())
             {
-                if ((*it)->CheckCollision((*it2)->GetHitbox()))
+                if (it->CheckCollision(it2->GetHitbox()))
                 {
                     for (int i = 0; i < 3; ++i)
                     {
-                        new_entities.push_back(std::unique_ptr<Asteroid>(new Asteroid((*it)->Getposition().x,
-                                                                                      (*it)->Getposition().y,
-                                                                                      (*it)->GetLevel() + 1,
+                        new_entities.push_back(std::unique_ptr<Asteroid>(new Asteroid(it->Getposition().x,
+                                                                                      it->Getposition().y,
+                                                                                      it->GetLevel() + 1,
                                                                                       textures_[ "ASTEROID" ])));
                     }
-                    (*it2)->SetAlive(false);
-                    (*it)->SetAlive(false);
+                    it2->SetAlive(false);
+                    it->SetAlive(false);
                 }
             }
-            ++it2;
+            if (it->GetName() == "ship" && it2->GetName() == "asteroid" && !it->IsExploding() &&
+                !it2->IsExploding())
+            {
+                if (it->CheckCollision(it2->GetHitbox()))
+                {
+                    it->SetAlive(false);
+                }
+            }
         }
-        ++it;
     }
     if (new_entities.size() != 0)
     {
