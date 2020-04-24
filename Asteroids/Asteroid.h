@@ -23,6 +23,7 @@ class Asteroid : public Entity
     //Variables
     int level_;
     float factor_;
+    float max_velocity_asteroid_;
 
     //Initializer functions
     void InitVariables();

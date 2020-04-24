@@ -5,13 +5,14 @@ Asteroid::Asteroid(float x, float y, int level, sf::Texture& texture_sheet)
         : level_(level)
 {
     SetPosition(x, y);
-    SetScale(level);
 
     InitVariables();
     InitComponents();
+    
+    SetScale(level);
 
     CreateHitboxComponent(sprite_, 42, factor_);
-    CreateMovementComponent(50.f, 0.f, 0.f, sprite_.getRotation());
+    CreateMovementComponent(max_velocity_asteroid_, 0.f, 0.f, sprite_.getRotation());
     CreateAnimationComponent(texture_sheet);    
 
     animation_component_->AddAnimation(name_, 5.f, 0, 0, 15, 0, 64, 64);
@@ -27,9 +28,16 @@ void Asteroid::SetScale(const int& level)
 {
     factor_ = 1.f;
     if (level == 2)
-        factor_ = 0.75f;
+    {
+        factor_                = 0.75f;
+        max_velocity_asteroid_ = 100.f;
+    }
     if (level == 3)
+    {
+
         factor_ = 0.5f;
+        max_velocity_asteroid_ = 150.f;
+    }
 
     sprite_.setScale(factor_, factor_);
 }
@@ -72,6 +80,7 @@ void Asteroid::InitVariables()
     name_  = "asteroid";
     animation_name_ = name_;
     sprite_.setRotation(static_cast<float>((rand() % 360)));
+    max_velocity_asteroid_ = 50.f;
 }
 
 void Asteroid::InitComponents()

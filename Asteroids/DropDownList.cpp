@@ -27,11 +27,6 @@ gui::DropDownList::~DropDownList()
 
     for (auto& i : list_)
         delete i;
-
-    /*for (size_t i = 0; i < list_.size(); i++)
-    {
-        delete list_[ i ];
-    }*/
 }
 
 //Accessor
