@@ -1,0 +1,7 @@
+1.Scaling according to resolution
+2.Number of lives left, upper left corner
+3.Points value of each asteroid level
+4.Keeping track current player score
+5.Save player score to file with name and date
+6.High score state.
+
