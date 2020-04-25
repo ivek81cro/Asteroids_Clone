@@ -32,6 +32,8 @@ class GameState : public State
     sf::Clock bullet_clock_;
     sf::Time  bullet_cooldown_;
 
+    int score_;
+
     //Initializer Functions
     void InitKeybinds();
     void InitFonts();

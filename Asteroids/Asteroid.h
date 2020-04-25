@@ -13,15 +13,17 @@ class Asteroid : public Entity
     void operator=(const Asteroid&) = delete;
 
     //Functions
-    void SetScale(const int& leve);
-    void SetAlive(bool is_alive);
-    void Update(const float& delta, const sf::Vector2u& window_size);
-    const int& GetLevel() const;
+    void                SetScale(const int& leve);
+    void                SetAlive(bool is_alive);
+    void                Update(const float& delta, const sf::Vector2u& window_size);
+    const int&          GetLevel() const;
     const sf::Vector2f& Getposition() const;
+    const int           GetPoints() const;
 
   private:
     //Variables
-    int level_;
+    int   level_;
+    int   points_;
     float rescale_factor_;
     float max_velocity_asteroid_;
 

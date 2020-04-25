@@ -8,12 +8,12 @@ Asteroid::Asteroid(float x, float y, int level, sf::Texture& texture_sheet)
 
     InitVariables();
     InitComponents();
-    
+
     SetScale(level);
 
     CreateHitboxComponent(sprite_, 42, rescale_factor_);
     CreateMovementComponent(max_velocity_asteroid_, 0.f, 0.f, sprite_.getRotation());
-    CreateAnimationComponent(texture_sheet);    
+    CreateAnimationComponent(texture_sheet);
 
     animation_component_->AddAnimation(name_, 5.f, 0, 0, 15, 0, 64, 64);
     animation_component_->AddAnimation("asteroid_explode", 5.f, 0, 1, 64, 1, 64, 64);
@@ -73,6 +73,11 @@ const sf::Vector2f& Asteroid::Getposition() const
     return sprite_.getPosition();
 }
 
+const int Asteroid::GetPoints() const
+{
+    return points_;
+}
+
 //Initializer functions
 void Asteroid::InitVariables()
 {
@@ -80,6 +85,17 @@ void Asteroid::InitVariables()
     animation_name_ = name_;
     sprite_.setRotation(static_cast<float>((rand() % 360)));
     max_velocity_asteroid_ = 50.f;
+    switch (level_)
+    {
+        case 1: points_ = 10; 
+            break;
+        case 2: points_ = 20; 
+            break;
+        case 3: points_ = 30; 
+            break;
+        default: 
+            break;
+    }
 }
 
 void Asteroid::InitComponents()

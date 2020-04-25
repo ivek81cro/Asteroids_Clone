@@ -4,6 +4,7 @@
 //Constructors / Destructors
 GameState::GameState(StateData* state_data)
         : State(state_data)
+        , score_(0)
 {
     InitKeybinds();
     InitFonts();
@@ -198,6 +199,7 @@ void GameState::CheckCollision()
                                                                                       it->GetLevel() + 1,
                                                                                       textures_[ "ASTEROID" ])));
                     }
+                    score_ += static_cast<Asteroid*>(it.get())->GetPoints();
                     it2->SetAlive(false);
                     it->SetAlive(false);
                 }
@@ -236,6 +238,9 @@ void GameState::Update(const float& delta)
         p_menu_->Update(mouse_pos_view_);
         UpdatePauseMenuButtons();
     }
+    //If all asteroids are destroyed
+    if (entities_.size() < 2)
+        paused_ = true;
 }
 
 //Render Functions
