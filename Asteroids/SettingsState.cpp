@@ -73,31 +73,34 @@ void SettingsState::InitButtons()
 {
     float x      = static_cast<float>(window_->getSize().x);
     float y      = static_cast<float>(window_->getSize().y);
-    float width  = 250;
-    float height = 50;
+    float width  = PercToPixelX(19.53f);
+    float height = PercToPixelY(6.94f);
 
-    buttons_[ "BACK" ] = new gui::Button(
-        x / 2.f - width / 2.f, y - 100, width, height, &font_, "Back", 40, sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250),
-        sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
+    buttons_[ "BACK" ] = new gui::Button(PercToPixelX(40.23f), PercToPixelY(90.19f), width, height, &font_, "Back",
+                                         CalcFontSIze() * 0.60f, sf::Color(255, 0, 0, 200),
+                                         sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
+                                         sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 
     buttons_[ "APPLY" ] = new gui::Button(
-        x / 2.f - width / 2.f, y - 150, width, height, &font_, "Apply", 40, sf::Color(255, 0, 0, 200),
-        sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), 
-        sf::Color(204, 0, 0, 0));
+                                         PercToPixelX(40.23f), PercToPixelY(82.28f), width, height, &font_, "Apply", 
+                                         CalcFontSIze() * 0.60f, sf::Color(255, 0, 0, 200), 
+                                         sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), 
+                                         sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 
     std::vector<std::string> modes_str;
     for (auto& i : v_modes_)
     {
         modes_str.push_back(std::to_string(i.width) + 'x' + std::to_string(i.height));
     }
-    ddl_[ "RESOLUTION" ] = new gui::DropDownList(250.f, 100.f, 200, 50, font_, modes_str.data(), modes_str.size());
+    ddl_[ "RESOLUTION" ] = new gui::DropDownList(PercToPixelX(19.53f), PercToPixelY(13.88f), PercToPixelX(20.78f),
+                                                 PercToPixelY(6.94f), font_, modes_str.data(), modes_str.size());
 }
 
 void SettingsState::InitText()
 {
     options_text_.setFont(font_);
-    options_text_.setPosition(sf::Vector2f(100.f, 100.f));
-    options_text_.setCharacterSize(30);
+    options_text_.setPosition(sf::Vector2f(PercToPixelX(7.82f), PercToPixelY(13.89f)));
+    options_text_.setCharacterSize(CalcFontSIze() * 0.60);
     options_text_.setFillColor(sf::Color(250, 0, 0, 200));
     options_text_.setLineSpacing(2);
 

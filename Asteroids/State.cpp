@@ -34,6 +34,38 @@ const bool State::GetKeytime()
 }
 
 //Functions
+const float State::PercToPixelX(const float perc) const
+{
+    /*
+    * Converts a percetage value to pixels relative to screen resolution in the x-axis.
+    *
+    * @param    float perc  The percentage value
+    *
+    * @return    float The calculated pixel value
+    *
+    */
+    return std::floor(static_cast<float>(state_data_->gfx_settings_->resolution_.width) * (perc / 100.f));
+}
+
+const float State::PercToPixelY(const float perc) const
+{
+    /*
+    * Converts a percetage value to pixels relative to screen resolution in the y-axis.
+    *
+    * @param    float perc  The percentage value
+    *
+    * @return    float The calculated pixel value
+    *
+    */
+    return std::floor(static_cast<float>(state_data_->gfx_settings_->resolution_.height) * (perc / 100.f));
+}
+
+const unsigned State::CalcFontSIze() const
+{
+    return static_cast<unsigned>(
+        (state_data_->gfx_settings_->resolution_.width + state_data_->gfx_settings_->resolution_.height) / 40);
+}
+
 void State::EndState()
 {
     quit_ = true;
