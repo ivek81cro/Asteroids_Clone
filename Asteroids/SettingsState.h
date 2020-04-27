@@ -16,8 +16,8 @@ class SettingsState : public State
 
     //Functions
     void UpdateInput(const float& delta);
-    void UpdateButtons(const float& delta);
-    void ResetButtons();
+    void UpdateGui(const float& delta);
+    void ResetGui();
     void Update(const float& delta);
     void RenderButtons(sf::RenderTarget& target);
     void Render(sf::RenderTarget* target = nullptr);
@@ -26,6 +26,7 @@ class SettingsState : public State
     //Variables
     sf::RectangleShape background_;
     sf::Font           font_;
+    sf::Texture        background_texture_;
 
     std::map<std::string, gui::Button*> buttons_;
     std::map<std::string, gui::DropDownList*> ddl_;
@@ -39,7 +40,6 @@ class SettingsState : public State
     void InitFonts();
     void InitKeybinds();
     void InitGui();
-    void InitText();
 };
 
 #endif // !SETTINGSSTATE_H_

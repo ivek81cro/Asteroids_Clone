@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Button.h"
 
+//Percentage functions
 const float gui::PercToPixelX(const float perc, const sf::VideoMode& vm)
 {
     /*
@@ -27,17 +28,18 @@ const float gui::PercToPixelY(const float perc, const sf::VideoMode& vm)
     return std::floor(static_cast<float>(vm.height) * (perc / 100.f));
 }
 
-const unsigned gui::CalcFontSIze(const sf::VideoMode& vm)
+const unsigned gui::CalcFontSIze(const sf::VideoMode& vm, const unsigned modifier)
 {
     /*
     * Calculates the character size for text using the current resolution and constanat.
     *
-    * @param    sf::VideoMode& vm   The current video mode of window (resolution). 
+    * @param    sf::VideoMode& vm   The current video mode of window (resolution).
+    * @param    unsigned modifier   Modify text size factor.
     *
     * @return   unsigned            The calculated character size value.
     */
     return static_cast<unsigned>(
-        (vm.width + vm.height) / 40);
+        (vm.width + vm.height) / modifier);
 }
 
 //Constructors / Destructors

@@ -13,6 +13,7 @@ class MainMenuState : public State
     virtual ~MainMenuState();
 
     //Functions
+    void ResetGui();
     void UpdateInput(const float& delta);
     void UpdateButtons();
     void Update(const float& delta);
@@ -23,14 +24,14 @@ class MainMenuState : public State
     //Variables
     sf::RectangleShape background_;
     sf::Font           font_;
+    sf::Texture        background_texture_;
 
     std::map<std::string, gui::Button*> buttons_;
 
     //Functions
     void InitVariables();
-    void InitBackground();
     void InitFonts();
     void InitKeybinds();
-    void InitButtons();
+    void InitGui();
 };
 #endif // !MAINMENUSTATE_H_

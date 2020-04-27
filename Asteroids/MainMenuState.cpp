@@ -6,16 +6,16 @@ MainMenuState::MainMenuState(StateData* state_data)
         : State(state_data)
 {
     InitVariables();
-    InitBackground();
     InitFonts();
     InitKeybinds();
-    InitButtons();
+    InitGui();
+    ResetGui();
 }
 
 MainMenuState::~MainMenuState()
 {
     auto it = buttons_.begin();
-    for (it = buttons_.begin(); it != buttons_.end(); ++it)
+    for (it= buttons_.begin(); it != buttons_.end(); ++it)
     {
         delete it->second;
     }
@@ -24,19 +24,6 @@ MainMenuState::~MainMenuState()
 //Initializer functions
 void MainMenuState::InitVariables()
 {
-}
-
-void MainMenuState::InitBackground()
-{
-    background_.setSize(
-        sf::Vector2f(static_cast<float>(window_->getSize().x), static_cast<float>(window_->getSize().y)));
-
-    if (!textures_[ "BACKGROUND_TEXTURE" ].loadFromFile("Resources/Images/background.jpg"))
-    {
-        throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_TEXTURE";
-    }
-
-    background_.setTexture(&textures_[ "BACKGROUND_TEXTURE" ]);
 }
 
 void MainMenuState::InitFonts()
@@ -62,33 +49,60 @@ void MainMenuState::InitKeybinds()
     ifs.close();
 }
 
-void MainMenuState::InitButtons()
+void MainMenuState::InitGui()
 {
-    const sf::VideoMode& vm  = state_data_->gfx_settings_->resolution_;
 
+    const sf::VideoMode& vm = state_data_->gfx_settings_->resolution_;
+
+    //Background
+    background_.setSize(
+        sf::Vector2f(static_cast<float>(vm.width), static_cast<float>(vm.height)));
+
+    if (!background_texture_.loadFromFile("Resources/Images/background.jpg"))
+    {
+        throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_TEXTURE";
+    }
+
+    background_.setTexture(&background_texture_);
+
+    //Buttons
     buttons_[ "GAME_STATE" ] =
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(30.52f, vm), gui::PercToPixelX(19.53f, vm),
-                        gui::PercToPixelY(6.94f, vm), &font_, "New game", gui::CalcFontSIze(vm),
+                        gui::PercToPixelY(6.94f, vm), &font_, "New game", gui::CalcFontSIze(vm, 40),
                         sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
                         sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 
     buttons_[ "SETTINGS_STATE" ] =
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(44.40f, vm), gui::PercToPixelX(19.53f, vm),
-                        gui::PercToPixelY(6.94f, vm), &font_, "Settings", gui::CalcFontSIze(vm),
+                        gui::PercToPixelY(6.94f, vm), &font_, "Settings", gui::CalcFontSIze(vm, 40),
                         sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
                         sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 
     buttons_[ "EXIT_STATE" ] =
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(58.28f, vm), gui::PercToPixelX(19.53f, vm),
-                        gui::PercToPixelY(6.94f, vm), &font_, "Quit", gui::CalcFontSIze(vm), sf::Color(255, 0, 0, 200),
+                        gui::PercToPixelY(6.94f, vm), &font_, "Quit", gui::CalcFontSIze(vm, 40), sf::Color(255, 0, 0, 200),
                         sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0),
                         sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 }
 
 //Update functions
+void MainMenuState::ResetGui()
+{
+    auto it = buttons_.begin();
+    for (it = buttons_.begin(); it != buttons_.end(); ++it)
+    {
+        delete it->second;
+    }
+    buttons_.clear();
+
+    InitGui();
+}
+
 void MainMenuState::UpdateInput(const float& delta)
 {
 }
+
+
 
 void MainMenuState::UpdateButtons()
 {

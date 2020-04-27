@@ -74,7 +74,7 @@ void GameState::InitPauseMenu()
     p_menu_ = new PauseMenu(state_data_->gfx_settings_->resolution_, font_);
 
     p_menu_->AddButton("QUIT", window_->getSize().y - gui::PercToPixelY(13.89f, vm), gui::PercToPixelX(19.53f, vm),
-                       gui::PercToPixelY(6.94f, vm), gui::CalcFontSIze(vm), "Quit");
+                       gui::PercToPixelY(6.94f, vm), gui::CalcFontSIze(vm, 40), "Quit");
 }
 
 void GameState::InitBackground()

@@ -8,7 +8,6 @@ SettingsState::SettingsState(StateData* state_data)
     InitFonts();
     InitKeybinds();
     InitGui();
-    InitText();
 }
 
 SettingsState::~SettingsState()
@@ -62,27 +61,26 @@ void SettingsState::InitGui()
     //Backround
     background_.setSize(sf::Vector2f(static_cast<float>(vm.width), static_cast<float>(vm.height)));
 
-    if (!textures_[ "BACKGROUND_TEXTURE" ].loadFromFile("Resources/Images/background.jpg"))
+    if (!background_texture_.loadFromFile("Resources/Images/background.jpg"))
     {
         throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_TEXTURE";
     }
 
-    background_.setTexture(&textures_[ "BACKGROUND_TEXTURE" ]);
+    background_.setTexture(&background_texture_);
 
     //Buttons
-
     float width  = gui::PercToPixelX(19.53f, vm);
     float height = gui::PercToPixelY(6.94f, vm);
 
     buttons_[ "BACK" ] = new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(90.19f, vm), width, height,
                                          &font_, "Back",
-                                         gui::CalcFontSIze(vm) * 0.60f, sf::Color(255, 0, 0, 200),
+                                         gui::CalcFontSIze(vm, 40) * 0.60f, sf::Color(255, 0, 0, 200),
                                          sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
                                          sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 
     buttons_[ "APPLY" ] = new gui::Button(
         gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(82.28f, vm), width, height, &font_, "Apply", 
-                                         gui::CalcFontSIze(vm) * 0.60f, sf::Color(255, 0, 0, 200), 
+                                         gui::CalcFontSIze(vm, 40) * 0.60f, sf::Color(255, 0, 0, 200), 
                                          sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), 
                                          sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 
@@ -95,13 +93,21 @@ void SettingsState::InitGui()
     }
 
     //Drop down list
-    ddl_[ "RESOLUTION" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(13.88f, vm), gui::PercToPixelX(20.78f, vm),
+    ddl_[ "RESOLUTION" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(13.89f, vm), gui::PercToPixelX(20.78f, vm),
                                                  gui::PercToPixelY(6.94f, vm), font_, modes_str.data(), modes_str.size());
+
+    //Text
+    options_text_.setFont(font_);
+    options_text_.setPosition(sf::Vector2f(gui::PercToPixelX(7.82f, vm), gui::PercToPixelY(13.89f, vm)));
+    options_text_.setCharacterSize(gui::CalcFontSIze(vm, 70));
+    options_text_.setFillColor(sf::Color(250, 0, 0, 200));
+    options_text_.setLineSpacing(2);
+
+    options_text_.setString("Resolution \nFullscreen \nVsync \nAntialiasing \n");
 }
 
-
-
-void SettingsState::ResetButtons()
+//Functions
+void SettingsState::ResetGui()
 {
     auto it = buttons_.begin();
     for (it = buttons_.begin(); it != buttons_.end(); ++it)
@@ -121,27 +127,11 @@ void SettingsState::ResetButtons()
 
 }
 
-void SettingsState::InitText()
-{
-    const sf::VideoMode& vm = state_data_->gfx_settings_->resolution_;
-
-    options_text_.setFont(font_);
-    options_text_.setPosition(sf::Vector2f(gui::PercToPixelX(7.82f, vm), gui::PercToPixelY(13.89f, vm)));
-    options_text_.setCharacterSize(gui::CalcFontSIze(vm) * 0.60);
-    options_text_.setFillColor(sf::Color(250, 0, 0, 200));
-    options_text_.setLineSpacing(2);
-
-    options_text_.setString("Resolution \nFullscreen \nVsync \nAntialiasing \n");
-}
-
-//Accessor
-
-//Functions
 void SettingsState::UpdateInput(const float& delta)
 {
 }
 
-void SettingsState::UpdateButtons(const float& delta)
+void SettingsState::UpdateGui(const float& delta)
 {
     /*Update all buttons in the state and handle functionality*/    
 
@@ -164,7 +154,7 @@ void SettingsState::UpdateButtons(const float& delta)
         //TEST
         state_data_->gfx_settings_->resolution_ = v_modes_[ ddl_[ "RESOLUTION" ]->GetActiveElementId() ];
         window_->create(state_data_->gfx_settings_->resolution_, state_data_->gfx_settings_->title_, sf::Style::Default);
-        ResetButtons();
+        ResetGui();
     }
 
     //Dropdown lists
@@ -181,7 +171,7 @@ void SettingsState::Update(const float& delta)
     UpdateMousePositions();
     UpdateInput(delta);
 
-    UpdateButtons(delta);
+    UpdateGui(delta);
 }
 
 void SettingsState::RenderButtons(sf::RenderTarget& target)
