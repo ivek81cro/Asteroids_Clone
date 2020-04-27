@@ -26,7 +26,6 @@ class SettingsState : public State
     //Variables
     sf::RectangleShape background_;
     sf::Font           font_;
-    sf::Texture        background_texture_;
 
     std::map<std::string, gui::Button*> buttons_;
     std::map<std::string, gui::DropDownList*> ddl_;

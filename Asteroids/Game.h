@@ -24,7 +24,7 @@ class Game
     void Render();
 
     //Core function
-    int Run();
+    void Run();
 
   private:
     GraphicsSettings           gfx_settings_;

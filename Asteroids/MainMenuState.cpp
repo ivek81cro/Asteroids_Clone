@@ -58,12 +58,12 @@ void MainMenuState::InitGui()
     background_.setSize(
         sf::Vector2f(static_cast<float>(vm.width), static_cast<float>(vm.height)));
 
-    if (!background_texture_.loadFromFile("Resources/Images/background.jpg"))
+    if (!textures_[ "BACKGROUND_TEXTURE" ].loadFromFile("Resources/Images/background.jpg"))
     {
         throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_TEXTURE";
     }
 
-    background_.setTexture(&background_texture_);
+    background_.setTexture(&textures_[ "BACKGROUND_TEXTURE" ]);
 
     //Buttons
     buttons_[ "GAME_STATE" ] =

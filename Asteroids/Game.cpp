@@ -106,13 +106,16 @@ void Game::Update()
 
     if (!states_.empty())
     {
-        states_.top()->Update(delta_);
-
-        if (states_.top()->GetQuit())
+        if (window_->hasFocus())
         {
-            states_.top()->EndState();
-            delete states_.top();
-            states_.pop();
+            states_.top()->Update(delta_);
+
+            if (states_.top()->GetQuit())
+            {
+                states_.top()->EndState();
+                delete states_.top();
+                states_.pop();
+            }
         }
     }
     else
@@ -134,7 +137,7 @@ void Game::Render()
 }
 
 //Core function
-int Game::Run()
+void Game::Run()
 {
     while (window_->isOpen())
     {
@@ -142,5 +145,4 @@ int Game::Run()
         Update();
         Render();
     }
-    return EXIT_SUCCESS;
 }
