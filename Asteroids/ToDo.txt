@@ -1,4 +1,4 @@
--Extract scaling methods from State to separate class
+-Extract scaling methods from State to gui namespace
 -Scaling according to resolution
 -Number of lives left, upper left corner
 -Save player score to file with name and date

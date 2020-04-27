@@ -69,9 +69,12 @@ void GameState::InitTextures()
 
 void GameState::InitPauseMenu()
 {
-    p_menu_ = new PauseMenu(*window_, font_);
+    const sf::VideoMode& vm = state_data_->gfx_settings_->resolution_;
 
-    p_menu_->AddButton("QUIT", window_->getSize().y - 100.f, "Quit");
+    p_menu_ = new PauseMenu(state_data_->gfx_settings_->resolution_, font_);
+
+    p_menu_->AddButton("QUIT", window_->getSize().y - gui::PercToPixelY(13.89f, vm), gui::PercToPixelX(19.53f, vm),
+                       gui::PercToPixelY(6.94f, vm), gui::CalcFontSIze(vm), "Quit");
 }
 
 void GameState::InitBackground()

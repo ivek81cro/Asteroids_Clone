@@ -6,12 +6,13 @@
 class PauseMenu
 {
   public:
-    PauseMenu(sf::RenderWindow& window, sf::Font& font);
+    PauseMenu(sf::VideoMode& vm, sf::Font& font);
     virtual ~PauseMenu();
 
     //Functions
     const bool IsButtonPressed(const std::string key);
-    void AddButton(const std::string key, float y, const std::string text);
+    void       AddButton(const std::string key, const float y, const float width, const float height,
+                         const unsigned char_size, const std::string text);
     void Update(const sf::Vector2f& mouse_position);
     void Render(sf::RenderTarget& target);
 

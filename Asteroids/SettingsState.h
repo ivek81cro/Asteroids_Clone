@@ -17,6 +17,7 @@ class SettingsState : public State
     //Functions
     void UpdateInput(const float& delta);
     void UpdateButtons(const float& delta);
+    void ResetButtons();
     void Update(const float& delta);
     void RenderButtons(sf::RenderTarget& target);
     void Render(sf::RenderTarget* target = nullptr);
@@ -35,10 +36,9 @@ class SettingsState : public State
 
     //Functions
     void InitVariables();
-    void InitBackground();
     void InitFonts();
     void InitKeybinds();
-    void InitButtons();
+    void InitGui();
     void InitText();
 };
 

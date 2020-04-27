@@ -188,6 +188,7 @@
     <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="PauseMenu.h" />
+    <ClInclude Include="resource1.h" />
     <ClInclude Include="SettingsState.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="State.h" />
@@ -198,6 +199,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="ToDo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Asteroids.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

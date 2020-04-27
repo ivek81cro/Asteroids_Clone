@@ -64,21 +64,25 @@ void MainMenuState::InitKeybinds()
 
 void MainMenuState::InitButtons()
 {
+    const sf::VideoMode& vm  = state_data_->gfx_settings_->resolution_;
 
-    buttons_[ "GAME_STATE" ] = new gui::Button(
-        PercToPixelX(40.23f), PercToPixelY(30.52f), PercToPixelX(19.53f), PercToPixelY(6.94f), &font_, "New game",
-        CalcFontSIze(), sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
-        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
+    buttons_[ "GAME_STATE" ] =
+        new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(30.52f, vm), gui::PercToPixelX(19.53f, vm),
+                        gui::PercToPixelY(6.94f, vm), &font_, "New game", gui::CalcFontSIze(vm),
+                        sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
+                        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 
-    buttons_[ "SETTINGS_STATE" ] = new gui::Button(
-        PercToPixelX(40.23f), PercToPixelY(44.40f), PercToPixelX(19.53f), PercToPixelY(6.94f), &font_, "Settings",
-        CalcFontSIze(), sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
-        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
+    buttons_[ "SETTINGS_STATE" ] =
+        new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(44.40f, vm), gui::PercToPixelX(19.53f, vm),
+                        gui::PercToPixelY(6.94f, vm), &font_, "Settings", gui::CalcFontSIze(vm),
+                        sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
+                        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 
-    buttons_[ "EXIT_STATE" ] = new gui::Button(
-        PercToPixelX(40.23f), PercToPixelY(58.28f), PercToPixelX(19.53f), PercToPixelY(6.94f), &font_, "Quit",
-        CalcFontSIze(), sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
-        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
+    buttons_[ "EXIT_STATE" ] =
+        new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(58.28f, vm), gui::PercToPixelX(19.53f, vm),
+                        gui::PercToPixelY(6.94f, vm), &font_, "Quit", gui::CalcFontSIze(vm), sf::Color(255, 0, 0, 200),
+                        sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0),
+                        sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 }
 
 //Update functions

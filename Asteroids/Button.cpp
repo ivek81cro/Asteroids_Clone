@@ -1,6 +1,45 @@
 #include "stdafx.h"
 #include "Button.h"
 
+const float gui::PercToPixelX(const float perc, const sf::VideoMode& vm)
+{
+    /*
+    * Converts a percetage value to pixels relative to screen resolution in the x-axis.
+    *
+    * @param    float perc          The percentage value.
+    * @param    sf::VideoMode& vm   The current video mode of window (resolution). 
+    *
+    * @return    float The calculated pixel value.
+    */
+    return std::floor(static_cast<float>(vm.width) * (perc / 100.f));
+}
+
+const float gui::PercToPixelY(const float perc, const sf::VideoMode& vm)
+{
+    /*
+    * Converts a percetage value to pixels relative to screen resolution in the y-axis.
+    *
+    * @param    float perc  The percentage value.
+    * @param    sf::VideoMode& vm   The current video mode of window (resolution). 
+    *
+    * @return    float The calculated pixel value
+    */
+    return std::floor(static_cast<float>(vm.height) * (perc / 100.f));
+}
+
+const unsigned gui::CalcFontSIze(const sf::VideoMode& vm)
+{
+    /*
+    * Calculates the character size for text using the current resolution and constanat.
+    *
+    * @param    sf::VideoMode& vm   The current video mode of window (resolution). 
+    *
+    * @return   unsigned            The calculated character size value.
+    */
+    return static_cast<unsigned>(
+        (vm.width + vm.height) / 40);
+}
+
 //Constructors / Destructors
 gui::Button::Button(float x, float y, float width, float height, sf::Font* font, std::string text, unsigned character_size,
                sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color ,sf::Color idle_color,

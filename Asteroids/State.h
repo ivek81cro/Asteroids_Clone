@@ -32,10 +32,6 @@ class State
     const bool  GetKeytime();
 
     //Functions
-    const float PercToPixelX(const float perc) const;
-    const float PercToPixelY(const float perc) const;
-    const unsigned CalcFontSIze() const ;
-
     void EndState();
     void PauseState();
     void UnpauseState();

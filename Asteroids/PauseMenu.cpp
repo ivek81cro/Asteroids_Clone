@@ -1,25 +1,25 @@
 #include "stdafx.h"
 #include "PauseMenu.h"
 
-PauseMenu::PauseMenu(sf::RenderWindow& window, sf::Font& font)
+PauseMenu::PauseMenu(sf::VideoMode& vm, sf::Font& font)
         : font_(font)
 {
-    background_.setSize(sf::Vector2f(static_cast<float>(window.getSize().x), static_cast<float>(window.getSize().y)));
+    background_.setSize(sf::Vector2f(static_cast<float>(vm.width), static_cast<float>(vm.height)));
     background_.setFillColor(sf::Color(20, 20, 20, 100));
 
     container_.setSize(
-        sf::Vector2f(static_cast<float>(window.getSize().x / 4.f), static_cast<float>(window.getSize().y)));
+        sf::Vector2f(static_cast<float>(vm.width / 4.f), static_cast<float>(vm.height)));
     container_.setFillColor(sf::Color(20, 20, 20, 200));
     container_.setPosition(
-        static_cast<float>(window.getSize().x / 2.f) - static_cast<float>(container_.getSize().x / 2.f), 0.f);
+        static_cast<float>(vm.width / 2.f) - static_cast<float>(container_.getSize().x / 2.f), 0.f);
 
     menu_text_.setFont(font_);
     menu_text_.setFillColor(sf::Color(255, 255, 255, 200));
-    menu_text_.setCharacterSize(60);
+    menu_text_.setCharacterSize(gui::CalcFontSIze(vm));
     menu_text_.setString("PAUSED");
     menu_text_.setPosition(container_.getPosition().x + container_.getSize().x / 2.f -
                                menu_text_.getGlobalBounds().width / 2.f,
-                           container_.getPosition().y + 40.f);
+                           container_.getPosition().y + gui::PercToPixelY(5.56f, vm));
 }
 
 PauseMenu::~PauseMenu()
@@ -37,15 +37,14 @@ const bool PauseMenu::IsButtonPressed(const std::string key)
     return buttons_[ key ]->IsPressed();
 }
 
-void PauseMenu::AddButton(const std::string key, float y, const std::string text)
+void PauseMenu::AddButton(const std::string key, const float y, const float width, const float height,
+                          const unsigned char_size, const std::string text)
 {
-    float width     = 250.f;
-    float height    = 50.f;
-    float x         = container_.getPosition().x + container_.getSize().x / 2.f - width / 2.f;
+    float x = container_.getPosition().x + container_.getSize().x / 2.f - width / 2.f;
 
-    buttons_[ key ] = new gui::Button(x, y, width, height, &font_, text, 50, sf::Color(255, 0, 0, 200),
-                                 sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0),
-                                 sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
+    buttons_[ key ] = new gui::Button(x, y, width, height, &font_, text, char_size, sf::Color(255, 0, 0, 200),
+                                      sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0),
+                                      sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 }
 
 void PauseMenu::Update(const sf::Vector2f& mouse_position)
