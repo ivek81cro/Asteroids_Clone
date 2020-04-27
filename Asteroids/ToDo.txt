@@ -1,5 +1,5 @@
-1.Scaling according to resolution
-2.Number of lives left, upper left corner
-5.Save player score to file with name and date
-6.High score state.
-
+-Extract scaling methods from State to separate class
+-Scaling according to resolution
+-Number of lives left, upper left corner
+-Save player score to file with name and date
+-High score state
