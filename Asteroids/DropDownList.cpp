@@ -9,8 +9,8 @@ gui::DropDownList::DropDownList(float x, float y, float width, float height, sf:
         , keytime_(0.f)
 {
 
-    active_element_ = new Button(x, y, width, height, &font_, list[ default_index ], 16, sf::Color(250, 0, 0, 255),
-                                 sf::Color(250, 90, 90, 200), sf::Color(250, 200, 200, 100), sf::Color(0, 0, 0, 200),
+    active_element_ = new Button(x, y, width, height, &font_, list[ default_index ], 16, sf::Color(250, 100, 100, 255),
+                                 sf::Color(250, 215, 215, 200), sf::Color(250, 255, 255, 100), sf::Color(0, 0, 0, 200),
                                  sf::Color(0, 0, 0, 200), sf::Color(20, 20, 20, 200));
 
     for (size_t i = 0; i < num_of_elements; i++)

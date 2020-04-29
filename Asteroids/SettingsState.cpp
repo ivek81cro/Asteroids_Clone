@@ -86,6 +86,9 @@ void SettingsState::InitGui()
 
     
     //Modes
+    std::vector<std::string> fulscreen_str;
+    fulscreen_str.push_back("OFF");
+    fulscreen_str.push_back("ON");
     std::vector<std::string> modes_str;
     for (auto& i : v_modes_)
     {
@@ -93,8 +96,22 @@ void SettingsState::InitGui()
     }
 
     //Drop down list
-    ddl_[ "RESOLUTION" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(13.89f, vm), gui::PercToPixelX(20.78f, vm),
-                                                 gui::PercToPixelY(6.94f, vm), font_, modes_str.data(), modes_str.size());
+    ddl_[ "RESOLUTION" ] = 
+        new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(13.89f, vm),
+                                                 gui::PercToPixelX(20.78f, vm), gui::PercToPixelY(6.94f, vm), font_,
+                                                 modes_str.data(), modes_str.size());
+
+    ddl_[ "FULLSCREEN" ] =
+        new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(23.f, vm), gui::PercToPixelX(20.78f, vm),
+                              gui::PercToPixelY(6.94f, vm), font_, fulscreen_str.data(), fulscreen_str.size());
+
+    ddl_[ "VSYNC" ] =
+        new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(32.8f, vm), gui::PercToPixelX(20.78f, vm),
+                              gui::PercToPixelY(6.94f, vm), font_, fulscreen_str.data(), fulscreen_str.size());
+
+    ddl_[ "ANTIALIASING" ] =
+        new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(42.f, vm), gui::PercToPixelX(20.78f, vm),
+                              gui::PercToPixelY(6.94f, vm), font_, fulscreen_str.data(), fulscreen_str.size());
 
     //Text
     options_text_.setFont(font_);
