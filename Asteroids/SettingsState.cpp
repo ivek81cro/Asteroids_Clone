@@ -56,7 +56,7 @@ void SettingsState::InitKeybinds()
 
 void SettingsState::InitGui()
 {
-    const sf::VideoMode& vm     = state_data_->gfx_settings_->resolution_;
+    const sf::VideoMode& vm = state_data_->gfx_settings_->resolution_;
 
     //Backround
     background_.setSize(sf::Vector2f(static_cast<float>(vm.width), static_cast<float>(vm.height)));
@@ -74,13 +74,13 @@ void SettingsState::InitGui()
 
     buttons_[ "BACK" ] = new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(90.19f, vm), width, height,
                                          &font_, "Back",
-                                         gui::CalcFontSIze(vm, 40) * 0.60f, sf::Color(255, 0, 0, 200),
+                                         gui::CalcFontSIze(vm, 60), sf::Color(255, 0, 0, 200),
                                          sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
                                          sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 
     buttons_[ "APPLY" ] = new gui::Button(
         gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(82.28f, vm), width, height, &font_, "Apply", 
-                                         gui::CalcFontSIze(vm, 40) * 0.60f, sf::Color(255, 0, 0, 200), 
+                                         gui::CalcFontSIze(vm, 60), sf::Color(255, 0, 0, 200), 
                                          sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), 
                                          sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 
@@ -151,6 +151,7 @@ void SettingsState::UpdateGui(const float& delta)
     //Apply
     if (buttons_[ "APPLY" ]->IsPressed())
     {
+        //TODO LATER01: Scaling works on setting menu, nowhere else, fix it
         //TEST
         state_data_->gfx_settings_->resolution_ = v_modes_[ ddl_[ "RESOLUTION" ]->GetActiveElementId() ];
         window_->create(state_data_->gfx_settings_->resolution_, state_data_->gfx_settings_->title_, sf::Style::Default);

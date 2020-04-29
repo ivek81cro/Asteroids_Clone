@@ -1,5 +1,4 @@
--Extract scaling methods from State to gui namespace
--Scaling according to resolution
+-Scaling according to resolution, game state, main menu state
 -Number of lives left, upper left corner
 -Save player score to file with name and date
 -High score state
