@@ -169,6 +169,7 @@
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
+    <ClCompile Include="ScoreState.cpp" />
     <ClCompile Include="SettingsState.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="State.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="resource1.h" />
+    <ClInclude Include="ScoreState.h" />
     <ClInclude Include="SettingsState.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="State.h" />
