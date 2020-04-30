@@ -227,7 +227,7 @@ void GameState::CheckCollision()
 void GameState::Update(const float& delta)
 {
     //If all asteroids are destroyed
-    if (entities_.size() < 5 && paused_== false)
+    if (entities_.size() < 2 && paused_== false && entities_[0].get()->GetName() == "ship")
     {
         states_->push(new ScoreState(state_data_, score_));
         paused_ = true;

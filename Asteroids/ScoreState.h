@@ -7,19 +7,20 @@
 class ScoreState : public State
 {
   public:
-    ScoreState(StateData* state_data, const int& score);
+    ScoreState(StateData* state_data, const int& score = 0);
     virtual ~ScoreState();
 
     //Functions
+    void ReadScoresFile();
+    void WriteScoresFile();
+    void CompareScore();
+
     void UpdateInput(const float& delta);
     void UpdateGui(const float& delta);
     void Update(const float& delta);
     void RenderButtons(sf::RenderTarget& target);
     void Render(sf::RenderTarget* target = nullptr);
 
-    void ReadScoresFile();
-    bool WriteScoresFile();
-    void CompareScore();
 
   private:
     //Variables
@@ -30,11 +31,17 @@ class ScoreState : public State
     sf::Text                            name_;
     sf::Text                            score_;
 
+    int current_player_score_;
+
     std::multimap<int, std::string, std::greater<int>> scores_;
     std::vector<sf::VideoMode> v_modes_;
 
+    //Init functions
     void InitFonts();
     void InitGui();
     void InitKeybinds();
+    void InitBackground(const sf::VideoMode& vm);
+    void InitButtons(const sf::VideoMode& vm);
+    void InitText(const sf::VideoMode& vm);
 };
 #endif
