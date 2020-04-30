@@ -58,6 +58,14 @@ void SettingsState::InitGui()
 {
     const sf::VideoMode& vm = state_data_->gfx_settings_->resolution_;
 
+    InitBackground(vm);
+    InitButtons(vm);
+    InitDropdownList(vm);
+    InitText(vm);
+}
+
+void SettingsState::InitBackground(const sf::VideoMode& vm)
+{
     //Backround
     background_.setSize(sf::Vector2f(static_cast<float>(vm.width), static_cast<float>(vm.height)));
 
@@ -67,24 +75,27 @@ void SettingsState::InitGui()
     }
 
     background_.setTexture(&textures_[ "BACKGROUND_TEXTURE" ]);
+}
 
+void SettingsState::InitButtons(const sf::VideoMode& vm)
+{
     //Buttons
     float width  = gui::PercToPixelX(19.53f, vm);
     float height = gui::PercToPixelY(6.94f, vm);
 
     buttons_[ "BACK" ] = new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(90.19f, vm), width, height,
-                                         &font_, "Back",
-                                         gui::CalcFontSIze(vm, 60), sf::Color(255, 0, 0, 200),
+                                         &font_, "Back", gui::CalcFontSIze(vm, 60), sf::Color(255, 0, 0, 200),
                                          sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
                                          sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 
     buttons_[ "APPLY" ] = new gui::Button(
-        gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(82.28f, vm), width, height, &font_, "Apply", 
-                                         gui::CalcFontSIze(vm, 60), sf::Color(255, 0, 0, 200), 
-                                         sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), 
-                                         sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
+        gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(82.28f, vm), width, height, &font_, "Apply",
+        gui::CalcFontSIze(vm, 60), sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
+        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
+}
 
-    
+void SettingsState::InitDropdownList(const sf::VideoMode& vm)
+{
     //Modes
     std::vector<std::string> fulscreen_str;
     fulscreen_str.push_back("OFF");
@@ -96,8 +107,7 @@ void SettingsState::InitGui()
     }
 
     //Drop down list
-    ddl_[ "RESOLUTION" ] = 
-        new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(13.89f, vm),
+    ddl_[ "RESOLUTION" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(13.89f, vm),
                                                  gui::PercToPixelX(20.78f, vm), gui::PercToPixelY(6.94f, vm), font_,
                                                  modes_str.data(), modes_str.size());
 
@@ -105,14 +115,17 @@ void SettingsState::InitGui()
         new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(23.f, vm), gui::PercToPixelX(20.78f, vm),
                               gui::PercToPixelY(6.94f, vm), font_, fulscreen_str.data(), fulscreen_str.size());
 
-    ddl_[ "VSYNC" ] =
-        new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(32.8f, vm), gui::PercToPixelX(20.78f, vm),
-                              gui::PercToPixelY(6.94f, vm), font_, fulscreen_str.data(), fulscreen_str.size());
+    ddl_[ "VSYNC" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(32.8f, vm),
+                                            gui::PercToPixelX(20.78f, vm), gui::PercToPixelY(6.94f, vm), font_,
+                                            fulscreen_str.data(), fulscreen_str.size());
 
     ddl_[ "ANTIALIASING" ] =
         new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(42.f, vm), gui::PercToPixelX(20.78f, vm),
                               gui::PercToPixelY(6.94f, vm), font_, fulscreen_str.data(), fulscreen_str.size());
+}
 
+void SettingsState::InitText(const sf::VideoMode& vm)
+{
     //Text
     options_text_.setFont(font_);
     options_text_.setPosition(sf::Vector2f(gui::PercToPixelX(7.82f, vm), gui::PercToPixelY(13.89f, vm)));

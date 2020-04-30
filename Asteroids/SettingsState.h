@@ -39,6 +39,10 @@ class SettingsState : public State
     void InitFonts();
     void InitKeybinds();
     void InitGui();
+    void InitBackground(const sf::VideoMode& vm);
+    void InitButtons(const sf::VideoMode& vm);
+    void InitDropdownList(const sf::VideoMode& vm);
+    void InitText(const sf::VideoMode& vm);
     void ResetGui();
 };
 
