@@ -27,9 +27,10 @@ class ScoreState : public State
     sf::Font           font_;
 
     std::map<std::string, gui::Button*> buttons_;
-    sf::Text                            text_;
+    sf::Text                            name_;
+    sf::Text                            score_;
 
-    std::multimap<std::string, int>   scores_;
+    std::multimap<int, std::string, std::greater<int>> scores_;
     std::vector<sf::VideoMode> v_modes_;
 
     void InitFonts();

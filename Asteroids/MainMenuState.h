@@ -27,8 +27,6 @@ class MainMenuState : public State
 
     std::map<std::string, gui::Button*> buttons_;
 
-    sf::VideoMode current_vm_;
-
     //Functions
     void InitVariables();
     void InitFonts();

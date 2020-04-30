@@ -23,7 +23,6 @@ MainMenuState::~MainMenuState()
 //Initializer functions
 void MainMenuState::InitVariables()
 {
-    current_vm_ = state_data_->gfx_settings_->resolution_;
 }
 
 void MainMenuState::InitFonts()
@@ -133,16 +132,8 @@ void MainMenuState::UpdateButtons()
 
 void MainMenuState::Update(const float& delta)
 {
-    //If resolution changed in settings menu reset gui
-    if (state_data_->gfx_settings_->resolution_ != current_vm_)
-    {
-        ResetGui();
-        current_vm_ = state_data_->gfx_settings_->resolution_;
-    }
-
     UpdateMousePositions();
     UpdateInput(delta);
-
     UpdateButtons();
 }
 

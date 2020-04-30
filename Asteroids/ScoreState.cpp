@@ -51,23 +51,33 @@ void ScoreState::InitGui()
                                          sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
 
     //Text
-    text_.setFont(font_);
-    text_.setPosition(sf::Vector2f(gui::PercToPixelX(7.82f, vm), gui::PercToPixelY(13.89f, vm)));
-    text_.setCharacterSize(gui::CalcFontSIze(vm, 70));
-    text_.setFillColor(sf::Color(250, 0, 0, 200));
-    text_.setLineSpacing(2);
+    name_.setFont(font_);
+    name_.setPosition(sf::Vector2f(gui::PercToPixelX(30.82f, vm), gui::PercToPixelY(13.89f, vm)));
+    name_.setCharacterSize(gui::CalcFontSIze(vm, 85));
+    name_.setFillColor(sf::Color(250, 0, 0, 200));
+    name_.setOutlineThickness(2);
+    name_.setLineSpacing(1);
 
-    std::string score_string = "High scores:\n";
+    score_.setFont(font_);
+    score_.setPosition(sf::Vector2f(gui::PercToPixelX(60.82f, vm), gui::PercToPixelY(13.89f, vm)));
+    score_.setCharacterSize(gui::CalcFontSIze(vm, 85));
+    score_.setFillColor(sf::Color(250, 0, 0, 200));
+    score_.setOutlineThickness(2);
+    score_.setLineSpacing(1);
+
+    std::string name_string = "Player name:\n\n";
+    std::string score_string = "Score:\n\n";
 
     for (auto& score : scores_)
     {
-        score_string.append(score.first);
-        score_string.append("\t");
-        score_string.append(std::to_string(score.second));
+        name_string.append(score.second);
+        name_string.append("\n");
+        score_string.append(std::to_string(score.first));
         score_string.append("\n");
     }
 
-    text_.setString(score_string);
+    name_.setString(name_string);
+    score_.setString(score_string);
 }
 
 void ScoreState::InitKeybinds()
@@ -100,7 +110,7 @@ void ScoreState::UpdateGui(const float& delta)
     }
 
     //Button functionality
-    //Quit game
+    //Exit scoreboard
     if (buttons_[ "BACK" ]->IsPressed())
     {
         EndState();
@@ -134,7 +144,8 @@ void ScoreState::Render(sf::RenderTarget* target)
 
     RenderButtons(*target);
 
-    target->draw(text_);
+    target->draw(name_);
+    target->draw(score_);
 }
 
 void ScoreState::ReadScoresFile()
@@ -146,7 +157,7 @@ void ScoreState::ReadScoresFile()
         int         score = 0;
         while (ifs >> name >> score)
         {
-            scores_.insert(std::pair<std::string, int>(name, score));
+            scores_.insert(std::pair<int, std::string>(score, name));
         }
     }
     ifs.close();

@@ -30,6 +30,7 @@ class SettingsState : public State
     std::map<std::string, gui::DropDownList*> ddl_;
 
     sf::Text options_text_;
+    sf::Text warning_text_;
 
     std::vector<sf::VideoMode> v_modes_;
 

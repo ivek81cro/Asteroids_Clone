@@ -121,6 +121,13 @@ void SettingsState::InitGui()
     options_text_.setLineSpacing(2);
 
     options_text_.setString("Resolution \nFullscreen \nVsync \nAntialiasing \n");
+
+    warning_text_.setFont(font_);
+    warning_text_.setPosition(sf::Vector2f(gui::PercToPixelX(7.82f, vm), gui::PercToPixelY(5.89f, vm)));
+    warning_text_.setCharacterSize(gui::CalcFontSIze(vm, 70));
+    warning_text_.setFillColor(sf::Color(250, 0, 0, 200));
+
+    warning_text_.setString("");
 }
 
 //Functions
@@ -171,8 +178,8 @@ void SettingsState::UpdateGui(const float& delta)
         //TODO LATER01: Scaling works on setting menu, nowhere else, fix it
         //TEST
         state_data_->gfx_settings_->resolution_ = v_modes_[ ddl_[ "RESOLUTION" ]->GetActiveElementId() ];
-        window_->create(state_data_->gfx_settings_->resolution_, state_data_->gfx_settings_->title_, sf::Style::Default);
-        ResetGui();
+        state_data_->gfx_settings_->SaveToFile("Config/graphics.ini");
+        warning_text_.setString("Restart game for changes to take effect.");
     }
 
     //Dropdown lists
@@ -216,6 +223,7 @@ void SettingsState::Render(sf::RenderTarget* target)
     RenderButtons(*target);
 
     target->draw(options_text_);
+    target->draw(warning_text_);
 
     //Mouse coordinates for testing
     sf::Text mouse_text;

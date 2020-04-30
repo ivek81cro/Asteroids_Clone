@@ -23,12 +23,12 @@ void GraphicsSettings::SaveToFile(std::string path)
 
     if (ofs.is_open())
     {
-        ofs << title_;
-        ofs << resolution_.width << " " << resolution_.height;
-        ofs << fullscreen_;
-        ofs << frame_rate_limit_;
-        ofs << v_sync_;
-        ofs << context_settings_.antialiasingLevel;
+        ofs << title_ << '\n';
+        ofs << resolution_.width << " " << resolution_.height << '\n';
+        ofs << fullscreen_ << '\n';
+        ofs << frame_rate_limit_ << '\n';
+        ofs << v_sync_ << '\n';
+        ofs << context_settings_.antialiasingLevel << '\n';
     }
 
     ofs.close();
@@ -40,7 +40,7 @@ void GraphicsSettings::LoadFromFile(std::string path)
 
     if (ifs.is_open())
     {
-        std::getline(ifs, title_);
+        ifs >> title_;
         ifs >> resolution_.width >> resolution_.height;
         ifs >> fullscreen_;
         ifs >> frame_rate_limit_;
