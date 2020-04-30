@@ -94,7 +94,7 @@ void GameState::InitPlayer()
 
 void GameState::InitAsteroids()
 {
-    for (int i = 0; i < 3; ++i)
+    for (int i = 0; i < 1; ++i)
         entities_.push_back(std::unique_ptr<Asteroid>(new Asteroid(static_cast<float>(rand() % (window_->getSize().x)),
                                                                    static_cast<float>(rand() % (window_->getSize().y)),
                                                                     1,
@@ -226,6 +226,13 @@ void GameState::CheckCollision()
 
 void GameState::Update(const float& delta)
 {
+    //If all asteroids are destroyed
+    if (entities_.size() < 5 && paused_== false)
+    {
+        states_->push(new ScoreState(state_data_, score_));
+        paused_ = true;
+    }
+
     UpdateMousePositions();
     UpdateKeytime(delta);
     UpdateInput(delta);
@@ -240,10 +247,7 @@ void GameState::Update(const float& delta)
     {
         p_menu_->Update(mouse_pos_view_);
         UpdatePauseMenuButtons();
-    }
-    //If all asteroids are destroyed
-    if (entities_.size() < 2)
-        paused_ = true;
+    }    
 }
 
 //Render Functions

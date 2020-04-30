@@ -1,6 +1,7 @@
 #ifndef GAMESTATE_H_
 #define GAMESTATE_H_
 
+#include "ScoreState.h"
 #include "PauseMenu.h"
 #include "State.h"
 
