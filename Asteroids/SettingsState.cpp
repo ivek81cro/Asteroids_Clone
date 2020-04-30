@@ -191,6 +191,8 @@ void SettingsState::UpdateGui(const float& delta)
         //TODO LATER01: Scaling works on setting menu, nowhere else, fix it
         //TEST
         state_data_->gfx_settings_->resolution_ = v_modes_[ ddl_[ "RESOLUTION" ]->GetActiveElementId() ];
+        if (ddl_[ "FULLSCREEN" ]->GetActiveElementId())
+            state_data_->gfx_settings_->fullscreen_ = true;
         state_data_->gfx_settings_->SaveToFile("Config/graphics.ini");
         warning_text_.setString("Restart game for changes to take effect.");
     }
