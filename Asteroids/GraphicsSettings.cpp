@@ -40,7 +40,7 @@ void GraphicsSettings::LoadFromFile(std::string path)
 
     if (ifs.is_open())
     {
-        ifs >> title_;
+        std::getline(ifs, title_);
         ifs >> resolution_.width >> resolution_.height;
         ifs >> fullscreen_;
         ifs >> frame_rate_limit_;
