@@ -145,7 +145,7 @@ void ScoreState::CompareScore()
 {
     for (auto itr = scores_.begin(); itr != scores_.end(); ++itr)
     {
-        if (current_player_score_ > (*itr).first )
+        if (current_player_score_ >= (*itr).first )
         {
             scores_.erase(--scores_.end());
             scores_.insert(itr, std::pair<int, std::string>(current_player_score_, "New_Player"));

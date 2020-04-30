@@ -214,6 +214,7 @@ void GameState::CheckCollision()
 
 void GameState::Update(const float& delta)
 {
+    //TODO Extract parts in separate functions
     //If all asteroids are destroyed
     if (entities_.size() < 2 && paused_== false && entities_[0].get()->GetName() == "ship")
     {
@@ -230,23 +231,23 @@ void GameState::Update(const float& delta)
         UpdatePlayerInput(delta);
         CheckEntitiesAlive(delta);
         CheckCollision();
+
+        //Update entities
+        for (auto& it : entities_)
+        {
+            if (it->GetName() == "bullet")
+                static_cast<Bullet*>(it.get())->SetLifeTime(delta); //Decrease lifetime for elapsed time
+
+            if ((it)->GetName() != "ship")
+                it->Move(0, 0, delta); //Movement for asteroids and bullets
+
+            it->Update(delta, window_->getSize()); //Update each entity
+        }
     }
     else
     {
         p_menu_->Update(mouse_pos_view_);
         UpdatePauseMenuButtons();
-    }
-
-    //Update entities
-    for (auto& it : entities_)
-    {
-        if (it->GetName() == "bullet")
-            static_cast<Bullet*>(it.get())->SetLifeTime(delta); //Decrease lifetime for elapsed time
-
-        if ((it)->GetName() != "ship")
-            it->Move(0, 0, delta); //Movement for asteroids and bullets
-
-        it->Update(delta, window_->getSize()); //Update each entity
     }
 }
 

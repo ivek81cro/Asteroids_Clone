@@ -100,6 +100,14 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
     std::vector<std::string> fulscreen_str;
     fulscreen_str.push_back("OFF");
     fulscreen_str.push_back("ON");
+    std::vector<std::string> v_sync_str;
+    v_sync_str.push_back("OFF");
+    v_sync_str.push_back("ON");
+    std::vector<std::string> antialiasnig_str;
+    antialiasnig_str.push_back("0x");
+    antialiasnig_str.push_back("1x");
+    antialiasnig_str.push_back("2x");
+    antialiasnig_str.push_back("4x");
     std::vector<std::string> modes_str;
     for (auto& i : v_modes_)
     {
@@ -117,11 +125,11 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
 
     ddl_[ "VSYNC" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(32.8f, vm),
                                             gui::PercToPixelX(20.78f, vm), gui::PercToPixelY(6.94f, vm), font_,
-                                            fulscreen_str.data(), fulscreen_str.size());
+                                            v_sync_str.data(), v_sync_str.size());
 
     ddl_[ "ANTIALIASING" ] =
         new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(42.f, vm), gui::PercToPixelX(20.78f, vm),
-                              gui::PercToPixelY(6.94f, vm), font_, fulscreen_str.data(), fulscreen_str.size());
+                              gui::PercToPixelY(6.94f, vm), font_, antialiasnig_str.data(), antialiasnig_str.size());
 }
 
 void SettingsState::InitText(const sf::VideoMode& vm)
@@ -188,11 +196,28 @@ void SettingsState::UpdateGui(const float& delta)
     //Apply
     if (buttons_[ "APPLY" ]->IsPressed())
     {
-        //TODO LATER01: Scaling works on setting menu, nowhere else, fix it
-        //TEST
+        //Get selected resolution
         state_data_->gfx_settings_->resolution_ = v_modes_[ ddl_[ "RESOLUTION" ]->GetActiveElementId() ];
+
+        //Get fullscreen toggle
         if (ddl_[ "FULLSCREEN" ]->GetActiveElementId())
             state_data_->gfx_settings_->fullscreen_ = true;
+        else
+            state_data_->gfx_settings_->fullscreen_ = false;
+
+        //Get v-sync toggle
+        if (ddl_[ "VSYNC" ]->GetActiveElementId())
+            state_data_->gfx_settings_->v_sync_ = true;
+        else
+            state_data_->gfx_settings_->v_sync_ = false;
+
+        //Get antialiasing toggle
+        if (ddl_[ "ANTIALIASING" ]->GetActiveElementId())
+            state_data_->gfx_settings_->context_settings_.antialiasingLevel =
+                ddl_[ "ANTIALIASING" ]->GetActiveElementId();
+        else
+            state_data_->gfx_settings_->context_settings_.antialiasingLevel = 0;
+
         state_data_->gfx_settings_->SaveToFile("Config/graphics.ini");
         warning_text_.setString("Restart game for changes to take effect.");
     }
