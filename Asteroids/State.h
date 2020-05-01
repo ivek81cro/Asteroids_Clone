@@ -19,6 +19,7 @@ class StateData
     GraphicsSettings*           gfx_settings_;
     std::map<std::string, int>* supported_keys_;
     std::stack<State*>*         states_;
+    sf::Event*                  event_;
 };
 
 class State

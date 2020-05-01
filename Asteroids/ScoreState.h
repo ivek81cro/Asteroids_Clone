@@ -14,6 +14,7 @@ class ScoreState : public State
     void ReadScoresFile();
     void WriteScoresFile();
     void CompareScore();
+    void RefreshScores();
 
     void UpdateInput(const float& delta);
     void UpdateGui(const float& delta);
@@ -30,6 +31,14 @@ class ScoreState : public State
     std::map<std::string, gui::Button*> buttons_;
     sf::Text                            name_;
     sf::Text                            score_;
+    sf::Text                            player_name_;
+    sf::Text                            name_text_;
+    sf::RectangleShape                  name_rect_;
+
+    std::string str_name_;
+    sf::Clock   elapsed_coldown_;
+    sf::Clock   key_clock_;
+    sf::Time    key_cooldown_;
 
     int current_player_score_;
 

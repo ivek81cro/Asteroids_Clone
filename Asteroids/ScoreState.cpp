@@ -5,11 +5,11 @@
 ScoreState::ScoreState(StateData* state_data, const int& score)
         : State(state_data)
         , current_player_score_(score)
+        , str_name_("")
 {
     InitFonts();
     InitKeybinds();
     ReadScoresFile();
-    CompareScore();
     InitGui();
 }
 
@@ -97,19 +97,28 @@ void ScoreState::InitText(const sf::VideoMode& vm)
     score_.setOutlineThickness(2);
     score_.setLineSpacing(1);
 
-    std::string name_string  = "Player name:\n\n";
-    std::string score_string = "Score:\n\n";
+    //TODO maybe ectract to separate function
+    name_text_.setFont(font_);
+    name_text_.setPosition(sf::Vector2f(gui::PercToPixelX(10.f, vm), gui::PercToPixelY(5.f, vm)));
+    name_text_.setCharacterSize(gui::CalcFontSIze(vm, 85));
+    name_text_.setFillColor(sf::Color(250, 0, 0, 200));
+    name_text_.setOutlineThickness(2);
+    std::string name_text = "Enter your name please: ";
+    name_text_.setString(name_text);
 
-    for (auto& score : scores_)
-    {
-        name_string.append(score.second);
-        name_string.append("\n");
-        score_string.append(std::to_string(score.first));
-        score_string.append("\n");
-    }
+    player_name_.setFont(font_);
+    player_name_.setPosition(sf::Vector2f(gui::PercToPixelX(30.f, vm), gui::PercToPixelY(5.f, vm)));
+    player_name_.setCharacterSize(gui::CalcFontSIze(vm, 85));
+    player_name_.setFillColor(sf::Color::Black);
+    player_name_.setString(str_name_);
 
-    name_.setString(name_string);
-    score_.setString(score_string);
+    name_rect_.setSize(sf::Vector2f(gui::PercToPixelX(20.f, vm), gui::PercToPixelY(4.3f, vm)));
+    name_rect_.setPosition(sf::Vector2f(gui::PercToPixelX(28.f, vm), gui::PercToPixelY(5.2f, vm)));
+    name_rect_.setFillColor(sf::Color::White);
+    name_rect_.setOutlineThickness(2);
+    name_rect_.setOutlineColor(sf::Color(250, 0, 0, 200));
+
+    RefreshScores();
 }
 
 //Functions
@@ -137,7 +146,6 @@ void ScoreState::WriteScoresFile()
         for (auto scores : scores_)
             ofs << scores.second << '\t' << scores.first << '\n';
     }
-
     ofs.close();
 }
 
@@ -148,15 +156,54 @@ void ScoreState::CompareScore()
         if (current_player_score_ >= (*itr).first )
         {
             scores_.erase(--scores_.end());
-            scores_.insert(itr, std::pair<int, std::string>(current_player_score_, "Salkic"));
+            scores_.insert(itr, std::pair<int, std::string>(current_player_score_, str_name_));
             break;
         }
     }
     WriteScoresFile();
+    RefreshScores();
+}
+
+void ScoreState::RefreshScores()
+{
+    std::string name_string  = "Player name:\n\n";
+    std::string score_string = "Score:\n\n";
+
+    for (auto& score : scores_)
+    {
+        name_string.append(score.second);
+        name_string.append("\n");
+        score_string.append(std::to_string(score.first));
+        score_string.append("\n");
+    }
+    name_.setString(name_string);
+    score_.setString(score_string);
 }
 
 void ScoreState::UpdateInput(const float& delta)
 {
+    key_cooldown_ = key_clock_.getElapsedTime();
+    if (state_data_->event_->type == sf::Event::TextEntered && key_cooldown_.asSeconds() > 0.10f)
+    {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::BackSpace) && str_name_.size() > 0)
+        {
+            str_name_.erase(str_name_.size() - 1);
+            player_name_.setString(str_name_);
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Return))
+        {
+            CompareScore();
+            str_name_.clear();
+        }
+
+        if (state_data_->event_->text.unicode != 8)
+        {
+            str_name_ += (char)state_data_->event_->text.unicode;
+            player_name_.setString(str_name_);
+        }
+
+        key_clock_.restart();
+    }
 }
 
 void ScoreState::UpdateGui(const float& delta)
@@ -205,4 +252,7 @@ void ScoreState::Render(sf::RenderTarget* target)
 
     target->draw(name_);
     target->draw(score_);
+    target->draw(name_rect_);
+    target->draw(name_text_);
+    target->draw(player_name_);
 }
