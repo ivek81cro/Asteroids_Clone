@@ -17,7 +17,9 @@ class GameState : public State
     void UpdatePauseMenuButtons();
     void CheckEntitiesAlive(const float& delta);
     void CheckCollision();
+    void UpdateEntities(const float& delta);
     void Update(const float& delta);
+    void IfEnd();
 
     //Render functions
     void Render(sf::RenderTarget* target = nullptr);
@@ -33,7 +35,10 @@ class GameState : public State
     sf::Clock bullet_clock_;
     sf::Time  bullet_cooldown_;
 
+    sf::Text lives_text_;
+
     int score_;
+    int times_killed_;
 
     //Initializer Functions
     void InitKeybinds();
@@ -43,6 +48,7 @@ class GameState : public State
     void InitBackground();
     void InitPlayer();
     void InitAsteroids();
+    void InitLivesText(Ship* s);
     void FireBullet(Ship* s);
 };
 

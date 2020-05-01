@@ -2,7 +2,8 @@
 #include "Ship.h"
 
 //Constructors / Destructors
-Ship::Ship(float x, float y, sf::Texture& texture_sheet)
+Ship::Ship(float x, float y, sf::Texture& texture_sheet, int lives)
+        : lives_(lives)
 {
     InitVariables();
 
@@ -85,6 +86,16 @@ void Ship::SetAlive(bool is_alive)
 bool Ship::ShieldsUp()
 {
     return invulnerability_;
+}
+
+void Ship::SetLives(int remaining)
+{
+    lives_ = remaining;
+}
+
+const int& Ship::GetLivesRemaining() const
+{
+    return lives_;
 }
 
 sf::Vector2f Ship::GetPosition() const
