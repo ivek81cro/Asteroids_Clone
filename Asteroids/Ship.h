@@ -6,7 +6,7 @@
 class Ship : public Entity
 {
   public:
-    Ship(float x, float y, sf::Texture& texture_sheet);
+    Ship(float x, float y, sf::Texture& texture_sheet, int lives = 3);
     virtual ~Ship();
 
     Ship(const Ship&) = delete;
@@ -18,6 +18,8 @@ class Ship : public Entity
     void Move(const float dir_x, const float dir_y, const float& delta);
     void SetAlive(bool is_alive);
     bool ShieldsUp();
+    void SetLives(int remaining);
+    const int&  GetLivesRemaining() const;
 
     sf::Vector2f GetPosition() const;
     float        GetAngle() const;
@@ -27,6 +29,7 @@ class Ship : public Entity
 
     bool  invulnerability_;
     float shield_timer_;
+    int   lives_;
 
     //Initializer functions
     void InitVariables();

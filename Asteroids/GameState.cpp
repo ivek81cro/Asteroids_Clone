@@ -5,6 +5,7 @@
 GameState::GameState(StateData* state_data)
         : State(state_data)
         , score_(0)
+        , times_killed_(0)
 {
     InitKeybinds();
     InitFonts();
@@ -94,11 +95,26 @@ void GameState::InitPlayer()
 
 void GameState::InitAsteroids()
 {
-    for (int i = 0; i < 1; ++i)
+    for (int i = 0; i < 5; ++i)
         entities_.push_back(std::unique_ptr<Asteroid>(new Asteroid(static_cast<float>(rand() % (window_->getSize().x)),
                                                                    static_cast<float>(rand() % (window_->getSize().y)),
                                                                     1,
                                                                    textures_[ "ASTEROID" ])));
+}
+
+void GameState::InitLivesText(Ship* s)
+{
+    const sf::VideoMode& vm = state_data_->gfx_settings_->resolution_;
+
+    lives_text_.setFont(font_);
+    lives_text_.setPosition(sf::Vector2f(gui::PercToPixelX(1.f, vm), gui::PercToPixelY(95.f, vm)));
+    lives_text_.setCharacterSize(gui::CalcFontSIze(vm, 85));
+    lives_text_.setFillColor(sf::Color(255, 255, 255, 200));
+    lives_text_.setOutlineThickness(2);
+
+    std::string lives_text = "Lives: ";
+
+    lives_text_.setString(lives_text.append(std::to_string(s->GetLivesRemaining())));
 }
 
 void GameState::FireBullet(Ship* s)
@@ -130,12 +146,19 @@ void GameState::UpdatePlayerInput(const float& delta)
             s = static_cast<Ship*>(it.get());
         }
     }
-    //If ship not alive, reset player
+    //If ship not alive, reset player and remove life
     if (s == nullptr)
     {
         InitPlayer();
         s = static_cast<Ship*>(entities_[ entities_.size() - 1 ].get());
+        s->SetLives(s->GetLivesRemaining() - times_killed_);
+        if (s->GetLivesRemaining() == 0)
+        {
+            states_->push(new ScoreState(state_data_, score_));
+            paused_ = true;
+        }
     }
+    InitLivesText(s);
 
     s->ResetAnimationName();
     //Update player input
@@ -181,8 +204,10 @@ void GameState::CheckCollision()
         {
             if (it->GetName() == "asteroid" && it2->GetName() == "bullet" && !it->IsExploding())
             {
+                //Check collision between bullets and asteroids
                 if (it->CheckCollision(it2->GetHitbox()))
                 {
+                    //Split asteroid in 3 smaller ones
                     for (int i = 0; i < 3; ++i)
                     {
                         new_entities.push_back(std::unique_ptr<Asteroid>(new Asteroid(it->Getposition().x,
@@ -195,12 +220,14 @@ void GameState::CheckCollision()
                     it->SetAlive(false);
                 }
             }
+            //Check collision between ship and asteroids
             if (it->GetName() == "ship" && it2->GetName() == "asteroid" && !it->IsExploding() &&
                 !it2->IsExploding() && !static_cast<Ship*>(it.get())->ShieldsUp())
             {
                 if (it->CheckCollision(it2->GetHitbox()))
                 {
                     it->SetAlive(false);
+                    ++times_killed_;
                 }
             }
         }
@@ -212,16 +239,24 @@ void GameState::CheckCollision()
     }
 }
 
+void GameState::UpdateEntities(const float& delta)
+{
+    //Update entities
+    for (auto& it : entities_)
+    {
+        if (it->GetName() == "bullet")
+            static_cast<Bullet*>(it.get())->SetLifeTime(delta); //Decrease lifetime for elapsed time
+
+        if ((it)->GetName() != "ship")
+            it->Move(0, 0, delta); //Movement for asteroids and bullets
+
+        it->Update(delta, window_->getSize()); //Update each entity
+    }
+}
+
 void GameState::Update(const float& delta)
 {
-    //TODO Extract parts in separate functions
-    //If all asteroids are destroyed
-    if (entities_.size() < 2 && paused_== false && entities_[0].get()->GetName() == "ship")
-    {
-        states_->push(new ScoreState(state_data_, score_));
-        paused_ = true;
-    }
-
+    IfEnd();
     UpdateMousePositions();
     UpdateKeytime(delta);
     UpdateInput(delta);
@@ -230,24 +265,23 @@ void GameState::Update(const float& delta)
     {
         UpdatePlayerInput(delta);
         CheckEntitiesAlive(delta);
-        CheckCollision();
-
-        //Update entities
-        for (auto& it : entities_)
-        {
-            if (it->GetName() == "bullet")
-                static_cast<Bullet*>(it.get())->SetLifeTime(delta); //Decrease lifetime for elapsed time
-
-            if ((it)->GetName() != "ship")
-                it->Move(0, 0, delta); //Movement for asteroids and bullets
-
-            it->Update(delta, window_->getSize()); //Update each entity
-        }
+        CheckCollision();   
+        UpdateEntities(delta);
     }
     else
     {
         p_menu_->Update(mouse_pos_view_);
         UpdatePauseMenuButtons();
+    }
+}
+
+void GameState::IfEnd()
+{
+    //If all asteroids are destroyed
+    if (entities_.size() < 2 && paused_ == false && entities_[ 0 ].get()->GetName() == "ship")
+    {
+        states_->push(new ScoreState(state_data_, score_));
+        paused_ = true;
     }
 }
 
@@ -265,6 +299,8 @@ void GameState::Render(sf::RenderTarget* target)
     {
         it->Render(*target);
     }
+
+    target->draw(lives_text_);
 
     if (paused_)
     {
