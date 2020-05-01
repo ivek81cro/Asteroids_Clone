@@ -197,6 +197,7 @@ void GameState::CheckEntitiesAlive(const float& delta)
 
 void GameState::CheckCollision()
 {
+    //TODO maybe set asteroids to collide but up to last level, avoid player selective split.
     std::vector<std::unique_ptr<Entity>> new_entities;
     for (auto& it : entities_)
     {
