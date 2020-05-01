@@ -97,6 +97,7 @@ void SettingsState::InitButtons(const sf::VideoMode& vm)
 void SettingsState::InitDropdownList(const sf::VideoMode& vm)
 {
     //Modes
+    //TODO Try to fix this
     std::vector<std::string> fulscreen_str;
     fulscreen_str.push_back("OFF");
     fulscreen_str.push_back("ON");
@@ -115,6 +116,7 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
     }
 
     //Drop down list
+    //TODO Fix overlaping
     ddl_[ "RESOLUTION" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(13.89f, vm),
                                                  gui::PercToPixelX(20.78f, vm), gui::PercToPixelY(6.94f, vm), font_,
                                                  modes_str.data(), modes_str.size());
@@ -196,6 +198,7 @@ void SettingsState::UpdateGui(const float& delta)
     //Apply
     if (buttons_[ "APPLY" ]->IsPressed())
     {
+        //TODO Set active option as selected in ddl
         //Get selected resolution
         state_data_->gfx_settings_->resolution_ = v_modes_[ ddl_[ "RESOLUTION" ]->GetActiveElementId() ];
 
