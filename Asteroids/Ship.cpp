@@ -30,7 +30,7 @@ void Ship::InitVariables()
     animation_name_ = name_;
     level_          = 0;
     invulnerability_ = true;
-    shield_timer_    = 5.f;
+    shield_timer_    = 3.f;
 }
 
 void Ship::InitComponents()

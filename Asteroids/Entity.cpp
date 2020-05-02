@@ -54,7 +54,7 @@ void Entity::Move(const float dir_x, const float dir_y, const float& delta)
         movement_component_->Move(dir_x, dir_y, delta); //Sets velocity
 }
 
-bool Entity::IsAlive()
+const bool Entity::IsAlive()
 {
     return alive_;
 }
@@ -64,12 +64,12 @@ void Entity::SetAlive(bool is_alive)
     alive_ = is_alive;
 }
 
-bool Entity::IsExploding()
+const bool Entity::IsExploding()
 {
     return exploding_;
 }
 
-std::string Entity::GetName()
+const std::string Entity::GetName()
 {
     return name_;
 }
@@ -79,7 +79,7 @@ const sf::CircleShape& Entity::GetHitbox() const
     return hitbox_component_->GetHitbox();
 }
 
-bool Entity::CheckCollision(const sf::CircleShape& other)
+const bool Entity::CheckCollision(const sf::CircleShape& other)
 {
     float ax = hitbox_component_->GetHitbox().getPosition().x;
     float ay = hitbox_component_->GetHitbox().getPosition().y;

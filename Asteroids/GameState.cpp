@@ -115,6 +115,24 @@ void GameState::InitLivesText(Ship* s)
     std::string lives_text = "Lives: ";
 
     lives_text_.setString(lives_text.append(std::to_string(s->GetLivesRemaining())));
+
+    score_text_.setFont(font_);
+    score_text_.setPosition(sf::Vector2f(gui::PercToPixelX(85.f, vm), gui::PercToPixelY(95.f, vm)));
+    score_text_.setCharacterSize(gui::CalcFontSIze(vm, 85));
+    score_text_.setFillColor(sf::Color(255, 255, 255, 200));
+    score_text_.setOutlineThickness(2);
+    std::string score_text = "Current score: ";
+
+    score_text_.setString(score_text.append(std::to_string(score_)));
+
+    invoulnerable_text_.setFont(font_);
+    invoulnerable_text_.setPosition(sf::Vector2f(gui::PercToPixelX(42.f, vm), gui::PercToPixelY(45.f, vm)));
+    invoulnerable_text_.setCharacterSize(gui::CalcFontSIze(vm, 70));
+    invoulnerable_text_.setFillColor(sf::Color(255, 0, 0, 200));
+    invoulnerable_text_.setOutlineThickness(2);
+    std::string invoulnerable_text = "=INVOULNERABLE=";
+
+    invoulnerable_text_.setString(invoulnerable_text);
 }
 
 void GameState::FireBullet(Ship* s)
@@ -298,10 +316,14 @@ void GameState::Render(sf::RenderTarget* target)
 
     for (auto& it : entities_)
     {
+        if (it.get()->GetName() == "ship" && static_cast<Ship*>(it.get())->ShieldsUp())
+            target->draw(invoulnerable_text_);
+
         it->Render(*target);
     }
 
     target->draw(lives_text_);
+    target->draw(score_text_);
 
     if (paused_)
     {

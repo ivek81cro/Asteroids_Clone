@@ -36,6 +36,8 @@ class GameState : public State
     sf::Time  bullet_cooldown_;
 
     sf::Text lives_text_;
+    sf::Text score_text_;
+    sf::Text invoulnerable_text_;
 
     int score_;
     int times_killed_;

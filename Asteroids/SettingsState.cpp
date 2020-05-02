@@ -101,14 +101,17 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
     std::vector<std::string> fulscreen_str;
     fulscreen_str.push_back("OFF");
     fulscreen_str.push_back("ON");
+
     std::vector<std::string> v_sync_str;
     v_sync_str.push_back("OFF");
     v_sync_str.push_back("ON");
+
     std::vector<std::string> antialiasnig_str;
     antialiasnig_str.push_back("0x");
     antialiasnig_str.push_back("1x");
     antialiasnig_str.push_back("2x");
     antialiasnig_str.push_back("4x");
+
     std::vector<std::string> modes_str;
     for (auto& i : v_modes_)
     {
