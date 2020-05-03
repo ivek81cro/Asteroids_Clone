@@ -96,62 +96,60 @@ void SettingsState::InitButtons(const sf::VideoMode& vm)
 
 void SettingsState::InitDropdownList(const sf::VideoMode& vm)
 {
-    //TODO Set active option as selected in ddl
-    //Modes
-    //TODO Try to fix this
-    std::vector<std::string> fulscreen_str;
-    fulscreen_str.push_back("OFF");
-    fulscreen_str.push_back("ON");
+        //TODO Try to fix this
+        std::vector<std::string> fulscreen_str;
+        fulscreen_str.push_back("OFF");
+        fulscreen_str.push_back("ON");
 
-    std::vector<std::string> v_sync_str;
-    v_sync_str.push_back("OFF");
-    v_sync_str.push_back("ON");
+        std::vector<std::string> v_sync_str;
+        v_sync_str.push_back("OFF");
+        v_sync_str.push_back("ON");
 
-    std::vector<std::string> antialiasnig_str;
-    antialiasnig_str.push_back("0x");
-    antialiasnig_str.push_back("1x");
-    antialiasnig_str.push_back("2x");
-    antialiasnig_str.push_back("4x");
+        std::vector<std::string> antialiasnig_str;
+        antialiasnig_str.push_back("0x");
+        antialiasnig_str.push_back("1x");
+        antialiasnig_str.push_back("2x");
+        antialiasnig_str.push_back("4x");
 
-    unsigned                 default_mode = 0;
-    std::vector<std::string> modes_str;
-    for (auto& i : v_modes_)
-    {
-        modes_str.push_back(std::to_string(i.width) + 'x' + std::to_string(i.height));
-        if (state_data_->gfx_settings_->resolution_.width == i.width &&
-            state_data_->gfx_settings_->resolution_.height == i.height)
-            default_mode = modes_str.size() - 1;
-    }
+        unsigned                 default_mode = 0;
+        std::vector<std::string> modes_str;
+        for (auto& i : v_modes_)
+        {
+            modes_str.push_back(std::to_string(i.width) + 'x' + std::to_string(i.height));
+            if (state_data_->gfx_settings_->resolution_.width == i.width &&
+                state_data_->gfx_settings_->resolution_.height == i.height)
+                default_mode = modes_str.size() - 1;
+        }
 
-    //Drop down list
+        //Drop down list
         //Resolution
-    ddl_[ "RESOLUTION" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(13.89f, vm),
-                                                 gui::PercToPixelX(20.78f, vm), gui::PercToPixelY(6.94f, vm), font_,
-                                                 modes_str.data(), modes_str.size(), default_mode);
+        ddl_[ "RESOLUTION" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(13.89f, vm),
+                                                     gui::PercToPixelX(20.78f, vm), gui::PercToPixelY(6.94f, vm), font_,
+                                                     modes_str.data(), modes_str.size(), default_mode);
 
-    default_mode = 0;
+        default_mode = 0;
 
         //Fullscreen
-    if (state_data_->gfx_settings_->fullscreen_)
-        default_mode = 1;
-    ddl_[ "FULLSCREEN" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(23.f, vm),
-                                                 gui::PercToPixelX(20.78f, vm), gui::PercToPixelY(6.94f, vm), font_,
-                                                 fulscreen_str.data(), fulscreen_str.size(), default_mode);
-    default_mode         = 0;
+        if (state_data_->gfx_settings_->fullscreen_)
+            default_mode = 1;
+        ddl_[ "FULLSCREEN" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(23.f, vm),
+                                                     gui::PercToPixelX(20.78f, vm), gui::PercToPixelY(6.94f, vm), font_,
+                                                     fulscreen_str.data(), fulscreen_str.size(), default_mode);
+        default_mode         = 0;
 
         //V_Sync
-    if (state_data_->gfx_settings_->v_sync_)
-        default_mode = 1;
-    ddl_[ "VSYNC" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(32.8f, vm),
-                                            gui::PercToPixelX(20.78f, vm), gui::PercToPixelY(6.94f, vm), font_,
-                                            v_sync_str.data(), v_sync_str.size(), default_mode);
-    default_mode    = 0;
+        if (state_data_->gfx_settings_->v_sync_)
+            default_mode = 1;
+        ddl_[ "VSYNC" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(32.8f, vm),
+                                                gui::PercToPixelX(20.78f, vm), gui::PercToPixelY(6.94f, vm), font_,
+                                                v_sync_str.data(), v_sync_str.size(), default_mode);
+        default_mode    = 0;
 
         //Antialiasing
-    default_mode           = state_data_->gfx_settings_->context_settings_.antialiasingLevel;
-    ddl_[ "ANTIALIASING" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(42.f, vm),
-                                                   gui::PercToPixelX(20.78f, vm), gui::PercToPixelY(6.94f, vm), font_,
-                                                   antialiasnig_str.data(), antialiasnig_str.size(), default_mode);
+        default_mode           = state_data_->gfx_settings_->context_settings_.antialiasingLevel;
+        ddl_[ "ANTIALIASING" ] = new gui::DropDownList(
+            gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(42.f, vm), gui::PercToPixelX(20.78f, vm),
+            gui::PercToPixelY(6.94f, vm), font_, antialiasnig_str.data(), antialiasnig_str.size(), default_mode);
 }
 
 void SettingsState::InitText(const sf::VideoMode& vm)
@@ -209,7 +207,7 @@ void SettingsState::UpdateGui(const float& delta)
     }
 
     //Button functionality
-    //Quit game
+    //Quit settings
     if (buttons_[ "BACK" ]->IsPressed())
     {
         EndState();
@@ -268,7 +266,7 @@ void SettingsState::RenderButtons(sf::RenderTarget& target)
         it.second->Render(target);
     }
 
-    //Prevent overlap of ddl's
+    //Prevent overlap of ddl's items
     bool exists_active = false;
     for (auto& it : ddl_)
     {
