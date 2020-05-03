@@ -84,14 +84,14 @@ void ScoreState::InitText(const sf::VideoMode& vm)
 {
     //Text
     name_.setFont(font_);
-    name_.setPosition(sf::Vector2f(gui::PercToPixelX(30.82f, vm), gui::PercToPixelY(13.89f, vm)));
+    name_.setPosition(sf::Vector2f(gui::PercToPixelX(30.82f, vm), gui::PercToPixelY(15.89f, vm)));
     name_.setCharacterSize(gui::CalcFontSIze(vm, 85));
     name_.setFillColor(sf::Color(250, 0, 0, 200));
     name_.setOutlineThickness(2);
     name_.setLineSpacing(1);
 
     score_.setFont(font_);
-    score_.setPosition(sf::Vector2f(gui::PercToPixelX(60.82f, vm), gui::PercToPixelY(13.89f, vm)));
+    score_.setPosition(sf::Vector2f(gui::PercToPixelX(60.82f, vm), gui::PercToPixelY(15.89f, vm)));
     score_.setCharacterSize(gui::CalcFontSIze(vm, 85));
     score_.setFillColor(sf::Color(250, 0, 0, 200));
     score_.setOutlineThickness(2);
@@ -107,13 +107,13 @@ void ScoreState::InitText(const sf::VideoMode& vm)
     name_text_.setString(name_text);
 
     player_name_.setFont(font_);
-    player_name_.setPosition(sf::Vector2f(gui::PercToPixelX(30.f, vm), gui::PercToPixelY(5.f, vm)));
+    player_name_.setPosition(sf::Vector2f(gui::PercToPixelX(10.f, vm), gui::PercToPixelY(10.f, vm)));
     player_name_.setCharacterSize(gui::CalcFontSIze(vm, 85));
     player_name_.setFillColor(sf::Color::Black);
     player_name_.setString(str_name_);
 
     name_rect_.setSize(sf::Vector2f(gui::PercToPixelX(20.f, vm), gui::PercToPixelY(4.3f, vm)));
-    name_rect_.setPosition(sf::Vector2f(gui::PercToPixelX(28.f, vm), gui::PercToPixelY(5.2f, vm)));
+    name_rect_.setPosition(sf::Vector2f(gui::PercToPixelX(10.f, vm), gui::PercToPixelY(10.2f, vm)));
     name_rect_.setFillColor(sf::Color::White);
     name_rect_.setOutlineThickness(2);
     name_rect_.setOutlineColor(sf::Color(250, 0, 0, 200));
