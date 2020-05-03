@@ -10,7 +10,7 @@ State::State(StateData* state_data)
     supported_keys_ = state_data->supported_keys_;
     paused_         = false;
     keytime_        = 0.f;
-    keytime_max_    = 10.f;
+    keytime_max_    = 20.f;
 }
 
 State::~State()

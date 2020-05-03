@@ -255,7 +255,7 @@ void SettingsState::Update(const float& delta)
 {
     UpdateMousePositions();
     UpdateInput(delta);
-
+    UpdateKeytime(delta);
     UpdateGui(delta);
 }
 
