@@ -13,13 +13,15 @@ namespace gui
         virtual ~DropDownList();
 
         //Accessor
-        const unsigned short& GetActiveElementId() const; 
+        const unsigned short& GetActiveElementId() const;
 
         //Functions
         const bool GetKeytime();
         void       UpdateKeytime(const float& delta);
         void       Update(const sf::Vector2f& mouse_pos, const float& delta);
         void       Render(sf::RenderTarget& target);
+
+        const bool& IsActive();
 
       private:
         sf::Font&            font_;

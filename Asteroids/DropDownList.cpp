@@ -94,3 +94,8 @@ void gui::DropDownList::Render(sf::RenderTarget& target)
         }
     }
 }
+
+const bool& gui::DropDownList::IsActive()
+{
+    return show_list_;
+}

@@ -45,7 +45,7 @@ void Ship::ResetAnimationName()
 
 void Ship::Update(const float& delta, const sf::Vector2u& window_size)
 {
-    //TODO Make shields up texture for invulnerable time
+    //TODO Make shields up texture for invulnerable time - text for now
     if (exploding_)
     {
         if (animation_component_->Play("ship_explode", delta, true))
