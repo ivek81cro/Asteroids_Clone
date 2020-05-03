@@ -6,7 +6,7 @@
 class Ship : public Entity
 {
   public:
-    Ship(float x, float y, sf::Texture& texture_sheet, int lives = 3);
+    Ship(float x, float y, sf::Texture& texture_sheet, int lives, float scale);
     virtual ~Ship();
 
     Ship(const Ship&) = delete;

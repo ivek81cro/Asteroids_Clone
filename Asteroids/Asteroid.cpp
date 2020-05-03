@@ -1,9 +1,12 @@
 #include "stdafx.h"
 #include "Asteroid.h"
 
-Asteroid::Asteroid(float x, float y, int level, sf::Texture& texture_sheet)
+Asteroid::Asteroid(float x, float y, int level, sf::Texture& texture_sheet, float scale_factor)
         : level_(level)
 {
+    scale_factor_ = scale_factor;
+    sprite_.setScale(scale_factor_, scale_factor_);
+
     SetPosition(x, y);
 
     InitVariables();
@@ -26,16 +29,16 @@ Asteroid::~Asteroid()
 //Functions
 void Asteroid::SetScale(const int& level)
 {
-    rescale_factor_ = 1.f;
+    rescale_factor_ = scale_factor_;
     if (level == 2)
     {
-        rescale_factor_        = 0.75f;
-        max_velocity_asteroid_ = 100.f;
+        rescale_factor_        *= 0.75f;
+        max_velocity_asteroid_ = scale_factor_ * 100.f;
     }
     if (level == 3)
     {
-        rescale_factor_        = 0.5f;
-        max_velocity_asteroid_ = 150.f;
+        rescale_factor_        *= 0.5f;
+        max_velocity_asteroid_ = scale_factor_ * 150.f;
     }
 
     sprite_.setScale(rescale_factor_, rescale_factor_);
@@ -84,7 +87,8 @@ void Asteroid::InitVariables()
     name_  = "asteroid";
     animation_name_ = name_;
     sprite_.setRotation(static_cast<float>((rand() % 360)));
-    max_velocity_asteroid_ = 50.f;
+    max_velocity_asteroid_ = 50.f * scale_factor_
+        ;
     switch (level_)
     {
         case 1: points_ = 10; 

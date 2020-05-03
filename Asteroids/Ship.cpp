@@ -2,9 +2,12 @@
 #include "Ship.h"
 
 //Constructors / Destructors
-Ship::Ship(float x, float y, sf::Texture& texture_sheet, int lives)
+Ship::Ship(float x, float y, sf::Texture& texture_sheet, int lives, float scale)
         : lives_(lives)
 {
+    scale_factor_ = scale;
+    sprite_.setScale(scale_factor_, scale_factor_);
+
     InitVariables();
 
     SetPosition(x, y);

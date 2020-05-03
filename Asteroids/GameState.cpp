@@ -7,6 +7,9 @@ GameState::GameState(StateData* state_data)
         , score_(0)
         , times_killed_(0)
 {
+
+    entity_scale_factor_ = state_data_->gfx_settings_->resolution_.width / 1280.f;
+
     InitKeybinds();
     InitFonts();
     InitTextures();
@@ -88,9 +91,9 @@ void GameState::InitBackground()
 
 void GameState::InitPlayer()
 {
-    entities_.push_back(
-        std::unique_ptr<Ship>(new Ship(static_cast<float>(window_->getSize().x / 2),
-                                       static_cast<float>(window_->getSize().y / 2), textures_["PLAYER_SHIP"])));
+    entities_.push_back(std::unique_ptr<Ship>(new Ship(static_cast<float>(window_->getSize().x / 2),
+                                                       static_cast<float>(window_->getSize().y / 2),
+                                                       textures_[ "PLAYER_SHIP" ], 3, entity_scale_factor_)));
 }
 
 void GameState::InitAsteroids()
@@ -99,7 +102,7 @@ void GameState::InitAsteroids()
         entities_.push_back(std::unique_ptr<Asteroid>(new Asteroid(static_cast<float>(rand() % (window_->getSize().x)),
                                                                    static_cast<float>(rand() % (window_->getSize().y)),
                                                                     1,
-                                                                   textures_[ "ASTEROID" ])));
+                                                                   textures_[ "ASTEROID" ], entity_scale_factor_)));
 }
 
 void GameState::InitLivesText(Ship* s)
@@ -138,7 +141,7 @@ void GameState::InitLivesText(Ship* s)
 void GameState::FireBullet(Ship* s)
 {
     entities_.push_back(std::unique_ptr<Bullet>(
-        new Bullet(s->GetPosition().x, s->GetPosition().y, textures_[ "BULLET" ], s->GetAngle())));
+        new Bullet(s->GetPosition().x, s->GetPosition().y, textures_[ "BULLET" ], s->GetAngle(), entity_scale_factor_)));
 }
 
 void GameState::UpdateInput(const float& delta)
@@ -229,10 +232,9 @@ void GameState::CheckCollision()
                     //Split asteroid in 3 smaller ones
                     for (int i = 0; i < 3; ++i)
                     {
-                        new_entities.push_back(std::unique_ptr<Asteroid>(new Asteroid(it->Getposition().x,
-                                                                                      it->Getposition().y,
-                                                                                      it->GetLevel() + 1,
-                                                                                      textures_[ "ASTEROID" ])));
+                        new_entities.push_back(std::unique_ptr<Asteroid>(
+                            new Asteroid(it->Getposition().x, it->Getposition().y, it->GetLevel() + 1,
+                                         textures_[ "ASTEROID" ], entity_scale_factor_)));
                     }
                     score_ += static_cast<Asteroid*>(it.get())->GetPoints();
                     it2->SetAlive(false);

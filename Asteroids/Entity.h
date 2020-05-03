@@ -44,7 +44,8 @@ class Entity
     bool alive_;
     bool exploding_;
 
-    int level_;
+    int   level_;
+    float scale_factor_;
 
     MovementComponent*  movement_component_;
     AnimationComponent* animation_component_;

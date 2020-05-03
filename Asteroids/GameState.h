@@ -41,6 +41,7 @@ class GameState : public State
 
     int score_;
     int times_killed_;
+    float entity_scale_factor_;
 
     //Initializer Functions
     void InitKeybinds();
