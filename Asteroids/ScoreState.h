@@ -41,6 +41,7 @@ class ScoreState : public State
     sf::Time    key_cooldown_;
 
     int current_player_score_;
+    int max_name_length_;
 
     std::multimap<int, std::string, std::greater<int>> scores_;
     std::vector<sf::VideoMode> v_modes_;

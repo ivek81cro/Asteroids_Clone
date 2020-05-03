@@ -6,6 +6,7 @@ ScoreState::ScoreState(StateData* state_data, const int& score)
         : State(state_data)
         , current_player_score_(score)
         , str_name_("")
+        , max_name_length_(25)
 {
     InitFonts();
     InitKeybinds();
@@ -196,7 +197,7 @@ void ScoreState::UpdateInput(const float& delta)
             str_name_.clear();
         }
 
-        if (state_data_->event_->text.unicode != 8)
+        if (state_data_->event_->text.unicode != 8 && str_name_.length() < max_name_length_)
         {
             str_name_ += (char)state_data_->event_->text.unicode;
             player_name_.setString(str_name_);
