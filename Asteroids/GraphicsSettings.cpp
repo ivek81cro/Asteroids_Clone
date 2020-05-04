@@ -3,9 +3,9 @@
 
 GraphicsSettings::GraphicsSettings()
 {
-    title_                              = "UNINITIALIZED";
+    title_                              = "Asteroids Clone C++ SFML - NWP Project";
     resolution_                         = sf::VideoMode::getDesktopMode();
-    fullscreen_                         = false;
+    fullscreen_                         = true;
     frame_rate_limit_                   = 120;
     v_sync_                             = false;
     context_settings_.antialiasingLevel = 0;
