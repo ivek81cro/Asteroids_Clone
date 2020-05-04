@@ -152,13 +152,21 @@ void ScoreState::WriteScoresFile()
 
 void ScoreState::CompareScore()
 {
-    for (auto itr = scores_.begin(); itr != scores_.end(); ++itr)
+    if (scores_.size() == 0)
     {
-        if (current_player_score_ >= (*itr).first )
+        scores_.insert(std::pair<int, std::string>(current_player_score_, str_name_));
+    }
+    else
+    {
+        for (auto itr = scores_.begin(); itr != scores_.end(); ++itr)
         {
-            scores_.erase(--scores_.end());
-            scores_.insert(itr, std::pair<int, std::string>(current_player_score_, str_name_));
-            break;
+            if (current_player_score_ >= (*itr).first)
+            {
+                if (scores_.size() > 10)
+                    scores_.erase(--scores_.end());
+                scores_.insert(itr, std::pair<int, std::string>(current_player_score_, str_name_));
+                break;
+            }
         }
     }
     WriteScoresFile();
@@ -191,10 +199,15 @@ void ScoreState::UpdateInput(const float& delta)
             str_name_.erase(str_name_.size() - 1);
             player_name_.setString(str_name_);
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Return))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Return))
         {
-            CompareScore();
-            str_name_.clear();
+
+            if (str_name_.length() > 1)
+            {
+                if (str_name_.front() != '\r')
+                    CompareScore();
+                str_name_.clear();
+            }
         }
 
         if (state_data_->event_->text.unicode != 8 && str_name_.length() < max_name_length_)
