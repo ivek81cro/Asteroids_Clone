@@ -166,9 +166,11 @@ void SettingsState::InitText(const sf::VideoMode& vm)
     options_text_.setString("Resolution \nFullscreen \nVsync \nAntialiasing \n");
 
     warning_text_.setFont(font_);
-    warning_text_.setPosition(sf::Vector2f(gui::PercToPixelX(7.82f, vm), gui::PercToPixelY(5.89f, vm)));
+    warning_text_.setPosition(sf::Vector2f(gui::PercToPixelX(5.f, vm), gui::PercToPixelY(75.f, vm)));
     warning_text_.setCharacterSize(gui::CalcFontSIze(vm, 70));
     warning_text_.setFillColor(sf::Color(250, 0, 0, 200));
+    warning_text_.setOutlineThickness(3);
+    warning_text_.setOutlineColor(sf::Color(255, 255, 255, 255));
 
     warning_text_.setString("");
 }
