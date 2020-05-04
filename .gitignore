@@ -9,6 +9,10 @@
 *.user
 *.userosscache
 *.sln.docstates
+graphics.ini
+scores.ini
+asteriods.zip
+Release.zip
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
