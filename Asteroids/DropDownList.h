@@ -8,12 +8,13 @@ namespace gui
     class DropDownList
     {
       public:
-        DropDownList(float x, float y, float width,float height, sf::Font& font, std::string list[], unsigned num_of_elements,
-                     unsigned default_index = 0);
+        DropDownList(float x, float y, float width, float height, sf::Font& font, sf::VideoMode vm, std::string list[],
+                     unsigned num_of_elements,
+                     unsigned default_index);
         virtual ~DropDownList();
 
         //Accessor
-        const unsigned short& GetActiveElementId() const;
+        const unsigned short& GetActiveElementId();
 
         //Functions
         const bool GetKeytime();
@@ -21,16 +22,20 @@ namespace gui
         void       Update(const sf::Vector2f& mouse_pos, const float& delta);
         void       Render(sf::RenderTarget& target);
 
+        const bool& GetToggle();
+
         const bool& IsActive();
 
       private:
         sf::Font&            font_;
         Button*              active_element_;
         std::vector<Button*> list_;
+        sf::VideoMode        vm_;
 
         float keytime_;
         float keytime_max_;
         bool  show_list_;
+        bool  toggle_;
     };
 } // namespace gui
 

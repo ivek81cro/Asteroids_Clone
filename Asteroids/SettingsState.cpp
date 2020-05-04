@@ -113,42 +113,44 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
 
         unsigned                 default_mode = 0;
         std::vector<std::string> modes_str;
-        for (auto& i : v_modes_)
+        auto                     it = v_modes_.begin();
+        int                      i  = 0;
+        for (it = v_modes_.begin(), i=0; it!= v_modes_.end(); ++it, ++i)
         {
-            modes_str.push_back(std::to_string(i.width) + 'x' + std::to_string(i.height));
-            if (state_data_->gfx_settings_->resolution_.width == i.width &&
-                state_data_->gfx_settings_->resolution_.height == i.height)
-                default_mode = modes_str.size() - 1;
+            modes_str.push_back(std::to_string((*it).width) + 'x' + std::to_string((*it).height));
+            if (state_data_->gfx_settings_->resolution_.width == (*it).width &&
+                state_data_->gfx_settings_->resolution_.height == (*it).height)
+                default_mode = i;
         }
-
         //Drop down list
-        //Resolution
+            //Resolution
         ddl_[ "RESOLUTION" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(13.89f, vm),
-                                                     gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_,
+                                                     gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
                                                      modes_str.data(), modes_str.size(), default_mode);
 
         default_mode = 0;
 
-        //Fullscreen
+            //Fullscreen
         if (state_data_->gfx_settings_->fullscreen_)
             default_mode = 1;
         ddl_[ "FULLSCREEN" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(23.f, vm),
-                                                     gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_,
+                                                     gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
                                                      fulscreen_str.data(), fulscreen_str.size(), default_mode);
         default_mode         = 0;
 
-        //V_Sync
+            //V_Sync
         if (state_data_->gfx_settings_->v_sync_)
             default_mode = 1;
         ddl_[ "VSYNC" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(32.8f, vm),
-                                                gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_,
+                                                gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
                                                 v_sync_str.data(), v_sync_str.size(), default_mode);
         default_mode    = 0;
 
-        //Antialiasing
+            //Antialiasing
         default_mode           = state_data_->gfx_settings_->context_settings_.antialiasingLevel;
-        ddl_[ "ANTIALIASING" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(42.f, vm), 
-                                                gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_,
+        ddl_[ "ANTIALIASING" ] = new gui::DropDownList(
+                                                gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(42.f, vm), 
+                                                gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm, 
                                                 antialiasnig_str.data(), antialiasnig_str.size(), default_mode);
 }
 
@@ -216,27 +218,21 @@ void SettingsState::UpdateGui(const float& delta)
     //Apply
     if (buttons_[ "APPLY" ]->IsPressed())
     {
-        //Get selected resolution
-        state_data_->gfx_settings_->resolution_ = v_modes_[ ddl_[ "RESOLUTION" ]->GetActiveElementId() ];
+        if (ddl_[ "RESOLUTION" ]->GetToggle())
+            state_data_->gfx_settings_->resolution_ = v_modes_[ ddl_[ "RESOLUTION" ]->GetActiveElementId() ];
 
         //Get fullscreen toggle
-        if (ddl_[ "FULLSCREEN" ]->GetActiveElementId())
-            state_data_->gfx_settings_->fullscreen_ = true;
-        else
-            state_data_->gfx_settings_->fullscreen_ = false;
+        if (ddl_[ "FULLSCREEN" ]->GetToggle())
+            state_data_->gfx_settings_->fullscreen_ = ddl_[ "FULLSCREEN" ]->GetActiveElementId();
 
         //Get v-sync toggle
-        if (ddl_[ "VSYNC" ]->GetActiveElementId())
-            state_data_->gfx_settings_->v_sync_ = true;
-        else
-            state_data_->gfx_settings_->v_sync_ = false;
+        if (ddl_[ "VSYNC" ]->GetToggle())
+            state_data_->gfx_settings_->v_sync_ = ddl_[ "VSYNC" ]->GetActiveElementId();
 
         //Get antialiasing toggle
-        if (ddl_[ "ANTIALIASING" ]->GetActiveElementId())
+        if (ddl_[ "ANTIALIASING" ]->GetToggle())
             state_data_->gfx_settings_->context_settings_.antialiasingLevel =
                 ddl_[ "ANTIALIASING" ]->GetActiveElementId();
-        else
-            state_data_->gfx_settings_->context_settings_.antialiasingLevel = 0;
 
         state_data_->gfx_settings_->SaveToFile("Config/graphics.ini");
         warning_text_.setString("Restart game for changes to take effect.");
