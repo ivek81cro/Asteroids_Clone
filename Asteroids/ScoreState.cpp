@@ -125,7 +125,7 @@ void ScoreState::InitText(const sf::VideoMode& vm)
 //Functions
 void ScoreState::ReadScoresFile()
 {
-    std::ifstream ifs("config/scores.ini");
+    std::ifstream ifs("Config/scores.ini");
     if (ifs.is_open())
     {
         std::string name  = "";
@@ -140,7 +140,7 @@ void ScoreState::ReadScoresFile()
 
 void ScoreState::WriteScoresFile()
 {
-    std::ofstream ofs("config/scores.ini");
+    std::ofstream ofs("Config/scores.ini");
 
     if (ofs.is_open())
     {
@@ -209,10 +209,10 @@ void ScoreState::UpdateInput(const float& delta)
                 str_name_.clear();
             }
         }
-
         if (state_data_->event_->text.unicode != 8 && str_name_.length() < max_name_length_)
         {
-            str_name_ += (char)state_data_->event_->text.unicode;
+            if (state_data_->event_->text.unicode != '\r')
+                str_name_ += (char)state_data_->event_->text.unicode;
             player_name_.setString(str_name_);
         }
 
