@@ -234,7 +234,7 @@ void ScoreState::UpdateGui(const float& delta)
 
     //Button functionality
     //Exit scoreboard
-    if (buttons_[ "BACK" ]->IsPressed())
+    if (buttons_[ "BACK" ]->IsPressed() || sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("CLOSE"))))
     {
         EndState();
     }
