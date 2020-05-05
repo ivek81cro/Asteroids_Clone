@@ -39,10 +39,10 @@ class GameState : public State
     sf::Text score_text_;
     sf::Text invoulnerable_text_;
 
-    int      score_;
-    int      times_killed_;
-    float    entity_scale_factor_;
-    unsigned game_level_;
+    int   score_;
+    int   times_killed_;
+    float entity_scale_factor_;
+    float game_level_;
 
     //Initializer Functions
     void InitKeybinds();

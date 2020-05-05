@@ -302,7 +302,7 @@ void GameState::IfEnd()
     //If all asteroids are destroyed
     if (entities_.size() < 2 && paused_ == false && entities_[ 0 ].get()->GetName() == "ship")
     {
-        ++game_level_;
+        game_level_+=0.3f;
         InitAsteroids();
     }
 }

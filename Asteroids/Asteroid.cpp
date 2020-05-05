@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Asteroid.h"
 
-Asteroid::Asteroid(float x, float y, int level, sf::Texture& texture_sheet, float scale_factor, unsigned& game_level)
+Asteroid::Asteroid(float x, float y, int level, sf::Texture& texture_sheet, float scale_factor, float& game_level)
         : level_(level)
 {
     scale_factor_ = scale_factor;
@@ -34,12 +34,12 @@ void Asteroid::SetScale(const int& level)
     if (level == 2)
     {
         rescale_factor_        *= 0.75f;
-        max_velocity_asteroid_ = scale_factor_ * 100.f * game_level_;
+        max_velocity_asteroid_ = scale_factor_ * 75.f * game_level_;
     }
     if (level == 3)
     {
         rescale_factor_        *= 0.5f;
-        max_velocity_asteroid_ = scale_factor_ * 150.f * game_level_;
+        max_velocity_asteroid_ = scale_factor_ * 100.f * game_level_;
     }
 
     sprite_.setScale(rescale_factor_, rescale_factor_);

@@ -6,7 +6,7 @@
 class Asteroid : public Entity
 {
   public:
-    Asteroid(float x, float y, int level, sf::Texture& texture_sheet, float scale_factor, unsigned& game_level);
+    Asteroid(float x, float y, int level, sf::Texture& texture_sheet, float scale_factor, float& game_level);
     virtual ~Asteroid();
 
     Asteroid(const Asteroid&) = delete;
