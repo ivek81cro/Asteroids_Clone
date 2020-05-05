@@ -44,8 +44,9 @@ class Entity
     bool alive_;
     bool exploding_;
 
-    int   level_;
-    float scale_factor_;
+    int      asteroid_level_;
+    float    scale_factor_;
+    unsigned game_level_;
 
     MovementComponent*  movement_component_;
     AnimationComponent* animation_component_;

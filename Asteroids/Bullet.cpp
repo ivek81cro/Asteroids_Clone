@@ -44,7 +44,6 @@ void Bullet::InitVariables()
     animation_name_ = name_;
     lifetime_ = 1.f;
     sprite_.setRotation(angle_ - 90);
-    level_ = 0;
 }
 
 void Bullet::InitComponents()

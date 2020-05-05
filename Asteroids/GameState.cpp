@@ -6,6 +6,7 @@ GameState::GameState(StateData* state_data)
         : State(state_data)
         , score_(0)
         , times_killed_(0)
+        , game_level_(1)
 {
 
     entity_scale_factor_ = state_data_->gfx_settings_->resolution_.width / 1280.f;
@@ -98,11 +99,11 @@ void GameState::InitPlayer()
 
 void GameState::InitAsteroids()
 {
-    for (int i = 0; i < 5; ++i)
+    for (int i = 0; i < 5 * game_level_; ++i)
         entities_.push_back(std::unique_ptr<Asteroid>(new Asteroid(static_cast<float>(rand() % (window_->getSize().x)),
                                                                    static_cast<float>(rand() % (window_->getSize().y)),
                                                                     1,
-                                                                   textures_[ "ASTEROID" ], entity_scale_factor_)));
+                                                                   textures_[ "ASTEROID" ], entity_scale_factor_, game_level_)));
 }
 
 void GameState::InitLivesText(Ship* s)
@@ -234,7 +235,7 @@ void GameState::CheckCollision()
                     {
                         new_entities.push_back(std::unique_ptr<Asteroid>(
                             new Asteroid(it->Getposition().x, it->Getposition().y, it->GetLevel() + 1,
-                                         textures_[ "ASTEROID" ], entity_scale_factor_)));
+                                         textures_[ "ASTEROID" ], entity_scale_factor_, game_level_)));
                     }
                     score_ += static_cast<Asteroid*>(it.get())->GetPoints();
                     it2->SetAlive(false);
@@ -301,8 +302,8 @@ void GameState::IfEnd()
     //If all asteroids are destroyed
     if (entities_.size() < 2 && paused_ == false && entities_[ 0 ].get()->GetName() == "ship")
     {
-        states_->push(new ScoreState(state_data_, score_));
-        paused_ = true;
+        ++game_level_;
+        InitAsteroids();
     }
 }
 

@@ -3,6 +3,8 @@
 
 //Constructors / Destrustors
 Entity::Entity()
+        : asteroid_level_(0)
+        , game_level_(0)
 {
     InitVariables();
 }
@@ -95,7 +97,7 @@ const bool Entity::CheckCollision(const sf::CircleShape& other)
 
 const int& Entity::GetLevel() const
 {
-    return level_;
+    return asteroid_level_;
 }
 
 const sf::Vector2f& Entity::Getposition() const

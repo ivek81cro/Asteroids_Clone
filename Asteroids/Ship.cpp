@@ -31,7 +31,6 @@ void Ship::InitVariables()
 {
     name_           = "ship";
     animation_name_ = name_;
-    level_          = 0;
     invulnerability_ = true;
     shield_timer_    = 3.f;
 }
