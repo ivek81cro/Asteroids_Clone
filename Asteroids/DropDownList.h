@@ -23,8 +23,8 @@ namespace gui
         void       Render(sf::RenderTarget& target);
 
         const bool& GetToggle();
-
         const bool& IsActive();
+        const std::string GetActiveElementText() const;
 
       private:
         sf::Font&            font_;

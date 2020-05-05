@@ -16,6 +16,7 @@ class GraphicsSettings
     unsigned                   frame_rate_limit_;
     sf::ContextSettings        context_settings_;
     std::vector<sf::VideoMode> video_modes_;
+    std::string                path_game_state_keys_;
 
     //Functions
     void SaveToFile(std::string path);

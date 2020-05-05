@@ -10,6 +10,7 @@ GraphicsSettings::GraphicsSettings()
     v_sync_                             = false;
     context_settings_.antialiasingLevel = 0;
     video_modes_                        = sf::VideoMode::getFullscreenModes();
+    path_game_state_keys_               = "Config/gamestate_keybinds.ini";
 }
 
 GraphicsSettings::~GraphicsSettings()
@@ -29,6 +30,7 @@ void GraphicsSettings::SaveToFile(std::string path)
         ofs << frame_rate_limit_ << '\n';
         ofs << v_sync_ << '\n';
         ofs << context_settings_.antialiasingLevel << '\n';
+        ofs << path_game_state_keys_ << '\n';
     }
 
     ofs.close();
@@ -46,6 +48,7 @@ void GraphicsSettings::LoadFromFile(std::string path)
         ifs >> frame_rate_limit_;
         ifs >> v_sync_;
         ifs >> context_settings_.antialiasingLevel;
+        ifs >> path_game_state_keys_;
     }
 
     ifs.close();

@@ -32,7 +32,8 @@ class SettingsState : public State
     sf::Text options_text_;
     sf::Text warning_text_;
 
-    std::vector<sf::VideoMode> v_modes_;
+    std::vector<sf::VideoMode>         v_modes_;
+    std::map<std::string, std::string> key_configs_;
 
     //Functions
     void InitVariables();

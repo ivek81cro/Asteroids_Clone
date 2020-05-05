@@ -37,6 +37,11 @@ const unsigned short& gui::DropDownList::GetActiveElementId()
     return active_element_->GetId();
 }
 
+const std::string gui::DropDownList::GetActiveElementText() const
+{
+    return active_element_->GetText();
+}
+
 const bool gui::DropDownList::GetKeytime()
 {
     if (keytime_ >= keytime_max_)

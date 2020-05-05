@@ -20,6 +20,7 @@ class StateData
     std::map<std::string, int>* supported_keys_;
     std::stack<State*>*         states_;
     sf::Event*                  event_;
+    std::string*                path_game_state_keys_;
 };
 
 class State

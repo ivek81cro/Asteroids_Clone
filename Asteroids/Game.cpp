@@ -37,11 +37,12 @@ void Game::InitGraphicsSettings()
 
 void Game::InitStateData()
 {
-    state_data_.window_         = window_;
-    state_data_.gfx_settings_   = &gfx_settings_;
-    state_data_.supported_keys_ = &supported_keys_;
-    state_data_.states_         = &states_;
-    state_data_.event_          = &event_;
+    state_data_.window_               = window_;
+    state_data_.gfx_settings_         = &gfx_settings_;
+    state_data_.supported_keys_       = &supported_keys_;
+    state_data_.states_               = &states_;
+    state_data_.event_                = &event_;
+    state_data_.path_game_state_keys_ = &gfx_settings_.path_game_state_keys_;
 }
 
 void Game::InitWindow()
