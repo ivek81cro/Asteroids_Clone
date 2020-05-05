@@ -132,7 +132,7 @@ void MainMenuState::UpdateButtons()
     //High scores
     if (buttons_[ "SCORE_STATE" ]->IsPressed())
     {
-        states_->push(new ScoreState(state_data_));
+        states_->push(new ScoreState(state_data_, NULL, false));
     }
 
     //Quit game

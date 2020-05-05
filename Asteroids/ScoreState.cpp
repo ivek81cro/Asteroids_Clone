@@ -2,12 +2,13 @@
 #include "ScoreState.h"
 
 //Constructor / Destructor
-ScoreState::ScoreState(StateData* state_data, const int& score)
+ScoreState::ScoreState(StateData* state_data, const int& score, bool writable)
         : State(state_data)
         , current_player_score_(score)
         , str_name_("")
         , max_name_length_(25)
         , score_entered_(false)
+        , writable_(writable)
 {
     InitFonts();
     InitKeybinds();
@@ -194,7 +195,7 @@ void ScoreState::RefreshScores()
 void ScoreState::UpdateInput(const float& delta)
 {
     key_cooldown_ = key_clock_.getElapsedTime();
-    if (state_data_->event_->type == sf::Event::TextEntered && key_cooldown_.asSeconds() > 0.10f && !score_entered_)
+    if (state_data_->event_->type == sf::Event::TextEntered && key_cooldown_.asSeconds() > 0.10f && !score_entered_ && writable_)
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::BackSpace) && str_name_.size() > 0)
         {

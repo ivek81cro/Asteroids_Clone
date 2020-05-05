@@ -7,7 +7,7 @@
 class ScoreState : public State
 {
   public:
-    ScoreState(StateData* state_data, const int& score = 0);
+    ScoreState(StateData* state_data, const int& score = 0, bool writable = true);
     virtual ~ScoreState();
 
     //Functions
@@ -40,6 +40,7 @@ class ScoreState : public State
     sf::Clock   key_clock_;
     sf::Time    key_cooldown_;
 
+    bool     writable_;
     bool     score_entered_;
     int      current_player_score_;
     unsigned max_name_length_;
