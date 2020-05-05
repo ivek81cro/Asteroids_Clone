@@ -154,7 +154,7 @@ void ScoreState::WriteScoresFile()
 
 void ScoreState::CompareScore()
 {
-    if (scores_.size() == 0)
+    if (scores_.size() <= 10)
     {
         scores_.insert(std::pair<int, std::string>(current_player_score_, str_name_));
     }

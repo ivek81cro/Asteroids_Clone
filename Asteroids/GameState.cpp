@@ -94,7 +94,7 @@ void GameState::InitPlayer()
 {
     entities_.push_back(std::unique_ptr<Ship>(new Ship(static_cast<float>(window_->getSize().x / 2),
                                                        static_cast<float>(window_->getSize().y / 2),
-                                                       textures_[ "PLAYER_SHIP" ], 3, entity_scale_factor_)));
+                                                       textures_[ "PLAYER_SHIP" ], 10, entity_scale_factor_)));
 }
 
 void GameState::InitAsteroids()
