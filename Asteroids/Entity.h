@@ -47,6 +47,8 @@ class Entity
     int      asteroid_level_;
     float    scale_factor_;
     float    game_level_;
+    float    max_velocity_;
+    float    acceleration_;
 
     MovementComponent*  movement_component_;
     AnimationComponent* animation_component_;
