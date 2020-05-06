@@ -174,10 +174,11 @@ void GameState::UpdatePlayerInput(const float& delta)
         InitPlayer();
         s = static_cast<Ship*>(entities_[ entities_.size() - 1 ].get());
         s->SetLives(s->GetLivesRemaining() - times_killed_);
-        if (s->GetLivesRemaining() == 0)
+        if (s->GetLivesRemaining() <= 0)
         {
-            states_->push(new ScoreState(state_data_, score_));
+            states_->push(new ScoreState(state_data_, score_,true));
             paused_ = true;
+            EndState();
         }
     }
     InitLivesText(s);
