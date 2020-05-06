@@ -80,7 +80,7 @@ const sf::CircleShape& Entity::GetHitbox() const
 {
     return hitbox_component_->GetHitbox();
 }
-
+//TODO maybe move in gamestate
 const bool Entity::CheckCollision(const sf::CircleShape& other)
 {
     float ax = hitbox_component_->GetHitbox().getPosition().x;

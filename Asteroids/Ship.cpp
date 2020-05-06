@@ -4,6 +4,8 @@
 //Constructors / Destructors
 Ship::Ship(float x, float y, sf::Texture& texture_sheet, int lives, float scale)
         : lives_(lives)
+        , shield_timer_(3.f)
+        , invulnerability_(true)
 {
     scale_factor_ = scale;
     sprite_.setScale(scale_factor_, scale_factor_);
@@ -13,7 +15,7 @@ Ship::Ship(float x, float y, sf::Texture& texture_sheet, int lives, float scale)
     SetPosition(x, y);
 
     CreateHitboxComponent(sprite_, 38.f);
-    CreateMovementComponent(200.f, 400.f, 0.998f, sprite_.getRotation());
+    CreateMovementComponent(200.f * scale_factor_, 400.f * scale_factor_, 0.998f * scale_factor_, sprite_.getRotation());
     CreateAnimationComponent(texture_sheet);
 
     animation_component_->AddAnimation("ship", 8.f, 1, 0, 2, 0, 40, 45);
@@ -31,8 +33,6 @@ void Ship::InitVariables()
 {
     name_           = "ship";
     animation_name_ = name_;
-    invulnerability_ = true;
-    shield_timer_    = 3.f;
 }
 
 void Ship::InitComponents()

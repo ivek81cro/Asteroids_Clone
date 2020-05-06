@@ -52,7 +52,7 @@ class GameState : public State
     void InitBackground();
     void InitPlayer();
     void InitAsteroids();
-    void InitLivesText(Ship* s);
+    void InitTextItems(Ship* s);
     void FireBullet(Ship* s);
 };
 

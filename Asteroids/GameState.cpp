@@ -106,7 +106,7 @@ void GameState::InitAsteroids()
                                                                    textures_[ "ASTEROID" ], entity_scale_factor_, game_level_)));
 }
 
-void GameState::InitLivesText(Ship* s)
+void GameState::InitTextItems(Ship* s)
 {
     const sf::VideoMode& vm = state_data_->gfx_settings_->resolution_;
 
@@ -181,7 +181,7 @@ void GameState::UpdatePlayerInput(const float& delta)
             EndState();
         }
     }
-    InitLivesText(s);
+    InitTextItems(s);
 
     s->ResetAnimationName();
     //Update player input

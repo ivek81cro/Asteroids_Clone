@@ -321,7 +321,7 @@ void SettingsState::Render(sf::RenderTarget* target)
     target->draw(warning_text_);
 
     //Mouse coordinates for testing
-    sf::Text mouse_text;
+    /*sf::Text mouse_text;
     mouse_text.setPosition(mouse_pos_view_.x, mouse_pos_view_.y - 50);
     mouse_text.setFont(font_);
     mouse_text.setCharacterSize(12);
@@ -329,5 +329,5 @@ void SettingsState::Render(sf::RenderTarget* target)
     ss << mouse_pos_view_.x << " " << mouse_pos_view_.y;
     mouse_text.setString(ss.str());
 
-    target->draw(mouse_text);
+    target->draw(mouse_text);*/
 }

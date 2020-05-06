@@ -36,7 +36,7 @@ void MovementComponent::Move(const float dir_x, const float dir_y, const float& 
     //Ship rotation
     if (dir_x != 0)
     {
-        sprite_.rotate(dir_x * 300.f * delta);
+        sprite_.rotate(dir_x * rotation_speed_ * delta);
     }
     //Ship movement forward-backward
     if (name_ == "ship")
