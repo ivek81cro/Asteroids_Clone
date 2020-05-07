@@ -11,20 +11,9 @@ Ship::Ship(float x, float y, sf::Texture& texture_sheet, int lives, float scale)
     sprite_.setScale(scale_factor_, scale_factor_);
 
     InitVariables();
+    InitComponents(texture_sheet);
 
     SetPosition(x, y);
-
-    CreateHitboxComponent(sprite_, 38.f * scale_factor_);
-    CreateMovementComponent(max_velocity_, acceleration_ , 0.998f, sprite_.getRotation());
-    CreateAnimationComponent(texture_sheet);
-
-    animation_component_->AddAnimation("ship", 8.f, 1, 0, 2, 0, 40, 45);
-    animation_component_->AddAnimation("ship_l", 5.f, 4, 0, 5, 0, 40, 45);
-    animation_component_->AddAnimation("ship_r", 5.f, 7, 0, 8, 0, 40, 45);
-    animation_component_->AddAnimation("ship_sh", 8.f, 9, 0, 10, 0, 40, 45);
-    animation_component_->AddAnimation("ship_l_sh", 5.f, 11, 0, 12, 0, 40, 45);
-    animation_component_->AddAnimation("ship_r_sh", 5.f, 13, 0, 14, 0, 40, 45);
-    animation_component_->AddAnimation("ship_explode", 5.f, 0, 1, 21, 1, 40, 45);
 }
 
 Ship::~Ship()
@@ -40,8 +29,21 @@ void Ship::InitVariables()
     acceleration_   = 400.f * scale_factor_;
 }
 
-void Ship::InitComponents()
+void Ship::InitComponents(sf::Texture& texture_sheet)
 {
+    CreateHitboxComponent(sprite_, 38.f * scale_factor_);
+
+    CreateMovementComponent(max_velocity_, acceleration_, 0.998f, sprite_.getRotation());
+
+    CreateAnimationComponent(texture_sheet);
+
+    animation_component_->AddAnimation("ship", 8.f, 1, 0, 2, 0, 40, 45);
+    animation_component_->AddAnimation("ship_l", 5.f, 4, 0, 5, 0, 40, 45);
+    animation_component_->AddAnimation("ship_r", 5.f, 7, 0, 8, 0, 40, 45);
+    animation_component_->AddAnimation("ship_sh", 8.f, 9, 0, 10, 0, 40, 45);
+    animation_component_->AddAnimation("ship_l_sh", 5.f, 11, 0, 12, 0, 40, 45);
+    animation_component_->AddAnimation("ship_r_sh", 5.f, 13, 0, 14, 0, 40, 45);
+    animation_component_->AddAnimation("ship_explode", 5.f, 0, 1, 21, 1, 40, 45);
 }
 
 //Functions
