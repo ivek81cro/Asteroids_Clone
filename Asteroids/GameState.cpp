@@ -287,8 +287,8 @@ void GameState::Update(const float& delta)
     if (!paused_)
     {
         UpdatePlayerInput(delta);
+        CheckCollision();
         CheckEntitiesAlive(delta);
-        CheckCollision();   
         UpdateEntities(delta);
     }
     else
