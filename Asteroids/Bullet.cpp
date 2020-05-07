@@ -10,17 +10,20 @@ Bullet::Bullet(float x, float y, sf::Texture& texture_sheet, float angle, float 
     SetScale(sf::Vector2f(0.25f * scale_factor_, 0.25f * scale_factor_));
 
     InitVariables();
-    InitComponents();
+    InitComponents(texture_sheet);
+}
 
+Bullet::~Bullet()
+{
+}
+
+void Bullet::InitComponents(sf::Texture& texture_sheet)
+{
     CreateHitboxComponent(sprite_, 32 * 0.25f * scale_factor_);
     CreateMovementComponent(max_velocity_, 0.f, 0.f, sprite_.getRotation());
     CreateAnimationComponent(texture_sheet);
 
     animation_component_->AddAnimation(name_, 10.f, 0, 0, 0, 0, 64, 32);
-}
-
-Bullet::~Bullet()
-{
 }
 
 void Bullet::SetScale(const sf::Vector2f& factor)
@@ -45,8 +48,4 @@ void Bullet::InitVariables()
     lifetime_ = 1.f;
     sprite_.setRotation(angle_ - 90);
     max_velocity_ = 1000.f * scale_factor_;
-}
-
-void Bullet::InitComponents()
-{
 }

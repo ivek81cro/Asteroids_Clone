@@ -23,7 +23,7 @@ class Bullet : public Entity
 
     //Initializer functions
     void InitVariables();
-    void InitComponents();
+    void InitComponents(sf::Texture& texture_sheet);
 };
 
 #endif

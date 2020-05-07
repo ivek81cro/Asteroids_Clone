@@ -32,9 +32,7 @@ void Ship::InitVariables()
 void Ship::InitComponents(sf::Texture& texture_sheet)
 {
     CreateHitboxComponent(sprite_, 38.f * scale_factor_);
-
     CreateMovementComponent(max_velocity_, acceleration_, 0.998f, sprite_.getRotation());
-
     CreateAnimationComponent(texture_sheet);
 
     animation_component_->AddAnimation("ship", 8.f, 1, 0, 2, 0, 40, 45);
