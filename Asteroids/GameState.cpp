@@ -130,7 +130,7 @@ void GameState::InitTextItems(Ship* s)
     score_text_.setString(score_text.append(std::to_string(score_)));
 
     invoulnerable_text_.setFont(font_);
-    invoulnerable_text_.setPosition(sf::Vector2f(gui::PercToPixelX(42.f, vm), gui::PercToPixelY(45.f, vm)));
+    invoulnerable_text_.setPosition(sf::Vector2f(gui::PercToPixelX(42.f, vm), gui::PercToPixelY(90.f, vm)));
     invoulnerable_text_.setCharacterSize(gui::CalcFontSIze(vm, 70));
     invoulnerable_text_.setFillColor(sf::Color(255, 0, 0, 200));
     invoulnerable_text_.setOutlineThickness(2);
