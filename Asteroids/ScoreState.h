@@ -7,7 +7,7 @@
 class ScoreState : public State
 {
   public:
-    ScoreState(StateData* state_data, const int& score = 0, bool writable = true);
+    ScoreState(StateData* state_data, const int& score = 0, bool writable = false);
     virtual ~ScoreState();
 
     //Functions

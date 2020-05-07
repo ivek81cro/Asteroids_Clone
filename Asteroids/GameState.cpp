@@ -7,6 +7,7 @@ GameState::GameState(StateData* state_data)
         , score_(0)
         , times_killed_(0)
         , game_level_(1)
+        , current_level_(1)
 {
 
     entity_scale_factor_ = state_data_->gfx_settings_->resolution_.width / 1280.f;
@@ -114,7 +115,6 @@ void GameState::InitTextItems(Ship* s)
     lives_text_.setPosition(sf::Vector2f(gui::PercToPixelX(1.f, vm), gui::PercToPixelY(95.f, vm)));
     lives_text_.setCharacterSize(gui::CalcFontSIze(vm, 85));
     lives_text_.setFillColor(sf::Color(255, 255, 255, 200));
-    lives_text_.setOutlineThickness(2);
 
     std::string lives_text = "Lives: ";
 
@@ -124,10 +124,17 @@ void GameState::InitTextItems(Ship* s)
     score_text_.setPosition(sf::Vector2f(gui::PercToPixelX(85.f, vm), gui::PercToPixelY(95.f, vm)));
     score_text_.setCharacterSize(gui::CalcFontSIze(vm, 85));
     score_text_.setFillColor(sf::Color(255, 255, 255, 200));
-    score_text_.setOutlineThickness(2);
     std::string score_text = "Current score: ";
 
     score_text_.setString(score_text.append(std::to_string(score_)));
+
+    level_text_.setFont(font_);
+    level_text_.setPosition(sf::Vector2f(gui::PercToPixelX(42.f, vm), gui::PercToPixelY(95.f, vm)));
+    level_text_.setCharacterSize(gui::CalcFontSIze(vm, 85));
+    level_text_.setFillColor(sf::Color(255, 255, 255, 200));
+    std::string level_text = "Current Level: ";
+
+    level_text_.setString(level_text.append(std::to_string(current_level_)));
 
     invoulnerable_text_.setFont(font_);
     invoulnerable_text_.setPosition(sf::Vector2f(gui::PercToPixelX(42.f, vm), gui::PercToPixelY(90.f, vm)));
@@ -245,7 +252,7 @@ void GameState::CheckCollision()
             }
             //Check collision between ship and asteroids
             if (it->GetName() == "ship" && it2->GetName() == "asteroid" && !it->IsExploding() &&
-                !it2->IsExploding() && !static_cast<Ship*>(it.get())->ShieldsUp())
+                !it2->IsExploding() && it2->IsAlive() && !static_cast<Ship*>(it.get())->ShieldsUp())
             {
                 if (it->CheckCollision(it2->GetHitbox()))
                 {
@@ -304,6 +311,7 @@ void GameState::IfEnd()
     if (entities_.size() < 2 && paused_ == false && entities_[ 0 ].get()->GetName() == "ship")
     {
         game_level_+=0.3f;
+        ++current_level_;
         InitAsteroids();
     }
 }
@@ -328,6 +336,7 @@ void GameState::Render(sf::RenderTarget* target)
 
     target->draw(lives_text_);
     target->draw(score_text_);
+    target->draw(level_text_);
 
     if (paused_)
     {

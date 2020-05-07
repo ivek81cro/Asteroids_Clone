@@ -6,13 +6,20 @@ Asteroid::Asteroid(float x, float y, int level, sf::Texture& texture_sheet, floa
 {
     game_level_   = game_level;
     scale_factor_ = scale_factor;
+
     SetPosition(x, y);
-
     InitVariables();
-    InitComponents();
-
     SetScale(level);
+    InitComponents(texture_sheet);
+    SetScale(level);
+}
 
+Asteroid::~Asteroid()
+{
+}
+
+void Asteroid::InitComponents(sf::Texture& texture_sheet)
+{
     CreateHitboxComponent(sprite_, 42, rescale_factor_);
     CreateMovementComponent(max_velocity_, 0.f, 0.f, sprite_.getRotation());
     CreateAnimationComponent(texture_sheet);
@@ -21,30 +28,30 @@ Asteroid::Asteroid(float x, float y, int level, sf::Texture& texture_sheet, floa
     animation_component_->AddAnimation("asteroid_explode", 5.f, 0, 1, 64, 1, 64, 64);
 }
 
-Asteroid::~Asteroid()
-{
-}
-
 //Initializer functions
 void Asteroid::InitVariables()
 {
     name_           = "asteroid";
     animation_name_ = name_;
-    max_velocity_= 50.f * scale_factor_ * game_level_;
+    max_velocity_   = 50.f * scale_factor_ * game_level_;
+
     sprite_.setScale(scale_factor_, scale_factor_);
     sprite_.setRotation(static_cast<float>((rand() % 360)));
 
     switch (level_)
     {
-        case 1: points_ = 10; break;
-        case 2: points_ = 20; break;
-        case 3: points_ = 30; break;
-        default: break;
+        case 1: 
+            points_ = 10; 
+            break;
+        case 2: 
+            points_ = 20; 
+            break;
+        case 3: 
+            points_ = 30; 
+            break;
+        default: 
+            break;
     }
-}
-
-void Asteroid::InitComponents()
-{
 }
 
 //Functions
