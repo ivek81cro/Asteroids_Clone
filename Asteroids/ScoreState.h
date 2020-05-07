@@ -46,7 +46,7 @@ class ScoreState : public State
     unsigned max_name_length_;
 
     std::multimap<int, std::string, std::greater<int>> scores_;
-    std::vector<sf::VideoMode> v_modes_;
+    std::vector<sf::VideoMode>                         v_modes_;
 
     //Init functions
     void InitFonts();

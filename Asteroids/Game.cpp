@@ -69,6 +69,7 @@ void Game::InitKeys()
     {
         std::string key       = "";
         int         key_value = 0;
+
         while (ifs >> key >> key_value)
         {
             supported_keys_[ key ] = key_value;

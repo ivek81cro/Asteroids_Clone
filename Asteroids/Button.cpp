@@ -49,12 +49,12 @@ gui::Button::Button(float x, float y, float width, float height, sf::Font* font,
 {
     button_state_ = BTN_IDLE;
     id_           = id;
+    font_         = font;
 
     shape_.setPosition(sf::Vector2f(x, y));
     shape_.setSize(sf::Vector2f(width, height));
     shape_.setFillColor(idle_color);
 
-    font_ = font;
     text_.setFont(*font);
     text_.setString(text);
     text_.setFillColor(text_idle_color);
@@ -65,8 +65,8 @@ gui::Button::Button(float x, float y, float width, float height, sf::Font* font,
         shape_.getPosition().y + (shape_.getGlobalBounds().height / 2.f) - text_.getGlobalBounds().height / 2.f
     );
 
-    text_idle_color_ = text_idle_color;
-    text_hover_color_ = text_hover_color;
+    text_idle_color_   = text_idle_color;
+    text_hover_color_  = text_hover_color;
     text_active_color_ = text_active_color;
 
     idle_color_   = idle_color;

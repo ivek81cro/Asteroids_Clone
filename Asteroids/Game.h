@@ -27,10 +27,10 @@ class Game
     void Run();
 
   private:
-    GraphicsSettings           gfx_settings_;
-    StateData                  state_data_;
-    sf::RenderWindow*          window_;
-    sf::Event                  event_;
+    GraphicsSettings  gfx_settings_;
+    StateData         state_data_;
+    sf::RenderWindow* window_;
+    sf::Event         event_;
 
     sf::Clock clock_;
     float     delta_;

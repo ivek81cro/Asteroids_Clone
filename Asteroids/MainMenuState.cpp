@@ -36,6 +36,7 @@ void MainMenuState::InitFonts()
 void MainMenuState::InitKeybinds()
 {
     std::ifstream ifs("config/mainmenustate_keybinds.ini");
+
     if (ifs.is_open())
     {
         std::string key  = "";

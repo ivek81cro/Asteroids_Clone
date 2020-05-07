@@ -103,8 +103,7 @@ void GameState::InitAsteroids()
     for (int i = 0; i < 5 * game_level_; ++i)
         entities_.push_back(std::unique_ptr<Asteroid>(new Asteroid(static_cast<float>(rand() % (window_->getSize().x)),
                                                                    static_cast<float>(rand() % (window_->getSize().y)),
-                                                                    1,
-                                                                   textures_[ "ASTEROID" ], entity_scale_factor_, game_level_)));
+                                                                   1, textures_[ "ASTEROID" ], entity_scale_factor_, game_level_)));
 }
 
 void GameState::InitTextItems(Ship* s)
@@ -179,8 +178,10 @@ void GameState::UpdatePlayerInput(const float& delta)
     if (s == nullptr)
     {
         InitPlayer();
+
         s = static_cast<Ship*>(entities_[ entities_.size() - 1 ].get());
         s->SetLives(s->GetLivesRemaining() - times_killed_);
+        
         if (s->GetLivesRemaining() <= 0)
         {
             states_->push(new ScoreState(state_data_, score_,true));
@@ -191,6 +192,7 @@ void GameState::UpdatePlayerInput(const float& delta)
     InitTextItems(s);
 
     s->ResetAnimationName();
+
     //Update player input
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_UP"))))
         s->Move(0.f, -1.f, delta);
@@ -203,6 +205,7 @@ void GameState::UpdatePlayerInput(const float& delta)
 
     //Ship fires bullet if alive, if key cooldown time elapsed
     bullet_cooldown_ = bullet_clock_.getElapsedTime();
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("FIRE"))) && bullet_cooldown_.asSeconds() > 0.25f &&
         s->IsAlive() && !s->IsExploding())
     {
@@ -312,6 +315,7 @@ void GameState::IfEnd()
     {
         game_level_+=0.3f;
         ++current_level_;
+
         InitAsteroids();
     }
 }

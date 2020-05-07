@@ -29,6 +29,7 @@ SettingsState::~SettingsState()
 void SettingsState::InitVariables()
 {
     v_modes_ = sf::VideoMode::getFullscreenModes();
+
     key_configs_.insert(std::make_pair("Arrows","Config/gamestate_keybinds.ini"));
     key_configs_.insert(std::make_pair("WASD keys","Config/gamestate_keybinds_wasd.ini"));
 }
@@ -98,77 +99,81 @@ void SettingsState::InitButtons(const sf::VideoMode& vm)
 
 void SettingsState::InitDropdownList(const sf::VideoMode& vm)
 {
-        //TODO Try to fix this
-        std::vector<std::string> fulscreen_str;
-        fulscreen_str.push_back("OFF");
-        fulscreen_str.push_back("ON");
+    //Drop down list
+    //Resolution
+    unsigned                 default_mode = 0;
+    std::vector<std::string> modes_str;
+    auto                     it = v_modes_.begin();
+    int                      i  = 0;
 
-        std::vector<std::string> v_sync_str;
-        v_sync_str.push_back("OFF");
-        v_sync_str.push_back("ON");
+    for (it = v_modes_.begin(), i = 0; it != v_modes_.end(); ++it, ++i)
+    {
+        modes_str.push_back(std::to_string((*it).width) + 'x' + std::to_string((*it).height));
+        if (state_data_->gfx_settings_->resolution_.width == (*it).width &&
+            state_data_->gfx_settings_->resolution_.height == (*it).height)
+            default_mode = i;
+    }
 
-        std::vector<std::string> antialiasnig_str;
-        antialiasnig_str.push_back("0x");
-        antialiasnig_str.push_back("1x");
-        antialiasnig_str.push_back("2x");
-        antialiasnig_str.push_back("4x");
+    ddl_[ "RESOLUTION" ] =
+        new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(13.89f, vm), gui::PercToPixelX(15.f, vm),
+                              gui::PercToPixelY(7.f, vm), font_, vm, modes_str.data(), modes_str.size(), default_mode);
 
-        unsigned                 default_mode = 0;
-        std::vector<std::string> modes_str;
-        auto                     it = v_modes_.begin();
-        int                      i  = 0;
-        for (it = v_modes_.begin(), i=0; it!= v_modes_.end(); ++it, ++i)
-        {
-            modes_str.push_back(std::to_string((*it).width) + 'x' + std::to_string((*it).height));
-            if (state_data_->gfx_settings_->resolution_.width == (*it).width &&
-                state_data_->gfx_settings_->resolution_.height == (*it).height)
-                default_mode = i;
-        }
-        
-        //Drop down list
-            //Resolution
-        ddl_[ "RESOLUTION" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(13.89f, vm),
-                                                     gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
-                                                     modes_str.data(), modes_str.size(), default_mode);
+    default_mode = 0;
 
-        default_mode = 0;
+    std::vector<std::string> fulscreen_str;
+    fulscreen_str.push_back("OFF");
+    fulscreen_str.push_back("ON");
 
-            //Fullscreen
-        if (state_data_->gfx_settings_->fullscreen_)
-            default_mode = 1;
-        ddl_[ "FULLSCREEN" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(23.f, vm),
-                                                     gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
-                                                     fulscreen_str.data(), fulscreen_str.size(), default_mode);
-        default_mode         = 0;
+    if (state_data_->gfx_settings_->fullscreen_)
+        default_mode = 1;
 
-            //V_Sync
-        if (state_data_->gfx_settings_->v_sync_)
-            default_mode = 1;
-        ddl_[ "VSYNC" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(32.8f, vm),
-                                                gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
-                                                v_sync_str.data(), v_sync_str.size(), default_mode);
-        default_mode    = 0;
+    ddl_[ "FULLSCREEN" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(23.f, vm),
+                                                 gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
+                                                 fulscreen_str.data(), fulscreen_str.size(), default_mode);
+    default_mode         = 0;
 
-            //Antialiasing
-        default_mode           = state_data_->gfx_settings_->context_settings_.antialiasingLevel;
-        ddl_[ "ANTIALIASING" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(42.f, vm), 
-                                                       gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm, 
-                                                       antialiasnig_str.data(), antialiasnig_str.size(), default_mode);
-        default_mode = 0;
+    //V-Sync list
+    std::vector<std::string> v_sync_str;
+    v_sync_str.push_back("OFF");
+    v_sync_str.push_back("ON");
 
-            //Keys configuration
-        std::vector<std::string> keys_path_str;
-        auto                     it2 = key_configs_.begin();
-        i        = 0;
-        for (it2 = key_configs_.begin(), i = 0; it2 != key_configs_.end(); ++it2, ++i)
-        {
-            keys_path_str.push_back((*it2).first);
-            if (!state_data_->path_game_state_keys_->compare((*it2).second))
-                default_mode = i;
-        }
-        ddl_[ "KEYSCONFIG" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(52.f, vm),
-                                                     gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
-                                                     keys_path_str.data(), keys_path_str.size(), default_mode);
+    if (state_data_->gfx_settings_->v_sync_)
+        default_mode = 1;
+
+    ddl_[ "VSYNC" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(32.8f, vm),
+                                            gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
+                                            v_sync_str.data(), v_sync_str.size(), default_mode);
+    default_mode    = 0;
+
+    //Antialiasing list
+    std::vector<std::string> antialiasnig_str;
+    antialiasnig_str.push_back("0x");
+    antialiasnig_str.push_back("1x");
+    antialiasnig_str.push_back("2x");
+    antialiasnig_str.push_back("4x");
+
+    default_mode           = state_data_->gfx_settings_->context_settings_.antialiasingLevel;
+
+    ddl_[ "ANTIALIASING" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(42.f, vm),
+                                                   gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
+                                                   antialiasnig_str.data(), antialiasnig_str.size(), default_mode);
+    default_mode           = 0;
+
+    //Keys configuration list
+    std::vector<std::string> keys_path_str;
+    auto                     it2 = key_configs_.begin();
+    i                            = 0;
+
+    for (it2 = key_configs_.begin(), i = 0; it2 != key_configs_.end(); ++it2, ++i)
+    {
+        keys_path_str.push_back((*it2).first);
+        if (!state_data_->path_game_state_keys_->compare((*it2).second))
+            default_mode = i;
+    }
+
+    ddl_[ "KEYSCONFIG" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(52.f, vm),
+                                                 gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
+                                                 keys_path_str.data(), keys_path_str.size(), default_mode);
 }
 
 void SettingsState::InitText(const sf::VideoMode& vm)
@@ -238,7 +243,8 @@ void SettingsState::UpdateGui(const float& delta)
     if (buttons_[ "APPLY" ]->IsPressed())
     {
         if (ddl_[ "RESOLUTION" ]->GetToggle())
-            state_data_->gfx_settings_->resolution_ = v_modes_[ ddl_[ "RESOLUTION" ]->GetActiveElementId() ];
+            state_data_->gfx_settings_->resolution_ = 
+            v_modes_[ ddl_[ "RESOLUTION" ]->GetActiveElementId() ];
 
         //Get fullscreen toggle
         if (ddl_[ "FULLSCREEN" ]->GetToggle())
@@ -251,11 +257,12 @@ void SettingsState::UpdateGui(const float& delta)
         //Get antialiasing toggle
         if (ddl_[ "ANTIALIASING" ]->GetToggle())
             state_data_->gfx_settings_->context_settings_.antialiasingLevel =
-                ddl_[ "ANTIALIASING" ]->GetActiveElementId();
+            ddl_[ "ANTIALIASING" ]->GetActiveElementId();
 
         //Get key config toggle
         if (ddl_[ "KEYSCONFIG" ]->GetToggle())
-            state_data_->gfx_settings_->path_game_state_keys_ = key_configs_.at( ddl_[ "KEYSCONFIG" ]->GetActiveElementText());
+            state_data_->gfx_settings_->path_game_state_keys_ = 
+            key_configs_.at( ddl_[ "KEYSCONFIG" ]->GetActiveElementText());
 
         state_data_->gfx_settings_->SaveToFile("Config/graphics.ini");
         warning_text_.setString("Restart game for changes to take effect.");
