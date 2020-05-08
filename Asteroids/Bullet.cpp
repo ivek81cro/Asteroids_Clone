@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "Bullet.h"
 
-Bullet::Bullet(float x, float y, sf::Texture& texture_sheet, float angle, float scale_factor)
+Bullet::Bullet(float x, float y, sf::Texture& texture_sheet, float angle, float scale_factor, std::string name)
         : angle_(angle)
 {
+    name_         = name;
     scale_factor_ = scale_factor;
 
     SetPosition(x, y);
@@ -43,7 +44,6 @@ void Bullet::SetLifeTime(const float& delta)
 //Initializer functions
 void Bullet::InitVariables()
 {
-    name_     = "bullet";
     animation_name_ = name_;
     lifetime_ = 1.f;
     sprite_.setRotation(angle_ - 90);

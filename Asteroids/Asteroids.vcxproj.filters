@@ -83,6 +83,9 @@
     <ClCompile Include="ScoreState.cpp">
       <Filter>States</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyUfo.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -141,6 +144,9 @@
     </ClInclude>
     <ClInclude Include="ScoreState.h">
       <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyUfo.h">
+      <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

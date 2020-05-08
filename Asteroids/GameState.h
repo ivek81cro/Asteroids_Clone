@@ -18,6 +18,7 @@ class GameState : public State
     void CheckEntitiesAlive(const float& delta);
     void CheckCollision();
     void UpdateEntities(const float& delta);
+    void UpdateEnemy(const float& delta);
     void Update(const float& delta);
     void IfEnd();
 
@@ -25,26 +26,27 @@ class GameState : public State
     void Render(sf::RenderTarget* target = nullptr);
 
   private:
-    sf::Font   font_;
+    EnemyUfo*  e = nullptr;
     PauseMenu* p_menu_;
 
     std::vector<std::unique_ptr<Entity>> entities_;
-    sf::RectangleShape                   background_;
 
-    sf::Clock elapsed_coldown_;
-    sf::Clock bullet_clock_;
-    sf::Time  bullet_cooldown_;
-
-    sf::Text lives_text_;
-    sf::Text score_text_;
-    sf::Text invoulnerable_text_;
-    sf::Text level_text_;
+    sf::RectangleShape background_;
+    sf::Font           font_;
+    sf::Clock          bullet_clock_;
+    sf::Time           bullet_cooldown_;
+    sf::Text           lives_text_;
+    sf::Text           score_text_;
+    sf::Text           invoulnerable_text_;
+    sf::Text           level_text_;
 
     int   score_;
     int   times_killed_;
+    int   current_level_;
+    bool  ufo_active_;
     float entity_scale_factor_;
     float game_level_;
-    int   current_level_;
+    float enemy_time;
 
     //Initializer Functions
     void InitKeybinds();
@@ -52,7 +54,8 @@ class GameState : public State
     void InitTextures();
     void InitPauseMenu();
     void InitBackground();
-    void InitPlayer();
+    void InitPlayer(int lives);
+    void InitEnemyUfo();
     void InitAsteroids();
     void InitTextItems(Ship* s);
     void FireBullet(Ship* s);

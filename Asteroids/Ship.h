@@ -13,16 +13,13 @@ class Ship : public Entity
     void operator=(const Ship&) = delete;
 
     //Functions
-    void ResetAnimationName();
-    void Update(const float& delta, const sf::Vector2u& window_size);
-    void Move(const float dir_x, const float dir_y, const float& delta);
-    void SetAlive(bool is_alive);
-    bool ShieldsUp();
-    void SetLives(int remaining);
-    const int&  GetLivesRemaining() const;
-
-    sf::Vector2f GetPosition() const;
-    float        GetAngle() const;
+    void       ResetAnimationName();
+    void       Update(const float& delta, const sf::Vector2u& window_size);
+    void       Move(const float dir_x, const float dir_y, const float& delta);
+    void       SetAlive(bool is_alive);
+    bool       ShieldsUp();
+    const int& GetLivesRemaining() const;
+    float      GetAngle() const;
 
   private:
     //Variables

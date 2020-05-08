@@ -6,6 +6,7 @@
 #include "Entity.h"
 #include "GraphicsSettings.h"
 #include "Ship.h"
+#include "EnemyUfo.h"
 
 class State;
 

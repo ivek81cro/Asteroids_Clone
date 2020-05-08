@@ -104,19 +104,9 @@ bool Ship::ShieldsUp()
     return invulnerability_;
 }
 
-void Ship::SetLives(int remaining)
-{
-    lives_ = remaining;
-}
-
 const int& Ship::GetLivesRemaining() const
 {
     return lives_;
-}
-
-sf::Vector2f Ship::GetPosition() const
-{
-    return sprite_.getPosition();
 }
 
 float Ship::GetAngle() const

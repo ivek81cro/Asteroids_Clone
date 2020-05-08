@@ -8,16 +8,18 @@ GameState::GameState(StateData* state_data)
         , times_killed_(0)
         , game_level_(1)
         , current_level_(1)
+        , ufo_active_(false)
 {
 
     entity_scale_factor_ = state_data_->gfx_settings_->resolution_.width / 1280.f;
+    enemy_time           = rand() % 20 + 10;
 
     InitKeybinds();
     InitFonts();
     InitTextures();
     InitPauseMenu();
     InitBackground();
-    InitPlayer();
+    InitPlayer(times_killed_);
     InitAsteroids();
 }
 
@@ -69,7 +71,17 @@ void GameState::InitTextures()
 
     if (!textures_[ "BACKGROUND_TEXTURE" ].loadFromFile("Resources/Images/background.jpg"))
     {
-        throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_BACLGROUND_TEXTURE";
+        throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
+    }
+
+    if (!textures_[ "ENEMYUFO" ].loadFromFile("Resources/Images/enemy_ufo.png"))
+    {
+        throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_ENEMYUFO_TEXTURE";
+    }
+
+    if (!textures_[ "ENEMYBULLET" ].loadFromFile("Resources/Images/fire_blue.png"))
+    {
+        throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_ENEMYBULLET_EXTURE";
     }
 }
 
@@ -91,11 +103,20 @@ void GameState::InitBackground()
     background_.setTexture(&textures_[ "BACKGROUND_TEXTURE" ]);
 }
 
-void GameState::InitPlayer()
+void GameState::InitPlayer(int lives)
 {
     entities_.push_back(std::unique_ptr<Ship>(new Ship(static_cast<float>(window_->getSize().x / 2),
                                                        static_cast<float>(window_->getSize().y / 2),
-                                                       textures_[ "PLAYER_SHIP" ], 3, entity_scale_factor_)));
+                                                       textures_[ "PLAYER_SHIP" ], 3-lives, entity_scale_factor_)));
+}
+
+void GameState::InitEnemyUfo()
+{
+    sf::Vector2f ufo_position(static_cast<float>(rand() % window_->getSize().x), static_cast<float>(rand() % window_->getSize().y));
+
+    entities_.push_back(std::unique_ptr<EnemyUfo>(new EnemyUfo(ufo_position.x, ufo_position.y,
+                                                                   textures_[ "ENEMYUFO" ], entity_scale_factor_)));
+    ufo_active_ = true;
 }
 
 void GameState::InitAsteroids()
@@ -148,7 +169,7 @@ void GameState::InitTextItems(Ship* s)
 void GameState::FireBullet(Ship* s)
 {
     entities_.push_back(std::unique_ptr<Bullet>(
-        new Bullet(s->GetPosition().x, s->GetPosition().y, textures_[ "BULLET" ], s->GetAngle(), entity_scale_factor_)));
+        new Bullet(s->GetPosition().x, s->GetPosition().y, textures_[ "BULLET" ], s->GetAngle(), entity_scale_factor_, "bullet")));
 }
 
 void GameState::UpdateInput(const float& delta)
@@ -177,10 +198,9 @@ void GameState::UpdatePlayerInput(const float& delta)
     //If ship not alive, reset player and remove life
     if (s == nullptr)
     {
-        InitPlayer();
+        InitPlayer(++times_killed_);
 
         s = static_cast<Ship*>(entities_[ entities_.size() - 1 ].get());
-        s->SetLives(s->GetLivesRemaining() - times_killed_);
         
         if (s->GetLivesRemaining() <= 0)
         {
@@ -211,7 +231,7 @@ void GameState::UpdatePlayerInput(const float& delta)
     {
         bullet_clock_.restart();
         FireBullet(s);
-    }    
+    }
 }
 
 void GameState::UpdatePauseMenuButtons()
@@ -245,7 +265,7 @@ void GameState::CheckCollision()
                     for (int i = 0; i < 3; ++i)
                     {
                         new_entities.push_back(std::unique_ptr<Asteroid>(
-                            new Asteroid(it->Getposition().x, it->Getposition().y, it->GetLevel() + 1,
+                            new Asteroid(it->GetPosition().x, it->GetPosition().y, it->GetLevel() + 1,
                                          textures_[ "ASTEROID" ], entity_scale_factor_, game_level_)));
                     }
                     score_ += static_cast<Asteroid*>(it.get())->GetPoints();
@@ -260,7 +280,6 @@ void GameState::CheckCollision()
                 if (it->CheckCollision(it2->GetHitbox()))
                 {
                     it->SetAlive(false);
-                    ++times_killed_;
                 }
             }
         }
@@ -287,6 +306,41 @@ void GameState::UpdateEntities(const float& delta)
     }
 }
 
+void GameState::UpdateEnemy(const float& delta)
+{
+    if (enemy_time < 0 && !ufo_active_)
+    {
+        InitEnemyUfo();
+        e = static_cast<EnemyUfo*>(entities_[ entities_.size() - 1 ].get());
+        enemy_time = rand() % 20 + 50;
+    }
+        
+    if (e != nullptr)
+    {
+        if (e->IsAlive())
+        {
+            e->SetLifeTime(delta);
+            if (e->GetFireCooldown() < 0)
+            {
+                int angle = 360;
+                while (angle > 0)
+                {
+                    entities_.push_back(std::unique_ptr<Bullet>(new Bullet(e->GetPosition().x, e->GetPosition().y,
+                                                                           textures_[ "ENEMYBULLET" ], angle,
+                                                                           entity_scale_factor_, "e_bullet")));
+                    angle -= 45;
+                }
+                e->ResetFireCooldown();
+            }
+        }
+        else
+            e = nullptr;
+    }
+    else
+        enemy_time -= delta;
+    std::cout << enemy_time << std::endl;
+}
+
 void GameState::Update(const float& delta)
 {
     IfEnd();
@@ -297,6 +351,7 @@ void GameState::Update(const float& delta)
     if (!paused_)
     {
         UpdatePlayerInput(delta);
+        UpdateEnemy(delta);
         CheckCollision();
         CheckEntitiesAlive(delta);
         UpdateEntities(delta);

@@ -100,7 +100,7 @@ const int& Entity::GetLevel() const
     return asteroid_level_;
 }
 
-const sf::Vector2f& Entity::Getposition() const
+const sf::Vector2f& Entity::GetPosition() const
 {
     return sprite_.getPosition();
 }

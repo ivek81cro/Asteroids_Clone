@@ -27,7 +27,7 @@ class Entity
     virtual const sf::CircleShape& GetHitbox() const;
     virtual const bool             CheckCollision(const sf::CircleShape& other);
     virtual const int&             GetLevel() const;
-    virtual const sf::Vector2f&    Getposition() const;
+    virtual const sf::Vector2f&    GetPosition() const;
 
     virtual void Update(const float& delta, const sf::Vector2u& window_size);
     virtual void Render(sf::RenderTarget& target);
