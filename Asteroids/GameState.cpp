@@ -296,7 +296,7 @@ void GameState::UpdateEntities(const float& delta)
     //Update entities
     for (auto& it : entities_)
     {
-        if (it->GetName() == "bullet")
+        if (it->GetName() == "bullet" || it->GetName() == "e_bullet")
             static_cast<Bullet*>(it.get())->SetLifeTime(delta); //Decrease lifetime for elapsed time
 
         if ((it)->GetName() != "ship")
