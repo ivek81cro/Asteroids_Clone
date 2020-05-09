@@ -2,8 +2,11 @@
 #include "EnemyUfo.h"
 
 EnemyUfo::EnemyUfo(float x, float y, sf::Texture& texture_sheet, float scale)
-        : arriving_(true)
+        : invoulnerability_(true)
         , away_(false)
+        , points_(40)
+        , lifetime_(10.f)
+        , fire_cooldown_(5.f)
 {
     scale_factor_ = scale;
     sprite_.setScale(scale_factor_, scale_factor_);
@@ -11,9 +14,6 @@ EnemyUfo::EnemyUfo(float x, float y, sf::Texture& texture_sheet, float scale)
 
     name_ = "enemy_ufo";
     animation_name_ = name_;
-    fire_cooldown_  = 5.f;
-    lifetime_       = 10.f;
-    points_         = 40;
     exploding_      = false;
 
     InitComponents(texture_sheet);
@@ -29,27 +29,28 @@ void EnemyUfo::InitComponents(sf::Texture& texture_sheet)
     CreateHitboxComponent(sprite_, 45.f * scale_factor_);
     CreateAnimationComponent(texture_sheet);
 
-    animation_component_->AddAnimation("enemy_ufo", 5.f, 0, 0, 11, 0, 48, 48);
-    animation_component_->AddAnimation("enemy_ufo_active", 10.f, 12, 0, 17, 0, 48, 48);
-    animation_component_->AddAnimation("enemy_ufo_away", 5.f, 11, 1, 17, 1, 48, 48);
+    animation_component_->AddAnimation("enemy_ufo", 9.f, 0, 0, 17, 0, 48, 48);
+    animation_component_->AddAnimation("enemy_ufo_active", 3.f, 0, 1, 5, 1, 48, 48);
+    animation_component_->AddAnimation("enemy_ufo_away", 6.f, 11, 1, 17, 1, 48, 48);
     animation_component_->AddAnimation("enemy_ufo_exploding", 5.f, 0, 2, 16, 2, 48, 48);
 }
 
 void EnemyUfo::Update(const float& delta, const sf::Vector2u& window_size)
 {
-    if (arriving_)
+    if (invoulnerability_)
     {
         if (animation_component_->Play(animation_name_, delta, true))
         {
-            arriving_       = false;
+            invoulnerability_       = false;
             animation_name_ = "enemy_ufo_active";
         }
     }
     if (away_)
     {
+        invoulnerability_ = true;
+        fire_cooldown_    = 20.f;
         if (animation_component_->Play(animation_name_, delta, true))
         {
-            fire_cooldown_ = 20.f;
             away_          = false;
             alive_         = false;
         }
@@ -67,9 +68,9 @@ void EnemyUfo::Update(const float& delta, const sf::Vector2u& window_size)
     std::cout << lifetime_ << std::endl;
 }
 
-const bool EnemyUfo::GetArriving() const
+const bool EnemyUfo::GetInvoulnerability() const
 {
-    return arriving_;
+    return invoulnerability_;
 }
 
 const float& EnemyUfo::GetFireCooldown() const

@@ -12,7 +12,7 @@ class EnemyUfo : public Entity
 
     void Update(const float& delta, const sf::Vector2u& window_size);
 
-    const bool   GetArriving() const;
+    const bool   GetInvoulnerability() const;
     const float& GetFireCooldown() const;
     void         ResetFireCooldown();
     void         SetLifeTime(const float& delta);
@@ -22,10 +22,11 @@ class EnemyUfo : public Entity
   private:
     //Variables
     int   points_;
-    bool  arriving_;
+    bool  invoulnerability_;
     bool  away_;
     float fire_cooldown_;
     float lifetime_;
+
 
     //Functions
     void InitComponents(sf::Texture& texture_sheet);

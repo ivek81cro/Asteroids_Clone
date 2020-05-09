@@ -12,7 +12,7 @@ GameState::GameState(StateData* state_data)
 {
 
     entity_scale_factor_ = state_data_->gfx_settings_->resolution_.width / 1280.f;
-    enemy_time           = static_cast<float>(rand() % 20 + 30);
+    enemy_time           = static_cast<float>(/*rand() % 20 + 30*/5);
 
     InitKeybinds();
     InitFonts();
@@ -283,7 +283,8 @@ void GameState::CheckCollision()
                 }
             }
             //Check collision between ship bullet and UFO, and ship and ufo in case of suicide run
-            if (it->GetName() == "enemy_ufo" && (it2->GetName() == "bullet" || it2->GetName() == "ship"))
+            if (it->GetName() == "enemy_ufo" && !static_cast<EnemyUfo*>(it.get())->GetInvoulnerability() && 
+                (it2->GetName() == "bullet" || it2->GetName() == "ship"))
             {
                 if (it->CheckCollision(it2->GetHitbox()))
                 {
