@@ -14,6 +14,7 @@ EnemyUfo::EnemyUfo(float x, float y, sf::Texture& texture_sheet, float scale)
     fire_cooldown_  = 5.f;
     lifetime_       = 10.f;
     points_         = 40;
+    exploding_      = false;
 
     InitComponents(texture_sheet);
 }
@@ -31,6 +32,7 @@ void EnemyUfo::InitComponents(sf::Texture& texture_sheet)
     animation_component_->AddAnimation("enemy_ufo", 5.f, 0, 0, 11, 0, 48, 48);
     animation_component_->AddAnimation("enemy_ufo_active", 10.f, 12, 0, 17, 0, 48, 48);
     animation_component_->AddAnimation("enemy_ufo_away", 5.f, 11, 1, 17, 1, 48, 48);
+    animation_component_->AddAnimation("enemy_ufo_exploding", 5.f, 0, 2, 16, 2, 48, 48);
 }
 
 void EnemyUfo::Update(const float& delta, const sf::Vector2u& window_size)
@@ -50,6 +52,13 @@ void EnemyUfo::Update(const float& delta, const sf::Vector2u& window_size)
             fire_cooldown_ = 20.f;
             away_          = false;
             alive_         = false;
+        }
+    }
+    if (exploding_)
+    {
+        if (animation_component_->Play(animation_name_, delta, true))
+        {
+            alive_ = false;
         }
     }
     else
@@ -87,5 +96,15 @@ void EnemyUfo::SetLifeTime(const float& delta)
 const int EnemyUfo::GetPoints() const
 {
     return points_;
+}
+
+void EnemyUfo::SetAlive(bool is_alive)
+{
+    if (!is_alive)
+    {
+        exploding_      = true;
+        fire_cooldown_  = 20.f;
+        animation_name_ = "enemy_ufo_exploding";
+    }
 }
 
