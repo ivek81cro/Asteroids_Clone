@@ -282,14 +282,16 @@ void GameState::CheckCollision()
                     it->SetAlive(false);
                 }
             }
-            //Check collision between ship bullet and UFO
-            if (it->GetName() == "enemy_ufo" && it2->GetName() == "bullet")
+            //Check collision between ship bullet and UFO, and ship and ufo in case of suicide run
+            if (it->GetName() == "enemy_ufo" && (it2->GetName() == "bullet" || it2->GetName() == "ship"))
             {
                 if (it->CheckCollision(it2->GetHitbox()))
                 {
                     it->SetAlive(false);
                     ufo_active_ = false;
                     score_ += static_cast<EnemyUfo*>(it.get())->GetPoints();
+
+                    it2->SetAlive(false);
                 }
             }
         }
