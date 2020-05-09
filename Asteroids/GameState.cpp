@@ -12,7 +12,7 @@ GameState::GameState(StateData* state_data)
 {
 
     entity_scale_factor_ = state_data_->gfx_settings_->resolution_.width / 1280.f;
-    enemy_time           = rand() % 20 + 30;
+    enemy_time           = static_cast<float>(rand() % 20 + 30);
 
     InitKeybinds();
     InitFonts();
@@ -320,7 +320,7 @@ void GameState::UpdateEnemy(const float& delta)
     {
         InitEnemyUfo();
         e = static_cast<EnemyUfo*>(entities_[ entities_.size() - 1 ].get());
-        enemy_time = rand() % 20 + 30;
+        enemy_time = static_cast<float>(rand() % 20 + 30);
     }
         
     if (e != nullptr)
@@ -330,13 +330,13 @@ void GameState::UpdateEnemy(const float& delta)
             e->SetLifeTime(delta);
             if (e->GetFireCooldown() < 0)
             {
-                int angle = 360;
-                while (angle > 0)
+                float angle = 360.f;
+                while (angle > 0.f)
                 {
                     entities_.push_back(std::unique_ptr<Bullet>(new Bullet(e->GetPosition().x, e->GetPosition().y,
                                                                            textures_[ "ENEMYBULLET" ], angle,
                                                                            entity_scale_factor_, "e_bullet")));
-                    angle -= 45;
+                    angle -= 45.f;
                 }
                 e->ResetFireCooldown();
             }
