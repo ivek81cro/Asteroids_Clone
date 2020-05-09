@@ -57,8 +57,15 @@ void MainMenuState::InitGui()
     //Background
     background_.setSize(
         sf::Vector2f(static_cast<float>(vm.width), static_cast<float>(vm.height)));
+    
+    //Darkened container behind buttons
+    container_.setSize(
+        sf::Vector2f(static_cast<float>(vm.width / 4.f), static_cast<float>(vm.height) - gui::PercToPixelY(20.f, vm)));
+    container_.setFillColor(sf::Color(20, 20, 20, 200));
+    container_.setPosition(static_cast<float>(vm.width / 2.f) - static_cast<float>(container_.getSize().x / 2.f),
+                           gui::PercToPixelY(20.f, vm));
 
-    if (!textures_[ "BACKGROUND_TEXTURE" ].loadFromFile("Resources/Images/background.jpg"))
+    if (!textures_[ "BACKGROUND_TEXTURE" ].loadFromFile("Resources/Images/background2.png"))
     {
         throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_TEXTURE";
     }
@@ -166,6 +173,7 @@ void MainMenuState::Render(sf::RenderTarget* target)
         target = window_;
     }
     target->draw(background_);
+    target->draw(container_);
 
     RenderButtons(*target);
 
