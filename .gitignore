@@ -11,8 +11,9 @@
 *.sln.docstates
 graphics.ini
 scores.ini
-asteriods.zip
-Release.zip
+*.zip
+*.psd
+
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -345,3 +346,4 @@ healthchecksdb
 *.psd
 *.cd
 *.epgz
+/Images_working_folder
