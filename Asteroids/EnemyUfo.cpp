@@ -35,7 +35,7 @@ void EnemyUfo::InitComponents(sf::Texture& texture_sheet)
 void EnemyUfo::Update(const float& delta, const sf::Vector2u& window_size)
 {
     if (arriving_)
-    {        
+    {
         if (animation_component_->Play(animation_name_, delta, true))
         {
             arriving_       = false;
@@ -44,12 +44,11 @@ void EnemyUfo::Update(const float& delta, const sf::Vector2u& window_size)
     }
     if (away_)
     {
-        animation_name_ = "enemy_ufo_away";
         if (animation_component_->Play(animation_name_, delta, true))
         {
             fire_cooldown_ = 20.f;
-            away_  = false;
-            alive_ = false;
+            away_          = false;
+            alive_         = false;
         }
     }
     else
@@ -78,6 +77,9 @@ void EnemyUfo::SetLifeTime(const float& delta)
     lifetime_ -= delta;
     fire_cooldown_ -= delta;
     if (lifetime_ < 0)
+    {
+        animation_name_ = "enemy_ufo_away";
         away_ = true;
+    }
 }
 

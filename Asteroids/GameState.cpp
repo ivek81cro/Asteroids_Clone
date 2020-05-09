@@ -12,7 +12,7 @@ GameState::GameState(StateData* state_data)
 {
 
     entity_scale_factor_ = state_data_->gfx_settings_->resolution_.width / 1280.f;
-    enemy_time           = rand() % 20 + 10;
+    enemy_time           = rand() % 20 + 30;
 
     InitKeybinds();
     InitFonts();
@@ -308,11 +308,19 @@ void GameState::UpdateEntities(const float& delta)
 
 void GameState::UpdateEnemy(const float& delta)
 {
-    if (enemy_time < 0 && !ufo_active_)
+    EnemyUfo* e = nullptr;
+    for (auto& it : entities_)
+    {
+        if (it->GetName() == "enemy_ufo")
+        {
+            e = static_cast<EnemyUfo*>(it.get());
+        }
+    }
+    if (enemy_time < 0 && !ufo_active_ && e == nullptr)
     {
         InitEnemyUfo();
         e = static_cast<EnemyUfo*>(entities_[ entities_.size() - 1 ].get());
-        enemy_time = rand() % 20 + 50;
+        enemy_time = rand() % 20 + 30;
     }
         
     if (e != nullptr)
@@ -334,7 +342,7 @@ void GameState::UpdateEnemy(const float& delta)
             }
         }
         else
-            e = nullptr;
+            ufo_active_ = false;
     }
     else
         enemy_time -= delta;
