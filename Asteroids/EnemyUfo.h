@@ -16,9 +16,11 @@ class EnemyUfo : public Entity
     const float& GetFireCooldown() const;
     void         ResetFireCooldown();
     void         SetLifeTime(const float& delta);
+    const int    GetPoints() const;
 
   private:
     //Variables
+    int   points_;
     bool  arriving_;
     bool  away_;
     float fire_cooldown_;

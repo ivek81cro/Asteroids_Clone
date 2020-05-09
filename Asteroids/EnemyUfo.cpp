@@ -13,6 +13,7 @@ EnemyUfo::EnemyUfo(float x, float y, sf::Texture& texture_sheet, float scale)
     animation_name_ = name_;
     fire_cooldown_  = 5.f;
     lifetime_       = 10.f;
+    points_         = 40;
 
     InitComponents(texture_sheet);
 }
@@ -81,5 +82,10 @@ void EnemyUfo::SetLifeTime(const float& delta)
         animation_name_ = "enemy_ufo_away";
         away_ = true;
     }
+}
+
+const int EnemyUfo::GetPoints() const
+{
+    return points_;
 }
 

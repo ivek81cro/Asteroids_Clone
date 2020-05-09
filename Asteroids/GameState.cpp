@@ -274,12 +274,22 @@ void GameState::CheckCollision()
                 }
             }
             //Check collision between ship and asteroids
-            if (it->GetName() == "ship" && it2->GetName() == "asteroid" && !it->IsExploding() &&
+            if (it->GetName() == "ship" && (it2->GetName() == "asteroid" || it2->GetName() == "e_bullet") && !it->IsExploding() &&
                 !it2->IsExploding() && it2->IsAlive() && !static_cast<Ship*>(it.get())->ShieldsUp())
             {
                 if (it->CheckCollision(it2->GetHitbox()))
                 {
                     it->SetAlive(false);
+                }
+            }
+            //Check collision between ship bullet and UFO
+            if (it->GetName() == "enemy_ufo" && it2->GetName() == "bullet")
+            {
+                if (it->CheckCollision(it2->GetHitbox()))
+                {
+                    it->SetAlive(false);
+                    ufo_active_ = false;
+                    score_ += static_cast<EnemyUfo*>(it.get())->GetPoints();
                 }
             }
         }
@@ -297,7 +307,7 @@ void GameState::UpdateEntities(const float& delta)
     for (auto& it : entities_)
     {
         if (it->GetName() == "bullet" || it->GetName() == "e_bullet")
-            static_cast<Bullet*>(it.get())->SetLifeTime(delta); //Decrease lifetime for elapsed time
+            static_cast<Bullet*>(it.get())->SetLifeTime(delta); //Decrease bullet lifetime for elapsed time
 
         if ((it)->GetName() != "ship")
             it->Move(0, 0, delta); //Movement for asteroids and bullets
