@@ -216,28 +216,30 @@ void GameState::UpdatePlayerInput(const float& delta)
             EndState();
         }
     }
-    InitTextItems();
-
-    s->ResetAnimationName();
-
-    //Update player input
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_UP"))))
-        s->Move(0.f, -1.f, delta);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_DOWN"))))
-        s->Move(0.f, 1.f, delta);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_LEFT"))))
-        s->Move(-1.f, 0.f, delta);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_RIGHT"))))
-        s->Move(1.f, 0.f, delta);
-
-    //Ship fires bullet if alive, if key cooldown time elapsed
-    bullet_cooldown_ = bullet_clock_.getElapsedTime();
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("FIRE"))) && bullet_cooldown_.asSeconds() > 0.25f &&
-        s->IsAlive() && !s->IsExploding())
+    else
     {
-        bullet_clock_.restart();
-        FireBullet(s);
+        s->ResetAnimationName();
+        InitTextItems();
+
+        //Update player input
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_UP"))))
+            s->Move(0.f, -1.f, delta);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_DOWN"))))
+            s->Move(0.f, 1.f, delta);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_LEFT"))))
+            s->Move(-1.f, 0.f, delta);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_RIGHT"))))
+            s->Move(1.f, 0.f, delta);
+
+        //Ship fires bullet if alive, if key cooldown time elapsed
+        bullet_cooldown_ = bullet_clock_.getElapsedTime();
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("FIRE"))) &&
+            bullet_cooldown_.asSeconds() > 0.25f && s->IsAlive() && !s->IsExploding())
+        {
+            bullet_clock_.restart();
+            FireBullet(s);
+        }
     }
 }
 
@@ -419,6 +421,7 @@ void GameState::IfEnd()
     {
         game_level_+=0.3f;
         ++current_level_;
+        ufo_max_per_level_ = 3;
 
         InitAsteroids();
     }
