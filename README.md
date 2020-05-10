@@ -20,8 +20,7 @@ Značajke:<br>
  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; -UFO enemy pojavljuje se sa random tajmingom, aktivan je 10 sec.,
    svakim levelom raste mu brzina i kut između linije pucanja se smanjuje<br>
   &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;-Ako se uništi enemy,postoji 30% šansa da dropa ekstra život(aktivan 5 sec.)<br>
-  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;-Kod završetka pojavljuje se high score lista u koju upišete ime ukoliko je rezultat veći od onog
-   na 10. mjestu.<br>
+  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;-Kod završetka pojavljuje se high score lista u koju upišete ime ukoliko je rezultat veći od onog na 10. mjestu.<br>
  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; -Povratom na glavni izbornik može se pokrenuti nova igra ili zatvoriti program.<br>
   <hr>
   Bodovanje:<br>
