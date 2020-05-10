@@ -83,6 +83,11 @@ void GameState::InitTextures()
     {
         throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_ENEMYBULLET_EXTURE";
     }
+
+    if (!textures_[ "LIFE" ].loadFromFile("Resources/Images/life.png"))
+    {
+        throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_ENEMYBULLET_EXTURE";
+    }
 }
 
 void GameState::InitPauseMenu()
@@ -291,7 +296,9 @@ void GameState::CheckCollision()
                     it->SetAlive(false);
                     ufo_active_ = false;
                     score_ += static_cast<EnemyUfo*>(it.get())->GetPoints();
-
+                    entities_.push_back(std::unique_ptr<DropLife>(new DropLife(it.get()->GetPosition().x, it.get()->GetPosition().y,
+                                                                           textures_[ "LIFE" ],
+                                                                           entity_scale_factor_)));
                     it2->SetAlive(false);
                 }
             }

@@ -96,7 +96,7 @@ void MovementComponent::CheckPosition(const sf::Vector2u& window_size)
 void MovementComponent::Update(const float& delta, const sf::Vector2u& window_size)
 {
     CheckMaxVelocity(delta);
-    if (name_ == "asteroid" || name_ == "ship" || name_=="enemy_ufo")
+    if (name_ != "e_bullet" && name_ != "bullet")
         CheckPosition(window_size);
     //Final move
     sprite_.move(velocity_ * delta); //Position change

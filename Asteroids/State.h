@@ -7,6 +7,7 @@
 #include "GraphicsSettings.h"
 #include "Ship.h"
 #include "EnemyUfo.h"
+#include "DropLife.h"
 
 class State;
 
