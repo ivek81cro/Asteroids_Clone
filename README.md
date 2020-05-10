@@ -1,5 +1,5 @@
-NWP projekt<br>
-Asteroids-like clone za NWP projekt uz korištenje C++, SMFL-2.5.1 
+<h2>NWP projekt</h2><br>
+<h3>Asteroids-like clone za NWP projekt uz korištenje C++, SMFL-2.5.1</h3> 
 
 Otvoriti kroz VS i trebalo bi raditi bez problema, sve potrebno je uključeno u build.
 
