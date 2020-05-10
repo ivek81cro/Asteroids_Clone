@@ -101,7 +101,7 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
 {
     //Drop down list
     //Resolution
-    unsigned                 default_mode = 0;
+    unsigned int             default_mode = 0;
     std::vector<std::string> modes_str;
     auto                     it = v_modes_.begin();
     int                      i  = 0;
@@ -116,7 +116,7 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
 
     ddl_[ "RESOLUTION" ] =
         new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(13.89f, vm), gui::PercToPixelX(15.f, vm),
-                              gui::PercToPixelY(7.f, vm), font_, vm, modes_str.data(), modes_str.size(), default_mode);
+                              gui::PercToPixelY(7.f, vm), font_, vm, modes_str.data(), static_cast<int>(modes_str.size()), default_mode);
 
     default_mode = 0;
 
@@ -129,7 +129,7 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
 
     ddl_[ "FULLSCREEN" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(23.f, vm),
                                                  gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
-                                                 fulscreen_str.data(), fulscreen_str.size(), default_mode);
+                                                 fulscreen_str.data(), static_cast<int>(fulscreen_str.size()), default_mode);
     default_mode         = 0;
 
     //V-Sync list
@@ -142,7 +142,7 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
 
     ddl_[ "VSYNC" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(32.8f, vm),
                                             gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
-                                            v_sync_str.data(), v_sync_str.size(), default_mode);
+                                            v_sync_str.data(), static_cast<int>(v_sync_str.size()), default_mode);
     default_mode    = 0;
 
     //Antialiasing list
@@ -156,7 +156,7 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
 
     ddl_[ "ANTIALIASING" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(42.f, vm),
                                                    gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
-                                                   antialiasnig_str.data(), antialiasnig_str.size(), default_mode);
+                                                   antialiasnig_str.data(), static_cast<int>(antialiasnig_str.size()), default_mode);
     default_mode           = 0;
 
     //Keys configuration list
@@ -173,7 +173,7 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
 
     ddl_[ "KEYSCONFIG" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(52.f, vm),
                                                  gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
-                                                 keys_path_str.data(), keys_path_str.size(), default_mode);
+                                                 keys_path_str.data(), static_cast<int>(keys_path_str.size()), default_mode);
 }
 
 void SettingsState::InitText(const sf::VideoMode& vm)

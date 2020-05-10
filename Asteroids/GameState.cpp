@@ -121,7 +121,7 @@ void GameState::InitEnemyUfo()
 
 void GameState::InitAsteroids()
 {
-    for (int i = 0; i <= 1 * game_level_; ++i)
+    for (int i = 0; i <= 1 * current_level_; ++i)
         entities_.push_back(std::unique_ptr<Asteroid>(new Asteroid(static_cast<float>(rand() % (window_->getSize().x)),
                                                                    static_cast<float>(rand() % (window_->getSize().y)),
                                                                    1, textures_[ "ASTEROID" ], entity_scale_factor_, game_level_)));

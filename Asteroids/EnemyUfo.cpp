@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "EnemyUfo.h"
 
-EnemyUfo::EnemyUfo(float x, float y, sf::Texture& texture_sheet, float scale, int game_level)
+EnemyUfo::EnemyUfo(float x, float y, sf::Texture& texture_sheet, float scale, int& game_level)
         : invoulnerability_(true)
         , away_(false)
         , points_(40)
@@ -13,10 +13,11 @@ EnemyUfo::EnemyUfo(float x, float y, sf::Texture& texture_sheet, float scale, in
     sprite_.setPosition(x, y);
 
     name_ = "enemy_ufo";
-    game_level_     = game_level;
+    game_level_     = static_cast<float>(game_level);
     animation_name_ = name_;
     exploding_      = false;
     max_velocity_   = 100.f * game_level_ / 2;
+    sprite_.setRotation(static_cast<float>((rand() % 360)));
 
     InitComponents(texture_sheet);
 }
@@ -32,9 +33,9 @@ void EnemyUfo::InitComponents(sf::Texture& texture_sheet)
     CreateAnimationComponent(texture_sheet);
     CreateMovementComponent(max_velocity_, 0.f, 0.f, sprite_.getRotation());
 
-    animation_component_->AddAnimation("enemy_ufo", 4.5f, 0, 0, 17, 0, 48, 48);
+    animation_component_->AddAnimation("enemy_ufo", 3.f, 0, 0, 17, 0, 48, 48);
     animation_component_->AddAnimation("enemy_ufo_active", 3.f, 0, 1, 5, 1, 48, 48);
-    animation_component_->AddAnimation("enemy_ufo_away", 4.5f, 0, 1, 17, 1, 48, 48);
+    animation_component_->AddAnimation("enemy_ufo_away", 3.f, 0, 1, 17, 1, 48, 48);
     animation_component_->AddAnimation("enemy_ufo_exploding", 5.f, 0, 2, 16, 2, 48, 48);
 }
 
