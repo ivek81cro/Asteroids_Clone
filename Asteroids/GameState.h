@@ -39,6 +39,7 @@ class GameState : public State
     sf::Text           invoulnerable_text_;
     sf::Text           level_text_;
 
+    int   ufo_max_per_level_;
     int   score_;
     int   times_killed_;
     int   current_level_;
@@ -53,7 +54,7 @@ class GameState : public State
     void InitTextures();
     void InitPauseMenu();
     void InitBackground();
-    void InitPlayer(int lives);
+    void InitPlayer();
     void InitEnemyUfo();
     void InitAsteroids();
     void InitTextItems(Ship* s);

@@ -71,8 +71,6 @@ void EnemyUfo::Update(const float& delta, const sf::Vector2u& window_size)
     }
 
     hitbox_component_->Update();
-
-    std::cout << lifetime_ << std::endl;
 }
 
 const bool EnemyUfo::GetInvoulnerability() const

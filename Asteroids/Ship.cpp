@@ -113,3 +113,8 @@ float Ship::GetAngle() const
 {
     return sprite_.getRotation();
 }
+
+void Ship::SetLives(int lives)
+{
+    lives_=lives;
+}

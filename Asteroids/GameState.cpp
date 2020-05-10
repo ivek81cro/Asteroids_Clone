@@ -9,6 +9,7 @@ GameState::GameState(StateData* state_data)
         , game_level_(1)
         , current_level_(1)
         , ufo_active_(false)
+        , ufo_max_per_level_(0)
 {
 
     entity_scale_factor_ = state_data_->gfx_settings_->resolution_.width / 1280.f;
@@ -19,7 +20,7 @@ GameState::GameState(StateData* state_data)
     InitTextures();
     InitPauseMenu();
     InitBackground();
-    InitPlayer(times_killed_);
+    InitPlayer();
     InitAsteroids();
 }
 
@@ -108,11 +109,11 @@ void GameState::InitBackground()
     background_.setTexture(&textures_[ "BACKGROUND_TEXTURE" ]);
 }
 
-void GameState::InitPlayer(int lives)
+void GameState::InitPlayer()
 {
     entities_.push_back(std::unique_ptr<Ship>(new Ship(static_cast<float>(window_->getSize().x / 2),
                                                        static_cast<float>(window_->getSize().y / 2),
-                                                       textures_[ "PLAYER_SHIP" ], 3-lives, entity_scale_factor_)));
+                                                       textures_[ "PLAYER_SHIP" ], 3, entity_scale_factor_)));
 }
 
 void GameState::InitEnemyUfo()
@@ -122,6 +123,7 @@ void GameState::InitEnemyUfo()
     entities_.push_back(std::unique_ptr<EnemyUfo>(new EnemyUfo(ufo_position.x, ufo_position.y,
                                                                    textures_[ "ENEMYUFO" ], entity_scale_factor_, current_level_)));
     ufo_active_ = true;
+    ++ufo_max_per_level_;
 }
 
 void GameState::InitAsteroids()
@@ -203,10 +205,12 @@ void GameState::UpdatePlayerInput(const float& delta)
     //If ship not alive, reset player and remove life
     if (s == nullptr)
     {
-        InitPlayer(++times_killed_);
-
+        InitPlayer();
         s = static_cast<Ship*>(entities_[ entities_.size() - 1 ].get());
         
+        ++times_killed_;
+        s->SetLives(3 - times_killed_);
+
         if (s->GetLivesRemaining() <= 0)
         {
             states_->push(new ScoreState(state_data_, score_,true));
@@ -278,6 +282,7 @@ void GameState::CheckCollision()
                     it->SetAlive(false);
                 }
             }
+
             //Check collision between ship and asteroids
             if (it->GetName() == "ship" && (it2->GetName() == "asteroid" || it2->GetName() == "e_bullet") && !it->IsExploding() &&
                 !it2->IsExploding() && it2->IsAlive() && !static_cast<Ship*>(it.get())->ShieldsUp())
@@ -287,6 +292,18 @@ void GameState::CheckCollision()
                     it->SetAlive(false);
                 }
             }
+
+            //Collision between ship and drop
+            if (it->GetName() == "ship" && (it2->GetName() == "life"))
+            {
+                if (it->CheckCollision(it2->GetHitbox()))
+                {
+                    static_cast<Ship*>(it.get())->SetLives(static_cast<Ship*>(it.get())->GetLivesRemaining() + 1);
+                    --times_killed_;
+                    it2->SetAlive(false);
+                }
+            }
+
             //Check collision between ship bullet and UFO, and ship and ufo in case of suicide run
             if (ufo_active_ && it->GetName() == "enemy_ufo" && !static_cast<EnemyUfo*>(it.get())->GetInvoulnerability() && 
                 (it2->GetName() == "bullet" || it2->GetName() == "ship"))
@@ -294,12 +311,18 @@ void GameState::CheckCollision()
                 if (it->CheckCollision(it2->GetHitbox()))
                 {
                     it->SetAlive(false);
+                    it2->SetAlive(false);
+
                     ufo_active_ = false;
                     score_ += static_cast<EnemyUfo*>(it.get())->GetPoints();
-                    entities_.push_back(std::unique_ptr<DropLife>(new DropLife(it.get()->GetPosition().x, it.get()->GetPosition().y,
-                                                                           textures_[ "LIFE" ],
-                                                                           entity_scale_factor_)));
-                    it2->SetAlive(false);
+
+                    int ra = rand() % 50;
+                    if (true)//Randomise if drop happens
+                    {
+                        entities_.push_back(
+                            std::unique_ptr<DropLife>(new DropLife(it.get()->GetPosition().x, it.get()->GetPosition().y,
+                                                                   textures_[ "LIFE" ], entity_scale_factor_)));
+                    }
                 }
             }
         }
@@ -330,7 +353,7 @@ void GameState::UpdateEnemy(const float& delta)
 {
     EnemyUfo* e = nullptr;
         
-    if (enemy_time < 0 && !ufo_active_)
+    if (enemy_time < 0 && !ufo_active_ && ufo_max_per_level_ < 4)
     {
         InitEnemyUfo();
         e = static_cast<EnemyUfo*>(entities_[ entities_.size() - 1 ].get());
@@ -368,7 +391,6 @@ void GameState::UpdateEnemy(const float& delta)
     }
     else
         enemy_time -= delta;
-    std::cout << enemy_time << std::endl;
 }
 
 void GameState::Update(const float& delta)

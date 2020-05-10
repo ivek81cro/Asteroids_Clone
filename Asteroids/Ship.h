@@ -20,6 +20,7 @@ class Ship : public Entity
     bool       ShieldsUp();
     const int& GetLivesRemaining() const;
     float      GetAngle() const;
+    void       SetLives(int lives);
 
   private:
     //Variables
