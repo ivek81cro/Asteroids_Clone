@@ -13,7 +13,7 @@ GameState::GameState(StateData* state_data)
 {
 
     entity_scale_factor_ = state_data_->gfx_settings_->resolution_.width / 1280.f;
-    enemy_time           = static_cast<float>(/*rand() % 20 + 30*/5);
+    enemy_time           = static_cast<float>(rand() % 20 + 30);
 
     InitKeybinds();
     InitFonts();
@@ -419,9 +419,11 @@ void GameState::IfEnd()
     //If all asteroids are destroyed
     if (entities_.size() < 2 && paused_ == false && entities_[ 0 ].get()->GetName() == "ship")
     {
-        game_level_+=0.3f;
+        game_level_ += 0.3f;
         ++current_level_;
+
         ufo_max_per_level_ = 0;
+        enemy_time         = static_cast<float>(rand() % 20 + 30);
 
         InitAsteroids();
     }
