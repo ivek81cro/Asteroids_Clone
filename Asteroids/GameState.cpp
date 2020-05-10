@@ -5,7 +5,7 @@
 GameState::GameState(StateData* state_data)
         : State(state_data)
         , score_(0)
-        , times_killed_(0)
+        , player_lives_(3)
         , game_level_(1)
         , current_level_(1)
         , ufo_active_(false)
@@ -113,7 +113,7 @@ void GameState::InitPlayer()
 {
     entities_.push_back(std::unique_ptr<Ship>(new Ship(static_cast<float>(window_->getSize().x / 2),
                                                        static_cast<float>(window_->getSize().y / 2),
-                                                       textures_[ "PLAYER_SHIP" ], 3, entity_scale_factor_)));
+                                                       textures_[ "PLAYER_SHIP" ], entity_scale_factor_)));
 }
 
 void GameState::InitEnemyUfo()
@@ -134,7 +134,7 @@ void GameState::InitAsteroids()
                                                                    1, textures_[ "ASTEROID" ], entity_scale_factor_, game_level_)));
 }
 
-void GameState::InitTextItems(Ship* s)
+void GameState::InitTextItems()
 {
     const sf::VideoMode& vm = state_data_->gfx_settings_->resolution_;
 
@@ -145,7 +145,7 @@ void GameState::InitTextItems(Ship* s)
 
     std::string lives_text = "Lives: ";
 
-    lives_text_.setString(lives_text.append(std::to_string(s->GetLivesRemaining())));
+    lives_text_.setString(lives_text.append(std::to_string(player_lives_)));
 
     score_text_.setFont(font_);
     score_text_.setPosition(sf::Vector2f(gui::PercToPixelX(85.f, vm), gui::PercToPixelY(95.f, vm)));
@@ -206,19 +206,17 @@ void GameState::UpdatePlayerInput(const float& delta)
     if (s == nullptr)
     {
         InitPlayer();
-        s = static_cast<Ship*>(entities_[ entities_.size() - 1 ].get());
-        
-        ++times_killed_;
-        s->SetLives(3 - times_killed_);
 
-        if (s->GetLivesRemaining() <= 0)
+        --player_lives_;
+
+        if (player_lives_ <= 0)
         {
             states_->push(new ScoreState(state_data_, score_,true));
             paused_ = true;
             EndState();
         }
     }
-    InitTextItems(s);
+    InitTextItems();
 
     s->ResetAnimationName();
 
@@ -297,9 +295,8 @@ void GameState::CheckCollision()
             if (it->GetName() == "ship" && (it2->GetName() == "life"))
             {
                 if (it->CheckCollision(it2->GetHitbox()))
-                {
-                    static_cast<Ship*>(it.get())->SetLives(static_cast<Ship*>(it.get())->GetLivesRemaining() + 1);
-                    --times_killed_;
+                {                    
+                    ++player_lives_;
                     it2->SetAlive(false);
                 }
             }
@@ -317,7 +314,7 @@ void GameState::CheckCollision()
                     score_ += static_cast<EnemyUfo*>(it.get())->GetPoints();
 
                     int ra = rand() % 50;
-                    if (true)//Randomise if drop happens
+                    if (ra % 3 == 0)//Randomise if drop happens
                     {
                         entities_.push_back(
                             std::unique_ptr<DropLife>(new DropLife(it.get()->GetPosition().x, it.get()->GetPosition().y,

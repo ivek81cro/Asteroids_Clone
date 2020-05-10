@@ -41,7 +41,7 @@ class GameState : public State
 
     int   ufo_max_per_level_;
     int   score_;
-    int   times_killed_;
+    int   player_lives_;
     int   current_level_;
     bool  ufo_active_;
     float entity_scale_factor_;
@@ -57,7 +57,7 @@ class GameState : public State
     void InitPlayer();
     void InitEnemyUfo();
     void InitAsteroids();
-    void InitTextItems(Ship* s);
+    void InitTextItems();
     void FireBullet(Ship* s);
 };
 

@@ -6,7 +6,7 @@
 class Ship : public Entity
 {
   public:
-    Ship(float x, float y, sf::Texture& texture_sheet, int lives, float scale);
+    Ship(float x, float y, sf::Texture& texture_sheet, float scale);
     virtual ~Ship();
 
     Ship(const Ship&) = delete;
@@ -18,9 +18,7 @@ class Ship : public Entity
     void       Move(const float dir_x, const float dir_y, const float& delta);
     void       SetAlive(bool is_alive);
     bool       ShieldsUp();
-    const int& GetLivesRemaining() const;
     float      GetAngle() const;
-    void       SetLives(int lives);
 
   private:
     //Variables

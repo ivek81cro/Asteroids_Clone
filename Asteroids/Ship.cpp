@@ -2,9 +2,8 @@
 #include "Ship.h"
 
 //Constructors / Destructors
-Ship::Ship(float x, float y, sf::Texture& texture_sheet, int lives, float scale)
-        : lives_(lives)
-        , shield_timer_(3.f)
+Ship::Ship(float x, float y, sf::Texture& texture_sheet, float scale)
+        : shield_timer_(3.f)
         , invulnerability_(true)
 {
     scale_factor_ = scale;
@@ -104,17 +103,7 @@ bool Ship::ShieldsUp()
     return invulnerability_;
 }
 
-const int& Ship::GetLivesRemaining() const
-{
-    return lives_;
-}
-
 float Ship::GetAngle() const
 {
     return sprite_.getRotation();
-}
-
-void Ship::SetLives(int lives)
-{
-    lives_=lives;
 }

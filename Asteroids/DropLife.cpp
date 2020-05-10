@@ -12,7 +12,7 @@ DropLife::DropLife(float x, float y, sf::Texture& texture_sheet, float scale)
 
     sprite_.setPosition(x, y);
     sprite_.setScale(scale_factor_, scale_factor_);
-    sprite_.setRotation(rand() % 360);
+    sprite_.setRotation(static_cast<float>(rand() % 360));
 
     InitComponents(texture_sheet);
     
@@ -38,5 +38,5 @@ void DropLife::InitComponents(sf::Texture& texture_sheet)
     CreateMovementComponent(max_velocity_, 0.f, 0.f, sprite_.getRotation());
     CreateHitboxComponent(sprite_, 45 * scale_factor_);
 
-    animation_component_->AddAnimation("life", 5.f, 0.f, 0.f, 7.f, 0.f, 45.f, 45.f);
+    animation_component_->AddAnimation("life", 5.f, 0, 0, 7, 0, 45, 45);
 }
