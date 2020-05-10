@@ -115,13 +115,13 @@ void GameState::InitEnemyUfo()
     sf::Vector2f ufo_position(static_cast<float>(rand() % window_->getSize().x), static_cast<float>(rand() % window_->getSize().y));
 
     entities_.push_back(std::unique_ptr<EnemyUfo>(new EnemyUfo(ufo_position.x, ufo_position.y,
-                                                                   textures_[ "ENEMYUFO" ], entity_scale_factor_)));
+                                                                   textures_[ "ENEMYUFO" ], entity_scale_factor_, current_level_)));
     ufo_active_ = true;
 }
 
 void GameState::InitAsteroids()
 {
-    for (int i = 0; i < 5 * game_level_; ++i)
+    for (int i = 0; i <= 1 * game_level_; ++i)
         entities_.push_back(std::unique_ptr<Asteroid>(new Asteroid(static_cast<float>(rand() % (window_->getSize().x)),
                                                                    static_cast<float>(rand() % (window_->getSize().y)),
                                                                    1, textures_[ "ASTEROID" ], entity_scale_factor_, game_level_)));
@@ -283,7 +283,7 @@ void GameState::CheckCollision()
                 }
             }
             //Check collision between ship bullet and UFO, and ship and ufo in case of suicide run
-            if (it->GetName() == "enemy_ufo" && !static_cast<EnemyUfo*>(it.get())->GetInvoulnerability() && 
+            if (ufo_active_ && it->GetName() == "enemy_ufo" && !static_cast<EnemyUfo*>(it.get())->GetInvoulnerability() && 
                 (it2->GetName() == "bullet" || it2->GetName() == "ship"))
             {
                 if (it->CheckCollision(it2->GetHitbox()))
@@ -322,26 +322,27 @@ void GameState::UpdateEntities(const float& delta)
 void GameState::UpdateEnemy(const float& delta)
 {
     EnemyUfo* e = nullptr;
-    for (auto& it : entities_)
-    {
-        if (it->GetName() == "enemy_ufo")
-        {
-            e = static_cast<EnemyUfo*>(it.get());
-        }
-    }
-    if (enemy_time < 0 && !ufo_active_ && e == nullptr)
+        
+    if (enemy_time < 0 && !ufo_active_)
     {
         InitEnemyUfo();
         e = static_cast<EnemyUfo*>(entities_[ entities_.size() - 1 ].get());
-        enemy_time = static_cast<float>(rand() % 20 + 30);
+        enemy_time = static_cast<float>(rand() % 20 + 10);
     }
         
-    if (e != nullptr)
+    if (ufo_active_)
     {
+        for (auto& it : entities_)
+        {
+            if (it->GetName() == "enemy_ufo")
+            {
+                e = static_cast<EnemyUfo*>(it.get());
+            }
+        }
         if (e->IsAlive())
         {
             e->SetLifeTime(delta);
-            if (e->GetFireCooldown() < 0)
+            if (e != nullptr && e->GetFireCooldown() < 0)
             {
                 float angle = 360.f;
                 while (angle > 0.f)
@@ -349,7 +350,8 @@ void GameState::UpdateEnemy(const float& delta)
                     entities_.push_back(std::unique_ptr<Bullet>(new Bullet(e->GetPosition().x, e->GetPosition().y,
                                                                            textures_[ "ENEMYBULLET" ], angle,
                                                                            entity_scale_factor_, "e_bullet")));
-                    angle -= 45.f;
+
+                    angle -= current_level_ > 1 ? 120.f / current_level_  : 120.f;
                 }
                 e->ResetFireCooldown();
             }

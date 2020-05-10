@@ -4,7 +4,7 @@
 //Constructors / Destrustors
 Entity::Entity()
         : asteroid_level_(0)
-        , game_level_(0)
+        , game_level_(1)
 {
     InitVariables();
 }

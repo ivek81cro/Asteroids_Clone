@@ -33,7 +33,7 @@ void AnimationComponent::AddAnimation(const std::string key, float animation_tim
 
 const bool& AnimationComponent::Play(const std::string key, const float& delta, const bool priority)
 {
-    if (prority_animation_)
+    if (prority_animation_)//If exists priority animation
     {
         if (prority_animation_ == animations_[ key ])
         {
@@ -55,7 +55,7 @@ const bool& AnimationComponent::Play(const std::string key, const float& delta, 
     }
     else
     {
-        if (priority)//If priority exists 
+        if (priority)//If this is priority animation 
         {
             prority_animation_ = animations_[ key ];
         }

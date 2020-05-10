@@ -7,7 +7,7 @@
 class EnemyUfo : public Entity
 {
   public:
-    EnemyUfo(float x, float y, sf::Texture& texture_sheet, float scale);
+    EnemyUfo(float x, float y, sf::Texture& texture_sheet, float scale, int game_level);
     virtual ~EnemyUfo();
 
     void Update(const float& delta, const sf::Vector2u& window_size);
