@@ -2,7 +2,7 @@
 #include "DropLife.h"
 
 DropLife::DropLife(float x, float y, sf::Texture& texture_sheet, float scale)
-        : lifetime_(500.f)
+        : lifetime_(5.f)
 {
     scale_factor_ = scale;
     name_         = "life";

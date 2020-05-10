@@ -421,7 +421,7 @@ void GameState::IfEnd()
     {
         game_level_+=0.3f;
         ++current_level_;
-        ufo_max_per_level_ = 3;
+        ufo_max_per_level_ = 0;
 
         InitAsteroids();
     }
