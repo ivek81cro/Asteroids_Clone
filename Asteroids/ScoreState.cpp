@@ -100,7 +100,7 @@ void ScoreState::InitText(const sf::VideoMode& vm)
     score_.setOutlineThickness(2);
     score_.setLineSpacing(1);
 
-    //TODO maybe ectract to separate function
+    //TODO maybe extract to separate function
     name_text_.setFont(font_);
     name_text_.setPosition(sf::Vector2f(gui::PercToPixelX(10.f, vm), gui::PercToPixelY(5.f, vm)));
     name_text_.setCharacterSize(gui::CalcFontSIze(vm, 85));

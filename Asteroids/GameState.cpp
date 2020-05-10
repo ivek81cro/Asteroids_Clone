@@ -259,7 +259,7 @@ void GameState::CheckEntitiesAlive(const float& delta)
 
 void GameState::CheckCollision()
 {
-    //TODO maybe set asteroids to collide but up to last level, avoid player selective split.
+
     std::vector<std::unique_ptr<Entity>> new_entities;
     for (auto& it : entities_)
     {
@@ -351,14 +351,14 @@ void GameState::UpdateEntities(const float& delta)
 void GameState::UpdateEnemy(const float& delta)
 {
     EnemyUfo* e = nullptr;
-        
-    if (enemy_time < 0 && !ufo_active_ && ufo_max_per_level_ < 4)
+    //TODO: Decrease bullet angle every iteration per level
+    if (enemy_time < 0 && !ufo_active_ && ufo_max_per_level_ < 3)
     {
         InitEnemyUfo();
-        e = static_cast<EnemyUfo*>(entities_[ entities_.size() - 1 ].get());
+        e          = static_cast<EnemyUfo*>(entities_[ entities_.size() - 1 ].get());
         enemy_time = static_cast<float>(rand() % 20 + 10);
     }
-        
+
     if (ufo_active_)
     {
         for (auto& it : entities_)
@@ -380,7 +380,7 @@ void GameState::UpdateEnemy(const float& delta)
                                                                            textures_[ "ENEMYBULLET" ], angle,
                                                                            entity_scale_factor_, "e_bullet")));
 
-                    angle -= current_level_ > 1 ? 120.f / current_level_  : 120.f;
+                    angle -= current_level_ > 1 ? 120.f / current_level_ : 120.f;
                 }
                 e->ResetFireCooldown();
             }
