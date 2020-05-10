@@ -7,11 +7,11 @@ Kod prvog pokretanja igra prpeuzima resoluciju koja je trenutno na desktopu.
 U settings-u možete mijenjati rezoluciju, fullscreen(on-default), antialiasing i v_sync.
 Također možete prebaciti kontrolu broda na WASD tipke.
 
-Kontrole: 
+Kontrole:<br> 
   -strelice(default) ili WASD za kretanje
   -space za pucanje
  
-Značajke:
+Značajke:<br>
   -brod, asteroidi, i enemy imaju "neprekidni ekran", metci ne
   -napredak kroz igru odvija se u levelima, prvi level kreće sa 2 asteroida, i za jedan više u svakom idućem
   -asteroid kod uništenja se raspada na 3 manja(srednja) koji imaju veću brzinu za 50% od prethodnog
@@ -24,7 +24,7 @@ Značajke:
    na 10. mjestu.
   -Povratom na glavni izbornik može se pokrenuti nova igra ili zatvoriti program.
   
-  Bodovanje:
+  Bodovanje:<br>
     -Asteroid-Veliki-10 bodova
              -Srednji- 20 bodova
              -Mali - 30 bodova
