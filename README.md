@@ -8,8 +8,8 @@ U settings-u možete mijenjati rezoluciju, fullscreen(on-default), antialiasing 
 Također možete prebaciti kontrolu broda na WASD tipke.
 
 Kontrole:<br> 
-  &nbsp;-strelice(default) ili WASD za kretanje
-  &nbsp;-space za pucanje
+ &nbsp; &nbsp;&nbsp;-strelice(default) ili WASD za kretanje
+  &nbsp;&nbsp;&nbsp;-space za pucanje
  
 Značajke:<br>
   -brod, asteroidi, i enemy imaju "neprekidni ekran", metci ne
