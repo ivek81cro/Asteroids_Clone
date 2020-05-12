@@ -3,7 +3,7 @@
 
 Otvoriti kroz VS i trebalo bi raditi bez problema, sve potrebno je uključeno u build.
 
-Kod prvog pokretanja igra prpeuzima resoluciju koja je trenutno na desktopu.
+Kod prvog pokretanja igra postavlja default rezoluciju koja je trenutno na desktopu.
 U settings-u možete mijenjati rezoluciju, fullscreen(on-default), antialiasing i v_sync.
 Također možete prebaciti kontrolu broda na WASD tipke.
 
