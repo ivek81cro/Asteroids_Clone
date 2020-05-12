@@ -9,11 +9,11 @@ GameState::GameState(StateData* state_data)
         , game_level_(1)
         , current_level_(1)
         , ufo_active_(false)
-        , ufo_max_per_level_(0)
+        , ufo_max_per_level_(rand() % 2 + 4)
 {
 
     entity_scale_factor_ = state_data_->gfx_settings_->resolution_.width / 1280.f;
-    enemy_time           = static_cast<float>(rand() % 20 + 30);
+    enemy_time           = static_cast<float>(rand() % 10 + 20);
 
     InitKeybinds();
     InitFonts();
@@ -119,10 +119,11 @@ void GameState::InitEnemyUfo()
 {
     sf::Vector2f ufo_position(static_cast<float>(rand() % window_->getSize().x), static_cast<float>(rand() % window_->getSize().y));
 
-    entities_.push_back(std::unique_ptr<EnemyUfo>(new EnemyUfo(ufo_position.x, ufo_position.y,
-                                                                   textures_[ "ENEMYUFO" ], entity_scale_factor_, current_level_)));
+    entities_.push_back(std::unique_ptr<EnemyUfo>(
+        new EnemyUfo(ufo_position.x, ufo_position.y, textures_[ "ENEMYUFO" ], entity_scale_factor_, current_level_)));
+
     ufo_active_ = true;
-    ++ufo_max_per_level_;
+    --ufo_max_per_level_;
 }
 
 void GameState::InitAsteroids()
@@ -350,12 +351,13 @@ void GameState::UpdateEntities(const float& delta)
 void GameState::UpdateEnemy(const float& delta)
 {
     EnemyUfo* e = nullptr;
-    //TODO: Decrease bullet angle every iteration per level
-    if (enemy_time < 0 && !ufo_active_ && ufo_max_per_level_ < 3)
+
+    if (enemy_time < 0 && !ufo_active_ && ufo_max_per_level_ > 0)
     {
         InitEnemyUfo();
+
         e          = static_cast<EnemyUfo*>(entities_[ entities_.size() - 1 ].get());
-        enemy_time = static_cast<float>(rand() % 20 + 10);
+        enemy_time = static_cast<float>(rand() % 10 + 20);
     }
 
     if (ufo_active_)
@@ -387,8 +389,10 @@ void GameState::UpdateEnemy(const float& delta)
         else
             ufo_active_ = false;
     }
-    else
+    else if (enemy_time > -1.f)
+    {
         enemy_time -= delta;
+    }
 }
 
 void GameState::Update(const float& delta)
@@ -421,8 +425,8 @@ void GameState::IfEnd()
         game_level_ += 0.3f;
         ++current_level_;
 
-        ufo_max_per_level_ = 0;
-        enemy_time         = static_cast<float>(rand() % 20 + 30);
+        ufo_max_per_level_ = rand() % 2 + 4;
+        enemy_time         = static_cast<float>(rand() % 10 + 20);
 
         InitAsteroids();
     }
