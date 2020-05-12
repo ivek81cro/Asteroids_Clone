@@ -4,7 +4,7 @@
 //Percentage functions
 const float gui::PercToPixelX(const float perc, const sf::VideoMode& vm)
 {
-    /*
+    /**
     * Converts a percetage value to pixels relative to screen resolution in the x-axis.
     *
     * @param    float perc          The percentage value.
@@ -17,7 +17,7 @@ const float gui::PercToPixelX(const float perc, const sf::VideoMode& vm)
 
 const float gui::PercToPixelY(const float perc, const sf::VideoMode& vm)
 {
-    /*
+    /**
     * Converts a percetage value to pixels relative to screen resolution in the y-axis.
     *
     * @param    float perc  The percentage value.
@@ -28,9 +28,9 @@ const float gui::PercToPixelY(const float perc, const sf::VideoMode& vm)
     return std::floor(static_cast<float>(vm.height) * (perc / 100.f));
 }
 
-const unsigned gui::CalcFontSIze(const sf::VideoMode& vm, const unsigned modifier)
+const unsigned gui::CalcFontSize(const sf::VideoMode& vm, const unsigned modifier)
 {
-    /*
+    /**
     * Calculates the character size for text using the current resolution and constanat.
     *
     * @param    sf::VideoMode& vm   The current video mode of window (resolution).

@@ -70,25 +70,25 @@ void MainMenuState::InitGui()
     //Buttons
     buttons_[ "GAME_STATE" ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(20.f, vm), gui::PercToPixelX(19.53f, vm),
-                        gui::PercToPixelY(6.94f, vm), &font_, "New game", gui::CalcFontSIze(vm, 40),
+                        gui::PercToPixelY(6.94f, vm), &font_, "New game", gui::CalcFontSize(vm, 40),
                         sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
                         sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 
     buttons_[ "SETTINGS_STATE" ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(35.f, vm), gui::PercToPixelX(19.53f, vm),
-                        gui::PercToPixelY(6.94f, vm), &font_, "Settings", gui::CalcFontSIze(vm, 40),
+                        gui::PercToPixelY(6.94f, vm), &font_, "Settings", gui::CalcFontSize(vm, 40),
                         sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
                         sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 
     buttons_[ "SCORE_STATE" ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(50.f, vm), gui::PercToPixelX(19.53f, vm),
-                        gui::PercToPixelY(6.94f, vm), &font_, "High Scores", gui::CalcFontSIze(vm, 40),
+                        gui::PercToPixelY(6.94f, vm), &font_, "High Scores", gui::CalcFontSize(vm, 40),
                         sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
                         sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 
     buttons_[ "EXIT_STATE" ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(65.f, vm), gui::PercToPixelX(19.53f, vm),
-                        gui::PercToPixelY(6.94f, vm), &font_, "Quit", gui::CalcFontSIze(vm, 40), sf::Color(255, 0, 0, 200),
+                        gui::PercToPixelY(6.94f, vm), &font_, "Quit", gui::CalcFontSize(vm, 40), sf::Color(255, 0, 0, 200),
                         sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0),
                         sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 }

@@ -11,7 +11,7 @@ namespace gui
 {
     const float    PercToPixelX(const float perc, const sf::VideoMode& vm);
     const float    PercToPixelY(const float perc, const sf::VideoMode& vm);
-    const unsigned CalcFontSIze(const sf::VideoMode& vm, const unsigned modifier);
+    const unsigned CalcFontSize(const sf::VideoMode& vm, const unsigned modifier);
 
     class Button
     {

@@ -77,13 +77,13 @@ void SettingsState::InitButtons(const sf::VideoMode& vm)
 
     buttons_[ "BACK" ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(90.19f, vm), width, height,
-                                         &font_, "Back", gui::CalcFontSIze(vm, 60), sf::Color(255, 0, 0, 200),
+                                         &font_, "Back", gui::CalcFontSize(vm, 60), sf::Color(255, 0, 0, 200),
                                          sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
                                          sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 
     buttons_[ "APPLY" ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(82.28f, vm), width, height, 
-                                           &font_, "Apply", gui::CalcFontSIze(vm, 60), sf::Color(255, 0, 0, 200), 
+                                           &font_, "Apply", gui::CalcFontSize(vm, 60), sf::Color(255, 0, 0, 200), 
                                            sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
                                            sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 }
@@ -177,7 +177,7 @@ void SettingsState::InitText(const sf::VideoMode& vm)
     //Text
     options_text_.setFont(font_);
     options_text_.setPosition(sf::Vector2f(gui::PercToPixelX(7.82f, vm), gui::PercToPixelY(13.89f, vm)));
-    options_text_.setCharacterSize(gui::CalcFontSIze(vm, 70));
+    options_text_.setCharacterSize(gui::CalcFontSize(vm, 70));
     options_text_.setFillColor(sf::Color(250, 0, 0, 200));
     options_text_.setLineSpacing(2);
 
@@ -185,7 +185,7 @@ void SettingsState::InitText(const sf::VideoMode& vm)
 
     warning_text_.setFont(font_);
     warning_text_.setPosition(sf::Vector2f(gui::PercToPixelX(5.f, vm), gui::PercToPixelY(75.f, vm)));
-    warning_text_.setCharacterSize(gui::CalcFontSIze(vm, 70));
+    warning_text_.setCharacterSize(gui::CalcFontSize(vm, 70));
     warning_text_.setFillColor(sf::Color(250, 0, 0, 200));
     warning_text_.setOutlineThickness(3);
     warning_text_.setOutlineColor(sf::Color(255, 255, 255, 255));

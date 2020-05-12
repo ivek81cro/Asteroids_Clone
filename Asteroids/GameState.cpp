@@ -97,7 +97,7 @@ void GameState::InitPauseMenu()
     p_menu_ = std::unique_ptr<PauseMenu>(new PauseMenu(state_data_->gfx_settings_->resolution_, font_));
 
     p_menu_->AddButton("QUIT", window_->getSize().y - gui::PercToPixelY(13.89f, vm), gui::PercToPixelX(19.53f, vm),
-                       gui::PercToPixelY(6.94f, vm), gui::CalcFontSIze(vm, 40), "Quit");
+                       gui::PercToPixelY(6.94f, vm), gui::CalcFontSize(vm, 40), "Quit");
 }
 
 void GameState::InitBackground()
@@ -140,7 +140,7 @@ void GameState::InitTextItems()
 
     lives_text_.setFont(font_);
     lives_text_.setPosition(sf::Vector2f(gui::PercToPixelX(1.f, vm), gui::PercToPixelY(95.f, vm)));
-    lives_text_.setCharacterSize(gui::CalcFontSIze(vm, 85));
+    lives_text_.setCharacterSize(gui::CalcFontSize(vm, 85));
     lives_text_.setFillColor(sf::Color(255, 255, 255, 200));
 
     std::string lives_text = "Lives: ";
@@ -149,7 +149,7 @@ void GameState::InitTextItems()
 
     score_text_.setFont(font_);
     score_text_.setPosition(sf::Vector2f(gui::PercToPixelX(85.f, vm), gui::PercToPixelY(95.f, vm)));
-    score_text_.setCharacterSize(gui::CalcFontSIze(vm, 85));
+    score_text_.setCharacterSize(gui::CalcFontSize(vm, 85));
     score_text_.setFillColor(sf::Color(255, 255, 255, 200));
     std::string score_text = "Current score: ";
 
@@ -157,7 +157,7 @@ void GameState::InitTextItems()
 
     level_text_.setFont(font_);
     level_text_.setPosition(sf::Vector2f(gui::PercToPixelX(42.f, vm), gui::PercToPixelY(95.f, vm)));
-    level_text_.setCharacterSize(gui::CalcFontSIze(vm, 85));
+    level_text_.setCharacterSize(gui::CalcFontSize(vm, 85));
     level_text_.setFillColor(sf::Color(255, 255, 255, 200));
     std::string level_text = "Current Level: ";
 
@@ -165,7 +165,7 @@ void GameState::InitTextItems()
 
     invoulnerable_text_.setFont(font_);
     invoulnerable_text_.setPosition(sf::Vector2f(gui::PercToPixelX(42.f, vm), gui::PercToPixelY(90.f, vm)));
-    invoulnerable_text_.setCharacterSize(gui::CalcFontSIze(vm, 70));
+    invoulnerable_text_.setCharacterSize(gui::CalcFontSize(vm, 70));
     invoulnerable_text_.setFillColor(sf::Color(255, 0, 0, 200));
     invoulnerable_text_.setOutlineThickness(2);
     std::string invoulnerable_text = "=INVOULNERABLE=";

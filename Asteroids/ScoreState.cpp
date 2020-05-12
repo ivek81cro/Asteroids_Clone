@@ -74,7 +74,7 @@ void ScoreState::InitButtons(const sf::VideoMode& vm)
 
     buttons_[ "BACK" ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(90.19f, vm), width, height,
-                                         &font_, "Back", gui::CalcFontSIze(vm, 60), sf::Color(255, 0, 0, 200),
+                                         &font_, "Back", gui::CalcFontSize(vm, 60), sf::Color(255, 0, 0, 200),
                                          sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
                                          sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 }
@@ -84,14 +84,14 @@ void ScoreState::InitText(const sf::VideoMode& vm)
     //Text
     name_.setFont(font_);
     name_.setPosition(sf::Vector2f(gui::PercToPixelX(30.82f, vm), gui::PercToPixelY(15.89f, vm)));
-    name_.setCharacterSize(gui::CalcFontSIze(vm, 85));
+    name_.setCharacterSize(gui::CalcFontSize(vm, 85));
     name_.setFillColor(sf::Color(250, 0, 0, 200));
     name_.setOutlineThickness(2);
     name_.setLineSpacing(1);
 
     score_.setFont(font_);
     score_.setPosition(sf::Vector2f(gui::PercToPixelX(60.82f, vm), gui::PercToPixelY(15.89f, vm)));
-    score_.setCharacterSize(gui::CalcFontSIze(vm, 85));
+    score_.setCharacterSize(gui::CalcFontSize(vm, 85));
     score_.setFillColor(sf::Color(250, 0, 0, 200));
     score_.setOutlineThickness(2);
     score_.setLineSpacing(1);
@@ -99,7 +99,7 @@ void ScoreState::InitText(const sf::VideoMode& vm)
     //TODO maybe extract to separate function
     name_text_.setFont(font_);
     name_text_.setPosition(sf::Vector2f(gui::PercToPixelX(10.f, vm), gui::PercToPixelY(5.f, vm)));
-    name_text_.setCharacterSize(gui::CalcFontSIze(vm, 85));
+    name_text_.setCharacterSize(gui::CalcFontSize(vm, 85));
     name_text_.setFillColor(sf::Color(250, 0, 0, 200));
     name_text_.setOutlineThickness(2);
     std::string name_text = "Enter your name please: ";
@@ -107,7 +107,7 @@ void ScoreState::InitText(const sf::VideoMode& vm)
 
     player_name_.setFont(font_);
     player_name_.setPosition(sf::Vector2f(gui::PercToPixelX(10.f, vm), gui::PercToPixelY(10.f, vm)));
-    player_name_.setCharacterSize(gui::CalcFontSIze(vm, 85));
+    player_name_.setCharacterSize(gui::CalcFontSize(vm, 85));
     player_name_.setFillColor(sf::Color::Black);
     player_name_.setString(str_name_);
 
