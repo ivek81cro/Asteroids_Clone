@@ -26,7 +26,7 @@ class GameState : public State
     void Render(sf::RenderTarget* target = nullptr);
 
   private:
-    PauseMenu* p_menu_;
+    std::unique_ptr<PauseMenu> p_menu_;
 
     std::vector<std::unique_ptr<Entity>> entities_;
 

@@ -13,11 +13,11 @@ class PauseMenu
     const bool IsButtonPressed(const std::string key);
     void       AddButton(const std::string key, const float y, const float width, const float height,
                          const unsigned char_size, const std::string text);
-    void Update(const sf::Vector2f& mouse_position);
-    void Render(sf::RenderTarget& target);
+    void       Update(const sf::Vector2f& mouse_position);
+    void       Render(sf::RenderTarget& target);
 
     //Accessor
-    std::map<std::string, gui::Button*>& GetButtons();
+    std::map<std::string, std::unique_ptr<gui::Button>>& GetButtons();
 
   private:
     sf::Font& font_;
@@ -26,7 +26,7 @@ class PauseMenu
     sf::RectangleShape background_;
     sf::RectangleShape container_;
 
-    std::map<std::string, gui::Button*> buttons_;
+    std::map<std::string, std::unique_ptr<gui::Button>> buttons_;
 
     //Functions
 };

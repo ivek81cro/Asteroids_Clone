@@ -28,12 +28,12 @@ class ScoreState : public State
     sf::RectangleShape background_;
     sf::Font           font_;
 
-    std::map<std::string, gui::Button*> buttons_;
-    sf::Text                            name_;
-    sf::Text                            score_;
-    sf::Text                            player_name_;
-    sf::Text                            name_text_;
-    sf::RectangleShape                  name_rect_;
+    std::map<std::string, std::unique_ptr<gui::Button>> buttons_;
+    sf::Text                                            name_;
+    sf::Text                                            score_;
+    sf::Text                                            player_name_;
+    sf::Text                                            name_text_;
+    sf::RectangleShape                                  name_rect_;
 
     std::string str_name_;
     sf::Clock   elapsed_coldown_;

@@ -27,10 +27,10 @@ namespace gui
         const std::string GetActiveElementText() const;
 
       private:
-        sf::Font&            font_;
-        Button*              active_element_;
-        std::vector<Button*> list_;
-        sf::VideoMode        vm_;
+        sf::Font&                            font_;
+        std::unique_ptr<Button>              active_element_;
+        std::vector<std::unique_ptr<Button>> list_;
+        sf::VideoMode                        vm_;
 
         float keytime_;
         float keytime_max_;

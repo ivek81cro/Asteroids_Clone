@@ -13,11 +13,6 @@ MainMenuState::MainMenuState(StateData* state_data)
 
 MainMenuState::~MainMenuState()
 {
-    auto it = buttons_.begin();
-    for (it= buttons_.begin(); it != buttons_.end(); ++it)
-    {
-        delete it->second;
-    }
 }
 
 //Initializer functions
@@ -73,41 +68,36 @@ void MainMenuState::InitGui()
     background_.setTexture(&textures_[ "BACKGROUND_TEXTURE" ]);
 
     //Buttons
-    buttons_[ "GAME_STATE" ] =
+    buttons_[ "GAME_STATE" ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(20.f, vm), gui::PercToPixelX(19.53f, vm),
                         gui::PercToPixelY(6.94f, vm), &font_, "New game", gui::CalcFontSIze(vm, 40),
                         sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
-                        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
+                        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 
-    buttons_[ "SETTINGS_STATE" ] =
+    buttons_[ "SETTINGS_STATE" ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(35.f, vm), gui::PercToPixelX(19.53f, vm),
                         gui::PercToPixelY(6.94f, vm), &font_, "Settings", gui::CalcFontSIze(vm, 40),
                         sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
-                        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
+                        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 
-    buttons_[ "SCORE_STATE" ] =
+    buttons_[ "SCORE_STATE" ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(50.f, vm), gui::PercToPixelX(19.53f, vm),
                         gui::PercToPixelY(6.94f, vm), &font_, "High Scores", gui::CalcFontSIze(vm, 40),
                         sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
-                        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
+                        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 
-    buttons_[ "EXIT_STATE" ] =
+    buttons_[ "EXIT_STATE" ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(65.f, vm), gui::PercToPixelX(19.53f, vm),
                         gui::PercToPixelY(6.94f, vm), &font_, "Quit", gui::CalcFontSIze(vm, 40), sf::Color(255, 0, 0, 200),
                         sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0),
-                        sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
+                        sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 }
 
 //Update functions
 void MainMenuState::ResetGui()
 {
-    auto it = buttons_.begin();
-    for (it = buttons_.begin(); it != buttons_.end(); ++it)
-    {
-        delete it->second;
-    }
-    buttons_.clear();
 
+    buttons_.clear();
     InitGui();
 }
 
@@ -128,19 +118,19 @@ void MainMenuState::UpdateButtons()
     //New game
     if (buttons_[ "GAME_STATE" ]->IsPressed())
     {
-        states_->push(new GameState(state_data_));
+        states_->push(std::unique_ptr<State>(new GameState(state_data_)));
     }
 
      //Settings
     if (buttons_[ "SETTINGS_STATE" ]->IsPressed())
     {
-        states_->push(new SettingsState(state_data_));
+        states_->push(std::unique_ptr<State>(new SettingsState(state_data_)));
     }
 
     //High scores
     if (buttons_[ "SCORE_STATE" ]->IsPressed())
     {
-        states_->push(new ScoreState(state_data_, NULL, false));
+        states_->push(std::unique_ptr<State>(new ScoreState(state_data_, NULL, false)));
     }
 
     //Quit game

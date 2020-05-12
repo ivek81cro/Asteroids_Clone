@@ -29,13 +29,13 @@ class Game
   private:
     GraphicsSettings  gfx_settings_;
     StateData         state_data_;
-    sf::RenderWindow* window_;
+    std::unique_ptr<sf::RenderWindow> window_;
     sf::Event         event_;
 
     sf::Clock clock_;
     float     delta_;
 
-    std::stack<State*> states_;
+    std::stack<std::unique_ptr<State>> states_;
 
     std::map<std::string, int> supported_keys_;
 

@@ -11,9 +11,6 @@ Entity::Entity()
 
 Entity::~Entity()
 {
-    delete movement_component_;
-    delete animation_component_;
-    delete hitbox_component_;
 }
 
 //Initializer functions
@@ -30,18 +27,18 @@ void Entity::InitVariables()
 void Entity::CreateMovementComponent(const float max_velocity, const float acceleration, const float deceleration,
                                      const float& angle)
 {
-    movement_component_ = new MovementComponent(sprite_, max_velocity, acceleration, deceleration, angle, name_);
+    movement_component_ = std::unique_ptr<MovementComponent>(
+        new MovementComponent(sprite_, max_velocity, acceleration, deceleration, angle, name_));
 }
 
 void Entity::CreateAnimationComponent(sf::Texture& texture_sheet)
 {
-    animation_component_ = new AnimationComponent(sprite_, texture_sheet);
+    animation_component_ = std::unique_ptr<AnimationComponent>(new AnimationComponent(sprite_, texture_sheet));
 }
 
 void Entity::CreateHitboxComponent(sf::Sprite& sprite, float width, float factor)
 {
-    hitbox_component_ =
-        new HitboxComponent(sprite, width, factor);
+    hitbox_component_ = std::unique_ptr<HitboxComponent>(new HitboxComponent(sprite, width, factor));
 }
 
 //Functions

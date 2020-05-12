@@ -34,9 +34,7 @@ class Entity
 
   protected:
     //Variables
-    sf::Sprite sprite_;
-
-    HitboxComponent* hitbox_component_;
+    sf::Sprite sprite_;    
 
     std::string name_;
     std::string animation_name_;
@@ -50,8 +48,9 @@ class Entity
     float    max_velocity_;
     float    acceleration_;
 
-    MovementComponent*  movement_component_;
-    AnimationComponent* animation_component_;
+    std::unique_ptr<MovementComponent>  movement_component_;
+    std::unique_ptr<AnimationComponent> animation_component_;
+    std::unique_ptr<HitboxComponent>    hitbox_component_;
 
   private:
     //Initializer functions

@@ -24,11 +24,6 @@ PauseMenu::PauseMenu(sf::VideoMode& vm, sf::Font& font)
 
 PauseMenu::~PauseMenu()
 {
-    auto it = buttons_.begin();
-    for (it = buttons_.begin(); it != buttons_.end(); ++it)
-    {
-        delete it->second;
-    }
 }
 
 //Functions
@@ -42,9 +37,9 @@ void PauseMenu::AddButton(const std::string key, const float y, const float widt
 {
     float x = container_.getPosition().x + container_.getSize().x / 2.f - width / 2.f;
 
-    buttons_[ key ] = new gui::Button(x, y, width, height, &font_, text, char_size, sf::Color(255, 0, 0, 200),
+    buttons_[ key ] = std::unique_ptr<gui::Button>(new gui::Button(x, y, width, height, &font_, text, char_size, sf::Color(255, 0, 0, 200),
                                       sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0),
-                                      sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
+                                      sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 }
 
 void PauseMenu::Update(const sf::Vector2f& mouse_position)
@@ -69,7 +64,7 @@ void PauseMenu::Render(sf::RenderTarget& target)
 }
 
 //Accessor
-std::map<std::string, gui::Button*>& PauseMenu::GetButtons()
+std::map<std::string, std::unique_ptr<gui::Button>>& PauseMenu::GetButtons()
 {
     return buttons_;
 }

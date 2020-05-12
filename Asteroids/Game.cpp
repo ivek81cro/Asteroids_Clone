@@ -14,11 +14,9 @@ Game::Game()
 
 Game::~Game()
 {
-    delete window_;
 
     while (!states_.empty())
     {
-        delete states_.top();
         states_.pop();
     }
 }
@@ -37,7 +35,7 @@ void Game::InitGraphicsSettings()
 
 void Game::InitStateData()
 {
-    state_data_.window_               = window_;
+    state_data_.window_               = window_.get();
     state_data_.gfx_settings_         = &gfx_settings_;
     state_data_.supported_keys_       = &supported_keys_;
     state_data_.states_               = &states_;
@@ -49,13 +47,15 @@ void Game::InitWindow()
 {
     if (gfx_settings_.fullscreen_)
     {
-        window_ = new sf::RenderWindow(gfx_settings_.resolution_, gfx_settings_.title_, sf::Style::Fullscreen,
-                                       gfx_settings_.context_settings_);
+        window_ = std::unique_ptr<sf::RenderWindow>(
+            new sf::RenderWindow(gfx_settings_.resolution_, gfx_settings_.title_, 
+                                 sf::Style::Fullscreen, gfx_settings_.context_settings_));
     }
     else
     {
-        window_ = new sf::RenderWindow(gfx_settings_.resolution_, gfx_settings_.title_,
-                                       sf::Style::Titlebar | sf::Style::Close, gfx_settings_.context_settings_);
+        window_ = std::unique_ptr<sf::RenderWindow>(
+            new sf::RenderWindow(gfx_settings_.resolution_, gfx_settings_.title_,
+                                 sf::Style::Titlebar | sf::Style::Close, gfx_settings_.context_settings_));
     }
 
     window_->setFramerateLimit(gfx_settings_.frame_rate_limit_);
@@ -80,7 +80,7 @@ void Game::InitKeys()
 
 void Game::InitStates()
 {
-    states_.push(new MainMenuState(&state_data_));
+    states_.push(std::unique_ptr<State>(new MainMenuState(&state_data_)));
 }
 
 //Regular
@@ -116,7 +116,6 @@ void Game::Update()
             if (states_.top()->GetQuit())
             {
                 states_.top()->EndState();
-                delete states_.top();
                 states_.pop();
             }
         }

@@ -18,11 +18,6 @@ ScoreState::ScoreState(StateData* state_data, const int& score, bool writable)
 
 ScoreState::~ScoreState()
 {
-    auto it = buttons_.begin();
-    for (it = buttons_.begin(); it != buttons_.end(); ++it)
-    {
-        delete it->second;
-    }
 }
 
 //Init functions
@@ -77,10 +72,11 @@ void ScoreState::InitButtons(const sf::VideoMode& vm)
     float width  = gui::PercToPixelX(19.53f, vm);
     float height = gui::PercToPixelY(6.94f, vm);
 
-    buttons_[ "BACK" ] = new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(90.19f, vm), width, height,
+    buttons_[ "BACK" ] = std::unique_ptr<gui::Button>(
+        new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(90.19f, vm), width, height,
                                          &font_, "Back", gui::CalcFontSIze(vm, 60), sf::Color(255, 0, 0, 200),
                                          sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
-                                         sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
+                                         sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 }
 
 void ScoreState::InitText(const sf::VideoMode& vm)

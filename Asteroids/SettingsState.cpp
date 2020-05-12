@@ -12,17 +12,6 @@ SettingsState::SettingsState(StateData* state_data)
 
 SettingsState::~SettingsState()
 {
-    auto it = buttons_.begin();
-    for (it = buttons_.begin(); it != buttons_.end(); ++it)
-    {
-        delete it->second;
-    }
-
-    auto it2 = ddl_.begin();
-    for (it2 = ddl_.begin(); it2 != ddl_.end(); ++it2)
-    {
-        delete it2->second;
-    }
 }
 
 //Initializer functions
@@ -86,15 +75,17 @@ void SettingsState::InitButtons(const sf::VideoMode& vm)
     float width  = gui::PercToPixelX(19.53f, vm);
     float height = gui::PercToPixelY(6.94f, vm);
 
-    buttons_[ "BACK" ] = new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(90.19f, vm), width, height,
+    buttons_[ "BACK" ] = std::unique_ptr<gui::Button>(
+        new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(90.19f, vm), width, height,
                                          &font_, "Back", gui::CalcFontSIze(vm, 60), sf::Color(255, 0, 0, 200),
                                          sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
-                                         sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
+                                         sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 
-    buttons_[ "APPLY" ] = new gui::Button(
-        gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(82.28f, vm), width, height, &font_, "Apply",
-        gui::CalcFontSIze(vm, 60), sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
-        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0));
+    buttons_[ "APPLY" ] = std::unique_ptr<gui::Button>(
+        new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(82.28f, vm), width, height, 
+                                           &font_, "Apply", gui::CalcFontSIze(vm, 60), sf::Color(255, 0, 0, 200), 
+                                           sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
+                                           sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 }
 
 void SettingsState::InitDropdownList(const sf::VideoMode& vm)
@@ -114,9 +105,10 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
             default_mode = i;
     }
 
-    ddl_[ "RESOLUTION" ] =
+    ddl_[ "RESOLUTION" ] = std::unique_ptr<gui::DropDownList>(
         new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(13.89f, vm), gui::PercToPixelX(15.f, vm),
-                              gui::PercToPixelY(7.f, vm), font_, vm, modes_str.data(), static_cast<int>(modes_str.size()), default_mode);
+                              gui::PercToPixelY(7.f, vm), font_, vm, modes_str.data(), 
+                              static_cast<int>(modes_str.size()), default_mode));
 
     default_mode = 0;
 
@@ -127,9 +119,10 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
     if (state_data_->gfx_settings_->fullscreen_)
         default_mode = 1;
 
-    ddl_[ "FULLSCREEN" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(23.f, vm),
-                                                 gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
-                                                 fulscreen_str.data(), static_cast<int>(fulscreen_str.size()), default_mode);
+    ddl_[ "FULLSCREEN" ] = std::unique_ptr<gui::DropDownList>(
+        new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(23.f, vm), gui::PercToPixelX(15.f, vm),
+                              gui::PercToPixelY(7.f, vm), font_, vm, fulscreen_str.data(),
+                              static_cast<int>(fulscreen_str.size()), default_mode));
     default_mode         = 0;
 
     //V-Sync list
@@ -140,9 +133,10 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
     if (state_data_->gfx_settings_->v_sync_)
         default_mode = 1;
 
-    ddl_[ "VSYNC" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(32.8f, vm),
-                                            gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
-                                            v_sync_str.data(), static_cast<int>(v_sync_str.size()), default_mode);
+    ddl_[ "VSYNC" ] = std::unique_ptr<gui::DropDownList>(
+        new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(32.8f, vm),
+                              gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
+                              v_sync_str.data(), static_cast<int>(v_sync_str.size()), default_mode));
     default_mode    = 0;
 
     //Antialiasing list
@@ -154,9 +148,10 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
 
     default_mode           = state_data_->gfx_settings_->context_settings_.antialiasingLevel;
 
-    ddl_[ "ANTIALIASING" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(42.f, vm),
+    ddl_[ "ANTIALIASING" ] = std::unique_ptr<gui::DropDownList>(
+        new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(42.f, vm),
                                                    gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
-                                                   antialiasnig_str.data(), static_cast<int>(antialiasnig_str.size()), default_mode);
+                                                   antialiasnig_str.data(), static_cast<int>(antialiasnig_str.size()), default_mode));
     default_mode           = 0;
 
     //Keys configuration list
@@ -171,9 +166,10 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
             default_mode = i;
     }
 
-    ddl_[ "KEYSCONFIG" ] = new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(52.f, vm),
+    ddl_[ "KEYSCONFIG" ] = std::unique_ptr<gui::DropDownList>(
+        new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(52.f, vm),
                                                  gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
-                                                 keys_path_str.data(), static_cast<int>(keys_path_str.size()), default_mode);
+                                                 keys_path_str.data(), static_cast<int>(keys_path_str.size()), default_mode));
 }
 
 void SettingsState::InitText(const sf::VideoMode& vm)
@@ -200,22 +196,11 @@ void SettingsState::InitText(const sf::VideoMode& vm)
 //Functions
 void SettingsState::ResetGui()
 {
-    auto it = buttons_.begin();
-    for (it = buttons_.begin(); it != buttons_.end(); ++it)
-    {
-        delete it->second;
-    }
     buttons_.clear();
 
-    auto it2 = ddl_.begin();
-    for (it2 = ddl_.begin(); it2 != ddl_.end(); ++it2)
-    {
-        delete it2->second;
-    }
     ddl_.clear();
 
     InitGui();
-
 }
 
 void SettingsState::UpdateInput(const float& delta)

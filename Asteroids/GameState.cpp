@@ -26,7 +26,6 @@ GameState::GameState(StateData* state_data)
 
 GameState::~GameState()
 {
-    delete p_menu_;
 }
 
 //Initializer functions
@@ -95,7 +94,7 @@ void GameState::InitPauseMenu()
 {
     const sf::VideoMode& vm = state_data_->gfx_settings_->resolution_;
 
-    p_menu_ = new PauseMenu(state_data_->gfx_settings_->resolution_, font_);
+    p_menu_ = std::unique_ptr<PauseMenu>(new PauseMenu(state_data_->gfx_settings_->resolution_, font_));
 
     p_menu_->AddButton("QUIT", window_->getSize().y - gui::PercToPixelY(13.89f, vm), gui::PercToPixelX(19.53f, vm),
                        gui::PercToPixelY(6.94f, vm), gui::CalcFontSIze(vm, 40), "Quit");
@@ -211,7 +210,7 @@ void GameState::UpdatePlayerInput(const float& delta)
 
         if (player_lives_ <= 0)
         {
-            states_->push(new ScoreState(state_data_, score_,true));
+            states_->push(std::unique_ptr<State>(new ScoreState(state_data_, score_,true)));
             paused_ = true;
             EndState();
         }

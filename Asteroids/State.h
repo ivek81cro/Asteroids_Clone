@@ -17,12 +17,12 @@ class StateData
     StateData(){};
 
     //Variables
-    sf::RenderWindow*           window_;
-    GraphicsSettings*           gfx_settings_;
-    std::map<std::string, int>* supported_keys_;
-    std::stack<State*>*         states_;
-    sf::Event*                  event_;
-    std::string*                path_game_state_keys_;
+    sf::RenderWindow*                   window_;
+    GraphicsSettings*                   gfx_settings_;
+    std::map<std::string, int>*         supported_keys_;
+    std::stack<std::unique_ptr<State>>* states_;
+    sf::Event*                          event_;
+    std::string*                        path_game_state_keys_;
 };
 
 class State
@@ -47,15 +47,15 @@ class State
     virtual void Render(sf::RenderTarget* target = nullptr) = 0;
 
   protected:
-    StateData*                  state_data_;
-    std::stack<State*>*         states_;
-    sf::RenderWindow*           window_;
-    std::map<std::string, int>* supported_keys_;
-    std::map<std::string, int>  keybinds_;
-    bool                        quit_;
-    bool                        paused_;
-    float                       keytime_;
-    float                       keytime_max_;
+    StateData*                          state_data_;
+    std::stack<std::unique_ptr<State>>* states_;
+    sf::RenderWindow*                   window_;
+    std::map<std::string, int>*         supported_keys_;
+    std::map<std::string, int>          keybinds_;
+    bool                                quit_;
+    bool                                paused_;
+    float                               keytime_;
+    float                               keytime_max_;
 
     //Mouse position
     sf::Vector2i mouse_pos_screen_;

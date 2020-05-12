@@ -26,8 +26,8 @@ class SettingsState : public State
     sf::RectangleShape background_;
     sf::Font           font_;
 
-    std::map<std::string, gui::Button*> buttons_;
-    std::map<std::string, gui::DropDownList*> ddl_;
+    std::map<std::string, std::unique_ptr<gui::Button>>       buttons_;
+    std::map<std::string, std::unique_ptr<gui::DropDownList>> ddl_;
 
     sf::Text options_text_;
     sf::Text warning_text_;

@@ -92,7 +92,7 @@ class AnimationComponent
     const bool& Play(const std::string key, const float& delta, const bool priority = false);
 
   private:
-    std::map<std::string, Animation*> animations_;
+    std::map<std::string, std::unique_ptr<Animation>> animations_;
 
     Animation* last_animation_;
     Animation* prority_animation_;
