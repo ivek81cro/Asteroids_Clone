@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "MovementComponent.h"
 
+/**
+    Class for movement of entities
+ */
 //Constructors / Destructors
 MovementComponent::MovementComponent(sf::Sprite& sprite, const float& max_velocity, const float& acceleration,
                                      const float& deceleration, const float& angle, const std::string& name)
@@ -19,17 +22,26 @@ MovementComponent::~MovementComponent()
 {
 }
 
+/**
+    Returns maximal velocity for entity
+ */
 //Accessors
 const float& MovementComponent::GetMaxVelocity() const
 {
     return max_velocity_;
 }
 
+/**
+    Returns current velocity for entity
+ */
 const sf::Vector2f& MovementComponent::GetVelocity() const
 {
     return velocity_;
 }
 
+/**
+    Move entity, ship has additional calculations
+ */
 //Functions
 void MovementComponent::Move(const float dir_x, const float dir_y, const float& delta)
 {
@@ -60,11 +72,14 @@ void MovementComponent::Move(const float dir_x, const float dir_y, const float& 
     }
     else
     {
-        //Asteroids and bullets
+        //Asteroids and bullets movement
         velocity_ = direction_ * max_velocity_;
     }
 }
 
+/**
+    Limiter for velocity of entity, ship has deceleration
+ */
 void MovementComponent::CheckMaxVelocity(const float& delta)
 {
     //Deceleration -ship only
@@ -75,6 +90,9 @@ void MovementComponent::CheckMaxVelocity(const float& delta)
     }
 }
 
+/**
+    "Continuous screen" for all entities except bullets
+ */
 void MovementComponent::CheckPosition(const sf::Vector2u& window_size)
 {
     //Infinite screen for asteroids and ship
@@ -93,6 +111,9 @@ void MovementComponent::CheckPosition(const sf::Vector2u& window_size)
     sprite_.setPosition(position);
 }
 
+/**
+    Update movement of entities
+ */
 void MovementComponent::Update(const float& delta, const sf::Vector2u& window_size)
 {
     CheckMaxVelocity(delta);

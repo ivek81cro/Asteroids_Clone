@@ -2,42 +2,43 @@
 #include "Button.h"
 
 //Percentage functions
+/**
+    Converts a percetage value to pixels relative to screen resolution in the x-axis.
+    
+    @param    float perc          The percentage value.
+    @param    sf::VideoMode& vm   The current video mode of window (resolution). 
+    
+    @return    float The calculated pixel value.
+ */
 const float gui::PercToPixelX(const float perc, const sf::VideoMode& vm)
 {
-    /**
-    * Converts a percetage value to pixels relative to screen resolution in the x-axis.
-    *
-    * @param    float perc          The percentage value.
-    * @param    sf::VideoMode& vm   The current video mode of window (resolution). 
-    *
-    * @return    float The calculated pixel value.
-    */
     return std::floor(static_cast<float>(vm.width) * (perc / 100.f));
 }
 
+/**
+     Converts a percetage value to pixels relative to screen resolution in the y-axis.
+    
+     @param    float perc  The percentage value.
+     @param    sf::VideoMode& vm   The current video mode of window (resolution). 
+    
+     @return    float The calculated pixel value
+*/
 const float gui::PercToPixelY(const float perc, const sf::VideoMode& vm)
-{
-    /**
-    * Converts a percetage value to pixels relative to screen resolution in the y-axis.
-    *
-    * @param    float perc  The percentage value.
-    * @param    sf::VideoMode& vm   The current video mode of window (resolution). 
-    *
-    * @return    float The calculated pixel value
-    */
+{    
     return std::floor(static_cast<float>(vm.height) * (perc / 100.f));
 }
 
+/**
+ Calculates the character size for text using the current resolution and constanat.
+
+    @param    sf::VideoMode& vm   The current video mode of window (resolution).
+    @param    unsigned modifier   Modify text size factor.
+
+    @return   unsigned            The calculated character size value.
+*/
 const unsigned gui::CalcFontSize(const sf::VideoMode& vm, const unsigned modifier)
 {
-    /**
-    * Calculates the character size for text using the current resolution and constanat.
-    *
-    * @param    sf::VideoMode& vm   The current video mode of window (resolution).
-    * @param    unsigned modifier   Modify text size factor.
-    *
-    * @return   unsigned            The calculated character size value.
-    */
+    
     return static_cast<unsigned>(
         (vm.width + vm.height) / modifier);
 }
@@ -108,6 +109,9 @@ void gui::Button::SetText(const std::string text)
     text_.setString(text);
 }
 
+/**
+    Checks if button is clicked or mouse hovering over
+*/
 //Functions
 void gui::Button::Update(const sf::Vector2f& mouse_pos)
 {

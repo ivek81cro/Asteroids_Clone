@@ -26,6 +26,9 @@ EnemyUfo::~EnemyUfo()
 {
 }
 
+/**
+    Initialize components needed for entity behaviour
+ */
 //Functions
 void EnemyUfo::InitComponents(sf::Texture& texture_sheet)
 {
@@ -39,6 +42,10 @@ void EnemyUfo::InitComponents(sf::Texture& texture_sheet)
     animation_component_->AddAnimation("enemy_ufo_exploding", 5.f, 0, 2, 16, 2, 48, 48);
 }
 
+
+/**
+    Update entity based on state (arriving, active, going away)
+ */
 void EnemyUfo::Update(const float& delta, const sf::Vector2u& window_size)
 {
     if (invoulnerability_ && !away_)

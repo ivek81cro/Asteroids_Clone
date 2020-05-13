@@ -18,6 +18,20 @@ Bullet::~Bullet()
 {
 }
 
+
+
+//Initializer functions
+void Bullet::InitVariables()
+{
+    animation_name_ = name_;
+    lifetime_       = 1.f;
+    sprite_.setRotation(angle_ - 90);
+    max_velocity_ = 1000.f * scale_factor_;
+}
+
+/**
+    Initialize components needed for entity behaviour
+ */
 void Bullet::InitComponents(sf::Texture& texture_sheet)
 {
     CreateHitboxComponent(sprite_, 32 * 0.25f * scale_factor_);
@@ -27,11 +41,18 @@ void Bullet::InitComponents(sf::Texture& texture_sheet)
     animation_component_->AddAnimation(name_, 10.f, 0, 0, 0, 0, 64, 32);
 }
 
+/**
+    Set scale of a bullet
+ */
 void Bullet::SetScale(const sf::Vector2f& factor)
 {
     sprite_.setScale(factor);
 }
 
+/**
+    Set lifetime of bullet, since no continuous screen and save
+    on number of entities in vector
+ */
 void Bullet::SetLifeTime(const float& delta)
 {
     lifetime_ -= delta;
@@ -39,13 +60,4 @@ void Bullet::SetLifeTime(const float& delta)
     {
         alive_ = false;
     }
-}
-
-//Initializer functions
-void Bullet::InitVariables()
-{
-    animation_name_ = name_;
-    lifetime_ = 1.f;
-    sprite_.setRotation(angle_ - 90);
-    max_velocity_ = 1000.f * scale_factor_;
 }

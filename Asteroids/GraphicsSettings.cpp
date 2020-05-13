@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "GraphicsSettings.h"
 
+/**
+    Default graphics settings
+*/
 GraphicsSettings::GraphicsSettings()
 {
     title_                              = "Asteroids Clone C++ SFML - NWP Project";
@@ -17,6 +20,9 @@ GraphicsSettings::~GraphicsSettings()
 {
 }
 
+/**
+    Save selected, changed, default graphics settings to file
+*/
 //Functions
 void GraphicsSettings::SaveToFile(std::string path)
 {
@@ -36,6 +42,9 @@ void GraphicsSettings::SaveToFile(std::string path)
     ofs.close();
 }
 
+/**
+    Load gfx settings from file when opening game
+*/
 void GraphicsSettings::LoadFromFile(std::string path)
 {
     std::ifstream ifs(path);

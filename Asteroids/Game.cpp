@@ -28,11 +28,15 @@ void Game::InitVariables()
     delta_  = 0.f;
 }
 
+
 void Game::InitGraphicsSettings()
 {
     gfx_settings_.LoadFromFile("Config/graphics.ini");
 }
 
+/**
+    Initializes data in State.cpp class StateData
+*/
 void Game::InitStateData()
 {
     state_data_.window_               = window_.get();
@@ -43,6 +47,9 @@ void Game::InitStateData()
     state_data_.path_game_state_keys_ = &gfx_settings_.path_game_state_keys_;
 }
 
+/**
+    Initialize window
+*/
 void Game::InitWindow()
 {
     if (gfx_settings_.fullscreen_)
@@ -62,6 +69,9 @@ void Game::InitWindow()
     window_->setVerticalSyncEnabled(gfx_settings_.v_sync_);
 }
 
+/**
+    Initialize supported keys, keybinds
+*/
 void Game::InitKeys()
 {
     std::ifstream ifs("Config/supported_keys.ini");
@@ -78,6 +88,9 @@ void Game::InitKeys()
     ifs.close();
 }
 
+/**
+    Push initialized state on stack states_
+*/
 void Game::InitStates()
 {
     states_.push(std::unique_ptr<State>(new MainMenuState(&state_data_)));
@@ -88,6 +101,9 @@ void Game::EndApplication()
 {
 }
 
+/**
+    Time management
+*/
 //Update functions
 void Game::UpdateDelta()
 {

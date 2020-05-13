@@ -18,6 +18,9 @@ Asteroid::~Asteroid()
 {
 }
 
+/**
+    Initialize components needed for entity behaviour
+ */
 void Asteroid::InitComponents(sf::Texture& texture_sheet)
 {
     CreateHitboxComponent(sprite_, 42, rescale_factor_);
@@ -54,6 +57,9 @@ void Asteroid::InitVariables()
     }
 }
 
+/**
+    Set scale of asteroid depending on level, large, medium, small
+ */
 //Functions
 void Asteroid::SetScale(const int& level)
 {
@@ -72,16 +78,24 @@ void Asteroid::SetScale(const int& level)
     sprite_.setScale(rescale_factor_, rescale_factor_);
 }
 
+/**
+    Set if asteroid is exploding, run explosion animation then set alive false.
+ */
 void Asteroid::SetAlive(bool is_alive)
 {
     exploding_ = true;
 }
 
+/**
+    Update asteroid
+ */
 void Asteroid::Update(const float& delta, const sf::Vector2u& window_size)
 {
+    //Remove asteroid if last in chain of size
     if (level_ > 3)
         alive_ = false;
 
+    //If exploding stop movement and switch animation
     if (exploding_)
     {
         if (animation_component_->Play("asteroid_explode", delta, true))

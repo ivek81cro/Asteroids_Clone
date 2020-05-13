@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "DropLife.h"
 
+/**
+    Class for dropping extra life
+ */
 DropLife::DropLife(float x, float y, sf::Texture& texture_sheet, float scale)
         : lifetime_(5.f)
 {
@@ -22,8 +25,12 @@ DropLife::~DropLife()
 {
 }
 
+/**
+    Update entity
+ */
 void DropLife::Update(const float& delta, const sf::Vector2u& window_size)
 {
+    //Remove drop if not picked up within 5 seconds
     lifetime_ -= delta;
     if ( lifetime_ < 0)
     {
@@ -32,6 +39,9 @@ void DropLife::Update(const float& delta, const sf::Vector2u& window_size)
     Entity::Update(delta, window_size);
 }
 
+/**
+    Initialize components needed for entity behaviour
+ */
 void DropLife::InitComponents(sf::Texture& texture_sheet)
 {
     CreateAnimationComponent(texture_sheet);

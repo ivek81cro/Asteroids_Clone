@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "AnimationComponent.h"
 
+/**
+    Class for animating sprites
+ */
 AnimationComponent::AnimationComponent(sf::Sprite& sprite, sf::Texture& texture_sheet)
         : sprite_(sprite)
         , texture_sheet_(texture_sheet)
@@ -13,12 +16,18 @@ AnimationComponent::~AnimationComponent()
 {
 }
 
+/**
+    Return if animation ran all frames 'till last
+ */
 //Accessor
 const bool& AnimationComponent::IsDone(const std::string key)
 {
     return animations_[ key ]->IsDone();
 }
 
+/**
+    Add spritesheet with number of frames for animation
+ */
 //Functions
 void AnimationComponent::AddAnimation(const std::string key, float animation_timer, int start_frame_x,
                                       int start_frame_y, int frames_x, int frames_y, int width, int height)
@@ -27,6 +36,9 @@ void AnimationComponent::AddAnimation(const std::string key, float animation_tim
                                        frames_y, width, height));
 }
 
+/**
+    Play animation, if there are multiple, one can be prioritized
+ */
 const bool& AnimationComponent::Play(const std::string key, const float& delta, const bool priority)
 {
     if (prority_animation_)//If exists priority animation

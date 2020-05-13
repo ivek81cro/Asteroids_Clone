@@ -32,6 +32,10 @@ const bool PauseMenu::IsButtonPressed(const std::string key)
     return buttons_[ key ]->IsPressed();
 }
 
+
+/**
+    Adds button to pause screen
+ */
 void PauseMenu::AddButton(const std::string key, const float y, const float width, const float height,
                           const unsigned char_size, const std::string text)
 {
@@ -42,6 +46,10 @@ void PauseMenu::AddButton(const std::string key, const float y, const float widt
                                       sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 }
 
+
+/**
+    Update and check buttons
+ */
 void PauseMenu::Update(const sf::Vector2f& mouse_position)
 {
     for (auto& i : buttons_)

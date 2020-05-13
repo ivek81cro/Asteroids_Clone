@@ -14,6 +14,9 @@ SettingsState::~SettingsState()
 {
 }
 
+/**
+    Load keybinds from file for wasd and arrow config
+*/
 //Initializer functions
 void SettingsState::InitVariables()
 {
@@ -23,6 +26,9 @@ void SettingsState::InitVariables()
     key_configs_.insert(std::make_pair("WASD keys","Config/gamestate_keybinds_wasd.ini"));
 }
 
+/**
+    Load fonts
+*/
 void SettingsState::InitFonts()
 {
     if (!font_.loadFromFile("Fonts/Dosis-Light.ttf"))
@@ -56,6 +62,9 @@ void SettingsState::InitGui()
     InitText(vm);
 }
 
+/**
+    Load and set background texture
+*/
 void SettingsState::InitBackground(const sf::VideoMode& vm)
 {
     //Backround
@@ -69,6 +78,9 @@ void SettingsState::InitBackground(const sf::VideoMode& vm)
     background_.setTexture(&textures_[ "BACKGROUND_TEXTURE" ]);
 }
 
+/**
+    Initialize buttons
+*/
 void SettingsState::InitButtons(const sf::VideoMode& vm)
 {
     //Buttons
@@ -88,6 +100,9 @@ void SettingsState::InitButtons(const sf::VideoMode& vm)
                                            sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 }
 
+/**
+    initialize ddl and all options in buttons
+*/
 void SettingsState::InitDropdownList(const sf::VideoMode& vm)
 {
     //Drop down list
@@ -172,6 +187,9 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
                                                  keys_path_str.data(), static_cast<int>(keys_path_str.size()), default_mode));
 }
 
+/**
+    Iinitialize text
+*/
 void SettingsState::InitText(const sf::VideoMode& vm)
 {
     //Text
@@ -193,6 +211,9 @@ void SettingsState::InitText(const sf::VideoMode& vm)
     warning_text_.setString("");
 }
 
+/**
+    Reset buttons and ddl
+*/
 //Functions
 void SettingsState::ResetGui()
 {
@@ -207,6 +228,9 @@ void SettingsState::UpdateInput(const float& delta)
 {
 }
 
+/**
+    update buttons
+*/
 void SettingsState::UpdateGui(const float& delta)
 {
     /*Update all buttons in the state and handle functionality*/    
@@ -270,6 +294,9 @@ void SettingsState::Update(const float& delta)
     UpdateGui(delta);
 }
 
+/**
+    Draw buttons
+*/
 void SettingsState::RenderButtons(sf::RenderTarget& target)
 {
     for (auto& it : buttons_)

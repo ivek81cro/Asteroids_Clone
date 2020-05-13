@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "HitboxComponent.h"
 
+/**
+    Class for colliding manageent
+ */
 HitboxComponent::HitboxComponent(sf::Sprite& sprite, float& width, float& factor)
         : sprite_(sprite)
         , factor_(factor)
@@ -17,17 +20,26 @@ HitboxComponent::~HitboxComponent()
 {
 }
 
+/**
+    Returns entire circle shape that represents hitbox
+ */
 //Functions
 sf::CircleShape& HitboxComponent::GetHitbox()
 {
     return hitbox_;
 }
 
+/**
+    Moving hitbox with entity
+ */
 void HitboxComponent::Update()
 {
     hitbox_.setPosition(sprite_.getPosition().x, sprite_.getPosition().y);
 }
 
+/**
+    Drawing hitbox
+ */
 void HitboxComponent::Render(sf::RenderTarget& target)
 {
     target.draw(hitbox_);

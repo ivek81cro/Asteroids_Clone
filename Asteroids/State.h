@@ -11,6 +11,9 @@
 
 class State;
 
+/**
+    Class container for data needed in states
+*/
 class StateData
 {
   public:

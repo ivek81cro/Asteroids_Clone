@@ -28,6 +28,10 @@ void Ship::InitVariables()
     acceleration_   = 400.f * scale_factor_;
 }
 
+
+/**
+    Initialize components needed for entity behaviour
+ */
 void Ship::InitComponents(sf::Texture& texture_sheet)
 {
     CreateHitboxComponent(sprite_, 38.f * scale_factor_);
@@ -43,6 +47,10 @@ void Ship::InitComponents(sf::Texture& texture_sheet)
     animation_component_->AddAnimation("ship_explode", 5.f, 0, 1, 21, 1, 40, 45);
 }
 
+
+/**
+    Resets animation to default back from turning left or right
+ */
 //Functions
 void Ship::ResetAnimationName()
 {
@@ -54,6 +62,7 @@ void Ship::ResetAnimationName()
 
 void Ship::Update(const float& delta, const sf::Vector2u& window_size)
 {
+    //If ship is exploding, stop movement, animate explosion, then alive = false
     if (exploding_)
     {
         if (animation_component_->Play("ship_explode", delta, true))

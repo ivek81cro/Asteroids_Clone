@@ -10,7 +10,7 @@ gui::DropDownList::DropDownList(float x, float y, float width, float height, sf:
         , toggle_(false)
         , vm_(vm)
 {
-
+    //Add  buttons to dropdown list and set active one
     active_element_ = std::unique_ptr<Button>(
         new Button(x, y, width, height, &font_, list[ default_index ], CalcFontSize(vm_, 140),
                    sf::Color(255, 0, 0, 255), sf::Color(250, 215, 215, 200), sf::Color(250, 255, 255, 100),
@@ -41,6 +41,9 @@ const std::string gui::DropDownList::GetActiveElementText() const
     return active_element_->GetText();
 }
 
+/**
+    Limits repeatnig if holding button
+*/
 const bool gui::DropDownList::GetKeytime()
 {
     if (keytime_ >= keytime_max_)
@@ -58,6 +61,9 @@ void gui::DropDownList::UpdateKeytime(const float& delta)
         keytime_ += 5.f * delta;
 }
 
+/**
+    Update ddl, expand or collapse
+*/
 void gui::DropDownList::Update(const sf::Vector2f& mouse_pos, const float& delta)
 {
     UpdateKeytime(delta);

@@ -20,6 +20,9 @@ void MainMenuState::InitVariables()
 {
 }
 
+/**
+    Load font
+*/
 void MainMenuState::InitFonts()
 {
     if (!font_.loadFromFile("Fonts/Dosis-Light.ttf"))
@@ -28,6 +31,9 @@ void MainMenuState::InitFonts()
     }
 }
 
+/**
+    Load keybinds
+*/
 void MainMenuState::InitKeybinds()
 {
     std::ifstream ifs("config/mainmenustate_keybinds.ini");
@@ -44,6 +50,9 @@ void MainMenuState::InitKeybinds()
     ifs.close();
 }
 
+/**
+    Initialize GUI
+*/
 void MainMenuState::InitGui()
 {
 
@@ -105,8 +114,9 @@ void MainMenuState::UpdateInput(const float& delta)
 {
 }
 
-
-
+/**
+    Update buttons
+*/
 void MainMenuState::UpdateButtons()
 {
     /*Update all buttons in the state and handle functionality*/

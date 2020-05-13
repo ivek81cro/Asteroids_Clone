@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "ScoreState.h"
 
+/**
+    Class gor keeping score
+*/
 //Constructor / Destructor
 ScoreState::ScoreState(StateData* state_data, const int& score, bool writable)
         : State(state_data)
@@ -20,6 +23,9 @@ ScoreState::~ScoreState()
 {
 }
 
+/**
+    load font
+*/
 //Init functions
 void ScoreState::InitFonts()
 {
@@ -29,6 +35,9 @@ void ScoreState::InitFonts()
     }
 }
 
+/**
+    Init Gui
+*/
 void ScoreState::InitGui()
 {
     const sf::VideoMode& vm = state_data_->gfx_settings_->resolution_;
@@ -38,6 +47,9 @@ void ScoreState::InitGui()
     InitText(vm);
 }
 
+/**
+    Load keybinds
+*/
 void ScoreState::InitKeybinds()
 {
     std::ifstream ifs("config/mainmenustate_keybinds.ini");
@@ -53,6 +65,9 @@ void ScoreState::InitKeybinds()
     ifs.close();
 }
 
+/**
+    Load and initialize background
+*/
 void ScoreState::InitBackground(const sf::VideoMode& vm)
 {
     //Backround
@@ -66,6 +81,9 @@ void ScoreState::InitBackground(const sf::VideoMode& vm)
     background_.setTexture(&textures_[ "BACKGROUND_TEXTURE" ]);
 }
 
+/**
+    Initialize buttons
+*/
 void ScoreState::InitButtons(const sf::VideoMode& vm)
 {
     //Buttons
@@ -79,6 +97,9 @@ void ScoreState::InitButtons(const sf::VideoMode& vm)
                                          sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 }
 
+/**
+    Initialize all text on GUI
+*/
 void ScoreState::InitText(const sf::VideoMode& vm)
 {
     //Text
@@ -120,6 +141,9 @@ void ScoreState::InitText(const sf::VideoMode& vm)
     RefreshScores();
 }
 
+/**
+    Read lis of existing cores from file
+*/
 //Functions
 void ScoreState::ReadScoresFile()
 {
@@ -136,6 +160,9 @@ void ScoreState::ReadScoresFile()
     ifs.close();
 }
 
+/**
+    Write current scores to file
+*/
 void ScoreState::WriteScoresFile()
 {
     std::ofstream ofs("Config/scores.ini");
@@ -149,6 +176,10 @@ void ScoreState::WriteScoresFile()
     ofs.close();
 }
 
+/**
+    Compare current score with existing ones, if existig one
+    larger than one on list, remove last, insert current
+*/
 void ScoreState::CompareScore()
 {
     if (scores_.size() <= 10)
@@ -172,6 +203,9 @@ void ScoreState::CompareScore()
     RefreshScores();
 }
 
+/**
+    refresh list with current score
+*/
 void ScoreState::RefreshScores()
 {
     std::string name_string  = "Player name:\n\n";
@@ -188,6 +222,9 @@ void ScoreState::RefreshScores()
     score_.setString(score_string);
 }
 
+/**
+    Manage input from user
+*/
 void ScoreState::UpdateInput(const float& delta)
 {
     key_cooldown_ = key_clock_.getElapsedTime();

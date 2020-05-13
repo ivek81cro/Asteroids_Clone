@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "State.h"
 
+/**
+    Base class for states
+*/
 State::State(StateData* state_data)
 {
     state_data_     = state_data;
@@ -49,6 +52,9 @@ void State::UnpauseState()
     paused_ = false;
 }
 
+/**
+    Updating mouse positions
+*/
 void State::UpdateMousePositions()
 {
     mouse_pos_screen_ = sf::Mouse::getPosition();
@@ -56,6 +62,9 @@ void State::UpdateMousePositions()
     mouse_pos_view_   = window_->mapPixelToCoords(sf::Mouse::getPosition(*window_));
 }
 
+/**
+    Prevent fast key repeat
+*/
 void State::UpdateKeytime(const float& delta)
 {
     if (keytime_ < keytime_max_)

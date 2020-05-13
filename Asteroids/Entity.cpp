@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "Entity.h"
 
+
+/**
+    Base class for entities
+ */
 //Constructors / Destrustors
 Entity::Entity()
         : asteroid_level_(0)
@@ -78,6 +82,9 @@ const sf::CircleShape& Entity::GetHitbox() const
     return hitbox_component_->GetHitbox();
 }
 
+/**
+    Check collision between two entities via hitbox
+ */
 const bool Entity::CheckCollision(const sf::CircleShape& other)
 {
     float ax = hitbox_component_->GetHitbox().getPosition().x;
@@ -102,6 +109,10 @@ const sf::Vector2f& Entity::GetPosition() const
     return sprite_.getPosition();
 }
 
+
+/**
+    Update components of entity
+ */
 void Entity::Update(const float& delta, const sf::Vector2u& window_size)
 {
     if (movement_component_ && alive_)
@@ -114,6 +125,10 @@ void Entity::Update(const float& delta, const sf::Vector2u& window_size)
         hitbox_component_->Update();
 }
 
+
+/**
+    Draw entity
+ */
 void Entity::Render(sf::RenderTarget& target)
 {
     target.draw(sprite_);

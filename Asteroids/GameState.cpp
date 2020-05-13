@@ -37,6 +37,9 @@ void GameState::InitFonts()
     }
 }
 
+/**
+    initialize keybinds 
+*/
 void GameState::InitKeybinds()
 {
     std::ifstream ifs(*state_data_->path_game_state_keys_);
@@ -52,6 +55,9 @@ void GameState::InitKeybinds()
     ifs.close();
 }
 
+/**
+    Load textures
+*/
 void GameState::InitTextures()
 {
     if (!textures_[ "PLAYER_SHIP" ].loadFromFile("Resources/Images/ship_inline.png"))
@@ -90,6 +96,9 @@ void GameState::InitTextures()
     }
 }
 
+/**
+    Pause menu
+*/
 void GameState::InitPauseMenu()
 {
     const sf::VideoMode& vm = state_data_->gfx_settings_->resolution_;
@@ -100,6 +109,9 @@ void GameState::InitPauseMenu()
                        gui::PercToPixelY(6.94f, vm), gui::CalcFontSize(vm, 40), "Quit");
 }
 
+/**
+    initialize background
+*/
 void GameState::InitBackground()
 {
     background_.setSize(
@@ -108,6 +120,9 @@ void GameState::InitBackground()
     background_.setTexture(&textures_[ "BACKGROUND_TEXTURE" ]);
 }
 
+/**
+    initialize player ship
+*/
 void GameState::InitPlayer()
 {
     entities_.push_back(std::unique_ptr<Ship>(new Ship(static_cast<float>(window_->getSize().x / 2),
@@ -115,6 +130,9 @@ void GameState::InitPlayer()
                                                        textures_[ "PLAYER_SHIP" ], entity_scale_factor_)));
 }
 
+/**
+    initialize enemy when time
+*/
 void GameState::InitEnemyUfo()
 {
     sf::Vector2f ufo_position(static_cast<float>(rand() % window_->getSize().x), static_cast<float>(rand() % window_->getSize().y));
@@ -126,6 +144,9 @@ void GameState::InitEnemyUfo()
     --ufo_max_per_level_;
 }
 
+/**
+    initialize asteroids
+*/
 void GameState::InitAsteroids()
 {
     for (int i = 0; i <= 1 * current_level_; ++i)
@@ -134,6 +155,9 @@ void GameState::InitAsteroids()
                                                                    1, textures_[ "ASTEROID" ], entity_scale_factor_, game_level_)));
 }
 
+/**
+    initialize text objects in game state
+*/
 void GameState::InitTextItems()
 {
     const sf::VideoMode& vm = state_data_->gfx_settings_->resolution_;
@@ -173,12 +197,18 @@ void GameState::InitTextItems()
     invoulnerable_text_.setString(invoulnerable_text);
 }
 
+/**
+    fire bullet from ship
+*/
 void GameState::FireBullet(Ship* s)
 {
     entities_.push_back(std::unique_ptr<Bullet>(
         new Bullet(s->GetPosition().x, s->GetPosition().y, textures_[ "BULLET" ], s->GetAngle(), entity_scale_factor_, "bullet")));
 }
 
+/**
+    If esc pressed enter into pause state
+*/
 void GameState::UpdateInput(const float& delta)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("CLOSE"))) && GetKeytime())
@@ -191,6 +221,9 @@ void GameState::UpdateInput(const float& delta)
 }
 
 //Update functions
+/**
+    Player input register function
+*/
 void GameState::UpdatePlayerInput(const float& delta)
 {
     //Select ship from entites
@@ -218,7 +251,7 @@ void GameState::UpdatePlayerInput(const float& delta)
     }
     else
     {
-        s->ResetAnimationName();
+        s->ResetAnimationName();//If not rotating return default animation
         InitTextItems();
 
         //Update player input
@@ -243,20 +276,28 @@ void GameState::UpdatePlayerInput(const float& delta)
     }
 }
 
+/**
+    If pause is on and quit pressed
+*/
 void GameState::UpdatePauseMenuButtons()
 {
     if (p_menu_->IsButtonPressed("QUIT"))
         EndState();
 }
 
+/**
+    Check if entity is alive, remove ones that are not
+*/
 void GameState::CheckEntitiesAlive(const float& delta)
 {
-    //Check if entity is alive, remove ones that are not
     entities_.erase(std::remove_if(entities_.begin(), entities_.end(),
                                    [](const std::unique_ptr<Entity>& ent) { return !ent->IsAlive(); }),
                     entities_.end());
 }
 
+/**
+    Check if entites are colliding
+*/
 void GameState::CheckCollision()
 {
 
@@ -265,9 +306,9 @@ void GameState::CheckCollision()
     {
         for (auto& it2 : entities_)
         {
+            //Check collision between ship bullets and asteroids
             if (it->GetName() == "asteroid" && it2->GetName() == "bullet" && !it->IsExploding())
             {
-                //Check collision between bullets and asteroids
                 if (it->CheckCollision(it2->GetHitbox()))
                 {
                     //Split asteroid in 3 smaller ones
@@ -283,7 +324,7 @@ void GameState::CheckCollision()
                 }
             }
 
-            //Check collision between ship and asteroids
+            //Check collision between ship and asteroids or ship and enemy bullets
             if (it->GetName() == "ship" && (it2->GetName() == "asteroid" || it2->GetName() == "e_bullet") && !it->IsExploding() &&
                 !it2->IsExploding() && it2->IsAlive() && !static_cast<Ship*>(it.get())->ShieldsUp())
             {
@@ -333,6 +374,9 @@ void GameState::CheckCollision()
     }
 }
 
+/**
+    update all entities
+*/
 void GameState::UpdateEntities(const float& delta)
 {
     //Update entities
@@ -348,10 +392,14 @@ void GameState::UpdateEntities(const float& delta)
     }
 }
 
+/**
+    Update for enemy
+*/
 void GameState::UpdateEnemy(const float& delta)
 {
     EnemyUfo* e = nullptr;
-
+    
+    //If enemy timer elapsed and there is no active enemy and limit of appearance not exceeded, create one
     if (enemy_time < 0 && !ufo_active_ && ufo_max_per_level_ > 0)
     {
         InitEnemyUfo();
@@ -371,8 +419,8 @@ void GameState::UpdateEnemy(const float& delta)
         }
         if (e->IsAlive())
         {
-            e->SetLifeTime(delta);
-            if (e != nullptr && e->GetFireCooldown() < 0)
+            e->SetLifeTime(delta);//Time duration decrease enemy is active
+            if (e != nullptr && e->GetFireCooldown() < 0)//Fire bullets every certain ammount of time
             {
                 float angle = 360.f;
                 while (angle > 0.f)
@@ -381,7 +429,7 @@ void GameState::UpdateEnemy(const float& delta)
                                                                            textures_[ "ENEMYBULLET" ], angle,
                                                                            entity_scale_factor_, "e_bullet")));
 
-                    angle -= current_level_ > 1 ? 120.f / current_level_ : 120.f;
+                    angle -= current_level_ > 1 ? 120.f / current_level_ : 120.f;//Set angle of shooting depending on level of game
                 }
                 e->ResetFireCooldown();
             }
@@ -389,6 +437,7 @@ void GameState::UpdateEnemy(const float& delta)
         else
             ufo_active_ = false;
     }
+    //Prevent counting if max enemy count is exceeded
     else if (enemy_time > -1.f)
     {
         enemy_time -= delta;
@@ -417,6 +466,9 @@ void GameState::Update(const float& delta)
     }
 }
 
+/**
+    Check if all asteroids and enemy is cleared, next level
+*/
 void GameState::IfEnd()
 {
     //If all asteroids are destroyed
