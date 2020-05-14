@@ -31,7 +31,7 @@ void Game::InitVariables()
 
 void Game::InitGraphicsSettings()
 {
-    gfx_settings_.LoadFromFile("Config/graphics.ini");
+    gfx_settings_.LoadFromFile(PATH_FILE_GRAPHICS);
 }
 
 /**
@@ -74,15 +74,17 @@ void Game::InitWindow()
 */
 void Game::InitKeys()
 {
-    std::ifstream ifs("Config/supported_keys.ini");
+    std::ifstream ifs(PATH_FILE_SUPPORTED_KEYS);
     if (ifs.is_open())
     {
         std::string key       = "";
         int         key_value = 0;
-
         while (ifs >> key >> key_value)
         {
-            supported_keys_[ key ] = key_value;
+            SupportedKeys key_e = SelectEnum(key);
+
+            if (key_e != SupportedKeys::Unsupported)
+                supported_keys_[ key_e ] = key_value;
         }
     }
     ifs.close();
@@ -94,6 +96,32 @@ void Game::InitKeys()
 void Game::InitStates()
 {
     states_.push(std::unique_ptr<State>(new MainMenuState(&state_data_)));
+}
+
+SupportedKeys Game::SelectEnum(std::string key)
+{
+    if (key == "Up")
+        return SupportedKeys::Up;
+    else if (key == "Down")
+        return SupportedKeys::Down;
+    else if (key == "Left")
+        return SupportedKeys::Left;
+    else if (key == "Right")
+        return SupportedKeys::Right;
+    else if (key == "Escape")
+        return SupportedKeys::Escape;
+    else if (key == "Space")
+        return SupportedKeys::Space;
+    else if (key == "W")
+        return SupportedKeys::W;
+    else if (key == "A")
+        return SupportedKeys::A;
+    else if (key == "S")
+        return SupportedKeys::S;
+    else if (key == "D")
+        return SupportedKeys::D;
+    else
+        return SupportedKeys::Unsupported;
 }
 
 //Regular

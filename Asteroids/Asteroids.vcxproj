@@ -194,6 +194,8 @@
     <ClInclude Include="DropLife.h" />
     <ClInclude Include="EnemyUfo.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="EnumsState.h" />
+    <ClInclude Include="FilePaths.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GraphicsSettings.h" />

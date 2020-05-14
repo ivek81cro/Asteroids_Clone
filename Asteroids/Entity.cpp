@@ -32,7 +32,7 @@ void Entity::CreateMovementComponent(const float max_velocity, const float accel
                                      const float& angle)
 {
     movement_component_ = std::unique_ptr<MovementComponent>(
-        new MovementComponent(sprite_, max_velocity, acceleration, deceleration, angle, name_));
+        new MovementComponent(sprite_, max_velocity, acceleration, deceleration, angle, movement_name_));
 }
 
 void Entity::CreateAnimationComponent(sf::Texture& texture_sheet)
@@ -72,7 +72,7 @@ const bool Entity::IsExploding()
     return exploding_;
 }
 
-const std::string Entity::GetName()
+const EntityName Entity::GetName()
 {
     return name_;
 }

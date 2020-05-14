@@ -27,7 +27,7 @@ PauseMenu::~PauseMenu()
 }
 
 //Functions
-const bool PauseMenu::IsButtonPressed(const std::string key)
+const bool PauseMenu::IsButtonPressed(const Buttons key)
 {
     return buttons_[ key ]->IsPressed();
 }
@@ -36,7 +36,7 @@ const bool PauseMenu::IsButtonPressed(const std::string key)
 /**
     Adds button to pause screen
  */
-void PauseMenu::AddButton(const std::string key, const float y, const float width, const float height,
+void PauseMenu::AddButton(const Buttons key, const float y, const float width, const float height,
                           const unsigned char_size, const std::string text)
 {
     float x = container_.getPosition().x + container_.getSize().x / 2.f - width / 2.f;
@@ -72,7 +72,7 @@ void PauseMenu::Render(sf::RenderTarget& target)
 }
 
 //Accessor
-std::map<std::string, std::unique_ptr<gui::Button>>& PauseMenu::GetButtons()
+std::map<Buttons, std::unique_ptr<gui::Button>>& PauseMenu::GetButtons()
 {
     return buttons_;
 }

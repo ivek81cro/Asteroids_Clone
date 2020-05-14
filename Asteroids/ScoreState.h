@@ -28,7 +28,7 @@ class ScoreState : public State
     sf::RectangleShape background_;
     sf::Font           font_;
 
-    std::map<std::string, std::unique_ptr<gui::Button>> buttons_;
+    std::map<Buttons, std::unique_ptr<gui::Button>> buttons_;
     sf::Text                                            name_;
     sf::Text                                            score_;
     sf::Text                                            player_name_;

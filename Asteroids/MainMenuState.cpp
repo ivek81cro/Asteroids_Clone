@@ -25,9 +25,9 @@ void MainMenuState::InitVariables()
 */
 void MainMenuState::InitFonts()
 {
-    if (!font_.loadFromFile("Fonts/Dosis-Light.ttf"))
+    if (!font_.loadFromFile(PATH_FILE_FONTS))
     {
-        throw("ERROR::MAINMENUSTATE::COULD_NOT_LOAD_FONT");
+        throw std::string("ERROR::MAINMENUSTATE::COULD_NOT_LOAD_FONT");
     }
 }
 
@@ -36,7 +36,7 @@ void MainMenuState::InitFonts()
 */
 void MainMenuState::InitKeybinds()
 {
-    std::ifstream ifs("config/mainmenustate_keybinds.ini");
+    std::ifstream ifs(PATH_FILE_KEYBINDS_MAIN_MENU);
 
     if (ifs.is_open())
     {
@@ -44,7 +44,11 @@ void MainMenuState::InitKeybinds()
         std::string key2 = "";
         while (ifs >> key >> key2)
         {
-            keybinds_[ key ] = supported_keys_->at(key2);
+            Keybinds      key_e  = SelectEnumKeybinds(key);
+            SupportedKeys key2_e = SelectEnumSupportedKeys(key2);
+
+            if (key_e != Keybinds::Unknown && key2_e != SupportedKeys::Unsupported)
+                keybinds_[ key_e ] = supported_keys_->at(key2_e);
         }
     }
     ifs.close();
@@ -69,33 +73,33 @@ void MainMenuState::InitGui()
     container_.setPosition(static_cast<float>(vm.width / 2.f) - static_cast<float>(container_.getSize().x / 2.f),
                            gui::PercToPixelY(20.f, vm));
 
-    if (!textures_[ "BACKGROUND_TEXTURE" ].loadFromFile("Resources/Images/background2.png"))
+    if (!textures_[ Textures::Background_texture ].loadFromFile(PATH_TEXTURE_BACKGROUND_MAIN))
     {
-        throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_TEXTURE";
+        throw std::string("ERROR::MAINMENUSTATE::FAILED_TO_LOAD_TEXTURE");
     }
 
-    background_.setTexture(&textures_[ "BACKGROUND_TEXTURE" ]);
+    background_.setTexture(&textures_[ Textures::Background_texture ]);
 
     //Buttons
-    buttons_[ "GAME_STATE" ] = std::unique_ptr<gui::Button>(
+    buttons_[ Buttons::Game_state ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(20.f, vm), gui::PercToPixelX(19.53f, vm),
                         gui::PercToPixelY(6.94f, vm), &font_, "New game", gui::CalcFontSize(vm, 40),
                         sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
                         sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 
-    buttons_[ "SETTINGS_STATE" ] = std::unique_ptr<gui::Button>(
+    buttons_[ Buttons::Settings_state ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(35.f, vm), gui::PercToPixelX(19.53f, vm),
                         gui::PercToPixelY(6.94f, vm), &font_, "Settings", gui::CalcFontSize(vm, 40),
                         sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
                         sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 
-    buttons_[ "SCORE_STATE" ] = std::unique_ptr<gui::Button>(
+    buttons_[ Buttons::Score_state ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(50.f, vm), gui::PercToPixelX(19.53f, vm),
                         gui::PercToPixelY(6.94f, vm), &font_, "High Scores", gui::CalcFontSize(vm, 40),
                         sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
                         sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 
-    buttons_[ "EXIT_STATE" ] = std::unique_ptr<gui::Button>(
+    buttons_[ Buttons::Exit_state ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(65.f, vm), gui::PercToPixelX(19.53f, vm),
                         gui::PercToPixelY(6.94f, vm), &font_, "Quit", gui::CalcFontSize(vm, 40), sf::Color(255, 0, 0, 200),
                         sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0),
@@ -126,25 +130,25 @@ void MainMenuState::UpdateButtons()
     }
 
     //New game
-    if (buttons_[ "GAME_STATE" ]->IsPressed())
+    if (buttons_[ Buttons::Game_state ]->IsPressed())
     {
         states_->push(std::unique_ptr<State>(new GameState(state_data_)));
     }
 
      //Settings
-    if (buttons_[ "SETTINGS_STATE" ]->IsPressed())
+    if (buttons_[ Buttons::Settings_state ]->IsPressed())
     {
         states_->push(std::unique_ptr<State>(new SettingsState(state_data_)));
     }
 
     //High scores
-    if (buttons_[ "SCORE_STATE" ]->IsPressed())
+    if (buttons_[ Buttons::Score_state ]->IsPressed())
     {
         states_->push(std::unique_ptr<State>(new ScoreState(state_data_, NULL, false)));
     }
 
     //Quit game
-    if (buttons_[ "EXIT_STATE" ]->IsPressed())
+    if (buttons_[ Buttons::Exit_state ]->IsPressed())
     {
         EndState();
     }

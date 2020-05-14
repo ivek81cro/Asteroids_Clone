@@ -22,8 +22,8 @@ void SettingsState::InitVariables()
 {
     v_modes_ = sf::VideoMode::getFullscreenModes();
 
-    key_configs_.insert(std::make_pair("Arrows","Config/gamestate_keybinds.ini"));
-    key_configs_.insert(std::make_pair("WASD keys","Config/gamestate_keybinds_wasd.ini"));
+    key_configs_.insert(std::make_pair("Arrows", PATH_FILE_KEYBINDS_ARROWS));
+    key_configs_.insert(std::make_pair("WASD Keys", PATH_FILE_KEYBINDS_WASD));
 }
 
 /**
@@ -31,22 +31,26 @@ void SettingsState::InitVariables()
 */
 void SettingsState::InitFonts()
 {
-    if (!font_.loadFromFile("Fonts/Dosis-Light.ttf"))
+    if (!font_.loadFromFile(PATH_FILE_FONTS))
     {
-        throw("ERROR::MAINMENUSTATE::COULD_NOT_LOAD_FONT");
+        throw std::string("ERROR::MAINMENUSTATE::COULD_NOT_LOAD_FONT");
     }
 }
 
 void SettingsState::InitKeybinds()
 {
-    std::ifstream ifs("config/mainmenustate_keybinds.ini");
+    std::ifstream ifs(PATH_FILE_KEYBINDS_MAIN_MENU);
     if (ifs.is_open())
     {
         std::string key  = "";
         std::string key2 = "";
         while (ifs >> key >> key2)
         {
-            keybinds_[ key ] = supported_keys_->at(key2);
+            Keybinds      key_e  = SelectEnumKeybinds(key);
+            SupportedKeys key2_e = SelectEnumSupportedKeys(key2);
+
+            if (key_e != Keybinds::Unknown && key2_e != SupportedKeys::Unsupported)
+                keybinds_[ key_e ] = supported_keys_->at(key2_e);
         }
     }
     ifs.close();
@@ -70,12 +74,12 @@ void SettingsState::InitBackground(const sf::VideoMode& vm)
     //Backround
     background_.setSize(sf::Vector2f(static_cast<float>(vm.width), static_cast<float>(vm.height)));
 
-    if (!textures_[ "BACKGROUND_TEXTURE" ].loadFromFile("Resources/Images/background.jpg"))
+    if (!textures_[ Textures::Background_texture ].loadFromFile(PATH_TEXTURE_BACKGROUND_MAIN))
     {
-        throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_TEXTURE";
+        throw std::string("ERROR::MAINMENUSTATE::FAILED_TO_LOAD_TEXTURE");
     }
 
-    background_.setTexture(&textures_[ "BACKGROUND_TEXTURE" ]);
+    background_.setTexture(&textures_[ Textures::Background_texture ]);
 }
 
 /**
@@ -87,13 +91,13 @@ void SettingsState::InitButtons(const sf::VideoMode& vm)
     float width  = gui::PercToPixelX(19.53f, vm);
     float height = gui::PercToPixelY(6.94f, vm);
 
-    buttons_[ "BACK" ] = std::unique_ptr<gui::Button>(
+    buttons_[Buttons::Back ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(90.19f, vm), width, height,
                                          &font_, "Back", gui::CalcFontSize(vm, 60), sf::Color(255, 0, 0, 200),
                                          sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
                                          sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
 
-    buttons_[ "APPLY" ] = std::unique_ptr<gui::Button>(
+    buttons_[ Buttons::Apply ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(82.28f, vm), width, height, 
                                            &font_, "Apply", gui::CalcFontSize(vm, 60), sf::Color(255, 0, 0, 200), 
                                            sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
@@ -120,7 +124,7 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
             default_mode = i;
     }
 
-    ddl_[ "RESOLUTION" ] = std::unique_ptr<gui::DropDownList>(
+    ddl_[ Settings::Resolution ] = std::unique_ptr<gui::DropDownList>(
         new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(13.89f, vm), gui::PercToPixelX(15.f, vm),
                               gui::PercToPixelY(7.f, vm), font_, vm, modes_str.data(), 
                               static_cast<int>(modes_str.size()), default_mode));
@@ -134,7 +138,7 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
     if (state_data_->gfx_settings_->fullscreen_)
         default_mode = 1;
 
-    ddl_[ "FULLSCREEN" ] = std::unique_ptr<gui::DropDownList>(
+    ddl_[ Settings::Fullscreen ] = std::unique_ptr<gui::DropDownList>(
         new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(23.f, vm), gui::PercToPixelX(15.f, vm),
                               gui::PercToPixelY(7.f, vm), font_, vm, fulscreen_str.data(),
                               static_cast<int>(fulscreen_str.size()), default_mode));
@@ -148,7 +152,7 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
     if (state_data_->gfx_settings_->v_sync_)
         default_mode = 1;
 
-    ddl_[ "VSYNC" ] = std::unique_ptr<gui::DropDownList>(
+    ddl_[ Settings::V_sync ] = std::unique_ptr<gui::DropDownList>(
         new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(32.8f, vm),
                               gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
                               v_sync_str.data(), static_cast<int>(v_sync_str.size()), default_mode));
@@ -163,7 +167,7 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
 
     default_mode           = state_data_->gfx_settings_->context_settings_.antialiasingLevel;
 
-    ddl_[ "ANTIALIASING" ] = std::unique_ptr<gui::DropDownList>(
+    ddl_[ Settings::Antialiasing ] = std::unique_ptr<gui::DropDownList>(
         new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(42.f, vm),
                                                    gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
                                                    antialiasnig_str.data(), static_cast<int>(antialiasnig_str.size()), default_mode));
@@ -181,7 +185,7 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
             default_mode = i;
     }
 
-    ddl_[ "KEYSCONFIG" ] = std::unique_ptr<gui::DropDownList>(
+    ddl_[ Settings::Keys_config ] = std::unique_ptr<gui::DropDownList>(
         new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(52.f, vm),
                                                  gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
                                                  keys_path_str.data(), static_cast<int>(keys_path_str.size()), default_mode));
@@ -199,7 +203,7 @@ void SettingsState::InitText(const sf::VideoMode& vm)
     options_text_.setFillColor(sf::Color(250, 0, 0, 200));
     options_text_.setLineSpacing(2);
 
-    options_text_.setString("Resolution \nFullscreen \nVsync \nAntialiasing \nKeys config \n");
+    options_text_.setString(sf::String("Resolution \nFullscreen \nVsync \nAntialiasing \nKeys config \n"));
 
     warning_text_.setFont(font_);
     warning_text_.setPosition(sf::Vector2f(gui::PercToPixelX(5.f, vm), gui::PercToPixelY(75.f, vm)));
@@ -243,38 +247,38 @@ void SettingsState::UpdateGui(const float& delta)
 
     //Button functionality
     //Quit settings
-    if (buttons_[ "BACK" ]->IsPressed() || sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("CLOSE"))))
+    if (buttons_[ Buttons::Back ]->IsPressed() || sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at(Keybinds::Close))))
     {
         EndState();
     }
 
     //Apply
-    if (buttons_[ "APPLY" ]->IsPressed())
+    if (buttons_[ Buttons::Apply ]->IsPressed())
     {
-        if (ddl_[ "RESOLUTION" ]->GetToggle())
+        if (ddl_[ Settings::Resolution ]->GetToggle())
             state_data_->gfx_settings_->resolution_ = 
-            v_modes_[ ddl_[ "RESOLUTION" ]->GetActiveElementId() ];
+            v_modes_[ ddl_[ Settings::Resolution ]->GetActiveElementId() ];
 
         //Get fullscreen toggle
-        if (ddl_[ "FULLSCREEN" ]->GetToggle())
-            state_data_->gfx_settings_->fullscreen_ = ddl_[ "FULLSCREEN" ]->GetActiveElementId();
+        if (ddl_[ Settings::Fullscreen ]->GetToggle())
+            state_data_->gfx_settings_->fullscreen_ = ddl_[ Settings::Fullscreen ]->GetActiveElementId();
 
         //Get v-sync toggle
-        if (ddl_[ "VSYNC" ]->GetToggle())
-            state_data_->gfx_settings_->v_sync_ = ddl_[ "VSYNC" ]->GetActiveElementId();
+        if (ddl_[ Settings::V_sync ]->GetToggle())
+            state_data_->gfx_settings_->v_sync_ = ddl_[ Settings::V_sync ]->GetActiveElementId();
 
         //Get antialiasing toggle
-        if (ddl_[ "ANTIALIASING" ]->GetToggle())
+        if (ddl_[ Settings::Antialiasing ]->GetToggle())
             state_data_->gfx_settings_->context_settings_.antialiasingLevel =
-            ddl_[ "ANTIALIASING" ]->GetActiveElementId();
+                ddl_[ Settings::Antialiasing ]->GetActiveElementId();
 
         //Get key config toggle
-        if (ddl_[ "KEYSCONFIG" ]->GetToggle())
+        if (ddl_[ Settings::Keys_config ]->GetToggle())
             state_data_->gfx_settings_->path_game_state_keys_ = 
-            key_configs_.at( ddl_[ "KEYSCONFIG" ]->GetActiveElementText());
+            key_configs_.at(ddl_[ Settings::Keys_config ]->GetActiveElementText());
 
-        state_data_->gfx_settings_->SaveToFile("Config/graphics.ini");
-        warning_text_.setString("Restart game for changes to take effect.");
+        state_data_->gfx_settings_->SaveToFile(PATH_FILE_GRAPHICS);
+        warning_text_.setString(sf::String("Restart game for changes to take effect."));
     }
 
     //Dropdown lists

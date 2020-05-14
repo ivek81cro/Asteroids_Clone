@@ -1,6 +1,25 @@
 #ifndef ANIMATIONCOMPONENT_H_
 #define ANIMATIONCOMPONENT_H_
 
+enum class Animations
+{
+    Ship_default,
+    Ship_default_left,
+    Ship_default_right,
+    Ship_shield,
+    Ship_shield_left,
+    Ship_shield_right,
+    Ship_explosion,
+    Asteroid_default,
+    Asteroid_explode,
+    Bullet_default,
+    Life_default,
+    Enemy_ufo_default,
+    Enemy_ufo_active,
+    Enemy_ufo_away,
+    Enemy_ufo_explosion
+};
+
 class AnimationComponent
 {
   private:
@@ -83,16 +102,16 @@ class AnimationComponent
     virtual ~AnimationComponent();
 
     //Accessor
-    const bool& IsDone(const std::string key);
+    const bool& IsDone(const Animations key);
 
     //Functions
-    void AddAnimation(const std::string key, float animation_timer, int start_frame_x, int start_frame_y, int frames_x,
+    void AddAnimation(const Animations, float animation_timer, int start_frame_x, int start_frame_y, int frames_x,
                       int frames_y, int width, int height);
 
-    const bool& Play(const std::string key, const float& delta, const bool priority = false);
+    const bool& Play(const Animations key, const float& delta, const bool priority = false);
 
   private:
-    std::map<std::string, std::unique_ptr<Animation>> animations_;
+    std::map<Animations, std::unique_ptr<Animation>> animations_;
 
     Animation* last_animation_;
     Animation* prority_animation_;

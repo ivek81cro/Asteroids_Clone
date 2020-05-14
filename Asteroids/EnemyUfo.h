@@ -30,6 +30,7 @@ class EnemyUfo : public Entity
 
     //Functions
     void InitComponents(sf::Texture& texture_sheet);
+    void InitVariables();
 
 
 

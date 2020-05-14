@@ -27,17 +27,17 @@ class Game
     void Run();
 
   private:
-    GraphicsSettings  gfx_settings_;
-    StateData         state_data_;
+    GraphicsSettings                  gfx_settings_;
+    StateData                         state_data_;
     std::unique_ptr<sf::RenderWindow> window_;
-    sf::Event         event_;
+    sf::Event                         event_;
 
     sf::Clock clock_;
     float     delta_;
 
     std::stack<std::unique_ptr<State>> states_;
 
-    std::map<std::string, int> supported_keys_;
+    std::map<SupportedKeys, int> supported_keys_;
 
     //Inititalization
     void InitVariables();
@@ -46,6 +46,8 @@ class Game
     void InitKeys();
     void InitStateData();
     void InitStates();
+
+    SupportedKeys SelectEnum(std::string key);
 };
 
 #endif

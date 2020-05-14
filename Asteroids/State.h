@@ -8,6 +8,8 @@
 #include "Ship.h"
 #include "EnemyUfo.h"
 #include "DropLife.h"
+#include "EnumsState.h"
+#include "FilePaths.h"
 
 class State;
 
@@ -22,7 +24,7 @@ class StateData
     //Variables
     sf::RenderWindow*                   window_;
     GraphicsSettings*                   gfx_settings_;
-    std::map<std::string, int>*         supported_keys_;
+    std::map<SupportedKeys, int>*         supported_keys_;
     std::stack<std::unique_ptr<State>>* states_;
     sf::Event*                          event_;
     std::string*                        path_game_state_keys_;
@@ -53,8 +55,8 @@ class State
     StateData*                          state_data_;
     std::stack<std::unique_ptr<State>>* states_;
     sf::RenderWindow*                   window_;
-    std::map<std::string, int>*         supported_keys_;
-    std::map<std::string, int>          keybinds_;
+    std::map<SupportedKeys, int>*       supported_keys_;
+    std::map<Keybinds, int>             keybinds_;
     bool                                quit_;
     bool                                paused_;
     float                               keytime_;
@@ -66,10 +68,13 @@ class State
     sf::Vector2f mouse_pos_view_;
 
     //Resources
-    std::map<std::string, sf::Texture> textures_;
+    std::map<Textures, sf::Texture> textures_;
 
     //Functions
     virtual void InitKeybinds() = 0;
+
+    Keybinds      SelectEnumKeybinds(std::string key);
+    SupportedKeys SelectEnumSupportedKeys(std::string key);
 
   private:
 };

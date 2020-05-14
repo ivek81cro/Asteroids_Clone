@@ -11,14 +11,11 @@ EnemyUfo::EnemyUfo(float x, float y, sf::Texture& texture_sheet, float scale, in
     scale_factor_ = scale;
     sprite_.setScale(scale_factor_, scale_factor_);
     sprite_.setPosition(x, y);
-
-    name_ = "enemy_ufo";
-    game_level_     = static_cast<float>(game_level);
-    animation_name_ = name_;
-    exploding_      = false;
-    max_velocity_   = 100.f * game_level_ / 2;
     sprite_.setRotation(static_cast<float>((rand() % 360)));
 
+    game_level_ = static_cast<float>(game_level);
+
+    InitVariables();
     InitComponents(texture_sheet);
 }
 
@@ -36,12 +33,20 @@ void EnemyUfo::InitComponents(sf::Texture& texture_sheet)
     CreateAnimationComponent(texture_sheet);
     CreateMovementComponent(max_velocity_, 0.f, 0.f, sprite_.getRotation());
 
-    animation_component_->AddAnimation("enemy_ufo", 3.f, 0, 0, 17, 0, 48, 48);
-    animation_component_->AddAnimation("enemy_ufo_active", 3.f, 0, 1, 5, 1, 48, 48);
-    animation_component_->AddAnimation("enemy_ufo_away", 3.f, 0, 1, 17, 1, 48, 48);
-    animation_component_->AddAnimation("enemy_ufo_exploding", 5.f, 0, 2, 16, 2, 48, 48);
+    animation_component_->AddAnimation(Animations::Enemy_ufo_default, 3.f, 0, 0, 17, 0, 48, 48);
+    animation_component_->AddAnimation(Animations::Enemy_ufo_active, 3.f, 0, 1, 5, 1, 48, 48);
+    animation_component_->AddAnimation(Animations::Enemy_ufo_away, 3.f, 0, 1, 17, 1, 48, 48);
+    animation_component_->AddAnimation(Animations::Enemy_ufo_explosion, 5.f, 0, 2, 16, 2, 48, 48);
 }
 
+void EnemyUfo::InitVariables()
+{
+    name_           = EntityName::Enemy_ufo;
+    animation_name_ = Animations::Enemy_ufo_default;
+    exploding_      = false;
+    max_velocity_   = 100.f * game_level_ / 2;
+    movement_name_  = Movements::Enemy_ufo;
+}
 
 /**
     Update entity based on state (arriving, active, going away)
@@ -53,7 +58,7 @@ void EnemyUfo::Update(const float& delta, const sf::Vector2u& window_size)
         if (animation_component_->Play(animation_name_, delta, true))
         {
             invoulnerability_ = false;
-            animation_name_   = "enemy_ufo_active";
+            animation_name_   = Animations::Enemy_ufo_active;
         }
     }
     else if (away_)
@@ -105,7 +110,7 @@ void EnemyUfo::SetLifeTime(const float& delta)
 
     if (lifetime_ < 0)
     {
-        animation_name_   = "enemy_ufo_away";
+        animation_name_   = Animations::Enemy_ufo_away;
         away_             = true;
         invoulnerability_ = true;
     }
@@ -122,7 +127,7 @@ void EnemyUfo::SetAlive(bool is_alive)
     {
         exploding_      = true;
         fire_cooldown_  = 20.f;
-        animation_name_ = "enemy_ufo_exploding";
+        animation_name_ = Animations::Enemy_ufo_explosion;
     }
 }
 

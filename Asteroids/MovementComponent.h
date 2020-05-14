@@ -1,11 +1,20 @@
 #ifndef MOVEMENTCOMPONENT_H_
 #define MOVEMENTCOMPONENT_H_
 
+enum class Movements
+{
+    Ship,
+    Asteroid,
+    Enemy_ufo,
+    Bullet,
+    Life
+};
+
 class MovementComponent
 {
   public:
     MovementComponent(sf::Sprite& sprite, const float& max_velocity, const float& acceleration,
-                      const float& deceleration, const float& angle, const std::string& name);
+                      const float& deceleration, const float& angle, const Movements& name);
     virtual ~MovementComponent();
 
     //Accessors
@@ -21,7 +30,7 @@ class MovementComponent
   private:
     sf::Sprite&  sprite_;
     sf::Vector2f direction_;
-    std::string  name_;
+    Movements  name_;
 
     float max_velocity_;
     float acceleration_;

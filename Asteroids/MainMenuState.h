@@ -26,7 +26,7 @@ class MainMenuState : public State
     sf::Font           font_;
     sf::RectangleShape container_;
 
-    std::map<std::string, std::unique_ptr<gui::Button>> buttons_;
+    std::map<Buttons, std::unique_ptr<gui::Button>> buttons_;
 
     //Functions
     void InitVariables();

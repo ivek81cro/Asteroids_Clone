@@ -31,9 +31,9 @@ GameState::~GameState()
 //Initializer functions
 void GameState::InitFonts()
 {
-    if (!font_.loadFromFile("Fonts/Dosis-Light.ttf"))
+    if (!font_.loadFromFile(PATH_FILE_FONTS))
     {
-        throw("ERROR::MAINMENUSTATE::COULD_NOT_LOAD_FONT");
+        throw std::string("ERROR::MAINMENUSTATE::COULD_NOT_LOAD_FONT");
     }
 }
 
@@ -43,13 +43,18 @@ void GameState::InitFonts()
 void GameState::InitKeybinds()
 {
     std::ifstream ifs(*state_data_->path_game_state_keys_);
+
     if (ifs.is_open())
     {
         std::string key  = "";
         std::string key2 = "";
         while (ifs >> key >> key2)
         {
-            keybinds_[ key ] = supported_keys_->at(key2);
+            Keybinds key_e     = SelectEnumKeybinds(key);
+            SupportedKeys key2_e = SelectEnumSupportedKeys(key2);
+
+            if (key_e != Keybinds::Unknown && key2_e != SupportedKeys::Unsupported)
+                keybinds_[ key_e ] = supported_keys_->at(key2_e);
         }
     }
     ifs.close();
@@ -60,39 +65,40 @@ void GameState::InitKeybinds()
 */
 void GameState::InitTextures()
 {
-    if (!textures_[ "PLAYER_SHIP" ].loadFromFile("Resources/Images/ship_inline.png"))
+
+    if (!textures_[ Textures::Player_ship ].loadFromFile(PATH_TEXTURE_SHIP))
     {
-        throw "ERROR::GAMESTATE::COULD_NOT_LOAD_PLAYER_SHIP_TEXTURE";
+        throw std::string("ERROR::GAMESTATE::COULD_NOT_LOAD_PLAYER_SHIP_TEXTURE");
     }
 
-    if (!textures_[ "ASTEROID" ].loadFromFile("Resources/Images/rock.png"))
+    if (!textures_[ Textures::Asteroid ].loadFromFile(PATH_TEXTURE_ASTEROID))
     {
-        throw "ERROR::GAMESTATE::COULD_NOT_LOAD_PLAYER_ASTEROID_TEXTURE";
+        throw std::string("ERROR::GAMESTATE::COULD_NOT_LOAD_PLAYER_ASTEROID_TEXTURE");
     }
 
-    if (!textures_[ "BULLET" ].loadFromFile("Resources/Images/fire_red_reverse.png"))
+    if (!textures_[ Textures::Bullet ].loadFromFile(PATH_TEXTURE_BULLET_SHIP))
     {
-        throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_BULLET_EXTURE";
+        throw std::string("ERROR::MAINMENUSTATE::FAILED_TO_LOAD_BULLET_EXTURE");
     }
 
-    if (!textures_[ "BACKGROUND_TEXTURE" ].loadFromFile("Resources/Images/background.jpg"))
+    if (!textures_[ Textures::Background_texture ].loadFromFile(PATH_TEXTURE_BACKGROUND_GAME))
     {
-        throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
+        throw std::string("ERROR::MAINMENUSTATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE");
     }
 
-    if (!textures_[ "ENEMYUFO" ].loadFromFile("Resources/Images/enemy_ufo.png"))
+    if (!textures_[ Textures::Enemy_ufo ].loadFromFile(PATH_TEXTURE_ENEMY_UFO))
     {
-        throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_ENEMYUFO_TEXTURE";
+        throw std::string("ERROR::MAINMENUSTATE::FAILED_TO_LOAD_ENEMYUFO_TEXTURE");
     }
 
-    if (!textures_[ "ENEMYBULLET" ].loadFromFile("Resources/Images/fire_blue.png"))
+    if (!textures_[ Textures::Bullet_enemy ].loadFromFile(PATH_TEXTURE_BULLET_ENEMY))
     {
-        throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_ENEMYBULLET_EXTURE";
+        throw std::string("ERROR::MAINMENUSTATE::FAILED_TO_LOAD_ENEMYBULLET_EXTURE");
     }
 
-    if (!textures_[ "LIFE" ].loadFromFile("Resources/Images/life.png"))
+    if (!textures_[ Textures::Life ].loadFromFile(PATH_TEXTURE_LIFE))
     {
-        throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_ENEMYBULLET_EXTURE";
+        throw std::string("ERROR::MAINMENUSTATE::FAILED_TO_LOAD_ENEMYBULLET_EXTURE");
     }
 }
 
@@ -105,7 +111,7 @@ void GameState::InitPauseMenu()
 
     p_menu_ = std::unique_ptr<PauseMenu>(new PauseMenu(state_data_->gfx_settings_->resolution_, font_));
 
-    p_menu_->AddButton("QUIT", window_->getSize().y - gui::PercToPixelY(13.89f, vm), gui::PercToPixelX(19.53f, vm),
+    p_menu_->AddButton(Buttons::Quit, window_->getSize().y - gui::PercToPixelY(13.89f, vm), gui::PercToPixelX(19.53f, vm),
                        gui::PercToPixelY(6.94f, vm), gui::CalcFontSize(vm, 40), "Quit");
 }
 
@@ -117,7 +123,7 @@ void GameState::InitBackground()
     background_.setSize(
         sf::Vector2f(static_cast<float>(window_->getSize().x), static_cast<float>(window_->getSize().y)));
 
-    background_.setTexture(&textures_[ "BACKGROUND_TEXTURE" ]);
+    background_.setTexture(&textures_[ Textures::Background_texture ]);
 }
 
 /**
@@ -127,7 +133,7 @@ void GameState::InitPlayer()
 {
     entities_.push_back(std::unique_ptr<Ship>(new Ship(static_cast<float>(window_->getSize().x / 2),
                                                        static_cast<float>(window_->getSize().y / 2),
-                                                       textures_[ "PLAYER_SHIP" ], entity_scale_factor_)));
+                                                       textures_[ Textures::Player_ship ], entity_scale_factor_)));
 }
 
 /**
@@ -138,7 +144,7 @@ void GameState::InitEnemyUfo()
     sf::Vector2f ufo_position(static_cast<float>(rand() % window_->getSize().x), static_cast<float>(rand() % window_->getSize().y));
 
     entities_.push_back(std::unique_ptr<EnemyUfo>(
-        new EnemyUfo(ufo_position.x, ufo_position.y, textures_[ "ENEMYUFO" ], entity_scale_factor_, current_level_)));
+        new EnemyUfo(ufo_position.x, ufo_position.y, textures_[ Textures::Enemy_ufo ], entity_scale_factor_, current_level_)));
 
     ufo_active_ = true;
     --ufo_max_per_level_;
@@ -152,7 +158,7 @@ void GameState::InitAsteroids()
     for (int i = 0; i <= 1 * current_level_; ++i)
         entities_.push_back(std::unique_ptr<Asteroid>(new Asteroid(static_cast<float>(rand() % (window_->getSize().x)),
                                                                    static_cast<float>(rand() % (window_->getSize().y)),
-                                                                   1, textures_[ "ASTEROID" ], entity_scale_factor_, game_level_)));
+                                                                   1, textures_[ Textures::Asteroid ], entity_scale_factor_, game_level_)));
 }
 
 /**
@@ -192,7 +198,7 @@ void GameState::InitTextItems()
     invoulnerable_text_.setCharacterSize(gui::CalcFontSize(vm, 70));
     invoulnerable_text_.setFillColor(sf::Color(255, 0, 0, 200));
     invoulnerable_text_.setOutlineThickness(2);
-    std::string invoulnerable_text = "=INVOULNERABLE=";
+    std::string invoulnerable_text = "=INVULNERABLE=";
 
     invoulnerable_text_.setString(invoulnerable_text);
 }
@@ -203,7 +209,7 @@ void GameState::InitTextItems()
 void GameState::FireBullet(Ship* s)
 {
     entities_.push_back(std::unique_ptr<Bullet>(
-        new Bullet(s->GetPosition().x, s->GetPosition().y, textures_[ "BULLET" ], s->GetAngle(), entity_scale_factor_, "bullet")));
+        new Bullet(s->GetPosition().x, s->GetPosition().y, textures_[ Textures::Bullet ], s->GetAngle(), entity_scale_factor_, EntityName::Bullet)));
 }
 
 /**
@@ -211,7 +217,7 @@ void GameState::FireBullet(Ship* s)
 */
 void GameState::UpdateInput(const float& delta)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("CLOSE"))) && GetKeytime())
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at(Keybinds::Close))) && GetKeytime())
     {
         if (!paused_)
             PauseState();
@@ -230,7 +236,7 @@ void GameState::UpdatePlayerInput(const float& delta)
     Ship* s = nullptr;
     for (auto& it : entities_)
     {
-        if (it->GetName() == "ship")
+        if (it->GetName() == EntityName::Ship)
         {
             s = static_cast<Ship*>(it.get());
         }
@@ -255,19 +261,19 @@ void GameState::UpdatePlayerInput(const float& delta)
         InitTextItems();
 
         //Update player input
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_UP"))))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at(Keybinds::Move_up))))
             s->Move(0.f, -1.f, delta);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_DOWN"))))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at(Keybinds::Move_down))))
             s->Move(0.f, 1.f, delta);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_LEFT"))))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at(Keybinds::Move_left))))
             s->Move(-1.f, 0.f, delta);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("MOVE_RIGHT"))))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at(Keybinds::Move_right))))
             s->Move(1.f, 0.f, delta);
 
         //Ship fires bullet if alive, if key cooldown time elapsed
         bullet_cooldown_ = bullet_clock_.getElapsedTime();
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("FIRE"))) &&
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at(Keybinds::Fire))) &&
             bullet_cooldown_.asSeconds() > 0.25f && s->IsAlive() && !s->IsExploding())
         {
             bullet_clock_.restart();
@@ -281,7 +287,7 @@ void GameState::UpdatePlayerInput(const float& delta)
 */
 void GameState::UpdatePauseMenuButtons()
 {
-    if (p_menu_->IsButtonPressed("QUIT"))
+    if (p_menu_->IsButtonPressed(Buttons::Quit))
         EndState();
 }
 
@@ -307,7 +313,7 @@ void GameState::CheckCollision()
         for (auto& it2 : entities_)
         {
             //Check collision between ship bullets and asteroids
-            if (it->GetName() == "asteroid" && it2->GetName() == "bullet" && !it->IsExploding())
+            if (it->GetName() == EntityName::Asteroid && it2->GetName() == EntityName::Bullet && !it->IsExploding())
             {
                 if (it->CheckCollision(it2->GetHitbox()))
                 {
@@ -316,7 +322,7 @@ void GameState::CheckCollision()
                     {
                         new_entities.push_back(std::unique_ptr<Asteroid>(
                             new Asteroid(it->GetPosition().x, it->GetPosition().y, it->GetLevel() + 1,
-                                         textures_[ "ASTEROID" ], entity_scale_factor_, game_level_)));
+                                         textures_[ Textures::Asteroid ], entity_scale_factor_, game_level_)));
                     }
                     score_ += static_cast<Asteroid*>(it.get())->GetPoints();
                     it2->SetAlive(false);
@@ -325,8 +331,9 @@ void GameState::CheckCollision()
             }
 
             //Check collision between ship and asteroids or ship and enemy bullets
-            if (it->GetName() == "ship" && (it2->GetName() == "asteroid" || it2->GetName() == "e_bullet") && !it->IsExploding() &&
-                !it2->IsExploding() && it2->IsAlive() && !static_cast<Ship*>(it.get())->ShieldsUp())
+            if (it->GetName() == EntityName::Ship && (it2->GetName() == EntityName::Asteroid || 
+                it2->GetName() == EntityName::Bullet_enemy) && !it->IsExploding() && !it2->IsExploding() && 
+                it2->IsAlive() && !static_cast<Ship*>(it.get())->ShieldsUp())
             {
                 if (it->CheckCollision(it2->GetHitbox()))
                 {
@@ -335,7 +342,7 @@ void GameState::CheckCollision()
             }
 
             //Collision between ship and drop
-            if (it->GetName() == "ship" && (it2->GetName() == "life"))
+            if (it->GetName() == EntityName::Ship && (it2->GetName() == EntityName::Life))
             {
                 if (it->CheckCollision(it2->GetHitbox()))
                 {                    
@@ -345,8 +352,8 @@ void GameState::CheckCollision()
             }
 
             //Check collision between ship bullet and UFO, and ship and ufo in case of suicide run
-            if (ufo_active_ && it->GetName() == "enemy_ufo" && !static_cast<EnemyUfo*>(it.get())->GetInvoulnerability() && 
-                (it2->GetName() == "bullet" || it2->GetName() == "ship"))
+            if (ufo_active_ && it->GetName() == EntityName::Enemy_ufo && !static_cast<EnemyUfo*>(it.get())->GetInvoulnerability() && 
+                (it2->GetName() == EntityName::Bullet || it2->GetName() == EntityName::Ship))
             {
                 if (it->CheckCollision(it2->GetHitbox()))
                 {
@@ -361,7 +368,7 @@ void GameState::CheckCollision()
                     {
                         entities_.push_back(
                             std::unique_ptr<DropLife>(new DropLife(it.get()->GetPosition().x, it.get()->GetPosition().y,
-                                                                   textures_[ "LIFE" ], entity_scale_factor_)));
+                                                                   textures_[ Textures::Life ], entity_scale_factor_)));
                     }
                 }
             }
@@ -382,10 +389,10 @@ void GameState::UpdateEntities(const float& delta)
     //Update entities
     for (auto& it : entities_)
     {
-        if (it->GetName() == "bullet" || it->GetName() == "e_bullet")
+        if (it->GetName() == EntityName::Bullet || it->GetName() == EntityName::Bullet_enemy)
             static_cast<Bullet*>(it.get())->SetLifeTime(delta); //Decrease bullet lifetime for elapsed time
 
-        if ((it)->GetName() != "ship")
+        if ((it)->GetName() != EntityName::Ship)
             it->Move(0, 0, delta); //Movement for asteroids and bullets
 
         it->Update(delta, window_->getSize()); //Update each entity
@@ -412,7 +419,7 @@ void GameState::UpdateEnemy(const float& delta)
     {
         for (auto& it : entities_)
         {
-            if (it->GetName() == "enemy_ufo")
+            if (it->GetName() == EntityName::Enemy_ufo)
             {
                 e = static_cast<EnemyUfo*>(it.get());
             }
@@ -426,8 +433,8 @@ void GameState::UpdateEnemy(const float& delta)
                 while (angle > 0.f)
                 {
                     entities_.push_back(std::unique_ptr<Bullet>(new Bullet(e->GetPosition().x, e->GetPosition().y,
-                                                                           textures_[ "ENEMYBULLET" ], angle,
-                                                                           entity_scale_factor_, "e_bullet")));
+                                                                           textures_[ Textures::Bullet_enemy ], angle,
+                                                                           entity_scale_factor_, EntityName::Bullet_enemy)));
 
                     angle -= current_level_ > 1 ? 120.f / current_level_ : 120.f;//Set angle of shooting depending on level of game
                 }
@@ -472,7 +479,7 @@ void GameState::Update(const float& delta)
 void GameState::IfEnd()
 {
     //If all asteroids are destroyed
-    if (entities_.size() < 2 && paused_ == false && entities_[ 0 ].get()->GetName() == "ship")
+    if (entities_.size() < 2 && paused_ == false && entities_[ 0 ].get()->GetName() == EntityName::Ship)
     {
         game_level_ += 0.3f;
         ++current_level_;
@@ -496,7 +503,7 @@ void GameState::Render(sf::RenderTarget* target)
 
     for (auto& it : entities_)
     {
-        if (it.get()->GetName() == "ship" && static_cast<Ship*>(it.get())->ShieldsUp())
+        if (it.get()->GetName() == EntityName::Ship && static_cast<Ship*>(it.get())->ShieldsUp())
             target->draw(invoulnerable_text_);
 
         it->Render(*target);

@@ -7,6 +7,20 @@ enum button_states
     BTN_HOVER,
     BTN_ACTIVE
 };
+
+enum class Buttons
+{
+    Apply,
+    Back,
+    Quit,
+    Game_state,
+    Settings_state,
+    Score_state,
+    Exit_state,
+    Wasd,
+    Arrows
+};
+
 namespace gui
 {
     const float    PercToPixelX(const float perc, const sf::VideoMode& vm);

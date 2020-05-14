@@ -7,18 +7,18 @@
 DropLife::DropLife(float x, float y, sf::Texture& texture_sheet, float scale)
         : lifetime_(5.f)
 {
-    scale_factor_ = scale;
-    name_         = "life";
-    animation_name_ = name_;
+    scale_factor_   = scale;
+    name_           = EntityName::Life;
+    animation_name_ = Animations::Life_default;
     max_velocity_   = 50.f;
     alive_          = true;
+    movement_name_  = Movements::Life;
 
     sprite_.setPosition(x, y);
     sprite_.setScale(scale_factor_, scale_factor_);
     sprite_.setRotation(static_cast<float>(rand() % 360));
 
     InitComponents(texture_sheet);
-    
 }
 
 DropLife::~DropLife()
@@ -32,7 +32,7 @@ void DropLife::Update(const float& delta, const sf::Vector2u& window_size)
 {
     //Remove drop if not picked up within 5 seconds
     lifetime_ -= delta;
-    if ( lifetime_ < 0)
+    if (lifetime_ < 0)
     {
         alive_ = false;
     }
@@ -48,5 +48,5 @@ void DropLife::InitComponents(sf::Texture& texture_sheet)
     CreateMovementComponent(max_velocity_, 0.f, 0.f, sprite_.getRotation());
     CreateHitboxComponent(sprite_, 45 * scale_factor_);
 
-    animation_component_->AddAnimation("life", 5.f, 0, 0, 7, 0, 45, 45);
+    animation_component_->AddAnimation(animation_name_, 5.f, 0, 0, 7, 0, 45, 45);
 }

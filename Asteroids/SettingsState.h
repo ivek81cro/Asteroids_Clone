@@ -26,13 +26,13 @@ class SettingsState : public State
     sf::RectangleShape background_;
     sf::Font           font_;
 
-    std::map<std::string, std::unique_ptr<gui::Button>>       buttons_;
-    std::map<std::string, std::unique_ptr<gui::DropDownList>> ddl_;
+    std::map<Buttons, std::unique_ptr<gui::Button>>       buttons_;
+    std::map<Settings, std::unique_ptr<gui::DropDownList>> ddl_;
 
     sf::Text options_text_;
     sf::Text warning_text_;
 
-    std::vector<sf::VideoMode>         v_modes_;
+    std::vector<sf::VideoMode>     v_modes_;
     std::map<std::string, std::string> key_configs_;
 
     //Functions

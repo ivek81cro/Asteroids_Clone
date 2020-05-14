@@ -154,6 +154,12 @@
     <ClInclude Include="DropLife.h">
       <Filter>Entities</Filter>
     </ClInclude>
+    <ClInclude Include="EnumsState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FilePaths.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

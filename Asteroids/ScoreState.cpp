@@ -29,9 +29,9 @@ ScoreState::~ScoreState()
 //Init functions
 void ScoreState::InitFonts()
 {
-    if (!font_.loadFromFile("Fonts/Dosis-Light.ttf"))
+    if (!font_.loadFromFile(PATH_FILE_FONTS))
     {
-        throw("ERROR::MAINMENUSTATE::COULD_NOT_LOAD_FONT");
+        throw std::string("ERROR::MAINMENUSTATE::COULD_NOT_LOAD_FONT");
     }
 }
 
@@ -52,14 +52,18 @@ void ScoreState::InitGui()
 */
 void ScoreState::InitKeybinds()
 {
-    std::ifstream ifs("config/mainmenustate_keybinds.ini");
+    std::ifstream ifs(PATH_FILE_KEYBINDS_MAIN_MENU);
     if (ifs.is_open())
     {
         std::string key  = "";
         std::string key2 = "";
         while (ifs >> key >> key2)
         {
-            keybinds_[ key ] = supported_keys_->at(key2);
+            Keybinds      key_e  = SelectEnumKeybinds(key);
+            SupportedKeys key2_e = SelectEnumSupportedKeys(key2);
+
+            if (key_e != Keybinds::Unknown && key2_e != SupportedKeys::Unsupported)
+                keybinds_[ key_e ] = supported_keys_->at(key2_e);
         }
     }
     ifs.close();
@@ -73,12 +77,12 @@ void ScoreState::InitBackground(const sf::VideoMode& vm)
     //Backround
     background_.setSize(sf::Vector2f(static_cast<float>(vm.width), static_cast<float>(vm.height)));
 
-    if (!textures_[ "BACKGROUND_TEXTURE" ].loadFromFile("Resources/Images/background.jpg"))
+    if (!textures_[ Textures::Background_texture ].loadFromFile(PATH_TEXTURE_BACKGROUND_GAME))
     {
-        throw "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_TEXTURE";
+        throw std::string("ERROR::MAINMENUSTATE::FAILED_TO_LOAD_TEXTURE");
     }
 
-    background_.setTexture(&textures_[ "BACKGROUND_TEXTURE" ]);
+    background_.setTexture(&textures_[ Textures::Background_texture ]);
 }
 
 /**
@@ -90,7 +94,7 @@ void ScoreState::InitButtons(const sf::VideoMode& vm)
     float width  = gui::PercToPixelX(19.53f, vm);
     float height = gui::PercToPixelY(6.94f, vm);
 
-    buttons_[ "BACK" ] = std::unique_ptr<gui::Button>(
+    buttons_[ Buttons::Back ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(90.19f, vm), width, height,
                                          &font_, "Back", gui::CalcFontSize(vm, 60), sf::Color(255, 0, 0, 200),
                                          sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
@@ -147,7 +151,7 @@ void ScoreState::InitText(const sf::VideoMode& vm)
 //Functions
 void ScoreState::ReadScoresFile()
 {
-    std::ifstream ifs("Config/scores.ini");
+    std::ifstream ifs(PATH_FILE_SCORES);
     if (ifs.is_open())
     {
         std::string name  = "";
@@ -165,7 +169,7 @@ void ScoreState::ReadScoresFile()
 */
 void ScoreState::WriteScoresFile()
 {
-    std::ofstream ofs("Config/scores.ini");
+    std::ofstream ofs(PATH_FILE_SCORES);
 
     if (ofs.is_open())
     {
@@ -268,7 +272,7 @@ void ScoreState::UpdateGui(const float& delta)
 
     //Button functionality
     //Exit scoreboard
-    if (buttons_[ "BACK" ]->IsPressed() || sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at("CLOSE"))))
+    if (buttons_[ Buttons::Back ]->IsPressed() || sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at(Keybinds::Close))))
     {
         EndState();
     }
