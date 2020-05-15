@@ -205,15 +205,20 @@ void ScoreState::CompareScore()
     }
     else
     {
-        for (auto itr = scores_.begin(); itr != scores_.end(); ++itr)
+        for (auto itr = scores_.begin(); itr != scores_.end(); )
         {
             if (current_player_score_ >= (*itr).first)
             {
                 if (scores_.size() > 10)
+                {
+                    scores_.insert(itr, std::pair<int, std::string>(current_player_score_, str_name_));
                     scores_.erase(--scores_.end());
+                    break;
+                }
                 scores_.insert(itr, std::pair<int, std::string>(current_player_score_, str_name_));
                 break;
             }
+            ++itr;
         }
     }
     WriteScoresFile();
