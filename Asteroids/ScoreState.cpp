@@ -29,9 +29,16 @@ ScoreState::~ScoreState()
 //Init functions
 void ScoreState::InitFonts()
 {
-    if (!font_.loadFromFile(PATH_FILE_FONTS))
+    try
     {
-        throw std::string("ERROR::MAINMENUSTATE::COULD_NOT_LOAD_FONT");
+        if (!font_.loadFromFile(PATH_FILE_FONTS))
+        {
+            throw XFileError(ERRORMESSAGE_ERROR_READING_FILE);
+        }
+    }
+    catch (XError& error)
+    {
+        error.LogError(ERRORMESSAGE_ERROR_READING_FONT_FILE);
     }
 }
 
@@ -59,10 +66,10 @@ void ScoreState::InitKeybinds()
         std::string key2 = "";
         while (ifs >> key >> key2)
         {
-            Keybinds      key_e  = SelectEnumKeybinds(key);
-            SupportedKeys key2_e = SelectEnumSupportedKeys(key2);
+            Keybind_e      key_e  = SelectEnumKeybinds(key);
+            SupportedKey_e key2_e = SelectEnumSupportedKeys(key2);
 
-            if (key_e != Keybinds::Unknown && key2_e != SupportedKeys::Unsupported)
+            if (key_e != Keybind_e::Unknown && key2_e != SupportedKey_e::Unsupported)
                 keybinds_[ key_e ] = supported_keys_->at(key2_e);
         }
     }
@@ -77,12 +84,18 @@ void ScoreState::InitBackground(const sf::VideoMode& vm)
     //Backround
     background_.setSize(sf::Vector2f(static_cast<float>(vm.width), static_cast<float>(vm.height)));
 
-    if (!textures_[ Textures::Background_texture ].loadFromFile(PATH_TEXTURE_BACKGROUND_GAME))
+    try{
+        if (!textures_[ Texture_e::Background_texture ].loadFromFile(PATH_TEXTURE_BACKGROUND_GAME))
+        {
+            throw XFileError(ERRORMESSAGE_ERROR_READING_FILE);
+        }
+    }
+    catch (XError& error)
     {
-        throw std::string("ERROR::MAINMENUSTATE::FAILED_TO_LOAD_TEXTURE");
+        error.LogError(ERRORMESSAGE_ERROR_READING_BACKGROUND_TEXTURE_FILE);
     }
 
-    background_.setTexture(&textures_[ Textures::Background_texture ]);
+    background_.setTexture(&textures_[ Texture_e::Background_texture ]);
 }
 
 /**
@@ -272,7 +285,7 @@ void ScoreState::UpdateGui(const float& delta)
 
     //Button functionality
     //Exit scoreboard
-    if (buttons_[ Buttons::Back ]->IsPressed() || sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at(Keybinds::Close))))
+    if (buttons_[ Buttons::Back ]->IsPressed() || sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at(Keybind_e::Close))))
     {
         EndState();
     }

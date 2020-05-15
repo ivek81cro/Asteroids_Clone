@@ -18,4 +18,6 @@
 #define PATH_TEXTURE_BULLET_ENEMY    "Resources/Images/fire_blue.png"
 #define PATH_TEXTURE_LIFE            "Resources/Images/life.png"
 
+#define PATH_LOG_FILE				 "Logs/"
+
 #endif // !FILEPATHS_H_

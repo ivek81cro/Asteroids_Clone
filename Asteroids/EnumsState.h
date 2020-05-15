@@ -1,7 +1,7 @@
 #ifndef ENUMS_STATE_H_
 #define ENUMS_STATE_H_
 
-enum class Textures
+enum class Texture_e
 {
     Player_ship,
     Asteroid,
@@ -12,7 +12,7 @@ enum class Textures
     Life
 };
 
-enum class Settings
+enum class Settings_e
 {
     Resolution,
     Fullscreen,
@@ -21,7 +21,7 @@ enum class Settings
     Keys_config
 };
 
-enum class SupportedKeys
+enum class SupportedKey_e
 {
     Up,
     Down,
@@ -36,7 +36,7 @@ enum class SupportedKeys
     Unsupported
 };
 
-enum class Keybinds
+enum class Keybind_e
 {
     Close,
     Fire,

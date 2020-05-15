@@ -90,6 +90,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\SFML\include</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -126,6 +127,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\SFML\include</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -170,6 +172,7 @@
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GraphicsSettings.cpp" />
     <ClCompile Include="HitboxComponent.cpp" />
+    <ClCompile Include="LogToFile.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
@@ -184,6 +187,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="XFileError.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationComponent.h" />
@@ -200,7 +204,9 @@
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GraphicsSettings.h" />
     <ClInclude Include="HitboxComponent.h" />
+    <ClInclude Include="LogToFile.h" />
     <ClInclude Include="MainMenuState.h" />
+    <ClInclude Include="Messages.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="resource1.h" />
@@ -209,6 +215,8 @@
     <ClInclude Include="Ship.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="XError.h" />
+    <ClInclude Include="XFileError.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

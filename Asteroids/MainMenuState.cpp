@@ -25,9 +25,16 @@ void MainMenuState::InitVariables()
 */
 void MainMenuState::InitFonts()
 {
-    if (!font_.loadFromFile(PATH_FILE_FONTS))
+    try
     {
-        throw std::string("ERROR::MAINMENUSTATE::COULD_NOT_LOAD_FONT");
+        if (!font_.loadFromFile(PATH_FILE_FONTS))
+        {
+            throw XFileError(ERRORMESSAGE_ERROR_READING_FILE);
+        }
+    }
+    catch (XError& error)
+    {
+        error.LogError(ERRORMESSAGE_ERROR_READING_FONT_FILE);
     }
 }
 
@@ -44,10 +51,10 @@ void MainMenuState::InitKeybinds()
         std::string key2 = "";
         while (ifs >> key >> key2)
         {
-            Keybinds      key_e  = SelectEnumKeybinds(key);
-            SupportedKeys key2_e = SelectEnumSupportedKeys(key2);
+            Keybind_e      key_e  = SelectEnumKeybinds(key);
+            SupportedKey_e key2_e = SelectEnumSupportedKeys(key2);
 
-            if (key_e != Keybinds::Unknown && key2_e != SupportedKeys::Unsupported)
+            if (key_e != Keybind_e::Unknown && key2_e != SupportedKey_e::Unsupported)
                 keybinds_[ key_e ] = supported_keys_->at(key2_e);
         }
     }
@@ -73,12 +80,19 @@ void MainMenuState::InitGui()
     container_.setPosition(static_cast<float>(vm.width / 2.f) - static_cast<float>(container_.getSize().x / 2.f),
                            gui::PercToPixelY(20.f, vm));
 
-    if (!textures_[ Textures::Background_texture ].loadFromFile(PATH_TEXTURE_BACKGROUND_MAIN))
+    try
     {
-        throw std::string("ERROR::MAINMENUSTATE::FAILED_TO_LOAD_TEXTURE");
+        if (!textures_[ Texture_e::Background_texture ].loadFromFile(PATH_TEXTURE_BACKGROUND_MAIN))
+        {
+            throw XFileError(ERRORMESSAGE_ERROR_READING_FILE);
+        }
+    }
+    catch (XError& error)
+    {
+        error.LogError(ERRORMESSAGE_ERROR_READING_BACKGROUND_TEXTURE_FILE);
     }
 
-    background_.setTexture(&textures_[ Textures::Background_texture ]);
+    background_.setTexture(&textures_[ Texture_e::Background_texture ]);
 
     //Buttons
     buttons_[ Buttons::Game_state ] = std::unique_ptr<gui::Button>(

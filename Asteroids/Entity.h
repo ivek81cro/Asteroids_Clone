@@ -5,7 +5,7 @@
 #include "HitboxComponent.h"
 #include "MovementComponent.h"
 
-enum class EntityName
+enum class EntityName_e
 {
     Ship,
     Asteroid,
@@ -33,22 +33,29 @@ class Entity
     virtual const bool             IsAlive();
     virtual void                   SetAlive(bool is_alive);
     virtual const bool             IsExploding();
-    virtual const EntityName       GetName();
+    virtual const EntityName_e       GetName();
     virtual const sf::CircleShape& GetHitbox() const;
     virtual const bool             CheckCollision(const sf::CircleShape& other);
     virtual const int&             GetLevel() const;
     virtual const sf::Vector2f&    GetPosition() const;
-
-    virtual void Update(const float& delta, const sf::Vector2u& window_size);
-    virtual void Render(sf::RenderTarget& target);
+    virtual void                   ResetAnimationName();
+    virtual void                   Update(const float& delta, const sf::Vector2u& window_size);
+    virtual void                   Render(sf::RenderTarget& target);
+    virtual bool                   ShieldsUp();
+    virtual float                  GetAngle() const;
+    virtual const int              GetPoints() const;
+    virtual const bool             GetInvoulnerability() const;
+    virtual void                   SetLifeTime(const float& delta);
+    virtual const float&           GetFireCooldown() const;
+    virtual void                   ResetFireCooldown();
 
   protected:
     //Variables
     sf::Sprite sprite_;
 
-    EntityName name_;
-    Animations animation_name_;
-    Movements  movement_name_;
+    EntityName_e name_;
+    Animation_e animation_name_;
+    Movement_e  movement_name_;
 
     bool alive_;
     bool exploding_;

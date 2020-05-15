@@ -37,7 +37,7 @@ class Game
 
     std::stack<std::unique_ptr<State>> states_;
 
-    std::map<SupportedKeys, int> supported_keys_;
+    std::map<SupportedKey_e, int> supported_keys_;
 
     //Inititalization
     void InitVariables();
@@ -47,7 +47,7 @@ class Game
     void InitStateData();
     void InitStates();
 
-    SupportedKeys SelectEnum(std::string key);
+    SupportedKey_e SelectEnum(std::string key);
 };
 
 #endif

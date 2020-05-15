@@ -2,8 +2,9 @@
 #define HEADER_H_
 
 //Core
+#include <chrono>
 #include <cstdlib>
-#include <ctime>
+#include <chrono>
 #include <fstream>
 #include <iostream>
 #include <map>

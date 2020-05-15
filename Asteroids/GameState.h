@@ -58,7 +58,7 @@ class GameState : public State
     void InitEnemyUfo();
     void InitAsteroids();
     void InitTextItems();
-    void FireBullet(Ship* s);
+    void FireBullet(Entity* s);
 };
 
 #endif // !GAMESTATE_H_

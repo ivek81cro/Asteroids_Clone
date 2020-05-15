@@ -24,6 +24,12 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{7230df36-29b4-4dd2-a8ae-9561ee49e3c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Logger">
+      <UniqueIdentifier>{2b3b7c3a-a2eb-47d3-9dec-7c75493a24bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Errors">
+      <UniqueIdentifier>{a1e244f3-240e-4526-a002-877206827889}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -88,6 +94,12 @@
     </ClCompile>
     <ClCompile Include="DropLife.cpp">
       <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="LogToFile.cpp">
+      <Filter>Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="XFileError.cpp">
+      <Filter>Errors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +171,18 @@
     </ClInclude>
     <ClInclude Include="FilePaths.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LogToFile.h">
+      <Filter>Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Messages.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="XError.h">
+      <Filter>Errors</Filter>
+    </ClInclude>
+    <ClInclude Include="XFileError.h">
+      <Filter>Errors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -27,7 +27,7 @@ class SettingsState : public State
     sf::Font           font_;
 
     std::map<Buttons, std::unique_ptr<gui::Button>>       buttons_;
-    std::map<Settings, std::unique_ptr<gui::DropDownList>> ddl_;
+    std::map<Settings_e, std::unique_ptr<gui::DropDownList>> ddl_;
 
     sf::Text options_text_;
     sf::Text warning_text_;

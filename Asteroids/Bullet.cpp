@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Bullet.h"
 
-Bullet::Bullet(float x, float y, sf::Texture& texture_sheet, float angle, float scale_factor, EntityName name)
+Bullet::Bullet(float x, float y, sf::Texture& texture_sheet, float angle, float scale_factor, EntityName_e name)
         : angle_(angle)
 {
     name_         = name;
@@ -23,11 +23,11 @@ Bullet::~Bullet()
 //Initializer functions
 void Bullet::InitVariables()
 {
-    animation_name_ = Animations::Bullet_default;
+    animation_name_ = Animation_e::Bullet_default;
     lifetime_       = 1.f;
     sprite_.setRotation(angle_ - 90);
     max_velocity_ = 1000.f * scale_factor_;
-    movement_name_ = Movements::Bullet;
+    movement_name_ = Movement_e::Bullet;
 }
 
 /**

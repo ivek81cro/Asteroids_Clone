@@ -20,7 +20,7 @@ AnimationComponent::~AnimationComponent()
     Return if animation ran all frames 'till last
  */
 //Accessor
-const bool& AnimationComponent::IsDone(const Animations key)
+const bool& AnimationComponent::IsDone(const Animation_e key)
 {
     return animations_[ key ]->IsDone();
 }
@@ -29,7 +29,7 @@ const bool& AnimationComponent::IsDone(const Animations key)
     Add spritesheet with number of frames for animation
  */
 //Functions
-void AnimationComponent::AddAnimation(const Animations key, float animation_timer, int start_frame_x,
+void AnimationComponent::AddAnimation(const Animation_e key, float animation_timer, int start_frame_x,
                                       int start_frame_y, int frames_x, int frames_y, int width, int height)
 {
     animations_[ key ] = std::unique_ptr<Animation>(new Animation(sprite_, texture_sheet_, animation_timer, start_frame_x, start_frame_y, frames_x,
@@ -39,7 +39,7 @@ void AnimationComponent::AddAnimation(const Animations key, float animation_time
 /**
     Play animation, if there are multiple, one can be prioritized
  */
-const bool& AnimationComponent::Play(const Animations key, const float& delta, const bool priority)
+const bool& AnimationComponent::Play(const Animation_e key, const float& delta, const bool priority)
 {
     if (prority_animation_)//If exists priority animation
     {

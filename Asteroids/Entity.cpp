@@ -72,7 +72,7 @@ const bool Entity::IsExploding()
     return exploding_;
 }
 
-const EntityName Entity::GetName()
+const EntityName_e Entity::GetName()
 {
     return name_;
 }
@@ -109,6 +109,10 @@ const sf::Vector2f& Entity::GetPosition() const
     return sprite_.getPosition();
 }
 
+void Entity::ResetAnimationName()
+{
+}
+
 
 /**
     Update components of entity
@@ -135,4 +139,37 @@ void Entity::Render(sf::RenderTarget& target)
 
     if (hitbox_component_)
         hitbox_component_->Render(target);
+}
+
+bool Entity::ShieldsUp()
+{
+    return false;
+}
+
+float Entity::GetAngle() const
+{
+    return 0.0f;
+}
+
+const int Entity::GetPoints() const
+{
+    return 0;
+}
+
+const bool Entity::GetInvoulnerability() const
+{
+    return false;
+}
+
+void Entity::SetLifeTime(const float& delta)
+{
+}
+
+const float& Entity::GetFireCooldown() const
+{
+    return 0.f;
+}
+
+void Entity::ResetFireCooldown()
+{
 }

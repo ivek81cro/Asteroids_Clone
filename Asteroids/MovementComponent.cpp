@@ -6,7 +6,7 @@
  */
 //Constructors / Destructors
 MovementComponent::MovementComponent(sf::Sprite& sprite, const float& max_velocity, const float& acceleration,
-                                     const float& deceleration, const float& angle, const Movements& name)
+                                     const float& deceleration, const float& angle, const Movement_e& name)
         : sprite_(sprite)
         , max_velocity_(max_velocity)
         , acceleration_(acceleration)
@@ -51,7 +51,7 @@ void MovementComponent::Move(const float dir_x, const float dir_y, const float& 
         sprite_.rotate(dir_x * 300.f * delta);
     }
     //Ship movement forward-backward
-    if (name_ == Movements::Ship)
+    if (name_ == Movement_e::Ship)
     {
         if (dir_y != 0)
         {
@@ -83,7 +83,7 @@ void MovementComponent::Move(const float dir_x, const float dir_y, const float& 
 void MovementComponent::CheckMaxVelocity(const float& delta)
 {
     //Deceleration -ship only
-    if (name_ == Movements::Ship)
+    if (name_ == Movement_e::Ship)
     {
         velocity_.y *= deceleration_;
         velocity_.x *= deceleration_;
@@ -117,7 +117,7 @@ void MovementComponent::CheckPosition(const sf::Vector2u& window_size)
 void MovementComponent::Update(const float& delta, const sf::Vector2u& window_size)
 {
     CheckMaxVelocity(delta);
-    if (name_ != Movements::Bullet)
+    if (name_ != Movement_e::Bullet)
         CheckPosition(window_size);
     //Final move
     sprite_.move(velocity_ * delta); //Position change

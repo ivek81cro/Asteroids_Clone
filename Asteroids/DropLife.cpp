@@ -8,11 +8,11 @@ DropLife::DropLife(float x, float y, sf::Texture& texture_sheet, float scale)
         : lifetime_(5.f)
 {
     scale_factor_   = scale;
-    name_           = EntityName::Life;
-    animation_name_ = Animations::Life_default;
+    name_           = EntityName_e::Life;
+    animation_name_ = Animation_e::Life_default;
     max_velocity_   = 50.f;
     alive_          = true;
-    movement_name_  = Movements::Life;
+    movement_name_  = Movement_e::Life;
 
     sprite_.setPosition(x, y);
     sprite_.setScale(scale_factor_, scale_factor_);

@@ -71,46 +71,51 @@ void State::UpdateKeytime(const float& delta)
         keytime_ += 100.f * delta;
 }
 
-SupportedKeys State::SelectEnumSupportedKeys(std::string key)
+void State::LogMessage(std::string& message)
 {
-    if (key == "Up")
-        return SupportedKeys::Up;
-    else if (key == "Down")
-        return SupportedKeys::Down;
-    else if (key == "Left")
-        return SupportedKeys::Left;
-    else if (key == "Right")
-        return SupportedKeys::Right;
-    else if (key == "Escape")
-        return SupportedKeys::Escape;
-    else if (key == "Space")
-        return SupportedKeys::Space;
-    else if (key == "W")
-        return SupportedKeys::W;
-    else if (key == "A")
-        return SupportedKeys::A;
-    else if (key == "S")
-        return SupportedKeys::S;
-    else if (key == "D")
-        return SupportedKeys::D;
-    else
-        return SupportedKeys::Unsupported;
+
 }
 
-Keybinds State::SelectEnumKeybinds(std::string key)
+SupportedKey_e State::SelectEnumSupportedKeys(std::string key)
+{
+    if (key == "Up")
+        return SupportedKey_e::Up;
+    else if (key == "Down")
+        return SupportedKey_e::Down;
+    else if (key == "Left")
+        return SupportedKey_e::Left;
+    else if (key == "Right")
+        return SupportedKey_e::Right;
+    else if (key == "Escape")
+        return SupportedKey_e::Escape;
+    else if (key == "Space")
+        return SupportedKey_e::Space;
+    else if (key == "W")
+        return SupportedKey_e::W;
+    else if (key == "A")
+        return SupportedKey_e::A;
+    else if (key == "S")
+        return SupportedKey_e::S;
+    else if (key == "D")
+        return SupportedKey_e::D;
+    else
+        return SupportedKey_e::Unsupported;
+}
+
+Keybind_e State::SelectEnumKeybinds(std::string key)
 {
     if (key == "CLOSE")
-        return Keybinds::Close;
+        return Keybind_e::Close;
     else if (key == "FIRE")
-        return Keybinds::Fire;
+        return Keybind_e::Fire;
     else if (key == "MOVE_UP")
-        return Keybinds::Move_up;
+        return Keybind_e::Move_up;
     else if (key == "MOVE_DOWN")
-        return Keybinds::Move_down;
+        return Keybind_e::Move_down;
     else if (key == "MOVE_LEFT")
-        return Keybinds::Move_left;
+        return Keybind_e::Move_left;
     else if (key == "MOVE_RIGHT")
-        return Keybinds::Move_right;
+        return Keybind_e::Move_right;
     else
-        return Keybinds::Unknown;
+        return Keybind_e::Unknown;
 }

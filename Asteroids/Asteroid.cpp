@@ -27,17 +27,17 @@ void Asteroid::InitComponents(sf::Texture& texture_sheet)
     CreateMovementComponent(max_velocity_, 0.f, 0.f, sprite_.getRotation());
     CreateAnimationComponent(texture_sheet);
 
-    animation_component_->AddAnimation(Animations::Asteroid_default, 5.f, 0, 0, 15, 0, 64, 64);
-    animation_component_->AddAnimation(Animations::Asteroid_explode, 5.f, 0, 1, 64, 1, 64, 64);
+    animation_component_->AddAnimation(Animation_e::Asteroid_default, 5.f, 0, 0, 15, 0, 64, 64);
+    animation_component_->AddAnimation(Animation_e::Asteroid_explode, 5.f, 0, 1, 64, 1, 64, 64);
 }
 
 //Initializer functions
 void Asteroid::InitVariables()
 {
-    name_           = EntityName::Asteroid;
-    animation_name_ = Animations::Asteroid_default;
+    name_           = EntityName_e::Asteroid;
+    animation_name_ = Animation_e::Asteroid_default;
     max_velocity_   = 50.f * scale_factor_ * game_level_;
-    movement_name_   = Movements::Asteroid;
+    movement_name_   = Movement_e::Asteroid;
 
     sprite_.setScale(scale_factor_, scale_factor_);
     sprite_.setRotation(static_cast<float>((rand() % 360)));
@@ -99,7 +99,7 @@ void Asteroid::Update(const float& delta, const sf::Vector2u& window_size)
     //If exploding stop movement and switch animation
     if (exploding_)
     {
-        if (animation_component_->Play(Animations::Asteroid_explode, delta, true))
+        if (animation_component_->Play(Animation_e::Asteroid_explode, delta, true))
         {
             exploding_ = false;
             alive_     = false;

@@ -1,7 +1,7 @@
 #ifndef ANIMATIONCOMPONENT_H_
 #define ANIMATIONCOMPONENT_H_
 
-enum class Animations
+enum class Animation_e
 {
     Ship_default,
     Ship_default_left,
@@ -102,16 +102,16 @@ class AnimationComponent
     virtual ~AnimationComponent();
 
     //Accessor
-    const bool& IsDone(const Animations key);
+    const bool& IsDone(const Animation_e key);
 
     //Functions
-    void AddAnimation(const Animations, float animation_timer, int start_frame_x, int start_frame_y, int frames_x,
+    void AddAnimation(const Animation_e, float animation_timer, int start_frame_x, int start_frame_y, int frames_x,
                       int frames_y, int width, int height);
 
-    const bool& Play(const Animations key, const float& delta, const bool priority = false);
+    const bool& Play(const Animation_e key, const float& delta, const bool priority = false);
 
   private:
-    std::map<Animations, std::unique_ptr<Animation>> animations_;
+    std::map<Animation_e, std::unique_ptr<Animation>> animations_;
 
     Animation* last_animation_;
     Animation* prority_animation_;
