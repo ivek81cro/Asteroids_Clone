@@ -13,15 +13,15 @@ gui::DropDownList::DropDownList(float x, float y, float width, float height, sf:
     //Add  buttons to dropdown list and set active one
     active_element_ = std::unique_ptr<Button>(
         new Button(x, y, width, height, &font_, list[ default_index ], CalcFontSize(vm_, 140),
-                   sf::Color(255, 0, 0, 255), sf::Color(250, 215, 215, 200), sf::Color(250, 255, 255, 100),
-                   sf::Color(0, 0, 0, 200), sf::Color(0, 0, 0, 200), sf::Color(20, 20, 20, 200)));
+                   BTN_DDL_COLOR_TXT_IDLE, BTN_DDL_COLOR_TXT_HOVER, BTN_DDL_COLOR_TXT_ACTIVE,
+                   BTN_DDL_COLOR_BG_IDLE, BTN_DDL_COLOR_BG_HOVER, BTN_DDL_COLOR_BG_ACTIVE));
 
     for (size_t i = 0; i < num_of_elements; i++)
     {
-        list_.push_back(std::unique_ptr<Button> (new Button(
-            x, (y + (i + 1) * height * 0.8f), width, height * 0.8f, &font_, list[ i ], CalcFontSize(vm_, 140),
-                                   sf::Color(255, 0, 0, 255), sf::Color(255, 255, 255, 255), sf::Color(0, 0, 0, 50),
-                                   sf::Color(0, 0, 0, 255), sf::Color(0, 0, 0, 200), sf::Color(0, 0, 0, 200), i)));
+        list_.push_back(std::unique_ptr<Button> (
+            new Button( x, (y + (i + 1) * height * 0.8f), width, height * 0.8f, &font_, list[ i ], CalcFontSize(vm_, 140),
+                       BTN_DDL_COLOR_TXT_IDLE, BTN_DDL_COLOR_TXT_HOVER, BTN_DDL_COLOR_TXT_ACTIVE, BTN_DDL_COLOR_BG_IDLE,
+                       BTN_DDL_COLOR_BG_HOVER, BTN_DDL_COLOR_BG_ACTIVE, i)));
     }
 }
 

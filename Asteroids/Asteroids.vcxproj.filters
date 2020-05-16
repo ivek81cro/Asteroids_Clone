@@ -184,6 +184,9 @@
     <ClInclude Include="XFileError.h">
       <Filter>Errors</Filter>
     </ClInclude>
+    <ClInclude Include="ButtonColors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

@@ -9,7 +9,7 @@ PauseMenu::PauseMenu(sf::VideoMode& vm, sf::Font& font)
 
     container_.setSize(
         sf::Vector2f(static_cast<float>(vm.width / 4.f), static_cast<float>(vm.height)));
-    container_.setFillColor(sf::Color(20, 20, 20, 200));
+    container_.setFillColor(BTN_DDL_COLOR_BG_ACTIVE);
     container_.setPosition(
         static_cast<float>(vm.width / 2.f) - static_cast<float>(container_.getSize().x / 2.f), 0.f);
 
@@ -41,9 +41,9 @@ void PauseMenu::AddButton(const Buttons key, const float y, const float width, c
 {
     float x = container_.getPosition().x + container_.getSize().x / 2.f - width / 2.f;
 
-    buttons_[ key ] = std::unique_ptr<gui::Button>(new gui::Button(x, y, width, height, &font_, text, char_size, sf::Color(255, 0, 0, 200),
-                                      sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0),
-                                      sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
+    buttons_[ key ] = std::unique_ptr<gui::Button>(new gui::Button(x, y, width, height, &font_, text, char_size, BTN_COLOR_TXT_IDLE,
+                                      BTN_COLOR_TXT_HOVER, BTN_COLOR_TXT_ACTIVE, BTN_COLOR_BG_IDLE,
+                                      BTN_COLOR_BG_HOVER, BTN_COLOR_BG_ACTIVE));
 }
 
 

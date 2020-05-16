@@ -252,7 +252,7 @@ void GameState::InitTextItems()
     invoulnerable_text_.setFont(font_);
     invoulnerable_text_.setPosition(sf::Vector2f(gui::PercToPixelX(42.f, vm), gui::PercToPixelY(90.f, vm)));
     invoulnerable_text_.setCharacterSize(gui::CalcFontSize(vm, 70));
-    invoulnerable_text_.setFillColor(sf::Color(255, 0, 0, 200));
+    invoulnerable_text_.setFillColor(BTN_COLOR_TXT_IDLE);
     invoulnerable_text_.setOutlineThickness(2);
     std::string invoulnerable_text = "=INVULNERABLE=";
 

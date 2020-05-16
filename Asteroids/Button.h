@@ -1,6 +1,8 @@
 #ifndef BUTTON_H_
 #define BUTTON_H_
 
+#include "ButtonColors.h"
+
 enum button_states
 {
     BTN_IDLE = 0,

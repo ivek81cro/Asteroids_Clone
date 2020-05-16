@@ -76,7 +76,7 @@ void MainMenuState::InitGui()
     //Darkened container behind buttons
     container_.setSize(
         sf::Vector2f(static_cast<float>(vm.width / 4.f), static_cast<float>(vm.height) - gui::PercToPixelY(20.f, vm)));
-    container_.setFillColor(sf::Color(20, 20, 20, 200));
+    container_.setFillColor(BTN_DDL_COLOR_BG_ACTIVE);
     container_.setPosition(static_cast<float>(vm.width / 2.f) - static_cast<float>(container_.getSize().x / 2.f),
                            gui::PercToPixelY(20.f, vm));
 
@@ -98,26 +98,26 @@ void MainMenuState::InitGui()
     buttons_[ Buttons::Game_state ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(20.f, vm), gui::PercToPixelX(19.53f, vm),
                         gui::PercToPixelY(6.94f, vm), &font_, "New game", gui::CalcFontSize(vm, 40),
-                        sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
-                        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
+                        BTN_COLOR_TXT_IDLE, BTN_COLOR_TXT_HOVER, BTN_COLOR_TXT_ACTIVE,
+                        BTN_COLOR_BG_IDLE, BTN_COLOR_BG_HOVER, BTN_COLOR_BG_ACTIVE));
 
     buttons_[ Buttons::Settings_state ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(35.f, vm), gui::PercToPixelX(19.53f, vm),
                         gui::PercToPixelY(6.94f, vm), &font_, "Settings", gui::CalcFontSize(vm, 40),
-                        sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
-                        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
+                        BTN_COLOR_TXT_IDLE, BTN_COLOR_TXT_HOVER, BTN_COLOR_TXT_ACTIVE,
+                        BTN_COLOR_BG_IDLE, BTN_COLOR_BG_HOVER, BTN_COLOR_BG_ACTIVE));
 
     buttons_[ Buttons::Score_state ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(50.f, vm), gui::PercToPixelX(19.53f, vm),
                         gui::PercToPixelY(6.94f, vm), &font_, "High Scores", gui::CalcFontSize(vm, 40),
-                        sf::Color(255, 0, 0, 200), sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50),
-                        sf::Color(255, 0, 0, 0), sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
+                        BTN_COLOR_TXT_IDLE, BTN_COLOR_TXT_HOVER, BTN_COLOR_TXT_ACTIVE,
+                        BTN_COLOR_BG_IDLE, BTN_COLOR_BG_HOVER, BTN_COLOR_BG_ACTIVE));
 
     buttons_[ Buttons::Exit_state ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(65.f, vm), gui::PercToPixelX(19.53f, vm),
-                        gui::PercToPixelY(6.94f, vm), &font_, "Quit", gui::CalcFontSize(vm, 40), sf::Color(255, 0, 0, 200),
-                        sf::Color(255, 102, 102, 250), sf::Color(204, 0, 0, 50), sf::Color(255, 0, 0, 0),
-                        sf::Color(255, 102, 102, 0), sf::Color(204, 0, 0, 0)));
+                        gui::PercToPixelY(6.94f, vm), &font_, "Quit", gui::CalcFontSize(vm, 40), BTN_COLOR_TXT_IDLE,
+                        BTN_COLOR_TXT_HOVER, BTN_COLOR_TXT_ACTIVE, BTN_COLOR_BG_IDLE,
+                        BTN_COLOR_BG_HOVER, BTN_COLOR_BG_ACTIVE));
 }
 
 //Update functions
