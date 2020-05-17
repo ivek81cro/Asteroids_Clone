@@ -34,6 +34,8 @@ class GameState : public State
     sf::Font           font_;
     sf::Clock          bullet_clock_;
     sf::Time           bullet_cooldown_;
+    sf::Clock          enemy_bullet_clock_;
+    sf::Time           enemy_bullet_cooldown_;
     sf::Text           lives_text_;
     sf::Text           score_text_;
     sf::Text           invoulnerable_text_;

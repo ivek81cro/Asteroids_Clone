@@ -57,7 +57,7 @@ void Entity::Move(const float dir_x, const float dir_y, const float& delta)
         movement_component_->Move(dir_x, dir_y, delta); //Sets velocity
 }
 
-const bool Entity::IsAlive()
+const bool Entity::GetAlive()
 {
     return alive_;
 }
@@ -141,9 +141,9 @@ void Entity::Render(sf::RenderTarget& target)
         hitbox_component_->Render(target);
 }
 
-bool Entity::ShieldsUp()
+const bool Entity::ShieldsUp() const
 {
-    return false;
+    return shields_;
 }
 
 float Entity::GetAngle() const
@@ -154,22 +154,4 @@ float Entity::GetAngle() const
 const int Entity::GetPoints() const
 {
     return 0;
-}
-
-const bool Entity::GetInvoulnerability() const
-{
-    return false;
-}
-
-void Entity::SetLifeTime(const float& delta)
-{
-}
-
-const float& Entity::GetFireCooldown() const
-{
-    return 0.f;
-}
-
-void Entity::ResetFireCooldown()
-{
 }

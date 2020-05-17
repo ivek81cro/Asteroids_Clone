@@ -13,8 +13,6 @@ class EnemyUfo : public Entity
     void Update(const float& delta, const sf::Vector2u& window_size);
 
     const bool   GetInvoulnerability() const;
-    const float& GetFireCooldown() const;
-    void         ResetFireCooldown();
     void         SetLifeTime(const float& delta);
     const int    GetPoints() const;
     void         SetAlive(bool is_alive);
@@ -22,9 +20,7 @@ class EnemyUfo : public Entity
   private:
     //Variables
     int   points_;
-    bool  invoulnerability_;
     bool  away_;
-    float fire_cooldown_;
     float lifetime_;
 
 

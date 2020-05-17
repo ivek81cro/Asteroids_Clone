@@ -30,10 +30,10 @@ class Entity
     //Functions
     virtual void                   SetPosition(const float x, const float y);
     virtual void                   Move(const float dir_x, const float dir_y, const float& delta);
-    virtual const bool             IsAlive();
+    virtual const bool             GetAlive();
     virtual void                   SetAlive(bool is_alive);
     virtual const bool             IsExploding();
-    virtual const EntityName_e       GetName();
+    virtual const EntityName_e     GetName();
     virtual const sf::CircleShape& GetHitbox() const;
     virtual const bool             CheckCollision(const sf::CircleShape& other);
     virtual const int&             GetLevel() const;
@@ -41,30 +41,27 @@ class Entity
     virtual void                   ResetAnimationName();
     virtual void                   Update(const float& delta, const sf::Vector2u& window_size);
     virtual void                   Render(sf::RenderTarget& target);
-    virtual bool                   ShieldsUp();
+    virtual const bool             ShieldsUp() const;
     virtual float                  GetAngle() const;
     virtual const int              GetPoints() const;
-    virtual const bool             GetInvoulnerability() const;
-    virtual void                   SetLifeTime(const float& delta);
-    virtual const float&           GetFireCooldown() const;
-    virtual void                   ResetFireCooldown();
 
   protected:
     //Variables
     sf::Sprite sprite_;
 
     EntityName_e name_;
-    Animation_e animation_name_;
-    Movement_e  movement_name_;
+    Animation_e  animation_name_;
+    Movement_e   movement_name_;
 
     bool alive_;
     bool exploding_;
+    bool shields_;
 
-    int      asteroid_level_;
-    float    scale_factor_;
-    float    game_level_;
-    float    max_velocity_;
-    float    acceleration_;
+    int   asteroid_level_;
+    float scale_factor_;
+    float game_level_;
+    float max_velocity_;
+    float acceleration_;
 
     std::unique_ptr<MovementComponent>  movement_component_;
     std::unique_ptr<AnimationComponent> animation_component_;

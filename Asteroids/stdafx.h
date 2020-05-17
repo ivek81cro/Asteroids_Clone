@@ -18,5 +18,7 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/System.hpp"
 #include "SFML/Window.hpp"
+#include "SFML/Window.hpp"
+#include "SFML/OpenGL.hpp"
 
 #endif // !HEADER_H_

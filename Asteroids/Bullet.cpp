@@ -62,3 +62,10 @@ void Bullet::SetLifeTime(const float& delta)
         alive_ = false;
     }
 }
+
+void Bullet::Update(const float& delta, const sf::Vector2u& window_size)
+{
+    SetLifeTime(delta);
+
+    Entity::Update(delta, window_size);
+}

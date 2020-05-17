@@ -15,6 +15,7 @@ class Bullet : public Entity
     //Functions
     void SetScale(const sf::Vector2f& factor);
     void SetLifeTime(const float& delta);
+    void Update(const float& delta, const sf::Vector2u& window_size);
 
   private:
     //Variables

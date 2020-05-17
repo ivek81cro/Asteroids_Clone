@@ -4,7 +4,6 @@
 //Constructors / Destructors
 Ship::Ship(float x, float y, sf::Texture& texture_sheet, float scale)
         : shield_timer_(3.f)
-        , invulnerability_(true)
 {
     scale_factor_ = scale;
     sprite_.setScale(scale_factor_, scale_factor_);
@@ -27,6 +26,7 @@ void Ship::InitVariables()
     max_velocity_   = 200.f * scale_factor_;
     acceleration_   = 400.f * scale_factor_;
     movement_name_  = Movement_e::Ship;
+    shields_        = true;
 }
 
 
@@ -54,7 +54,7 @@ void Ship::InitComponents(sf::Texture& texture_sheet)
 //Functions
 void Ship::ResetAnimationName()
 {
-    if (!invulnerability_)
+    if (!shields_)
         animation_name_ = Animation_e::Ship_default;
     else
         animation_name_ = Animation_e::Ship_shield;
@@ -76,7 +76,7 @@ void Ship::Update(const float& delta, const sf::Vector2u& window_size)
         if (shield_timer_ > 0.f)
             shield_timer_ -= delta;
         else
-            invulnerability_ = false;
+            shields_ = false;
 
         Entity::Update(delta, window_size);
     }
@@ -86,15 +86,15 @@ void Ship::Move(const float dir_x, const float dir_y, const float& delta)
 {
     //Ship animation preset based on movement
 
-    if (dir_x > 0 && !invulnerability_)
+    if (dir_x > 0 && !shields_)
         animation_name_ = Animation_e::Ship_default_right;
-    else if (dir_x < 0 && !invulnerability_)
+    else if (dir_x < 0 && !shields_)
         animation_name_ = Animation_e::Ship_default_left;
-    else if(dir_x > 0 && invulnerability_) 
+    else if (dir_x > 0 && shields_) 
         animation_name_ = Animation_e::Ship_shield_right;
-    else if (dir_x < 0 && invulnerability_) 
+    else if (dir_x < 0 && shields_) 
         animation_name_ = Animation_e::Ship_shield_left;
-    else if (invulnerability_)
+    else if (shields_)
         animation_name_ = Animation_e::Ship_shield;
     else
         animation_name_ = Animation_e::Ship_default;
@@ -105,11 +105,6 @@ void Ship::Move(const float dir_x, const float dir_y, const float& delta)
 void Ship::SetAlive(bool is_alive)
 {
     exploding_ = true;
-}
-
-bool Ship::ShieldsUp()
-{
-    return invulnerability_;
 }
 
 float Ship::GetAngle() const

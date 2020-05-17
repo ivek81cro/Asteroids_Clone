@@ -67,6 +67,7 @@ void Game::InitWindow()
 
     window_->setFramerateLimit(gfx_settings_.frame_rate_limit_);
     window_->setVerticalSyncEnabled(gfx_settings_.v_sync_);
+    window_->setIcon(asteroids_icon.width, asteroids_icon.height, asteroids_icon.pixel_data);
 }
 
 /**

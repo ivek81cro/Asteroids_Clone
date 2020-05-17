@@ -2,11 +2,9 @@
 #include "EnemyUfo.h"
 
 EnemyUfo::EnemyUfo(float x, float y, sf::Texture& texture_sheet, float scale, int& game_level)
-        : invoulnerability_(true)
-        , away_(false)
+        : away_(false)
         , points_(40)
         , lifetime_(6.f)
-        , fire_cooldown_(1.5f)
 {
     scale_factor_ = scale;
     sprite_.setScale(scale_factor_, scale_factor_);
@@ -46,6 +44,7 @@ void EnemyUfo::InitVariables()
     exploding_      = false;
     max_velocity_   = 100.f * game_level_ / 2;
     movement_name_  = Movement_e::Enemy_ufo;
+    shields_        = true;
 }
 
 /**
@@ -53,11 +52,11 @@ void EnemyUfo::InitVariables()
  */
 void EnemyUfo::Update(const float& delta, const sf::Vector2u& window_size)
 {
-    if (invoulnerability_ && !away_)
+    if (shields_ && !away_)
     {
         if (animation_component_->Play(animation_name_, delta, true))
         {
-            invoulnerability_ = false;
+            shields_ = false;
             animation_name_   = Animation_e::Enemy_ufo_active;
         }
     }
@@ -83,36 +82,21 @@ void EnemyUfo::Update(const float& delta, const sf::Vector2u& window_size)
     }
 
     hitbox_component_->Update();
-}
-
-const bool EnemyUfo::GetInvoulnerability() const
-{
-    return invoulnerability_;
-}
-
-const float& EnemyUfo::GetFireCooldown() const
-{
-    return fire_cooldown_;
-}
-
-void EnemyUfo::ResetFireCooldown()
-{
-    fire_cooldown_ = 1.5f;
+    SetLifeTime(delta);
 }
 
 void EnemyUfo::SetLifeTime(const float& delta)
 {
-    if (!invoulnerability_)
+    if (!shields_)
     {
         lifetime_ -= delta;
-        fire_cooldown_ -= delta;
     }
 
     if (lifetime_ < 0)
     {
         animation_name_   = Animation_e::Enemy_ufo_away;
         away_             = true;
-        invoulnerability_ = true;
+        shields_ = true;
     }
 }
 
@@ -126,7 +110,6 @@ void EnemyUfo::SetAlive(bool is_alive)
     if (!is_alive)
     {
         exploding_      = true;
-        fire_cooldown_  = 20.f;
         animation_name_ = Animation_e::Enemy_ufo_explosion;
     }
 }

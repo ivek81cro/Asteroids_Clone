@@ -204,6 +204,7 @@ void GameState::InitEnemyUfo()
 
     ufo_active_ = true;
     --ufo_max_per_level_;
+    enemy_bullet_clock_.restart();
 }
 
 /**
@@ -330,7 +331,7 @@ void GameState::UpdatePlayerInput(const float& delta)
         bullet_cooldown_ = bullet_clock_.getElapsedTime();
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds_.at(Keybind_e::Fire))) &&
-            bullet_cooldown_.asSeconds() > 0.25f && s->IsAlive() && !s->IsExploding())
+            bullet_cooldown_.asSeconds() > 0.25f && s->GetAlive() && !s->IsExploding())
         {
             bullet_clock_.restart();
             FireBullet(s);
@@ -353,7 +354,7 @@ void GameState::UpdatePauseMenuButtons()
 void GameState::CheckEntitiesAlive(const float& delta)
 {
     entities_.erase(std::remove_if(entities_.begin(), entities_.end(),
-                                   [](const std::unique_ptr<Entity>& ent) { return !ent->IsAlive(); }),
+                                   [](const std::unique_ptr<Entity>& ent) { return !ent->GetAlive(); }),
                     entities_.end());
 }
 
@@ -389,7 +390,7 @@ void GameState::CheckCollision()
             //Check collision between ship and asteroids or ship and enemy bullets
             if (it->GetName() == EntityName_e::Ship && (it2->GetName() == EntityName_e::Asteroid || 
                 it2->GetName() == EntityName_e::Bullet_enemy) && !it->IsExploding() && !it2->IsExploding() && 
-                it2->IsAlive() && !it.get()->ShieldsUp())
+                it2->GetAlive() && !it.get()->ShieldsUp())
             {
                 if (it->CheckCollision(it2->GetHitbox()))
                 {
@@ -408,7 +409,7 @@ void GameState::CheckCollision()
             }
 
             //Check collision between ship bullet and UFO, and ship and ufo in case of suicide run
-            if (ufo_active_ && it->GetName() == EntityName_e::Enemy_ufo && !it.get()->GetInvoulnerability() && 
+            if (ufo_active_ && it->GetName() == EntityName_e::Enemy_ufo && !it.get()->ShieldsUp() && 
                 (it2->GetName() == EntityName_e::Bullet || it2->GetName() == EntityName_e::Ship))
             {
                 if (it->CheckCollision(it2->GetHitbox()))
@@ -445,9 +446,6 @@ void GameState::UpdateEntities(const float& delta)
     //Update entities
     for (auto& it : entities_)
     {
-        if (it->GetName() == EntityName_e::Bullet || it->GetName() == EntityName_e::Bullet_enemy)
-            it.get()->SetLifeTime(delta); //Decrease bullet lifetime for elapsed time
-
         if ((it)->GetName() != EntityName_e::Ship)
             it->Move(0, 0, delta); //Movement for asteroids and bullets
 
@@ -480,10 +478,10 @@ void GameState::UpdateEnemy(const float& delta)
                 e = it.get();
             }
         }
-        if (e->IsAlive())
+        if (e->GetAlive())
         {
-            e->SetLifeTime(delta);//Time duration decrease enemy is active
-            if (e != nullptr && e->GetFireCooldown() < 0)//Fire bullets every certain ammount of time
+            enemy_bullet_cooldown_ = enemy_bullet_clock_.getElapsedTime();
+            if (e != nullptr && enemy_bullet_cooldown_.asSeconds() > 1.f)//Fire bullets every certain ammount of time
             {
                 float angle = 360.f;
                 while (angle > 0.f)
@@ -494,7 +492,7 @@ void GameState::UpdateEnemy(const float& delta)
 
                     angle -= current_level_ > 1 ? 120.f / current_level_ : 120.f;//Set angle of shooting depending on level of game
                 }
-                e->ResetFireCooldown();
+                enemy_bullet_clock_.restart();
             }
         }
         else
