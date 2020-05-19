@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Asteroid.h"
 
-Asteroid::Asteroid(float x, float y, int level, sf::Texture& texture_sheet, float scale_factor, float& game_level)
+Asteroid::Asteroid(const float& x, const float& y, const int& level, sf::Texture& texture_sheet, const float& scale_factor, const float& game_level)
         : level_(level)
 {
     game_level_   = game_level;
@@ -82,7 +82,7 @@ void Asteroid::SetScale(const int& level)
 /**
     Set if asteroid is exploding, run explosion animation then set alive false.
  */
-void Asteroid::SetAlive(bool is_alive)
+void Asteroid::SetAlive(const bool& is_alive)
 {
     exploding_ = true;
 }

@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "Bullet.h"
 
-Bullet::Bullet(float x, float y, sf::Texture& texture_sheet, float angle, float scale_factor, EntityName_e name)
+Bullet::Bullet(const float& x, const float& y, sf::Texture& texture_sheet, const float& angle,
+               const float& scale_factor, const EntityName_e name)
         : angle_(angle)
 {
     name_         = name;

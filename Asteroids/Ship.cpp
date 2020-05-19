@@ -2,7 +2,7 @@
 #include "Ship.h"
 
 //Constructors / Destructors
-Ship::Ship(float x, float y, sf::Texture& texture_sheet, float scale)
+Ship::Ship(const float& x, const float& y, sf::Texture& texture_sheet, const float& scale)
         : shield_timer_(3.f)
 {
     scale_factor_ = scale;
@@ -82,7 +82,7 @@ void Ship::Update(const float& delta, const sf::Vector2u& window_size)
     }
 }
 
-void Ship::Move(const float dir_x, const float dir_y, const float& delta)
+void Ship::Move(const float& dir_x, const float& dir_y, const float& delta)
 {
     //Ship animation preset based on movement
 
@@ -102,7 +102,7 @@ void Ship::Move(const float dir_x, const float dir_y, const float& delta)
     Entity::Move(dir_x, dir_y, delta);
 }
 
-void Ship::SetAlive(bool is_alive)
+void Ship::SetAlive(const bool& is_alive)
 {
     exploding_ = true;
 }

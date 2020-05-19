@@ -7,7 +7,7 @@ class DropLife : public Entity
 {
   public:
       //Functions
-    DropLife(float x, float y, sf::Texture& texture_sheet, float scale);
+    DropLife(const float& x, const float& y, sf::Texture& texture_sheet, const float& scale);
     virtual ~DropLife();
 
     void Update(const float& delta, const sf::Vector2u& window_size);

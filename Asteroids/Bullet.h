@@ -6,7 +6,8 @@
 class Bullet : public Entity
 {
   public:
-    Bullet(float x, float y, sf::Texture& texture, float angle, float scale_factor, EntityName_e name);
+    Bullet(const float& x, const float& y, sf::Texture& texture_sheet, const float& angle, const float& scale_factor,
+           const EntityName_e name);
     virtual ~Bullet();
 
     Bullet(const Bullet&) = delete;

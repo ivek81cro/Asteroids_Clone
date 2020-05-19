@@ -28,12 +28,12 @@ class Entity
     void CreateHitboxComponent(sf::Sprite& sprite, float width, float factor = 1.f);
 
     //Functions
-    virtual void                   SetPosition(const float x, const float y);
-    virtual void                   Move(const float dir_x, const float dir_y, const float& delta);
-    virtual const bool             GetAlive();
-    virtual void                   SetAlive(bool is_alive);
-    virtual const bool             IsExploding();
-    virtual const EntityName_e     GetName();
+    virtual void                   SetPosition(const float& x, const float& y);
+    virtual void                   Move(const float& dir_x, const float& dir_y, const float& delta);
+    virtual const bool             GetAlive() const;
+    virtual void                   SetAlive(const bool& is_alive);
+    virtual const bool             IsExploding() const;
+    virtual const EntityName_e     GetName() const;
     virtual const sf::CircleShape& GetHitbox() const;
     virtual const bool             CheckCollision(const sf::CircleShape& other);
     virtual const int&             GetLevel() const;

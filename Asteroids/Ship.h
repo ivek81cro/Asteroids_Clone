@@ -6,7 +6,7 @@
 class Ship : public Entity
 {
   public:
-    Ship(float x, float y, sf::Texture& texture_sheet, float scale);
+    Ship(const float& x, const float& y, sf::Texture& texture_sheet, const float& scale);
     virtual ~Ship();
 
     Ship(const Ship&) = delete;
@@ -15,8 +15,8 @@ class Ship : public Entity
     //Functions
     void  ResetAnimationName();
     void  Update(const float& delta, const sf::Vector2u& window_size);
-    void  Move(const float dir_x, const float dir_y, const float& delta);
-    void  SetAlive(bool is_alive);
+    void  Move(const float& dir_x, const float& dir_y, const float& delta);
+    void  SetAlive(const bool& is_alive);
     float GetAngle() const;
 
   private:

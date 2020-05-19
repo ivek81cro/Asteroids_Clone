@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "EnemyUfo.h"
 
-EnemyUfo::EnemyUfo(float x, float y, sf::Texture& texture_sheet, float scale, int& game_level)
+EnemyUfo::EnemyUfo(const float& x, const float& y, sf::Texture& texture_sheet, const float& scale, const int& game_level)
         : away_(false)
         , points_(40)
         , lifetime_(6.f)
@@ -105,7 +105,7 @@ const int EnemyUfo::GetPoints() const
     return points_;
 }
 
-void EnemyUfo::SetAlive(bool is_alive)
+void EnemyUfo::SetAlive(const bool& is_alive)
 {
     if (!is_alive)
     {

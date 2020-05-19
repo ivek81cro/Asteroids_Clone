@@ -4,7 +4,7 @@
 /**
     Class for dropping extra life
  */
-DropLife::DropLife(float x, float y, sf::Texture& texture_sheet, float scale)
+DropLife::DropLife(const float& x, const float& y, sf::Texture& texture_sheet, const float& scale)
         : lifetime_(5.f)
 {
     scale_factor_   = scale;

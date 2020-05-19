@@ -6,7 +6,8 @@
 class Asteroid : public Entity
 {
   public:
-    Asteroid(float x, float y, int level, sf::Texture& texture_sheet, float scale_factor, float& game_level);
+    Asteroid(const float& x, const float& y, const int& level, sf::Texture& texture_sheet,
+             const float& scale_factor, const float& game_level);
     virtual ~Asteroid();
 
     Asteroid(const Asteroid&) = delete;
@@ -14,7 +15,7 @@ class Asteroid : public Entity
 
     //Functions
     void                SetScale(const int& leve);
-    void                SetAlive(bool is_alive);
+    void                SetAlive(const bool& is_alive);
     void                Update(const float& delta, const sf::Vector2u& window_size);
     const int&          GetLevel() const;
     const sf::Vector2f& Getposition() const;

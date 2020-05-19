@@ -46,33 +46,33 @@ void Entity::CreateHitboxComponent(sf::Sprite& sprite, float width, float factor
 }
 
 //Functions
-void Entity::SetPosition(const float x, const float y)
+void Entity::SetPosition(const float& x, const float& y)
 {
     sprite_.setPosition(x, y);
 }
 
-void Entity::Move(const float dir_x, const float dir_y, const float& delta)
+void Entity::Move(const float& dir_x, const float& dir_y, const float& delta)
 {
     if (movement_component_ && !exploding_)
         movement_component_->Move(dir_x, dir_y, delta); //Sets velocity
 }
 
-const bool Entity::GetAlive()
+const bool Entity::GetAlive() const
 {
     return alive_;
 }
 
-void Entity::SetAlive(bool is_alive)
+void Entity::SetAlive(const bool& is_alive)
 {
     alive_ = is_alive;
 }
 
-const bool Entity::IsExploding()
+const bool Entity::IsExploding() const
 {
     return exploding_;
 }
 
-const EntityName_e Entity::GetName()
+const EntityName_e Entity::GetName() const
 {
     return name_;
 }
