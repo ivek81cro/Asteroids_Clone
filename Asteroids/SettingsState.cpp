@@ -107,15 +107,15 @@ void SettingsState::InitButtons(const sf::VideoMode& vm)
 
     buttons_[Buttons::Back ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(90.19f, vm), width, height,
-                                         &font_, "Back", gui::CalcFontSize(vm, 60), BTN_COLOR_TXT_IDLE,
-                                         BTN_COLOR_TXT_HOVER, BTN_COLOR_TXT_ACTIVE,
-                                         BTN_COLOR_BG_IDLE, BTN_COLOR_BG_HOVER, BTN_COLOR_BG_ACTIVE));
+                                         &font_, "Back", gui::CalcFontSize(vm, 60), state_data_->btn_settings_->btn_txt_idle_,
+                                         state_data_->btn_settings_->btn_txt_hover_, state_data_->btn_settings_->btn_txt_active_,
+                                         state_data_->btn_settings_->btn_bg_idle_, state_data_->btn_settings_->btn_bg_hover_, state_data_->btn_settings_->btn_bg_active_));
 
     buttons_[ Buttons::Apply ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(82.28f, vm), width, height, 
-                                           &font_, "Apply", gui::CalcFontSize(vm, 60), BTN_COLOR_TXT_IDLE, 
-                                           BTN_COLOR_TXT_HOVER, BTN_COLOR_TXT_ACTIVE,
-                                           BTN_COLOR_BG_IDLE, BTN_COLOR_BG_HOVER, BTN_COLOR_BG_ACTIVE));
+                                           &font_, "Apply", gui::CalcFontSize(vm, 60), state_data_->btn_settings_->btn_txt_idle_, 
+                                           state_data_->btn_settings_->btn_txt_hover_, state_data_->btn_settings_->btn_txt_active_,
+                                           state_data_->btn_settings_->btn_bg_idle_, state_data_->btn_settings_->btn_bg_hover_, state_data_->btn_settings_->btn_bg_active_));
 }
 
 /**
@@ -141,7 +141,7 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
     ddl_[ Settings_e::Resolution ] = std::unique_ptr<gui::DropDownList>(
         new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(13.89f, vm), gui::PercToPixelX(15.f, vm),
                               gui::PercToPixelY(7.f, vm), font_, vm, modes_str.data(), 
-                              static_cast<int>(modes_str.size()), default_mode));
+                              static_cast<int>(modes_str.size()), default_mode, state_data_->btn_settings_));
 
     default_mode = 0;
 
@@ -155,7 +155,7 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
     ddl_[ Settings_e::Fullscreen ] = std::unique_ptr<gui::DropDownList>(
         new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(23.f, vm), gui::PercToPixelX(15.f, vm),
                               gui::PercToPixelY(7.f, vm), font_, vm, fulscreen_str.data(),
-                              static_cast<int>(fulscreen_str.size()), default_mode));
+                              static_cast<int>(fulscreen_str.size()), default_mode, state_data_->btn_settings_));
     default_mode         = 0;
 
     //V-Sync list
@@ -168,8 +168,8 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
 
     ddl_[ Settings_e::V_sync ] = std::unique_ptr<gui::DropDownList>(
         new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(32.8f, vm),
-                              gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
-                              v_sync_str.data(), static_cast<int>(v_sync_str.size()), default_mode));
+                              gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm, v_sync_str.data(),
+                              static_cast<int>(v_sync_str.size()), default_mode, state_data_->btn_settings_));
     default_mode    = 0;
 
     //Antialiasing list
@@ -183,8 +183,8 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
 
     ddl_[ Settings_e::Antialiasing ] = std::unique_ptr<gui::DropDownList>(
         new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(42.f, vm),
-                                                   gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
-                                                   antialiasnig_str.data(), static_cast<int>(antialiasnig_str.size()), default_mode));
+                                                   gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm, antialiasnig_str.data(),
+                              static_cast<int>(antialiasnig_str.size()), default_mode, state_data_->btn_settings_));
     default_mode           = 0;
 
     //Keys configuration list
@@ -201,8 +201,8 @@ void SettingsState::InitDropdownList(const sf::VideoMode& vm)
 
     ddl_[ Settings_e::Keys_config ] = std::unique_ptr<gui::DropDownList>(
         new gui::DropDownList(gui::PercToPixelX(19.53f, vm), gui::PercToPixelY(52.f, vm),
-                                                 gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm,
-                                                 keys_path_str.data(), static_cast<int>(keys_path_str.size()), default_mode));
+                                                 gui::PercToPixelX(15.f, vm), gui::PercToPixelY(7.f, vm), font_, vm, keys_path_str.data(),
+                              static_cast<int>(keys_path_str.size()), default_mode, state_data_->btn_settings_));
 }
 
 /**

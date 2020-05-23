@@ -2,11 +2,12 @@
 #define PAUSEMENU_H_
 
 #include "Button.h"
+#include "State.h"
 
 class PauseMenu
 {
   public:
-    PauseMenu(sf::VideoMode& vm, sf::Font& font);
+    PauseMenu(sf::VideoMode& vm, sf::Font& font, ButtonSettings& btn_settings);
     virtual ~PauseMenu();
 
     //Functions
@@ -20,11 +21,12 @@ class PauseMenu
     std::map<Buttons, std::unique_ptr<gui::Button>>& GetButtons();
 
   private:
-    sf::Font& font_;
-    sf::Text  menu_text_;
-
+    sf::Font&          font_;
+    sf::Text           menu_text_;
     sf::RectangleShape background_;
     sf::RectangleShape container_;
+
+    ButtonSettings* btn_settings_;
 
     std::map<Buttons, std::unique_ptr<gui::Button>> buttons_;
 

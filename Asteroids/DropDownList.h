@@ -9,8 +9,7 @@ namespace gui
     {
       public:
         DropDownList(float x, float y, float width, float height, sf::Font& font, sf::VideoMode vm, std::string list[],
-                     unsigned num_of_elements,
-                     unsigned default_index);
+                     unsigned num_of_elements, unsigned default_index, ButtonSettings* btn_settings);
         virtual ~DropDownList();
 
         //Accessor

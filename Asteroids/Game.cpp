@@ -5,7 +5,7 @@
 Game::Game()
 {
     InitVariables();
-    InitGraphicsSettings();
+    InitSettings();
     InitWindow();
     InitKeys();
     InitStateData();
@@ -29,9 +29,10 @@ void Game::InitVariables()
 }
 
 
-void Game::InitGraphicsSettings()
+void Game::InitSettings()
 {
     gfx_settings_.LoadFromFile(PATH_FILE_GRAPHICS);
+    btn_settings_.LoadFromFile("Config/buttons_settings.ini");
 }
 
 /**
@@ -45,6 +46,7 @@ void Game::InitStateData()
     state_data_.states_               = &states_;
     state_data_.event_                = &event_;
     state_data_.path_game_state_keys_ = &gfx_settings_.path_game_state_keys_;
+    state_data_.btn_settings_         = &btn_settings_;
 }
 
 /**

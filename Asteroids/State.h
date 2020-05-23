@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include "Entity.h"
 #include "GraphicsSettings.h"
+#include "ButtonSettings.h"
 #include "Ship.h"
 #include "EnemyUfo.h"
 #include "DropLife.h"
@@ -27,7 +28,8 @@ class StateData
     //Variables
     sf::RenderWindow*                   window_;
     GraphicsSettings*                   gfx_settings_;
-    std::map<SupportedKey_e, int>*         supported_keys_;
+    ButtonSettings*                     btn_settings_;
+    std::map<SupportedKey_e, int>*      supported_keys_;
     std::stack<std::unique_ptr<State>>* states_;
     sf::Event*                          event_;
     std::string*                        path_game_state_keys_;

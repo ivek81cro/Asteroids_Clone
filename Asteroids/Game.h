@@ -88,6 +88,7 @@ class Game
 
   private:
     GraphicsSettings                  gfx_settings_;
+    ButtonSettings                    btn_settings_;
     StateData                         state_data_;
     std::unique_ptr<sf::RenderWindow> window_;
     sf::Event                         event_;
@@ -101,7 +102,7 @@ class Game
 
     //Inititalization
     void InitVariables();
-    void InitGraphicsSettings();
+    void InitSettings();
     void InitWindow();
     void InitKeys();
     void InitStateData();

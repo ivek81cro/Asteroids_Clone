@@ -30,6 +30,9 @@
     <Filter Include="Errors">
       <UniqueIdentifier>{a1e244f3-240e-4526-a002-877206827889}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Settings">
+      <UniqueIdentifier>{b487d4cc-52ee-407f-b576-2f575745dc00}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -83,9 +86,6 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicsSettings.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ScoreState.cpp">
       <Filter>States</Filter>
     </ClCompile>
@@ -100,6 +100,12 @@
     </ClCompile>
     <ClCompile Include="XFileError.cpp">
       <Filter>Errors</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsSettings.cpp">
+      <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonSettings.cpp">
+      <Filter>Settings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -151,9 +157,6 @@
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GraphicsSettings.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="resource1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -184,8 +187,11 @@
     <ClInclude Include="XFileError.h">
       <Filter>Errors</Filter>
     </ClInclude>
-    <ClInclude Include="ButtonColors.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GraphicsSettings.h">
+      <Filter>Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonSettings.h">
+      <Filter>Settings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

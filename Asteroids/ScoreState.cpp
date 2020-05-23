@@ -109,9 +109,9 @@ void ScoreState::InitButtons(const sf::VideoMode& vm)
 
     buttons_[ Buttons::Back ] = std::unique_ptr<gui::Button>(
         new gui::Button(gui::PercToPixelX(40.23f, vm), gui::PercToPixelY(90.19f, vm), width, height,
-                                         &font_, "Back", gui::CalcFontSize(vm, 60), BTN_COLOR_TXT_IDLE,
-                                         BTN_COLOR_TXT_HOVER, BTN_COLOR_TXT_ACTIVE,
-                                         BTN_COLOR_BG_IDLE, BTN_COLOR_BG_HOVER, BTN_COLOR_BG_ACTIVE));
+                                         &font_, "Back", gui::CalcFontSize(vm, 60), state_data_->btn_settings_->btn_txt_idle_,
+                                         state_data_->btn_settings_->btn_txt_hover_, state_data_->btn_settings_->btn_txt_active_,
+                                         state_data_->btn_settings_->btn_bg_idle_, state_data_->btn_settings_->btn_bg_hover_, state_data_->btn_settings_->btn_bg_active_));
 }
 
 /**

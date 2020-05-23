@@ -165,7 +165,7 @@ void GameState::InitPauseMenu()
 {
     const sf::VideoMode& vm = state_data_->gfx_settings_->resolution_;
 
-    p_menu_ = std::unique_ptr<PauseMenu>(new PauseMenu(state_data_->gfx_settings_->resolution_, font_));
+    p_menu_ = std::unique_ptr<PauseMenu>(new PauseMenu(state_data_->gfx_settings_->resolution_, font_, *state_data_->btn_settings_));
 
     p_menu_->AddButton(Buttons::Quit, window_->getSize().y - gui::PercToPixelY(13.89f, vm), gui::PercToPixelX(19.53f, vm),
                        gui::PercToPixelY(6.94f, vm), gui::CalcFontSize(vm, 40), "Quit");
@@ -253,7 +253,7 @@ void GameState::InitTextItems()
     invoulnerable_text_.setFont(font_);
     invoulnerable_text_.setPosition(sf::Vector2f(gui::PercToPixelX(42.f, vm), gui::PercToPixelY(90.f, vm)));
     invoulnerable_text_.setCharacterSize(gui::CalcFontSize(vm, 70));
-    invoulnerable_text_.setFillColor(BTN_COLOR_TXT_IDLE);
+    invoulnerable_text_.setFillColor(state_data_->btn_settings_->btn_txt_idle_);
     invoulnerable_text_.setOutlineThickness(2);
     std::string invoulnerable_text = "=INVULNERABLE=";
 
